@@ -1,0 +1,6 @@
+{
+  "owner_dsn": "postgresql://postgres.dramddqxgrcspfcpqnhe:ĐIỀN_MẬT_KHẨU_DATABASE@aws-0-REGION.pooler.supabase.com:5432/postgres",
+  "dsn": "postgresql://mobilegis_app.dramddqxgrcspfcpqnhe:ĐIỀN_MẬT_KHẨU_MỚI_CHO_APP@aws-0-REGION.pooler.supabase.com:5432/postgres",
+  "pool": true,
+  "pool_size": 6
+}

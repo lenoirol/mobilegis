@@ -10,18 +10,61 @@ BOUNDARY='2025-reference'
 SOURCES=('legacy','gee','gee_recovery')
 DEMO_COLUMNS='id,name,lat,lon,year,lst,ndvi,tvdi,source'
 
-def config():
+def _load():
+    """Return (connection target, extras). Target is a DSN string or a dict of libpq keywords.
+
+    Order: MOBILEGIS_DATABASE_URL, then the JSON file named by MOBILEGIS_DB_CONFIG, then config/database.local.json.
+    A JSON file with a "dsn" key targets a remote server (e.g. Supabase) and uses a connection pool unless "pool" is false.
+    """
     if os.environ.get('MOBILEGIS_DATABASE_URL'):
-        return os.environ['MOBILEGIS_DATABASE_URL']
-    path=ROOT/'config/database.local.json'
+        return os.environ['MOBILEGIS_DATABASE_URL'], {}
+    custom = os.environ.get('MOBILEGIS_DB_CONFIG')
+    path = (ROOT / custom if custom and not Path(custom).is_absolute() else Path(custom)) if custom else ROOT / 'config/database.local.json'
     if not path.is_file():
         raise RuntimeError('Chưa cấu hình PostgreSQL. Xem DATABASE_POSTGRESQL.md hoặc chạy SETUP_POSTGRESQL.cmd.')
-    return json.loads(path.read_text(encoding='utf8'))
+    cfg = json.loads(path.read_text(encoding='utf8'))
+    if 'dsn' in cfg:
+        return with_ssl(cfg['dsn']), {'pool': cfg.get('pool', True), 'pool_size': int(cfg.get('pool_size', 6))}
+    return cfg, {}
+
+def with_ssl(dsn):
+    """Remote servers need TLS. Add sslmode=require unless the DSN already sets it or points at this machine."""
+    from psycopg.conninfo import conninfo_to_dict, make_conninfo
+    info = conninfo_to_dict(dsn)
+    if 'sslmode' not in info and info.get('host', '') not in ('', 'localhost', '127.0.0.1', '::1'):
+        return make_conninfo(dsn, sslmode='require')
+    return dsn
+
+def config():
+    return _load()[0]
+
+_POOLS = {}
+def close_pools():
+    for pool in list(_POOLS.values()):
+        pool.close()
+    _POOLS.clear()
+import atexit
+atexit.register(close_pools)   # worker threads must be stopped before interpreter shutdown (Python 3.14)
+
+def _prepare(conn):
+    # Set after connecting: poolers such as Supavisor reject the "options" startup parameter.
+    conn.execute('SET statement_timeout = 15000')
+    conn.commit()
+
+def _pool(dsn, size):
+    if dsn not in _POOLS:
+        from psycopg_pool import ConnectionPool
+        _POOLS[dsn] = ConnectionPool(dsn, min_size=1, max_size=size, timeout=15, open=True, configure=_prepare,
+            kwargs={'connect_timeout': 10, 'row_factory': dict_row, 'prepare_threshold': None})   # no prepared statements behind a pooler
+    return _POOLS[dsn]
 
 def connect():
-    cfg=config()
-    options={'connect_timeout':5,'row_factory':dict_row,'options':'-c statement_timeout=15000'}
-    return psycopg.connect(cfg,**options) if isinstance(cfg,str) else psycopg.connect(**cfg,**options)
+    """Context manager yielding a connection; commits on success, rolls back on error. Pooled for remote DSNs."""
+    target, extra = _load()
+    if extra.get('pool'):
+        return _pool(target, extra['pool_size']).connection()
+    options = {'connect_timeout': 5, 'row_factory': dict_row, 'options': '-c statement_timeout=15000'}
+    return psycopg.connect(target, **options) if isinstance(target, str) else psycopg.connect(**target, **options)
 
 def health():
     with connect() as c:
