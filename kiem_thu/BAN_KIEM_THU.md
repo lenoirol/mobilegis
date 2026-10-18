@@ -124,4 +124,51 @@ Câu hỏi khảo sát ngắn (thang 1–5): (1) Giao diện dễ dùng; (2) Ch�
 - Độ khô (TVDI) là chỉ số thử nghiệm; 5 mức chia đều chỉ là quy ước hiển thị, chưa được kiểm định với số đo độ ẩm đất.
 - Ngày chụp ảnh khác nhau giữa các khu vực và năm; số liệu là ảnh chụp nhanh mùa khô, không phải trung bình năm hay xu hướng khí hậu.
 - Năm 2025 còn 9 khu vực dưới 50% độ phủ, được đánh dấu "tin cậy thấp" và không dùng để xếp hạng.
-- Ứng dụng hiện là web/PWA; đề cương dự kiến Flutter hoặc React Native. Việc đổi công cụ cần được nhóm thống nhất và ghi trong báo cáo.
+- Ứng dụng có hai bản: web/PWA và ứng dụng Android React Native (thư mục `mobile/`), đúng công cụ đề cương cho phép (React Native với MapLibre). Bản Android mới thử trên máy ảo.
+
+## 8. Ứng dụng Android (React Native), thử trên máy ảo
+
+Ghi ngày 18/10/2026. **Môi trường: Android Emulator trên Mac Apple Silicon, Android 16 (API 36), bản release APK 41,7 MB. Chưa có kết quả trên điện thoại thật; các ô "thiết bị thật" ở các mục trên vẫn phải do nhóm điền.**
+
+| Máy ảo | Màn hình | Kết quả |
+|---|---|---|
+| Pixel 6 | 1080×2400 | Cài và mở được; đầy đủ chức năng |
+| Pixel 4a | 1080×2340 | Cài và mở được; bố cục vừa màn hình (nhãn "TIN CẬY CAO" xuống 2 dòng) |
+
+| STT | Thao tác | Kết quả quan sát | Máy ảo |
+|---|---|---|---|
+| A1 | Mở app | Bản đồ nền OSM, lớp nhiệt độ 2025, ranh giới 167 đơn vị; mặc định chọn Phường Bến Thành | Pixel 6, 4a |
+| A2 | Chạm vào bản đồ | Chọn đúng xã/phường chứa điểm chạm (ví dụ Phường Tây Thạnh), thẻ hiện 3 giá trị và độ tin cậy | Pixel 6 |
+| A3 | Mở bảng bằng nút mũi tên | Hiện câu mô tả, biểu đồ 2020–2025, công tắc lớp, chú giải | Pixel 6 |
+| A4 | Chọn khu vực độ khô ≥ 0,8 | Hiện cảnh báo thử nghiệm kèm câu "không phải cảnh báo hạn chính thức" | Pixel 6 |
+| A5 | Nút vị trí (vị trí giả lập bằng `adb emu geo fix`) | Báo "Bạn đang ở Phường Bến Thành", hiện chấm vị trí, phóng tới khu vực | Pixel 6 |
+| A6 | Chế độ máy bay, mở lại app | Vẫn hiện bản đồ, lớp và số liệu đã xem trước đó | Pixel 4a |
+| A7 | Tab Giới thiệu | Chú giải, cách đọc, mức độ khô | Pixel 4a |
+
+Giới hạn của các phép thử này: vị trí do giả lập tạo ra; mạng của máy ảo là mạng của Mac nên không phản ánh Wi-Fi hay mạng di động của điện thoại; A6 chỉ chứng minh phần đã xem được lưu lại, không phải toàn bộ dữ liệu.
+
+Nhật ký lỗi bổ sung của bản Android:
+
+| STT | Lỗi | Nguyên nhân | Cách sửa |
+|---|---|---|---|
+| 11 | Hai ô thông tin đầu màn hình bị kéo dài | Phần tử con giãn theo cột nút bên cạnh | Đặt `alignSelf: flex-start` |
+| 12 | Thanh tab dưới bị che trên máy có thanh điều hướng hệ thống | Chiều cao cố định, bỏ qua vùng an toàn | Tính chiều cao theo vùng an toàn của máy |
+| 13 | Nút vị trí báo "không lấy được vị trí" trên máy ảo | Yêu cầu độ chính xác "cân bằng" không có nguồn trên máy ảo | Dùng vị trí đã biết gần nhất, sau đó yêu cầu GPS độ chính xác cao, có giới hạn 20 giây |
+| 14 | Kích thước APK 142 MB | Gói đủ 4 loại chip | Chỉ build arm64: 41,7 MB |
+
+### 8.1. Cập nhật sau khi app có đủ chức năng như web (18/10/2026)
+
+App được dựng lại theo hệ thiết kế của web và có thêm Bảng số liệu, Thống kê, đăng nhập/đăng ký, quản trị, giả lập. Đã xem bằng mắt trên máy ảo Pixel 4a (Android 16): bản đồ, bảng thông tin, Chuyên gia, Bảng số liệu, Thống kê (biểu đồ lấy từ API), đăng nhập. **Đã thử bằng thao tác thật trên máy ảo (máy chủ cục bộ, tài khoản quản trị thử):** đăng nhập (chip tên hiện sau khi vào), trang Tài khoản, trang quản trị (Tổng quan, Tài khoản, Dữ liệu, Nội dung, Nhật ký), thông báo đầu trang do admin đặt hiện ở bản đồ, kết quả giả lập (bảng và thẻ so sánh cơ sở → kết quả), chế độ Thay đổi (chú giải "2025 − 2020", khóa nút Phát), chế độ Độ tin cậy, nền Vệ tinh, bản đồ định vị (3 tab), xuất CSV (mở hộp thoại chia sẻ với tệp `mobilegis_bang_so_lieu.csv`).
+
+**Gõ biểu mẫu trên máy ảo gặp trở ngại** (bàn phím che ô, hộp thoại bút cảm ứng của bàn phím máy ảo), nên các thao tác ghi dữ liệu (đặt thông báo, ghi chú, tạo tài khoản, tạo giả lập) được kiểm bằng cách gọi đúng các API mà app dùng, rồi xem kết quả hiển thị trong app. **Chưa thử trong app:** gõ tay để tạo tài khoản mới, đăng ký khách hàng, quên mật khẩu, đổi mật khẩu, tìm khu vực, lớp phủ đất, các nền Nhẹ/Ảnh 2020/Ảnh 2025, định vị GPS ở bản mới. **Chưa làm:** "So sánh kéo màn hình 2020 | năm chọn" (tùy chọn đang bị khóa). Bảng ca A1–A7 ở trên là của bản app đầu tiên.
+
+| STT | Lỗi gặp khi dựng lại | Nguyên nhân | Cách sửa |
+|---|---|---|---|
+| 15 | Máy ảo không phân giải được tên miền | DNS của máy ảo | Khởi động máy ảo với `-dns-server 8.8.8.8` |
+| 16 | Nút "Mở" kéo dài hết thẻ | Khung nút có `flexGrow` | Bọc nút, chỉ giãn khi cần |
+| 17 | Bấm tab Chuyên gia → trang con quay về bản đồ | Màn hình ẩn trong Tabs | Dùng Stack + thanh tab tự vẽ |
+| 18 | Dữ liệu trên máy ảo lúc nhanh lúc chậm | Máy chủ Render miễn phí ngủ; tile PNG tải theo nhu cầu | Ghi chú trong tài liệu; không phải lỗi mã |
+| 19 | Mọi ô nhập báo "Cannot read property 'forEach' of null" | Truyền `transform: undefined` qua `TextInput` | Bọc ô nhập, dùng lề thay cho `transform` |
+| 20 | Bàn phím che ô và nút khi nhập | Màn hình toàn khung (edge-to-edge) | Thêm khoảng đệm bằng chiều cao bàn phím |
+| 21 | Bản đồ định vị bị chú giải đè lên | Hai lớp nổi chồng nhau | Ẩn chú giải khi mở bản đồ định vị |
+| 22 | Thẻ số liệu trang quản trị tràn chữ | Giá trị dài (ngày, khoảng năm) | Giảm cỡ chữ khi giá trị dài |

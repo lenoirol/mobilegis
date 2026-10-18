@@ -14,3 +14,6 @@ __pycache__/
 
 # Playwright / kiểm thử tạm
 .pytest_cache/
+
+# APK phát hành: đưa lên GitHub Releases, không commit vào kho
+phat_hanh/*.apk

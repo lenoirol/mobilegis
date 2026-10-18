@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "MobileGIS TP.HCM",
+    "slug": "mobilegis-hcm",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#f7f3e8",
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "vn.edu.mobilegis.hcm",
+      "versionCode": 1,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "@maplibre/maplibre-react-native",
+      "expo-router",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "MobileGIS dùng vị trí của bạn để cho biết bạn đang ở xã/phường nào. Tọa độ không được lưu."
+        }
+      ]
+    ],
+    "scheme": "mobilegis",
+    "experiments": {}
+  }
+}
