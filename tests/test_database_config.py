@@ -44,6 +44,7 @@ class DatabaseConfigTests(unittest.TestCase):
             self.assertEqual(len(rows), 1)
             with db.connect() as c:   # session setting applied after connect (poolers reject startup options)
                 self.assertEqual(c.execute('SHOW statement_timeout').fetchone()['statement_timeout'], '15s')
+                self.assertEqual(c.execute('SHOW extra_float_digits').fetchone()['extra_float_digits'], '3')   # exact floats (Supabase defaults to 0)
             for _ in range(5):        # connections are reused, not leaked
                 db.demo()
             self.assertIn(target, db._POOLS)   # one pool per DSN, created once and reused

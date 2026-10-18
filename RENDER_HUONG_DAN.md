@@ -12,16 +12,19 @@ Cần có trước: tài khoản GitHub (đã có), tài khoản Supabase (đã 
 
 ## Bước 1 · Việc cần làm ở Supabase
 
-**1.1 Xem khu vực (region) của project**
-Mở https://supabase.com/dashboard/project/dramddqxgrcspfcpqnhe → **Project Settings** (bánh răng) → **General** → mục *Region*. Ghi lại (ví dụ *Southeast Asia (Singapore)*). Ở bước 4 bạn chọn khu vực Render gần nhất với nó (Singapore) để hai bên nói chuyện nhanh.
+**1.1 Khu vực (region) của project**
+Project của bạn ở **Sydney (`ap-southeast-2`)** (mình đã kiểm tra bằng cách thử kết nối). Bạn có thể xem lại ở https://supabase.com/dashboard/project/dramddqxgrcspfcpqnhe → **Project Settings** (bánh răng) → **General** → mục *Region*.
+Render không có khu vực Sydney, nên ở bước 4 chọn **Singapore** (gần Sydney nhất).
 
 **1.2 Đổi mật khẩu database (nên làm, vì mật khẩu cũ đã xuất hiện trong chat)**
 **Project Settings → Database → Database password → Reset database password**. Đặt mật khẩu mới chỉ gồm chữ và số, dài từ 20 ký tự, và lưu vào nơi an toàn.
 Sau đó mở tệp `config/supabase.local.json` trên máy, sửa mật khẩu trong dòng `owner_dsn` (phần giữa `postgres:` và `@`). Ứng dụng trên Render **không bị ảnh hưởng** vì nó dùng role `mobilegis_app` với mật khẩu riêng.
 
-**1.3 Lấy host của Session pooler**
-Bấm nút **Connect** (ở đầu trang project) → chọn **Session pooler** → chép **host**, dạng `aws-0-ap-southeast-1.pooler.supabase.com`
-(đôi khi là `aws-1-…`). Chỉ cần phần host này.
+**1.3 Host của Session pooler**
+Host của project bạn là: **`aws-0-ap-southeast-2.pooler.supabase.com`** (mình đã thử nối thật bằng role ứng dụng và thành công).
+Nếu muốn tự xem trong trang Supabase: bấm nút **Connect** ở thanh trên cùng của trang project → chọn **Session pooler** → chuỗi kết nối có dạng
+`postgresql://postgres.dramddqxgrcspfcpqnhe:[YOUR-PASSWORD]@aws-0-ap-southeast-2.pooler.supabase.com:5432/postgres`; **host là phần nằm giữa dấu `@` và `:5432`**.
+(Giao diện Supabase đôi khi đổi chỗ; nếu không thấy nút Connect, vào Project Settings → Database → *Connection string*.)
 Vì sao không dùng địa chỉ trực tiếp `db.<mã>.supabase.co`: Render không nối được qua IPv6, còn pooler thì có IPv4.
 
 ## Bước 2 · Tạo chuỗi kết nối cho Render (trên máy bạn)
@@ -29,7 +32,7 @@ Vì sao không dùng địa chỉ trực tiếp `db.<mã>.supabase.co`: Render k
 Mở Terminal, vào thư mục project và chạy (thay host bằng host ở bước 1.3):
 ```
 cd ~/Desktop/mobilegis
-.venv/bin/python scripts/supabase_render_dsn.py --host aws-0-ap-southeast-1.pooler.supabase.com
+.venv/bin/python scripts/supabase_render_dsn.py --host aws-0-ap-southeast-2.pooler.supabase.com
 ```
 Script đọc mật khẩu role ứng dụng trong `config/supabase.local.json`, **sao chép chuỗi kết nối vào clipboard** và chỉ in bản che mật khẩu (`********`).
 Đừng dán chuỗi này vào chat, GitHub hay tài liệu. Cứ để đó, bước 4 bạn dán (Cmd+V) vào Render.
@@ -49,7 +52,7 @@ Script hỏi mật khẩu quản trị (ẩn khi gõ). Chọn mật khẩu mạn
 3. Render hỏi quyền truy cập GitHub: chọn **Only select repositories** → `lenoirol/mobilegis` → *Install/Authorize*.
 4. Chọn kho `mobilegis`. Render đọc tệp `render.yaml` và hiển thị dịch vụ **mobilegis** (Web Service, gói **Free**, khu vực **Singapore**).
 5. Ở ô **MOBILEGIS_DATABASE_URL**: bấm vào, **dán (Cmd+V)** chuỗi đã sao chép ở bước 2.
-6. Kiểm tra lại: Region = Singapore (hoặc gần khu vực Supabase của bạn), Instance Type = **Free**. Bấm **Apply** / **Deploy Blueprint**.
+6. Kiểm tra lại: Region = Singapore (Render không có Sydney), Instance Type = **Free**. Bấm **Apply** / **Deploy Blueprint**.
 7. Đợi build (thường 5–10 phút, vì kho có dữ liệu bản đồ nặng). Mở tab **Logs**. Thành công khi thấy dòng
    `MobileGIS: http://0.0.0.0:...` rồi trạng thái chuyển **Live**.
 8. Địa chỉ nằm ở đầu trang dịch vụ, dạng `https://mobilegis-xxxx.onrender.com`.

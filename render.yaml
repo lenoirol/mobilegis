@@ -5,7 +5,7 @@ services:
     name: mobilegis
     runtime: python
     plan: free
-    region: singapore            # chọn cùng khu vực với project Supabase (xem Project Settings → General)
+    region: singapore            # Supabase của bạn ở Sydney (ap-southeast-2); Render không có Sydney nên chọn Singapore, gần nhất
     buildCommand: pip install -r requirements-server.txt
     startCommand: python server.py --host 0.0.0.0 --port $PORT
     healthCheckPath: /api/ping

@@ -49,6 +49,7 @@ atexit.register(close_pools)   # worker threads must be stopped before interpret
 def _prepare(conn):
     # Set after connecting: poolers such as Supavisor reject the "options" startup parameter.
     conn.execute('SET statement_timeout = 15000')
+    conn.execute('SET extra_float_digits = 3')   # Supabase defaults to 0 (15 digits): research values must round-trip exactly
     conn.commit()
 
 def _pool(dsn, size):
@@ -63,7 +64,7 @@ def connect():
     target, extra = _load()
     if extra.get('pool'):
         return _pool(target, extra['pool_size']).connection()
-    options = {'connect_timeout': 5, 'row_factory': dict_row, 'options': '-c statement_timeout=15000'}
+    options = {'connect_timeout': 5, 'row_factory': dict_row, 'options': '-c statement_timeout=15000 -c extra_float_digits=3'}
     return psycopg.connect(target, **options) if isinstance(target, str) else psycopg.connect(**target, **options)
 
 # ---- read cache for immutable research data -----------------------------------------------------------------
