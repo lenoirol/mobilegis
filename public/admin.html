@@ -36,7 +36,21 @@
     <p class="small muted">Khách đã đăng nhập mới gửi được góp ý (tối đa 5 mỗi giờ). Đánh dấu “Đã xử lý” khi đã kiểm tra hoặc sửa.</p></section>
   <section class="panel" id="tab-content" hidden><h2>Thông báo đầu trang</h2><form id="noticeForm" class="create-form"><label class="field"><span>Nội dung (tối đa 300 ký tự, để trống để gỡ thông báo)</span><textarea class="input" name="text" rows="3" maxlength="300"></textarea></label>
     <button class="btn primary" type="submit">Lưu thông báo</button></form>
-    <p class="small muted">Thông báo hiện ở đầu mọi trang cho khách; mỗi người có thể đóng nó. Chỉ là văn bản thuần, không có liên kết hay định dạng.</p></section>
+    <p class="small muted">Thông báo hiện ở đầu mọi trang cho khách; mỗi người có thể đóng nó. Chỉ là văn bản thuần, không có liên kết hay định dạng.</p>
+    <h2>Điểm nhấn trên trang chủ</h2><form id="highlightForm" class="create-form"><label class="field"><span>Tiêu đề (tối đa 120 ký tự)</span><input class="input" name="title" required maxlength="120"></label>
+      <label class="field"><span>Nội dung (tối đa 400 ký tự)</span><textarea class="input" name="body" rows="3" required maxlength="400"></textarea></label>
+      <label class="field"><span>Khu vực liên quan (không bắt buộc)</span><select class="select" name="code" data-areas><option value="">Không gắn khu vực</option></select></label>
+      <button class="btn primary" type="submit">Thêm điểm nhấn</button></form>
+    <div class="scroll card flat"><table class="tbl"><thead><tr><th>Tiêu đề</th><th>Nội dung</th><th>Khu vực</th><th></th></tr></thead><tbody id="highlightRows"></tbody></table></div>
+    <p class="small muted">Tối đa 6 điểm nhấn. Chỉ viết điều có thể kiểm chứng bằng số liệu trên web; không đưa kết luận về nguyên nhân hay dự báo.</p>
+    <h2>Ghi chú theo khu vực</h2><form id="noteForm" class="create-form"><label class="field"><span>Khu vực</span><select class="select" name="code" data-areas required><option value="">Chọn khu vực</option></select></label>
+      <label class="field"><span>Ghi chú (tối đa 500 ký tự, để trống để xóa)</span><textarea class="input" name="text" rows="3" maxlength="500"></textarea></label>
+      <button class="btn primary" type="submit">Lưu ghi chú</button></form>
+    <p class="small muted">Ghi chú hiện trên thẻ khu vực ở trang chủ và bản đồ, ví dụ “có công viên lớn”, “khu công nghiệp”. Đây là mô tả của người quản trị, không phải số liệu vệ tinh.</p></section>
+  <section class="panel" id="tab-usage" hidden><div class="stat-row" id="usageCards"></div>
+    <div class="two-col"><div><h2>Khu vực được xem nhiều</h2><div class="scroll card flat"><table class="tbl"><tbody id="usageAreas"></tbody></table></div></div>
+      <div><h2>Trang và lớp bản đồ</h2><div class="scroll card flat"><table class="tbl"><tbody id="usagePages"></tbody></table></div></div></div>
+    <p class="small muted">30 ngày gần nhất. Chỉ là bộ đếm ẩn danh (trang, khu vực, lớp bản đồ); không lưu địa chỉ IP, tài khoản hay thông tin trình duyệt.</p></section>
   <section class="panel" id="tab-events" hidden><div class="scroll card flat"><table class="tbl"><thead><tr><th>Thời gian</th><th>Sự kiện</th><th>Tài khoản</th><th>Chi tiết</th></tr></thead><tbody id="eventRows"></tbody></table></div></section>
 </main>
 <p class="page" id="denied" hidden>Bạn không có quyền quản trị. <a href="./">Về trang chính</a></p>

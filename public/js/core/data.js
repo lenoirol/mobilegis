@@ -18,6 +18,7 @@ export const data = {
   demoPoints: () => get('/api/observations'),
   boundary: () => once('boundary', () => get('/data/boundary_source.json')),
   info: () => get('/api/info'),
+  content: () => once('content', () => get('/api/content').catch(() => ({notes: {}, highlights: []}))),
   forget: key => { for (const k of [...cache.keys()]) if (k.startsWith(key)) cache.delete(k); },
 };
 

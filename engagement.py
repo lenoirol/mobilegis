@@ -86,3 +86,60 @@ def set_notice(admin_id, text):
             c.execute("DELETE FROM mobilegis.site_settings WHERE key='notice'")
         else:
             c.execute("INSERT INTO mobilegis.site_settings(key,value,updated_by) VALUES('notice',%s,%s) ON CONFLICT(key) DO UPDATE SET value=EXCLUDED.value,updated_at=now(),updated_by=EXCLUDED.updated_by", (text, admin_id))
+
+
+# ---- editorial content: area notes and highlights ------------------------------------
+MAX_HIGHLIGHTS = 6
+PAGES = ('trang-chu', 'ban-do', 'bang-so-lieu', 'thong-ke', 'gia-lap', 'du-lieu')
+LAYERS = ('lst', 'ndvi', 'tvdi')
+
+
+def get_content():
+    with db.connect() as c:
+        notes = {r['code']: r['note'] for r in c.execute('SELECT code,note FROM mobilegis.area_notes').fetchall()}
+        highlights = c.execute('SELECT id,title,body,code FROM mobilegis.highlights ORDER BY created_at DESC LIMIT %s', (MAX_HIGHLIGHTS,)).fetchall()
+    return {'notes': notes, 'highlights': highlights}
+
+
+def set_note(admin_id, code, text):
+    code, text = _code(code), str(text or '').strip()
+    if len(text) > 500:
+        raise AuthError('Ghi chú tối đa 500 ký tự.')
+    with db.connect() as c:
+        if not text:
+            c.execute('DELETE FROM mobilegis.area_notes WHERE code=%s', (code,))
+        else:
+            c.execute('INSERT INTO mobilegis.area_notes(code,note,updated_by) VALUES(%s,%s,%s) ON CONFLICT(code) DO UPDATE SET note=EXCLUDED.note,updated_at=now(),updated_by=EXCLUDED.updated_by', (code, text, admin_id))
+
+
+def add_highlight(admin_id, title, body, code):
+    title, body, code = str(title or '').strip(), str(body or '').strip(), _code(code, required=False)
+    if not 1 <= len(title) <= 120 or not 1 <= len(body) <= 400:
+        raise AuthError('Tiêu đề tối đa 120 ký tự và nội dung tối đa 400 ký tự, không để trống.')
+    with db.connect() as c:
+        if c.execute('SELECT count(*) AS n FROM mobilegis.highlights').fetchone()['n'] >= MAX_HIGHLIGHTS:
+            raise AuthError(f'Chỉ giữ tối đa {MAX_HIGHLIGHTS} điểm nhấn. Xóa bớt trước khi thêm.', 409)
+        return c.execute('INSERT INTO mobilegis.highlights(title,body,code,created_by) VALUES(%s,%s,%s,%s) RETURNING id', (title, body, code, admin_id)).fetchone()['id']
+
+
+def delete_highlight(highlight_id):
+    with db.connect() as c:
+        if not c.execute('DELETE FROM mobilegis.highlights WHERE id=%s RETURNING id', (highlight_id,)).fetchone():
+            raise AuthError('Không tìm thấy điểm nhấn.', 404)
+
+
+# ---- anonymous usage counters --------------------------------------------------------
+def record_hit(kind, key):
+    ok = (kind == 'area' and isinstance(key, str) and CODE_RE.match(key)) or (kind == 'layer' and key in LAYERS) or (kind == 'page' and key in PAGES)
+    if not ok:
+        raise AuthError('Không hợp lệ.')
+    with db.connect() as c:
+        c.execute('INSERT INTO mobilegis.usage_counts(kind,key,n) VALUES(%s,%s,1) ON CONFLICT(day,kind,key) DO UPDATE SET n=mobilegis.usage_counts.n+1', (kind, key))
+
+
+def usage(days=30):
+    with db.connect() as c:
+        rows = c.execute("SELECT kind,key,sum(n)::int AS n FROM mobilegis.usage_counts WHERE day > current_date - %s GROUP BY kind,key ORDER BY n DESC", (days,)).fetchall()
+        per_day = c.execute("SELECT day,sum(n)::int AS n FROM mobilegis.usage_counts WHERE kind='page' AND day > current_date - %s GROUP BY day ORDER BY day", (days,)).fetchall()
+    pick = lambda kind, limit=10: [r for r in rows if r['kind'] == kind][:limit]
+    return {'days': days, 'areas': pick('area'), 'layers': pick('layer'), 'pages': pick('page'), 'per_day': per_day}

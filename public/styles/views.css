@@ -217,3 +217,5 @@ body.has-notice .map-shell{margin-top:40px}
   body.printing-area .home-area{box-shadow:none;border:2px solid #000;margin:0}
   body.printing-area{background:#fff}
 }
+
+.area-note{margin:0;padding:10px 12px;border-left:5px solid var(--signal);background:var(--paper);font-size:15px}

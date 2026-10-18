@@ -81,3 +81,56 @@ class Engagement(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class Content(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.made = []
+        cls.admin_email, aid = auth_support.create_user('admin'); cls.cust_email, cid = auth_support.create_user('customer'); cls.made += [aid, cid]
+        cls.admin, cls.cust, cls.guest = TestClient(server.app), TestClient(server.app), TestClient(server.app)
+        cls.ah, cls.ch = auth_support.sign_in(cls.admin, cls.admin_email), auth_support.sign_in(cls.cust, cls.cust_email)
+
+    @classmethod
+    def tearDownClass(cls):
+        for uid in cls.made:
+            auth_support.delete_user(uid)
+        with db.connect() as c:
+            c.execute('DELETE FROM mobilegis.area_notes'); c.execute('DELETE FROM mobilegis.highlights')
+
+    def test_notes_and_highlights(self):
+        self.assertEqual(self.cust.post('/api/admin/notes', json={'code': CODE, 'text': 'x'}, headers=self.ch).status_code, 403)
+        self.assertEqual(self.admin.post('/api/admin/notes', json={'code': CODE, 'text': 'Khu thương mại, nhiều mặt bê tông'}, headers=self.ah).status_code, 200)
+        self.assertEqual(self.admin.post('/api/admin/notes', json={'code': 'x', 'text': 'bad'}, headers=self.ah).status_code, 400)
+        self.assertEqual(self.admin.post('/api/admin/notes', json={'code': CODE, 'text': 'a' * 501}, headers=self.ah).status_code, 400)
+        self.assertEqual(self.guest.get('/api/content').json()['notes'][CODE], 'Khu thương mại, nhiều mặt bê tông')
+        self.admin.post('/api/admin/notes', json={'code': CODE, 'text': ''}, headers=self.ah)
+        self.assertNotIn(CODE, self.guest.get('/api/content').json()['notes'])
+        ids = []
+        for i in range(6):
+            response = self.admin.post('/api/admin/highlights', json={'title': f'Điểm nhấn {i}', 'body': 'Nội dung', 'code': CODE if i == 0 else None}, headers=self.ah)
+            self.assertEqual(response.status_code, 200); ids.append(response.json()['id'])
+        self.assertEqual(self.admin.post('/api/admin/highlights', json={'title': 'Thứ 7', 'body': 'x'}, headers=self.ah).status_code, 409)
+        self.assertEqual(self.cust.post('/api/admin/highlights', json={'title': 'a', 'body': 'b'}, headers=self.ch).status_code, 403)
+        self.assertEqual(len(self.guest.get('/api/content').json()['highlights']), 6)
+        for hid in ids:
+            self.assertEqual(self.admin.delete(f'/api/admin/highlights/{hid}', headers=self.ah).status_code, 200)
+        self.assertEqual(self.admin.delete(f'/api/admin/highlights/{ids[0]}', headers=self.ah).status_code, 404)
+
+    def test_usage_counters_are_anonymous_and_validated(self):
+        with db.connect() as c:
+            before = c.execute("SELECT coalesce(sum(n),0)::int AS n FROM mobilegis.usage_counts WHERE kind='area' AND key=%s", (CODE,)).fetchone()['n']
+        for payload in ({'kind': 'area', 'key': CODE}, {'kind': 'area', 'key': CODE}):
+            self.assertEqual(self.guest.post('/api/hit', json=payload).status_code, 200)
+        for bad in ({'kind': 'area', 'key': 'x'}, {'kind': 'layer', 'key': 'zzz'}, {'kind': 'page', 'key': '../etc'}, {'kind': 'other', 'key': 'a'}):
+            self.assertEqual(self.guest.post('/api/hit', json=bad).status_code, 400)
+        with db.connect() as c:
+            after = c.execute("SELECT sum(n)::int AS n FROM mobilegis.usage_counts WHERE kind='area' AND key=%s", (CODE,)).fetchone()['n']
+            c.execute("UPDATE mobilegis.usage_counts SET n=greatest(n-2,0) WHERE kind='area' AND key=%s AND day=current_date", (CODE,))
+        self.assertEqual(after - before, 2)
+        self.assertEqual(self.cust.get('/api/admin/usage').status_code, 403)
+        report = self.admin.get('/api/admin/usage').json()
+        self.assertTrue({'areas', 'layers', 'pages', 'per_day'} <= set(report))
+        with db.connect() as c:
+            cols = [r['column_name'] for r in c.execute("SELECT column_name FROM information_schema.columns WHERE table_schema='mobilegis' AND table_name='usage_counts'").fetchall()]
+        self.assertEqual(sorted(cols), ['day', 'key', 'kind', 'n'])   # nothing that identifies a visitor

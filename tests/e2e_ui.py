@@ -150,10 +150,16 @@ with sync_playwright() as p:
     pg.click('.admin-tabs button:has-text("Tài khoản")');pg.click('.create-user summary');NEWMAIL=f'e2e-{CUST_ID}@example.test'
     pg.fill('#createUser [name=email]',NEWMAIL);pg.fill('#createUser [name=display_name]','Tạo bởi admin');pg.fill('#createUser [name=password]','Mat-khau-12345');pg.click('#createUser button[type=submit]');pg.wait_for_timeout(1200)
     ok('admin created an account',NEWMAIL in pg.inner_text('#userRows'))
+    pg.click('.admin-tabs button:has-text("Nội dung")');pg.fill('#highlightForm [name=title]','E2E điểm nhấn');pg.fill('#highlightForm [name=body]','Nội dung thử nghiệm');pg.select_option('#highlightForm [name=code]','26743');pg.click('#highlightForm button[type=submit]');pg.wait_for_timeout(1200)
+    ok('admin added a highlight','E2E điểm nhấn' in pg.inner_text('#highlightRows'))
+    pg.select_option('#noteForm [name=code]','26743');pg.fill('#noteForm [name=text]','E2E ghi chú khu trung tâm');pg.click('#noteForm button[type=submit]');pg.wait_for_timeout(1000)
+    pg.click('.admin-tabs button:has-text("Lượt dùng")');pg.wait_for_selector('#usageCards .stat');ok('admin usage tab shows counters',pg.locator('#usageCards .stat').count()==3)
     pg.goto(U+'/');pg.wait_for_selector('#notice:not([hidden])',timeout=15000);ok('notice banner shows for visitors','Bảo trì thử nghiệm E2E' in pg.inner_text('#notice'))
     pg.click('.admin-tabs button:has-text("Nội dung")') if False else None
+    pg.goto(U+'/');pg.wait_for_selector('.home-list',timeout=15000);ok('home shows the highlight','E2E điểm nhấn' in pg.inner_text('.home-page'))
+    pg.fill('.home-search input','Bến Thành');pg.click('.home-results .res >> nth=0');pg.wait_for_selector('.area-note',timeout=8000);ok('home area card shows the admin note','E2E ghi chú' in pg.inner_text('.home-area'))
     with _db.connect() as cn:
-        cn.execute("DELETE FROM mobilegis.site_settings WHERE key='notice'");cn.execute("DELETE FROM mobilegis.feedback WHERE message LIKE %s",('E2E góp ý %',));cn.execute('DELETE FROM mobilegis.app_users WHERE email=%s',(NEWMAIL,))
+        cn.execute("DELETE FROM mobilegis.site_settings WHERE key='notice'");cn.execute("DELETE FROM mobilegis.highlights WHERE title LIKE 'E2E%'");cn.execute("DELETE FROM mobilegis.area_notes WHERE note LIKE 'E2E%'");cn.execute("DELETE FROM mobilegis.feedback WHERE message LIKE %s",('E2E góp ý %',));cn.execute('DELETE FROM mobilegis.app_users WHERE email=%s',(NEWMAIL,))
     auth_support.delete_user(CUST_ID)
     ok('no console errors (admin 2)',not errors,errors[:3]);c.close()
     # ================= mobile =================

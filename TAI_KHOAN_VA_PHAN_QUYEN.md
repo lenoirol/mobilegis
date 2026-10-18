@@ -59,3 +59,9 @@ Role `mobilegis_app` được cấp SELECT/INSERT/UPDATE/DELETE trên ba bảng 
 - **Khách hàng đã đăng nhập:** lưu tối đa 30 khu vực và xem bảng so sánh nhanh ở trang chủ ("Khu vực của tôi"); gửi góp ý/báo sai số liệu (tối đa 5 lần mỗi giờ); xuất báo cáo một khu vực ra PDF bằng nút "Xuất PDF" (dùng hộp thoại in của trình duyệt).
 - **Quản trị viên:** tạo tài khoản trực tiếp (tab Tài khoản), xử lý góp ý (tab Góp ý), đặt thông báo đầu trang (tab Nội dung).
 - **Nâng cấp CSDL đã có:** chạy một lần `python scripts/migrate_engagement.py --user <chủ CSDL>` (cục bộ) hoặc `python scripts/migrate_engagement.py --supabase`. **Triển khai mã mới lên Render trước, rồi mới chạy lệnh Supabase**, vì mã cũ không nhận schema 5.
+
+## Đợt 3: điểm nhấn, ghi chú khu vực, lượt dùng (schema 6)
+
+- **Điểm nhấn** (tối đa 6) hiện ở trang chủ; **ghi chú theo khu vực** (tối đa 500 ký tự) hiện trên thẻ khu vực ở trang chủ và bản đồ. Cả hai do quản trị viên nhập ở tab Nội dung và luôn là mô tả của người quản trị, không phải số liệu vệ tinh.
+- **Lượt dùng:** bộ đếm ẩn danh theo ngày (trang, khu vực, lớp bản đồ). Không lưu IP, tài khoản hay thông tin trình duyệt. Xem ở tab Lượt dùng (30 ngày gần nhất).
+- **Nâng cấp CSDL đã có:** `scripts/migrate_engagement.py` nay áp dụng cả migration 005 và 006 (chạy lại an toàn). Với Supabase: triển khai mã mới lên Render trước, rồi chạy `python scripts/migrate_engagement.py --supabase`.

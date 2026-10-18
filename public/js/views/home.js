@@ -4,11 +4,11 @@ import {data, indexRows} from '../core/data.js';
 import {INDEX, INDICES, CANONICAL_SOURCE, fmt, normalize, confidence, shortName} from '../core/format.js';
 import {areaSentence, ranked, cityMean} from '../core/insight.js';
 import {toast} from '../ui/toast.js';
-import {session, onSession, get, post, env, url} from '../core/api.js';
+import {session, onSession, get, post, env, url, track} from '../core/api.js';
 import {stagger} from '../core/motion.js';
 
 const policy = window.ViewerPolicy;
-let root, built = false, rows, geo, year, firstYear, host = {}, favorites = [], shown = null;
+let root, built = false, rows, geo, year, firstYear, host = {}, favorites = [], shown = null, content = {notes: {}, highlights: []};
 
 const link = (code, index = 'lst', y = year) => `#/ban-do?khu-vuc=${code}&nam=${y}&chi-so=${index}`;
 const nameOf = code => geo.features.find(f => f.id === code)?.properties.full_name || code;
@@ -41,9 +41,9 @@ function showArea(code, scroll = true) {
       h('p', null, areaSentence(rows, code, year, k, [firstYear])));
   });
   mount(host.area, h('div', {class: 'home-area-head'}, h('div', null, h('span', {class: 'eyebrow'}, `Mùa khô ${year}`), h('h2', null, feature.properties.full_name)),
-      h('div', {class: 'home-actions'}, h('a', {class: 'btn primary', href: link(code)}, icon('map', 18), 'Xem trên bản đồ'), ...areaButtons(code))), h('p', {class: 'print-only small'}, `MobileGIS TP.HCM · báo cáo khu vực · in ngày ${new Date().toLocaleDateString('vi-VN')}`), ...lines,
+      h('div', {class: 'home-actions'}, h('a', {class: 'btn primary', href: link(code)}, icon('map', 18), 'Xem trên bản đồ'), ...areaButtons(code))), h('p', {class: 'print-only small'}, `MobileGIS TP.HCM · báo cáo khu vực · in ngày ${new Date().toLocaleDateString('vi-VN')}`), ...lines, content.notes[code] ? h('p', {class: 'area-note'}, h('b', null, 'Ghi chú: '), content.notes[code]) : null,
     h('p', {class: 'small muted'}, 'Nhiệt độ ở đây là nhiệt độ bề mặt (mặt đường, mái nhà, tán cây), không phải nhiệt độ không khí. “Tin cậy” cho biết phần ảnh dùng được nhiều hay ít, không phải độ chính xác.'));
-  host.area.hidden = false; shown = code;
+  host.area.hidden = false; if (shown !== code) track('area', code); shown = code;
   if (scroll) host.area.scrollIntoView({behavior: 'smooth', block: 'nearest'});
 }
 
@@ -117,7 +117,8 @@ const topList = (title, sub, items, fmtValue, index) => h('article', {class: 'ca
 
 async function build() {
   built = true;
-  const [rawRows, g] = await Promise.all([data.rows(CANONICAL_SOURCE), data.geo()]);
+  const [rawRows, g, extra] = await Promise.all([data.rows(CANONICAL_SOURCE), data.geo(), env.api ? data.content() : null]);
+  if (extra) content = extra;
   rows = indexRows(rawRows); geo = g;
   const years = [...new Set(rawRows.map(r => r.year))].sort(); year = years.at(-1); firstYear = years[0];
   const lst = cityMean(rows, year, 'lst'), lst0 = cityMean(rows, firstYear, 'lst'), ndvi = cityMean(rows, year, 'ndvi'), ndvi0 = cityMean(rows, firstYear, 'ndvi');
@@ -139,7 +140,8 @@ async function build() {
       h('h1', null, 'Chỗ bạn ở nóng đến đâu, xanh đến đâu?'),
       h('p', null, 'Nhiệt độ bề mặt và độ xanh của cây cối từ ảnh vệ tinh Landsat, so sánh từng phường/xã với cả thành phố qua các năm.'),
       h('div', {class: 'home-search'}, h('div', {class: 'search-wrap'}, icon('search', 18), host.input), host.locate), host.results),
-    host.area, host.mine,
+    host.area, host.mine, content.highlights.length ? h('section', {class: 'block'}, h('h2', null, 'Điểm nhấn'), h('div', {class: 'home-lists'}, ...content.highlights.map(x => h('article', {class: 'card home-list'}, h('h3', null, x.title), h('p', null, x.body),
+      x.code ? h('a', {class: 'btn sm', href: '#/ban-do?khu-vuc=' + x.code + '&nam=' + year}, icon('map', 15), 'Xem ' + shortName(nameOf(x.code))) : null)))) : null,
     h('section', {class: 'block'}, h('h2', null, `Cả thành phố, mùa khô ${year}`),
       h('div', {class: 'kpi-row'}, stat('Nhiệt độ bề mặt trung bình', fmt(lst, 1), ' °C', delta(lst, lst0, 1, ' °C')), stat('Độ xanh trung bình', fmt(ndvi, 2), '', delta(ndvi, ndvi0, 2, '')),
         stat('Khu vực có đủ dữ liệu', String(reliable), ' / 167', 'Khu vực thiếu ảnh không được tính')),

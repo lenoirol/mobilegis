@@ -1,4 +1,4 @@
-"""Apply migration 005 (saved areas, feedback, site notice) and grant the app role access.
+"""Apply migrations 005 (saved areas, feedback, site notice) and 006 (area notes, highlights, usage counters) and grant the app role access.
 
 Run once per database; safe to repeat. Research tables are not modified.
   Local:    MOBILEGIS_ADMIN_PASSWORD=... python scripts/migrate_engagement.py --user <owner>
@@ -13,14 +13,16 @@ import psycopg
 from psycopg import sql
 from psycopg.conninfo import conninfo_to_dict
 
-RW = ('user_favorites', 'feedback', 'site_settings')
+MIGRATIONS = ('005_engagement.sql', '006_content.sql')   # applied in order; each is idempotent
+RW = ('user_favorites', 'feedback', 'site_settings', 'area_notes', 'highlights', 'usage_counts')
 
 
 def apply(conn, role):
     conn.execute('SELECT pg_advisory_xact_lock(74052026)')
     if conn.execute("SELECT to_regclass('mobilegis.app_users')").fetchone()[0] is None:
         raise RuntimeError('Chưa có bảng tài khoản (schema 4). Chạy scripts/migrate_accounts.py trước.')
-    conn.execute((ROOT / 'database/migrations/005_engagement.sql').read_text(encoding='utf8'))
+    for name in MIGRATIONS:
+        conn.execute((ROOT / 'database/migrations' / name).read_text(encoding='utf8'))
     who = sql.Identifier(role)
     for table in RW:
         conn.execute(sql.SQL('GRANT SELECT,INSERT,UPDATE,DELETE ON {} TO {}').format(sql.Identifier('mobilegis', table), who))
@@ -43,7 +45,7 @@ def main():
         role = cfg['user']; conn = psycopg.connect(**{**cfg, 'user': args.user, 'password': password})
     with conn, conn.transaction():
         apply(conn, role)
-        print('Đã áp dụng migration 005 (schema 5).')
+        print('Đã áp dụng migration 005 và 006 (schema 6).')
 
 
 if __name__ == '__main__':

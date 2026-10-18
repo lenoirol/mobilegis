@@ -2,6 +2,7 @@
 import {h, icon, mount} from '../core/dom.js';
 import {INDEX, INDICES, fmt, pct, valid, dmy, confidence} from '../core/format.js';
 import {areaSentence} from '../core/insight.js';
+import {data} from '../core/data.js';
 import {countTo} from '../core/motion.js';
 import {lineChart, stackBar} from '../ui/charts.js';
 import {url, env} from '../core/api.js';
@@ -22,6 +23,8 @@ export function rasterLink(source, state) {
 }
 
 export function createDetail({onPin, onTable, onClose, onIndex}) {
+  let notes = {};
+  if (env.api) data.content().then(c => { notes = c.notes || {}; });
   const tiles = INDICES.map(key => ({key, value: h('b', {class: 'mono num'}, '—'), unit: h('small', null), tag: h('span', {class: 'tag missing'}, 'Thiếu'), root: null}));
   tiles.forEach(t => {
     // The tile doubles as the layer switch: tapping LST / NDVI / TVDI shows that layer on the map straight away.
@@ -73,6 +76,7 @@ export function createDetail({onPin, onTable, onClose, onIndex}) {
         : areaSentence(D.rows, state.selected, state.year, state.index, D.years);
       tech.textContent = !feature ? '' : q === 'adequate' ? `Độ phủ mẫu ${pct(cov, 1)} (${row[state.index + '_pixels']?.toLocaleString('vi-VN')} / ${row.sampled_pixels?.toLocaleString('vi-VN')} ô ảnh hợp lệ): trung bình phần có mẫu, không phải độ chính xác.`
         : q === 'limited' ? `Độ phủ mẫu chỉ ${pct(cov, 1)}: giá trị mô tả phần có mẫu, chưa đại diện cả khu vực.` : QUALITY_TEXT[q];
+      if (feature && notes[state.selected]) tech.textContent = (tech.textContent ? tech.textContent + ' ' : '') + 'Ghi chú: ' + notes[state.selected];
       if (state.display === 'change' && feature) {
         const a = D.rows?.get(state.selected, 2020), b = row, delta = valid(a?.[state.index]) && valid(b?.[state.index]) ? b[state.index] - a[state.index] : null;
         tech.textContent += ` Δ trung bình hai mốc: ${fmt(delta, idx.digits)} ${idx.unit}. Khác với Δ từng ô trên bản đồ.`;

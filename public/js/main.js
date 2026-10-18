@@ -1,6 +1,6 @@
 /* App shell: splash → data preload → hash router with View Transitions. Views are lazy ES modules kept alive once created. */
 import {$, $$, h, icon, mount} from './core/dom.js';
-import {loadSession, session, onSession, detectApi, env, get} from './core/api.js';
+import {loadSession, session, onSession, detectApi, env, get, track} from './core/api.js';
 import {data} from './core/data.js';
 import {createStore} from './core/store.js';
 import {CANONICAL_SOURCE, SOURCES} from './core/format.js';
@@ -75,6 +75,7 @@ async function show({id, params}, animate = true) {
     placeInk();
     window.scrollTo(0, 0);
     entry.module.show?.(params);
+    track('page', id);
   };
   if (animate) await transition(swap); else swap();
 }
@@ -114,6 +115,9 @@ async function boot() {
   chip.title = env.api ? 'Ảnh vệ tinh Landsat 8/9, các mốc mùa khô 2020–2025' : 'Bản xem thử: một số chức năng (đăng nhập, quản trị) chỉ có ở bản đầy đủ.';
   if (store.get().error) chip.querySelector('.dot').style.background = 'var(--coral)';
 
+  store.subscribe((next, prev) => {   // anonymous counters: which area and layer people look at on the map
+    if (current?.section.id === 'view-ban-do') { if (next.selected !== prev.selected) track('area', next.selected); if (next.index !== prev.index) track('layer', next.index); }
+  });
   window.addEventListener('hashchange', () => show(parseHash()));
   window.addEventListener('resize', placeInk);
   document.fonts?.ready.then(placeInk);
