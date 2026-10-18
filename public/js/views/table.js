@@ -60,7 +60,7 @@ function detailTable(rows, onEdit, onDelete) {
   const real = S.mode === 'real', admin = isAdmin();
   const columns = real
     ? [{label: 'Khu vực', sort: 'name'}, {label: 'Năm', sort: 'year', num: 1}, ...INDICES.map(k => ({label: INDEX[k].label + (INDEX[k].unit ? ' ' + INDEX[k].unit : '') + (INDEX[k].experimental ? ' *' : ''), sort: k, num: 1, hint: INDEX[k].name})),
-       {label: 'Độ phủ mẫu', sort: 'coverage', hint: 'Tỷ lệ pixel hợp lệ của LST · NDVI · TVDI'}, {label: 'Ngày ảnh'}, {label: ''}]
+       {label: 'Độ phủ mẫu', sort: 'coverage', hint: 'Tỷ lệ ô ảnh hợp lệ của nhiệt độ, độ xanh và độ khô'}, {label: 'Ngày ảnh'}, {label: ''}]
     : [{label: 'Khu vực', sort: 'name'}, {label: 'Năm', sort: 'year', num: 1}, ...INDICES.map(k => ({label: INDEX[k].label, sort: k, num: 1})), {label: 'Nguồn'}, ...(S.mode === 'demo' && admin ? [{label: 'Thao tác'}] : [])];
   const pages = Math.max(1, Math.ceil(rows.length / PAGE));
   S.page = Math.min(S.page, pages - 1);
@@ -89,7 +89,7 @@ function detailTable(rows, onEdit, onDelete) {
     h('button', {class: 'btn sm', type: 'button', disabled: S.page === 0, on: {click: () => { S.page--; render(); }}}, '‹ Trước'),
     h('span', {class: 'mono'}, `Trang ${S.page + 1}/${pages} · ${rows.length.toLocaleString('vi-VN')} dòng`),
     h('button', {class: 'btn sm', type: 'button', disabled: S.page >= pages - 1, on: {click: () => { S.page++; render(); }}}, 'Sau ›'));
-  return h('div', null, h('div', {class: 'scroll card flat'}, h('table', {class: 'tbl'}, h('caption', {class: 'sr-only'}, 'Bảng số liệu LST, NDVI và TVDI'), h('thead', null, headerRow(columns)), tbody)), pager);
+  return h('div', null, h('div', {class: 'scroll card flat'}, h('table', {class: 'tbl'}, h('caption', {class: 'sr-only'}, 'Bảng số liệu nhiệt độ, độ xanh và độ khô'), h('thead', null, headerRow(columns)), tbody)), pager);
 }
 
 // ---- expert summary -----------------------------------------------------------------------------------------------------------------
@@ -133,13 +133,13 @@ function summaryView(rows) {
   wrap.append(h('div', null, h('h2', null, `Xếp hạng · ${idx.label} · năm ${year}`), h('p', {class: 'muted'}, 'Xếp theo giá trị chỉ số, không phải mức rủi ro đã kiểm định.')),
     h('div', {class: 'rank-grid'}, h('article', {class: 'card'}, h('h3', null, '10 khu vực cao nhất'), topHost), h('article', {class: 'card'}, h('h3', null, '10 khu vực thấp nhất'), lowHost)));
   requestAnimationFrame(() => { charts.push(barChart(topHost, eligible.slice(0, 10).map(item), {digits: idx.digits, unit: idx.unit, label: 'Mười khu vực cao nhất'}), barChart(lowHost, eligible.slice(-10).reverse().map(item), {digits: idx.digits, unit: idx.unit, label: 'Mười khu vực thấp nhất'})); });
-  wrap.append(h('p', {class: 'callout'}, '“TB toàn vùng” là trung bình theo pixel hợp lệ của các khu vực đủ mẫu, không phải trung bình khí hậu năm. Số liệu là mùa khô theo ngày ảnh từng khu vực; TVDI là chỉ số thử nghiệm; chênh lệch giữa các năm chưa là xu thế đã kiểm định.'));
+  wrap.append(h('p', {class: 'callout'}, '“TB toàn vùng” là trung bình theo pixel hợp lệ của các khu vực đủ mẫu, không phải trung bình khí hậu năm. Số liệu là mùa khô theo ngày ảnh từng khu vực; Độ khô là chỉ số thử nghiệm; chênh lệch giữa các năm chưa là xu thế đã kiểm định.'));
   return wrap;
 }
 
 // ---- demo points (admin) ------------------------------------------------------------------------------------------------------------
 function editorDialog(record) {
-  const fields = [['name', 'Tên khu vực', 'text'], ['lat', 'Vĩ độ', 'number'], ['lon', 'Kinh độ', 'number'], ['year', 'Năm (2020–2025)', 'number'], ['lst', 'LST (°C)', 'number'], ['ndvi', 'NDVI (−1 → 1)', 'number'], ['tvdi', 'TVDI (0 → 1)', 'number'], ['source', 'Nguồn', 'text']];
+  const fields = [['name', 'Tên khu vực', 'text'], ['lat', 'Vĩ độ', 'number'], ['lon', 'Kinh độ', 'number'], ['year', 'Năm (2020–2025)', 'number'], ['lst', 'Nhiệt độ (°C)', 'number'], ['ndvi', 'Độ xanh (−1 → 1)', 'number'], ['tvdi', 'Độ khô (0 → 1)', 'number'], ['source', 'Nguồn', 'text']];
   const inputs = Object.fromEntries(fields.map(([k, , type]) => [k, h('input', {class: 'input', type, step: type === 'number' ? 'any' : null, required: true, value: record?.[k] ?? (k === 'source' ? 'Thực hành' : '')})]));
   const error = h('p', {class: 'form-error', role: 'alert'});
   const dialog = h('dialog', null, h('form', {class: 'dlg-form', method: 'dialog', on: {submit: async e => {
@@ -182,7 +182,7 @@ function buildShell(section) {
   actionsHost = h('div', {class: 'table-actions'});
   body = h('div', {class: 'table-body'});
   root = h('div', {class: 'page table-page'},
-    h('header', {class: 'page-head'}, h('span', {class: 'eyebrow'}, 'Bảng số liệu'), h('h1', null, 'Số liệu LST · NDVI · TVDI theo xã/phường'),
+    h('header', {class: 'page-head'}, h('span', {class: 'eyebrow'}, 'Bảng số liệu'), h('h1', null, 'Số liệu nhiệt độ, độ xanh, độ khô theo xã/phường'),
       h('p', null, 'Mọi số đều kèm độ phủ mẫu. Ô trống nghĩa là không có số liệu, không phải 0.')), viewSeg.el, controlsHost, actionsHost, body);
   section.append(root);
 }
@@ -194,10 +194,11 @@ async function render() {
   const mine = ++ticket;
   S.view = S.mode === 'real' ? S.view : 'detail';
   viewSeg.set(S.view); viewSeg.el.hidden = S.mode !== 'real'; modeSeg.set(S.mode); modeSeg.setDisabled(env.api ? [] : ['demo']); yearSelect.value = S.year; sourceSeg.set(S.source); indexSeg.set(S.index);
+  modeSeg.el.classList.add('admin-only');
   mount(controlsHost, modeSeg.el, field('Tìm khu vực', searchInput), field('Năm', yearSelect),
     S.mode === 'real' && S.view === 'summary' ? [field('Xếp hạng theo', indexSeg.el), field('Ngưỡng độ phủ', covSelect)] : null,
-    S.mode === 'real' && S.view === 'detail' ? h('label', {class: 'check'}, onlyBox, 'Chỉ khu vực đủ mẫu (≥ 50% cả 3 chỉ số)') : null,
-    S.mode === 'real' ? h('details', {class: 'adv'}, h('summary', null, 'Nguồn dữ liệu · nâng cao'), sourceSeg.el) : null);
+    S.mode === 'real' && S.view === 'detail' ? h('label', {class: 'check'}, onlyBox, 'Chỉ khu vực đủ dữ liệu (≥ 50% ảnh dùng được)') : null,
+    S.mode === 'real' ? h('details', {class: 'adv admin-only'}, h('summary', null, 'Nguồn dữ liệu · nâng cao'), sourceSeg.el) : null);
   onlyBox.checked = S.onlyEnough; requestAnimationFrame(() => { modeSeg.place(); viewSeg.place(); sourceSeg.place(); indexSeg.place(); });
   body.classList.add('loading');
   let rows;
@@ -206,7 +207,7 @@ async function render() {
   if (mine !== ticket) return;
   body.classList.remove('loading');
   const shown = filtered(rows), real = S.mode === 'real';
-  const hint = real ? 'Ô nền vàng là khu vực ít pixel hợp lệ: số vẫn là số thật nhưng chưa đại diện cả khu vực. * TVDI là chỉ số thử nghiệm.'
+  const hint = real ? 'Ô nền vàng là khu vực ít pixel hợp lệ: số vẫn là số thật nhưng chưa đại diện cả khu vực. * Độ khô là chỉ số thử nghiệm.'
     : S.mode === 'user' ? 'CSV nhóm cung cấp: 24 dòng tại 4 điểm, giữ nguyên số liệu; không phải trung bình xã/phường.' : 'Điểm thực hành do quản trị viên nhập; không phải số liệu nghiên cứu.';
   const exportBtn = h('button', {class: 'btn primary', type: 'button', on: {click: () => {
     if (!shown.length) return toast('Không có dòng nào để xuất.', {error: true});

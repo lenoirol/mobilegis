@@ -26,6 +26,8 @@ function overview(info, resets) {
   mount($('#cards'), stat(users.length, 'Tài khoản'), stat(users.filter(u => u.role === 'admin').length, 'Quản trị viên'), stat(users.filter(u => u.is_active).length, 'Đang hoạt động'), stat(resets.filter(r => r.status === 'pending').length, 'Yêu cầu chờ xử lý'));
   const rows = [['Phiên bản', info.version], ['PostgreSQL / PostGIS', `${info.database.postgres_version} / ${info.database.postgis}`], ['Phiên bản schema', String(info.database.schema_version)],
     ['Nguồn dữ liệu', info.database.datasets.map(d => `${d.dataset_id}: ${d.rows.toLocaleString('vi-VN')} dòng`).join(' · ')], ['Bảng chỉ số hiện trạng', info.database.metric_tables.map(m => `${m.table}: ${m.rows.toLocaleString('vi-VN')}`).join(' · ')]];
+  mount($('#docLinks'), ...[['/docs', 'Tài liệu REST API'], ['/api/documents/schema.sql', 'SQL tạo bảng và migration'], ['/api/documents/database_design.md', 'Thiết kế CSDL'], ['/api/documents/quickstart.md', 'Cách chạy PostgreSQL'], ['/api/documents/pg3_guide.md', 'Hướng dẫn PG3'], ['/api/documents/gee_script.js', 'Script xuất GEE'], ['/api/documents/gee_next_years.md', 'Quy trình xuất GEE']]
+    .map(([href, label]) => h('a', {class: 'btn sm', href: url(href), target: '_blank', rel: 'noopener'}, label)));
   mount($('#systemRows'), ...rows.map(([k, v]) => h('tr', null, h('th', {scope: 'row', class: 'name'}, k), h('td', {class: 'mono small'}, v))));
 }
 function usersTable() {
@@ -64,8 +66,15 @@ async function refresh() {
   const [list, resets, events, info] = await Promise.all([api('/api/admin/users'), api('/api/admin/resets'), api('/api/admin/events'), api('/api/info')]);
   users = list; overview(info, resets); usersTable(); resetsTable(resets); eventsTable(events);
 }
+async function audits() {
+  try {
+    const product = await get('/data/gee_recovery/products.json');
+    const list = Object.values(product.audits || {}).sort((a, b) => a.year - b.year);
+    mount($('#auditRows'), ...list.map(a => h('tr', null, h('th', {scope: 'row', class: 'name'}, String(a.year)), h('td', {class: 'num mono'}, `${a.valid_means.lst} / ${a.valid_means.ndvi} / ${a.valid_means.tvdi} trên 167`), h('td', {class: 'mono small'}, [...new Set((a.scenes || []).map(s => s.acquisition_date))].sort().join(', ')))));
+  } catch (_) { mount($('#auditRows'), h('tr', null, h('td', {colSpan: 3, class: 'empty'}, 'Không tải được metadata.'))); }
+}
 function selectTab(name) {
-  for (const id of ['overview', 'users', 'resets', 'events']) $('#tab-' + id).hidden = id !== name;
+  for (const id of ['overview', 'system', 'users', 'resets', 'events']) $('#tab-' + id).hidden = id !== name;
 }
 
 (async () => {
@@ -74,9 +83,9 @@ function selectTab(name) {
   if (session.user.role !== 'admin') { $('#denied').hidden = false; $('#logout').hidden = true; return; }
   me = session.user; $('#who').textContent = me.display_name; $('#app').hidden = false;
   const resetCount = h('span', {class: 'count', hidden: true}, '0');
-  tabs = segmented([{value: 'overview', label: 'Tổng quan'}, {value: 'users', label: 'Tài khoản'}, {value: 'resets', label: ['Quên mật khẩu', resetCount]}, {value: 'events', label: 'Nhật ký'}], 'overview', selectTab, {label: 'Mục quản trị'});
+  tabs = segmented([{value: 'overview', label: 'Tổng quan'}, {value: 'users', label: 'Tài khoản'}, {value: 'resets', label: ['Quên mật khẩu', resetCount]}, {value: 'events', label: 'Nhật ký'}, {value: 'system', label: 'Kỹ thuật'}], 'overview', selectTab, {label: 'Mục quản trị'});
   tabs.counts = {reset: resetCount}; tabs.el.classList.add('admin-tabs');
   $('#tabsHost').append(tabs.el); tabs.place();
   $('#logout').onclick = async () => { await fetch(url('api/auth/logout'), {method: 'POST', credentials: 'same-origin'}); location.href = url('login.html'); };
-  try { await refresh(); } catch (error) { toast(error.message, {error: true}); }
+  audits(); try { await refresh(); } catch (error) { toast(error.message, {error: true}); }
 })();

@@ -11,11 +11,12 @@ import {toast} from './ui/toast.js';
 export const store = createStore({source: CANONICAL_SOURCE, index: 'lst', year: 2025, selected: '26743', pinned: ['26743', '27664', '25747'], error: null});
 
 const ROUTES = [
+  {id: 'trang-chu', icon: 'grid', long: 'Trang chủ', short: 'Trang chủ', title: 'Trang chủ', load: () => import('./views/home.js')},
   {id: 'ban-do', icon: 'map', long: 'Bản đồ', short: 'Bản đồ', title: 'Bản đồ môi trường', load: () => import('./views/map.js')},
-  {id: 'bang-so-lieu', icon: 'table', long: 'Bảng số liệu', short: 'Bảng', title: 'Bảng số liệu', load: () => import('./views/table.js')},
+  {id: 'bang-so-lieu', icon: 'table', long: 'Số liệu', short: 'Số liệu', title: 'Bảng số liệu', load: () => import('./views/table.js')},
   {id: 'thong-ke', icon: 'chart', long: 'Thống kê', short: 'Thống kê', title: 'Thống kê', load: () => import('./views/stats.js')},
-  {id: 'gia-lap', icon: 'flask', long: 'Giả lập', short: 'Giả lập', title: 'Kịch bản giả lập', load: () => import('./views/scenario.js')},
-  {id: 'du-lieu', icon: 'info', long: 'Dữ liệu & phương pháp', short: 'Dữ liệu', title: 'Dữ liệu và phương pháp', load: () => import('./views/about.js')},
+  {id: 'gia-lap', icon: 'flask', long: 'Giả lập', short: 'Giả lập', title: 'Kịch bản giả lập', adminOnly: true, load: () => import('./views/scenario.js')},
+  {id: 'du-lieu', icon: 'info', long: 'Giới thiệu', short: 'Giới thiệu', title: 'Giới thiệu', load: () => import('./views/about.js')},
 ];
 const views = new Map();   // id → {section, module, ready}
 let current = null;
@@ -26,14 +27,14 @@ export const navigate = (id, params = {}) => {
 };
 const parseHash = () => {
   const [path, query = ''] = location.hash.replace(/^#\/?/, '').split('?');
-  return {id: ROUTES.some(r => r.id === path) ? path : 'ban-do', params: Object.fromEntries(new URLSearchParams(query))};
+  return {id: ROUTES.some(r => r.id === path) ? path : 'trang-chu', params: Object.fromEntries(new URLSearchParams(query))};
 };
 
 // ---- nav -----------------------------------------------------------------------------
 function buildNav() {
   const nav = $('#nav');
   for (const route of ROUTES) {
-    nav.append(h('a', {href: '#/' + route.id, dataset: {route: route.id}},
+    nav.append(h('a', {href: '#/' + route.id, class: route.adminOnly ? 'admin-only' : '', dataset: {route: route.id}},
       icon(route.icon, 20), h('span', {class: 'l-long'}, route.long), h('span', {class: 'l-short'}, route.short)));
   }
 }
@@ -60,7 +61,8 @@ async function ensureView(route) {
 }
 
 async function show({id, params}, animate = true) {
-  const route = ROUTES.find(r => r.id === id);
+  let route = ROUTES.find(r => r.id === id);
+  if (route.adminOnly && session.user?.role !== 'admin') { route = ROUTES[0]; id = route.id; params = {}; if (location.hash !== '#/' + id) history.replaceState(null, '', '#/' + id); }
   let entry;
   try { entry = await ensureView(route); }
   catch (error) { console.error(error); toast('Không mở được màn hình này: ' + error.message, {error: true}); return; }
@@ -107,8 +109,8 @@ async function boot() {
   splashStep(4, store.get().error ? 'Một phần dữ liệu chưa sẵn sàng' : 'Sẵn sàng');
 
   const chip = $('#sourceChip');
-  chip.querySelector('span').textContent = store.get().error ? 'Chưa đủ dữ liệu' : env.api ? SOURCES[CANONICAL_SOURCE].label : 'Demo tĩnh · ' + SOURCES[CANONICAL_SOURCE].label;
-  if (!env.api) chip.title = 'Bản demo tĩnh trên GitHub Pages: không có máy chủ, đăng nhập, thống kê pixel và giả lập.';
+  chip.querySelector('span').textContent = store.get().error ? 'Chưa đủ dữ liệu' : env.api ? 'Mùa khô 2020–2025' : 'Bản xem thử · 2020–2025';
+  chip.title = env.api ? 'Ảnh vệ tinh Landsat 8/9, các mốc mùa khô 2020–2025' : 'Bản xem thử: một số chức năng (đăng nhập, quản trị) chỉ có ở bản đầy đủ.';
   if (store.get().error) chip.querySelector('.dot').style.background = 'var(--coral)';
 
   window.addEventListener('hashchange', () => show(parseHash()));
@@ -124,7 +126,7 @@ async function boot() {
 
   if (!env.api && !sessionStorage.getItem('mg-static-note')) {
     sessionStorage.setItem('mg-static-note', '1');
-    setTimeout(() => toast('Đây là bản demo tĩnh: xem bản đồ, bảng số liệu và so sánh khu vực. Đăng nhập, thống kê pixel và giả lập cần chạy máy chủ (xem hướng dẫn trong kho mã).', {ms: 12000}), 1800);
+    setTimeout(() => toast('Đây là bản xem thử: bạn xem được bản đồ, số liệu và so sánh khu vực. Đăng nhập và các công cụ quản trị chỉ có ở bản đầy đủ.', {ms: 9000}), 1800);
   }
   if ('serviceWorker' in navigator && window.isSecureContext) navigator.serviceWorker.register('sw.js').catch(() => {});
 }

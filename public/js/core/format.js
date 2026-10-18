@@ -8,16 +8,18 @@ export const normalize = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/
 export const shortName = name => String(name).replace(/^(Phường|Xã|Đặc khu) /, '');
 
 export const INDEX = {
-  lst: {key: 'lst', label: 'LST', name: 'Nhiệt độ bề mặt', short: 'Nóng / mát', unit: '°C', min: 20, max: 45, digits: 1,
+  lst: {key: 'lst', code: 'LST', label: 'Nhiệt độ', name: 'Nhiệt độ bề mặt', short: 'Nóng / mát', unit: '°C', min: 20, max: 45, digits: 1,
     colors: ['#0000FF', '#0066FF', '#00FFFF', '#00FF00', '#FFFF00', '#FFCC00', '#FF6600', '#FF0000'],
     help: 'Nhiệt độ bề mặt đất, mái nhà, cây… tại mốc ảnh. Không phải nhiệt độ không khí.'},
-  ndvi: {key: 'ndvi', label: 'NDVI', name: 'Chỉ số thực vật', short: 'Xanh / thưa', unit: '', min: -0.2, max: 1, digits: 2,
+  ndvi: {key: 'ndvi', code: 'NDVI', label: 'Độ xanh', name: 'Độ xanh của cây cối', short: 'Xanh / thưa', unit: '', min: -0.2, max: 1, digits: 2,
     colors: ['#FF0000', '#FF7F00', '#FFFF00', '#ADFF2F', '#00FF00', '#00FFFF', '#007FFF', '#0000FF'],
     help: 'Mức độ xanh của thực vật. Giá trị cao thường là thực vật xanh; không phải số lượng cây.'},
-  tvdi: {key: 'tvdi', label: 'TVDI', name: 'Độ khô tương đối', short: 'Khô / ẩm', unit: '', min: 0, max: 1, digits: 2, experimental: true,
+  tvdi: {key: 'tvdi', code: 'TVDI', label: 'Độ khô', name: 'Độ khô tương đối', short: 'Khô / ẩm', unit: '', min: 0, max: 1, digits: 2, experimental: true,
     colors: ['#066b00', '#0bc400', '#0ce100', '#00ff00', '#ffff00', '#ffcc00', '#ff6600', '#ff0000'],
     help: 'Độ khô tương đối tính từ LST và NDVI. Chỉ số thử nghiệm, chưa dùng để kết luận hạn hán.'},
 };
+/** Plain-language reliability from the share of valid pixels: Cao ≥ 80 %, Vừa 50–80 %, Thấp < 50 %. Coverage is not accuracy. */
+export const confidence = coverage => !valid(coverage) ? {key: 'none', text: 'Chưa rõ'} : coverage >= .8 ? {key: 'high', text: 'Cao'} : coverage >= .5 ? {key: 'mid', text: 'Vừa'} : {key: 'low', text: 'Thấp'};
 export const INDICES = ['lst', 'ndvi', 'tvdi'];
 export const YEARS = [2020, 2021, 2022, 2023, 2024, 2025];
 

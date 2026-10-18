@@ -66,3 +66,5 @@ body.admin-page{background-color:var(--paper)}
 .codebox code{justify-self:start;font:800 38px var(--f-mono);letter-spacing:.3em;background:#fff;border:var(--bw) dashed var(--ink);border-radius:var(--radius);padding:6px 16px}
 #toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:100}
 @media(max-width:700px){.admin-main{padding:20px 14px 60px}.auth-form{padding:20px 16px 24px}}
+
+.admin-todo{margin:8px 0 0;padding-left:20px;display:grid;gap:8px;max-width:70ch}

@@ -1,12 +1,13 @@
 /* Right-hand detail card: selected area, metrics with sample-quality tags, trend, provenance, land cover. */
 import {h, icon, mount} from '../core/dom.js';
-import {INDEX, INDICES, fmt, pct, valid, dmy} from '../core/format.js';
+import {INDEX, INDICES, fmt, pct, valid, dmy, confidence} from '../core/format.js';
+import {areaSentence} from '../core/insight.js';
 import {countTo} from '../core/motion.js';
 import {lineChart, stackBar} from '../ui/charts.js';
 import {url, env} from '../core/api.js';
 
 const policy = window.ViewerPolicy;
-const QUALITY_LABEL = {adequate: ['ok', 'Đủ mẫu'], limited: ['low', 'Ít mẫu'], unknown: ['low', 'Chưa rõ'], missing: ['missing', 'Thiếu']};
+const QUALITY_LABEL = {adequate: ['ok', 'Tin cậy'], limited: ['low', 'Tin cậy thấp'], unknown: ['low', 'Chưa rõ'], missing: ['missing', 'Thiếu']};
 const QUALITY_TEXT = {
   missing: 'Chưa có giá trị hợp lệ ở mốc này. Vùng trống không phải 0.',
   unknown: 'Chưa xác định được độ phủ nên chưa nên so sánh với khu vực khác.',
@@ -30,6 +31,7 @@ export function createDetail({onPin, onTable, onClose, onIndex}) {
   const name = h('h2', {class: 'detail-name'}, 'Chạm vào một xã/phường');
   const sub = h('p', {class: 'detail-sub mono'});
   const note = h('div', {class: 'callout'});
+  const tech = h('p', {class: 'dock-help'});
   const probe = h('div', {class: 'probe', hidden: true});
   const chartHost = h('div', {class: 'detail-chart'});
   const chartTitle = h('h3', {class: 'dock-title'}, 'Diễn biến theo mốc ảnh');
@@ -44,7 +46,7 @@ export function createDetail({onPin, onTable, onClose, onIndex}) {
 
   const el = h('div', {class: 'detail-inner'},
     h('div', {class: 'detail-head'}, h('div', null, h('span', {class: 'eyebrow'}, 'Thông tin khu vực'), name, sub), closeBtn),
-    h('div', {class: 'metrics'}, ...tiles.map(t => t.root)), note, probe, chartTitle, chartHost, chartNote, cover, provenance,
+    h('div', {class: 'metrics'}, ...tiles.map(t => t.root)), note, tech, probe, chartTitle, chartHost, chartNote, cover, provenance,
     h('div', {class: 'detail-actions'}, pinBtn, tableBtn, download));
 
   return {
@@ -63,16 +65,17 @@ export function createDetail({onPin, onTable, onClose, onIndex}) {
         countTo(t.value, row?.[t.key], v => fmt(v, INDEX[t.key].digits), 600);
         if (!valid(row?.[t.key])) t.value.textContent = '—';
         t.unit.textContent = INDEX[t.key].unit;
-        t.tag.className = 'tag ' + cls; t.tag.textContent = text; t.root.classList.toggle('flag', q !== 'adequate');
+        t.tag.className = 'tag ' + cls; t.tag.textContent = q === 'adequate' ? 'Tin cậy ' + confidence(row?.[t.key + '_coverage']).text.toLowerCase() : text; t.root.classList.toggle('flag', q !== 'adequate');
       });
       const q = policy.quality(row, state.index), cov = row?.[state.index + '_coverage'];
       note.className = 'callout' + (q === 'adequate' ? '' : ' warn');
-      note.textContent = !feature ? 'Chọn một khu vực để xem số liệu, độ phủ và ngày ảnh.'
-        : q === 'adequate' ? `Độ phủ ${pct(cov, 1)} · ${row[state.index + '_pixels']?.toLocaleString('vi-VN')} / ${row.sampled_pixels?.toLocaleString('vi-VN')} ô hợp lệ. Trung bình phần có mẫu, không phải toàn bộ khu vực hay độ chính xác.`
-        : q === 'limited' ? `Ít mẫu: độ phủ ${pct(cov, 1)}. Giá trị chỉ mô tả phần có mẫu, chưa đại diện cả phường; không dùng để xếp hạng mặc định.` : QUALITY_TEXT[q];
+      note.textContent = !feature ? 'Chọn một khu vực để xem số liệu và so sánh với trung bình thành phố.'
+        : areaSentence(D.rows, state.selected, state.year, state.index, D.years);
+      tech.textContent = !feature ? '' : q === 'adequate' ? `Độ phủ mẫu ${pct(cov, 1)} (${row[state.index + '_pixels']?.toLocaleString('vi-VN')} / ${row.sampled_pixels?.toLocaleString('vi-VN')} ô ảnh hợp lệ): trung bình phần có mẫu, không phải độ chính xác.`
+        : q === 'limited' ? `Độ phủ mẫu chỉ ${pct(cov, 1)}: giá trị mô tả phần có mẫu, chưa đại diện cả khu vực.` : QUALITY_TEXT[q];
       if (state.display === 'change' && feature) {
         const a = D.rows?.get(state.selected, 2020), b = row, delta = valid(a?.[state.index]) && valid(b?.[state.index]) ? b[state.index] - a[state.index] : null;
-        note.textContent += ` Δ trung bình hai mốc: ${fmt(delta, idx.digits)} ${idx.unit}. Khác với Δ từng ô trên bản đồ.`;
+        tech.textContent += ` Δ trung bình hai mốc: ${fmt(delta, idx.digits)} ${idx.unit}. Khác với Δ từng ô trên bản đồ.`;
       }
       // probe
       probe.hidden = !probeData;
@@ -92,7 +95,7 @@ export function createDetail({onPin, onTable, onClose, onIndex}) {
       chartNote.hidden = !feature;
       // provenance
       const body = provenance.querySelector('.prov-body');
-      mount(body, row ? [h('p', null, h('b', null, 'Ngày ảnh: '), (row.dates || []).map(dmy).join(', ') || 'không có'), h('p', {class: 'small'}, 'Các cảnh có thể khác ngày giữa khu vực và năm; kết quả là trung bình ô hợp lệ, không phải trung bình năm. LST là nhiệt độ bề mặt, không phải nhiệt độ không khí.'),
+      mount(body, row ? [h('p', null, h('b', null, 'Ngày ảnh: '), (row.dates || []).map(dmy).join(', ') || 'không có'), h('p', {class: 'small'}, 'Các cảnh có thể khác ngày giữa khu vực và năm; kết quả là trung bình ô hợp lệ, không phải trung bình năm. Nhiệt độ ở đây là nhiệt độ bề mặt, không phải nhiệt độ không khí.'),
         row.recovery_pixels ? h('p', {class: 'small'}, `Bổ sung ${row.recovery_pixels} ô thực từ cảnh ${(row.recovery_dates || []).join(', ')}; các ô gốc giữ nguyên.`) : null]
         : h('p', {class: 'small'}, 'Chọn khu vực để xem ngày ảnh.'));
       // land cover

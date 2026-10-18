@@ -17,8 +17,11 @@
   <span class="eyebrow">Khu vực dành cho quản trị viên</span>
   <h1>Trang quản trị</h1>
   <div id="tabsHost"></div>
-  <section class="panel" id="tab-overview"><div class="stat-row" id="cards"></div><h2>Dữ liệu và hệ thống</h2><div class="scroll card flat"><table class="tbl"><tbody id="systemRows"></tbody></table></div>
-    <p class="small muted">Dữ liệu nghiên cứu (LST, NDVI, TVDI hiện trạng) chỉ đọc. Quản trị viên được thêm điểm thực hành và lưu giả lập ở ứng dụng chính; mọi giả lập tách khỏi số liệu hiện trạng.</p></section>
+  <section class="panel" id="tab-overview"><div class="stat-row" id="cards"></div><h2>Việc quản trị viên làm được</h2>
+    <ul class="admin-todo"><li><b>Tài khoản:</b> đổi vai trò, khóa/mở, xóa; cấp mã khi người dùng quên mật khẩu.</li><li><b>Giả lập:</b> chỉ quản trị viên tạo kịch bản; kết quả tách khỏi số liệu hiện trạng (menu “Giả lập” trên trang chính).</li><li><b>Điểm thực hành:</b> thêm/sửa/xóa ở “Số liệu” trên trang chính; luôn ghi rõ không phải số đo vệ tinh.</li><li><b>Số liệu vệ tinh 2020–2025:</b> chỉ đọc, không sửa qua web để giữ độ tin cậy khoa học. Năm mới được nạp bằng script.</li></ul></section>
+  <section class="panel" id="tab-system" hidden><h2>Hệ thống</h2><div class="scroll card flat"><table class="tbl"><tbody id="systemRows"></tbody></table></div>
+    <h2>Bộ xuất GEE đã kiểm tra</h2><div class="scroll card flat"><table class="tbl"><thead><tr><th>Năm</th><th class="num">Có LST / NDVI / TVDI</th><th>Ngày chụp các cảnh</th></tr></thead><tbody id="auditRows"></tbody></table></div>
+    <h2>Tài liệu kỹ thuật</h2><div class="link-grid" id="docLinks"></div></section>
   <section class="panel" id="tab-users" hidden><div class="scroll card flat"><table class="tbl"><thead><tr><th>Người dùng</th><th>Vai trò</th><th>Trạng thái</th><th>Tạo lúc</th><th>Đăng nhập gần nhất</th><th>Thao tác</th></tr></thead><tbody id="userRows"></tbody></table></div>
     <p class="small muted">Phải còn ít nhất một quản trị viên đang hoạt động. Vô hiệu hóa tài khoản sẽ đăng xuất người đó ngay.</p></section>
   <section class="panel" id="tab-resets" hidden><div id="codeBox" class="codebox" hidden></div><div class="scroll card flat"><table class="tbl"><thead><tr><th>Người dùng</th><th>Trạng thái</th><th>Yêu cầu lúc</th><th>Hết hạn</th><th>Thao tác</th></tr></thead><tbody id="resetRows"></tbody></table></div>

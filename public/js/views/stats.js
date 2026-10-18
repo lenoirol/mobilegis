@@ -74,7 +74,7 @@ function localCorrelations() {
     return {x: a, y: b, n, r: c, r_squared: c * c};
   };
   return {pairs: [pearson('ndvi', 'lst'), pearson('tvdi', 'lst'), pearson('ndvi', 'tvdi')],
-    note: 'Tương quan giữa trung bình xã/phường (không phải tương quan pixel) tính ngay trong trình duyệt. Không chứng minh nhân quả; TVDI có LST/NDVI trong công thức nên không độc lập.'};
+    note: 'Tương quan giữa trung bình xã/phường (không phải tương quan pixel) tính ngay trong trình duyệt. Không chứng minh nhân quả; độ khô có nhiệt độ/độ xanh trong công thức nên không độc lập.'};
 }
 function correlations(corr) {
   mount(el.corr, h('div', {class: 'scroll card flat'}, h('table', {class: 'tbl'}, h('thead', null, h('tr', null, ...['Cặp chỉ số', 'Số cặp', 'Pearson r', 'R² hồi quy đơn'].map((t, i) => h('th', {class: i ? 'num' : ''}, t)))),
@@ -92,7 +92,7 @@ function wardCompare() {
     if (p.includes(code)) return; if (p.length >= 4) return toast('Tối đa 4 khu vực. Bỏ bớt một khu vực trước khi thêm.', {error: true});
     store.set({pinned: [...p, code]}); renderWards();
   }}}, icon('plus', 16), 'Thêm')), h('div', {class: 'pin-chips'}, ...chips, !chips.length ? h('span', {class: 'muted small'}, 'Chưa chọn khu vực nào.') : null)), host,
-    h('p', {class: 'dock-help'}, `Chỉ vẽ mốc độ phủ ≥ ${Math.round(S.coverage * 100)}%; khoảng thiếu hoặc ít mẫu không nối. Ngày ảnh khác nhau giữa năm; TVDI thử nghiệm.`));
+    h('p', {class: 'dock-help'}, `Chỉ vẽ mốc độ phủ ≥ ${Math.round(S.coverage * 100)}%; khoảng thiếu hoặc ít mẫu không nối. Ngày ảnh khác nhau giữa năm; Độ khô là chỉ số thử nghiệm.`));
   charts.push(lineChart(host, series, {xs: YEARS, unit: idx.unit, height: 280, label: `So sánh ${idx.name} của các khu vực`, domain: [Math.min(idx.min, ...series.flatMap(s => s.points.map(p => p.y)).filter(valid)), Math.max(idx.max, ...series.flatMap(s => s.points.map(p => p.y)).filter(valid))], yFormat: v => fmt(v, idx.digits)}));
 }
 function renderWards() { if (rows && geo) wardCompare(); }
@@ -105,12 +105,12 @@ function ranking() {
 function scatter() {
   const pts = rows.filter(r => r.year === S.year && policy.eligible(r, 'lst', S.coverage) && policy.eligible(r, 'ndvi', S.coverage)).map(r => {
     const hasT = policy.eligible(r, 'tvdi', S.coverage);
-    return {x: r.ndvi, y: r.lst, color: hasT ? colorOf(r.tvdi, 'tvdi') : '#8b8672', label: r.name, lines: [`NDVI ${fmt(r.ndvi)} · LST ${fmt(r.lst, 1)} °C`, `TVDI ${hasT ? fmt(r.tvdi) : 'thiếu / độ phủ thấp'}`], code: r.code};
+    return {x: r.ndvi, y: r.lst, color: hasT ? colorOf(r.tvdi, 'tvdi') : '#8b8672', label: r.name, lines: [`Độ xanh ${fmt(r.ndvi)} · Nhiệt độ ${fmt(r.lst, 1)} °C`, `Độ khô ${hasT ? fmt(r.tvdi) : 'thiếu / độ phủ thấp'}`], code: r.code};
   });
   const host = h('div');
-  mount(el.scatter, host, h('div', {class: 'scatter-legend'}, h('span', {class: 'mono'}, 'TVDI'), h('i', {style: {background: rampCss('tvdi')}}), h('span', {class: 'mono'}, '0'), h('span', {class: 'mono'}, '1'), h('span', {class: 'muted small'}, '· xám: thiếu / độ phủ thấp')),
-    h('p', {class: 'dock-help'}, `${pts.length} khu vực đủ độ phủ LST/NDVI. Mỗi chấm là trung bình một khu vực. Tương quan không chứng minh nguyên nhân; TVDI phụ thuộc toán học vào LST và NDVI.`));
-  charts.push(scatterChart(host, pts, {xLabel: 'NDVI', yLabel: 'LST (°C)', xDigits: 2, yDigits: 0, height: 320, label: 'LST theo NDVI, tô màu theo TVDI', onPick: p => nav('ban-do', {'khu-vuc': p.code, nam: S.year})}));
+  mount(el.scatter, host, h('div', {class: 'scatter-legend'}, h('span', {class: 'mono'}, 'Độ khô'), h('i', {style: {background: rampCss('tvdi')}}), h('span', {class: 'mono'}, '0'), h('span', {class: 'mono'}, '1'), h('span', {class: 'muted small'}, '· xám: thiếu / độ phủ thấp')),
+    h('p', {class: 'dock-help'}, `${pts.length} khu vực đủ độ phủ nhiệt độ/độ xanh. Mỗi chấm là trung bình một khu vực. Tương quan không chứng minh nguyên nhân; độ khô phụ thuộc toán học vào nhiệt độ và độ xanh.`));
+  charts.push(scatterChart(host, pts, {xLabel: 'Độ xanh', yLabel: 'Nhiệt độ (°C)', xDigits: 2, yDigits: 0, height: 320, label: 'Nhiệt độ theo độ xanh, tô màu theo độ khô', onPick: p => nav('ban-do', {'khu-vuc': p.code, nam: S.year})}));
 }
 function fullTable(list) {
   const cols = ['Khu vực', 'Pixel hợp lệ', 'Độ phủ', 'Min', 'Q25', 'Trung vị', 'Trung bình', 'Q75', 'Max', 'Độ lệch chuẩn'];
@@ -124,37 +124,37 @@ function fullTable(list) {
 // ---- TVDI screening ------------------------------------------------------------------------------------------------------------------
 function screeningCard() {
   const y = h('select', {class: 'select', 'aria-label': 'Mốc ảnh'}, ...YEARS.map(v => h('option', {value: v, selected: v === 2025}, String(v))));
-  const t = h('input', {class: 'input', type: 'number', min: 0, max: 1, step: .05, value: .8, 'aria-label': 'TVDI tối thiểu'});
+  const t = h('input', {class: 'input', type: 'number', min: 0, max: 1, step: .05, value: .8, 'aria-label': 'Độ khô tối thiểu'});
   const c = h('select', {class: 'select', 'aria-label': 'Độ phủ tối thiểu'}, ...[[.5, '≥ 50%'], [.8, '≥ 80%'], [.1, '≥ 10% · thận trọng']].map(([v, l]) => h('option', {value: v}, l)));
   const status = h('p', {class: 'small', role: 'status'}), list = h('div', {class: 'alert-list'});
   let n = 0;
   const run = async () => {
     const th = Number(t.value), mine = ++n;
-    if (t.value.trim() === '' || !Number.isFinite(th) || th < 0 || th > 1) { status.textContent = 'Nhập TVDI trong khoảng 0–1.'; list.replaceChildren(); return; }
+    if (t.value.trim() === '' || !Number.isFinite(th) || th < 0 || th > 1) { status.textContent = 'Nhập độ khô trong khoảng 0–1.'; list.replaceChildren(); return; }
     status.textContent = 'Đang truy vấn CSDL…'; mount(list, ...skeleton(1, 60));
     try {
       const res = env.api ? await get(`/api/research/alerts?source=${S.source}&year=${y.value}&threshold=${th}&coverage=${c.value}`)
         : {units: (await data.rows(S.source)).filter(r => r.year === +y.value && policy.eligible(r, 'tvdi', +c.value) && r.tvdi >= th).sort((a, b) => b.tvdi - a.tvdi)};
       if (mine !== n) return;
-      status.textContent = `${SOURCES[S.source].label} · ${y.value}: ${res.units.length} khu vực đạt TVDI ≥ ${th} và độ phủ ≥ ${Math.round(c.value * 100)}%. Đây là sàng lọc thử nghiệm, không phải cấp hạn hay cảnh báo chính thức.`;
-      mount(list, ...res.units.slice(0, 40).map(r => h('div', {class: 'alert-row'}, h('b', null, r.name), h('span', {class: 'mono'}, `TVDI ${fmt(r.tvdi)}`), h('span', {class: 'mono muted'}, `phủ ${pct(r.tvdi_coverage)}`), h('a', {class: 'btn sm', href: `#/ban-do?khu-vuc=${r.code}&nam=${y.value}&chi-so=tvdi&che-do=zones`}, icon('map', 16), 'Bản đồ'))),
+      status.textContent = `${SOURCES[S.source].label} · ${y.value}: ${res.units.length} khu vực đạt độ khô ≥ ${th} và độ phủ ≥ ${Math.round(c.value * 100)}%. Đây là sàng lọc thử nghiệm, không phải cấp hạn hay cảnh báo chính thức.`;
+      mount(list, ...res.units.slice(0, 40).map(r => h('div', {class: 'alert-row'}, h('b', null, r.name), h('span', {class: 'mono'}, `Độ khô ${fmt(r.tvdi)}`), h('span', {class: 'mono muted'}, `phủ ${pct(r.tvdi_coverage)}`), h('a', {class: 'btn sm', href: `#/ban-do?khu-vuc=${r.code}&nam=${y.value}&chi-so=tvdi&che-do=zones`}, icon('map', 16), 'Bản đồ'))),
         res.units.length > 40 ? h('p', {class: 'muted small'}, `Hiện 40/${res.units.length} khu vực đầu.`) : null);
     } catch (e) { if (mine === n) { status.textContent = 'Không tải được kết quả SQL: ' + e.message; list.replaceChildren(); } }
   };
   [y, c].forEach(n_ => n_.addEventListener('change', run)); t.addEventListener('input', run);
   setTimeout(run, 50);
-  return h('article', {class: 'card'}, h('span', {class: 'eyebrow'}, 'Sàng lọc thử nghiệm'), h('h2', null, 'Khu vực có TVDI cao'),
+  return h('article', {class: 'card'}, h('span', {class: 'eyebrow'}, 'Sàng lọc thử nghiệm'), h('h2', null, 'Khu vực có độ khô cao'),
     h('p', {class: 'muted'}, 'Truy vấn PostgreSQL theo năm, nguồn và độ phủ. Không phải cảnh báo hạn chính thức hay ngưỡng đã kiểm định.'),
-    h('div', {class: 'filters flat-row'}, field('Mốc ảnh', y), field('TVDI tối thiểu', t), field('Độ phủ tối thiểu', c)), status, list);
+    h('div', {class: 'filters flat-row'}, field('Mốc ảnh', y), field('Độ khô tối thiểu', t), field('Độ phủ tối thiểu', c)), status, list);
 }
 
 // ---- appendix: four CSV points + evidence --------------------------------------------------------------------------------------------------
 const EVIDENCE = [
-  ['gee-ndvi-chart.jpg', 'Biểu đồ NDVI mùa khô 2020–2025', 'Bốn đường diễn biến có mức xanh tương đối khác nhau. Chú giải bị cắt, không đủ để gán chắc chắn mọi màu cho từng điểm. Ảnh tham khảo, không phải nguồn số của biểu đồ tương tác.'],
-  ['gee-lst-chart.jpg', 'Biểu đồ LST mùa khô 2020–2025', 'Các đường nhiệt độ bề mặt biến động không đồng nhất. Không đọc ra số chính xác từ ảnh hay kết luận xu hướng chỉ bằng hai điểm đầu cuối.'],
-  ['gee-lst-map-2025.jpg', 'Bản đồ LST năm 2025 trên GEE', 'Vùng trung tâm nhiều màu nóng, phía nam màu lạnh hơn. Không có thang số đầy đủ trong ảnh. Phạm vi lớp pilot là TP.HCM cũ.'],
-  ['gee-ndvi-map-2025.jpg', 'Bản đồ NDVI năm 2025 trên GEE', 'Phía nam nổi bật màu xanh đậm, trung tâm nhạt hơn. Cần chú giải gốc để xác nhận ngưỡng; không coi màu là phần trăm che phủ.'],
-  ['gee-tvdi-map-2025.jpg', 'Bản đồ TVDI thử nghiệm năm 2025', 'Màu đỏ và xanh thể hiện tương phản hiển thị, chưa đủ kết luận cấp hạn hán hay độ ẩm đất.'],
+  ['gee-ndvi-chart.jpg', 'Biểu đồ độ xanh mùa khô 2020–2025', 'Bốn đường diễn biến có mức xanh tương đối khác nhau. Chú giải bị cắt, không đủ để gán chắc chắn mọi màu cho từng điểm. Ảnh tham khảo, không phải nguồn số của biểu đồ tương tác.'],
+  ['gee-lst-chart.jpg', 'Biểu đồ nhiệt độ mùa khô 2020–2025', 'Các đường nhiệt độ bề mặt biến động không đồng nhất. Không đọc ra số chính xác từ ảnh hay kết luận xu hướng chỉ bằng hai điểm đầu cuối.'],
+  ['gee-lst-map-2025.jpg', 'Bản đồ nhiệt độ năm 2025 trên GEE', 'Vùng trung tâm nhiều màu nóng, phía nam màu lạnh hơn. Không có thang số đầy đủ trong ảnh. Phạm vi lớp pilot là TP.HCM cũ.'],
+  ['gee-ndvi-map-2025.jpg', 'Bản đồ độ xanh năm 2025 trên GEE', 'Phía nam nổi bật màu xanh đậm, trung tâm nhạt hơn. Cần chú giải gốc để xác nhận ngưỡng; không coi màu là phần trăm che phủ.'],
+  ['gee-tvdi-map-2025.jpg', 'Bản đồ độ khô thử nghiệm năm 2025', 'Màu đỏ và xanh thể hiện tương phản hiển thị, chưa đủ kết luận cấp hạn hán hay độ ẩm đất.'],
 ];
 function appendix() {
   const box = h('details', {class: 'card appendix'}, h('summary', null, 'Phụ lục · bốn điểm CSV của nhóm và ảnh minh chứng GEE'));
@@ -241,11 +241,11 @@ export function init(section, ctx) {
     h('section', {class: 'block server-only'}, h('h2', null, 'Phân bố'), el.dist, h('div', {class: 'export-row'}, el.exportCsv, el.exportSvg)),
     h('section', {class: 'block'}, h('h2', null, 'So sánh chuỗi các khu vực'), h('div', {class: 'card'}, el.ward)),
     h('section', {class: 'block two'}, h('div', null, h('h2', null, 'Khu vực giá trị cao'), h('div', {class: 'card'}, el.rank, h('p', {class: 'dock-help'}, 'Xếp theo giá trị chỉ số của năm đang chọn, không phải mức rủi ro đã kiểm định.'))),
-      h('div', null, h('h2', null, 'LST và NDVI cùng mốc'), h('div', {class: 'card'}, el.scatter))),
+      h('div', null, h('h2', null, 'Nhiệt độ và độ xanh cùng mốc'), h('div', {class: 'card'}, el.scatter))),
     h('section', {class: 'block'}, h('h2', null, 'Tương quan trung bình xã/phường'), el.corr),
     h('section', {class: 'block'}, screeningCard()),
     h('section', {class: 'block server-only'}, h('details', {class: 'card'}, h('summary', null, 'Bảng thống kê đầy đủ theo khu vực'), el.full)),
-    h('section', {class: 'block'}, appendix()));
+    h('section', {class: 'block admin-only'}, appendix()));
   section.append(root);
   root.classList.toggle('static', !env.api);
   stagger(root, ':scope > .page-head, :scope > .block');

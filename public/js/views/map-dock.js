@@ -5,21 +5,21 @@ import {segmented} from '../ui/seg.js';
 import {env} from '../core/api.js';
 
 const DISPLAY = [
-  {value: 'raster', label: 'Ảnh vệ tinh', title: 'Phân bố từng ô ảnh 120 m'},
+  {value: 'raster', label: 'Chi tiết', title: 'Từng ô ảnh vệ tinh 120 m'},
   {value: 'zones', label: 'Xã/phường', title: 'Tô vùng theo trung bình, chỉ hiện nơi đủ mẫu'},
   {value: 'change', label: 'Thay đổi', title: 'Chênh lệch 2025 − 2020 trên các ô hợp lệ cả hai mốc'},
-  {value: 'coverage', label: 'Độ phủ', title: 'Mức đầy đủ của mẫu từng khu vực'},
+  {value: 'coverage', label: 'Độ tin cậy', title: 'Mức đầy đủ của dữ liệu từng khu vực'},
 ];
 const DISPLAY_HINT = {
   raster: 'Mỗi ô 120 m một màu. Vùng không màu là thiếu mẫu hợp lệ (mây, mất dữ liệu), không phải giá trị 0.',
   zones: 'Trung bình các ô hợp lệ của từng xã/phường. Xám nét đứt: thiếu hoặc độ phủ dưới 50%, không tô theo số ít mẫu.',
   change: 'Giá trị 2025 trừ 2020, chỉ ở ô hợp lệ cả hai năm. Khác với hiệu hai trung bình khu vực.',
-  coverage: 'Tỷ lệ ô mẫu hợp lệ của từng khu vực. Độ phủ không phải độ chính xác.',
+  coverage: 'Tỷ lệ phần ảnh dùng được của từng khu vực. Đây là mức đầy đủ của dữ liệu, không phải độ chính xác.',
 };
 
 export function createDock({onIndex, onYear, onDisplay, onToggle, onPick, onPlay, onSource, onMode, onOpacity}) {
   let state = null, ctx = null;
-  const searchInput = h('input', {class: 'input', type: 'search', placeholder: 'Tìm xã/phường hoặc mã…', autocomplete: 'off', 'aria-label': 'Tìm xã/phường hoặc mã hành chính'});
+  const searchInput = h('input', {class: 'input', type: 'search', placeholder: 'Nhập tên xã/phường…', autocomplete: 'off', 'aria-label': 'Tìm xã/phường hoặc mã hành chính'});
   const results = h('div', {class: 'dock-results', role: 'listbox', 'aria-label': 'Kết quả tìm kiếm'});
   searchInput.addEventListener('input', () => renderResults());
   searchInput.addEventListener('focus', () => renderResults());
@@ -62,15 +62,15 @@ export function createDock({onIndex, onYear, onDisplay, onToggle, onPick, onPlay
   const modeSeg = segmented([{value: 'real', label: 'Landsat 167 khu vực'}, {value: 'user', label: 'CSV 4 điểm'}, {value: 'demo', label: 'Điểm thực hành'}], 'real', v => onMode(v), {label: 'Bộ dữ liệu', layout: 'col'});
 
   const group = (title, ...kids) => h('section', {class: 'dock-group'}, h('h3', {class: 'dock-title'}, title), ...kids);
-  const advanced = h('details', {class: 'dock-adv'}, h('summary', null, 'Nâng cao · đối chiếu nguồn'),
+  const advanced = h('details', {class: 'dock-adv admin-only'}, h('summary', null, 'Nâng cao · đối chiếu nguồn'),
     h('div', {class: 'dock-adv-body'}, h('p', {class: 'dock-help'}, 'Dành cho đối chiếu. Mặc định là bộ hiện trạng GEE đã bổ sung 2025; các lựa chọn khác không trộn với bộ này.'), sourceSeg.el, sourceNote, modeSeg.el));
 
   const el = h('div', {class: 'dock-inner'},
-    h('div', {class: 'dock-head'}, h('span', {class: 'eyebrow'}, 'Không gian và thời gian'), h('h1', null, 'Bản đồ môi trường')),
+    h('div', {class: 'dock-head'}, h('span', {class: 'eyebrow'}, 'TP. Hồ Chí Minh · mùa khô 2020–2025'), h('h1', null, 'Bản đồ môi trường')),
     group('Tìm khu vực', h('div', {class: 'search-wrap'}, icon('search', 18), searchInput), results),
-    group('Chỉ số', h('div', {class: 'idx-grid'}, ...indexButtons), indexHelp),
-    group('Mốc quan sát', h('div', {class: 'year-row'}, yearNum, yearTag, playBtn), slider, ticks),
-    group('Cách hiển thị', displaySeg.el, displayHint),
+    group('Xem gì?', h('div', {class: 'idx-grid'}, ...indexButtons), indexHelp),
+    group('Năm', h('div', {class: 'year-row'}, yearNum, yearTag, playBtn), slider, ticks),
+    group('Cách xem', displaySeg.el, displayHint),
     group('Lớp phủ', check('boundaries', 'Ranh giới xã/phường'), check('labels', 'Tên khu vực (tự tránh chồng)'), check('landcover', 'Lớp phủ đất ESA 2021'), check('compare', 'So sánh kéo màn hình 2020 | năm chọn'),
       h('div', {class: 'opacity-row'}, h('span', {class: 'field'}, h('span', null, 'Độ đậm của lớp')), opacityVal), opacity),
     group('Bản đồ nền', basemapSeg.el, baseNote), advanced);
@@ -78,7 +78,7 @@ export function createDock({onIndex, onYear, onDisplay, onToggle, onPick, onPlay
   // Search, year and the (desktop) index cards stay on top; display/overlay/basemap/source options live in one collapsible block.
   const groups = [...el.querySelectorAll(':scope > .dock-group')];   // search, index, year, display, layers, basemap
   ['g-search', 'g-index', 'g-year'].forEach((name, i) => groups[i].classList.add(name));
-  const more = h('details', {class: 'dock-more'}, h('summary', null, 'Tùy chọn bản đồ · hiển thị, lớp phủ, nền'));
+  const more = h('details', {class: 'dock-more'}, h('summary', null, 'Tùy chọn bản đồ'));
   more.append(groups[3], groups[4], groups[5], advanced);
   el.append(more);
   const phone = matchMedia('(max-width:860px)');

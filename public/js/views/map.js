@@ -24,7 +24,7 @@ const merged = () => ({...store.get(), ...ms.get()});
 // ---- elements --------------------------------------------------------------------------------------------
 const el = {};
 function build(section) {
-  el.map = h('div', {class: 'map-canvas', id: 'map', role: 'application', 'aria-label': 'Bản đồ tương tác LST, NDVI và TVDI'});
+  el.map = h('div', {class: 'map-canvas', id: 'map', role: 'application', 'aria-label': 'Bản đồ tương tác nhiệt độ, độ xanh và độ khô'});
   el.loader = h('div', {class: 'bar-loader', 'aria-hidden': 'true'});
   el.kpi = ['Mốc ảnh', 'Khu vực phủ ≥50%', 'Lưới mẫu'].map(label => ({value: h('b', {class: 'mono num'}, '—'), label}));
   el.kpis = h('div', {class: 'map-kpis'}, ...el.kpi.map(k => h('div', {class: 'kpi'}, k.value, h('span', null, k.label))));
