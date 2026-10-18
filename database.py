@@ -16,8 +16,9 @@ def _load():
     Order: MOBILEGIS_DATABASE_URL, then the JSON file named by MOBILEGIS_DB_CONFIG, then config/database.local.json.
     A JSON file with a "dsn" key targets a remote server (e.g. Supabase) and uses a connection pool unless "pool" is false.
     """
-    if os.environ.get('MOBILEGIS_DATABASE_URL'):   # hosting platforms (Render…) inject secrets this way
-        return with_ssl(os.environ['MOBILEGIS_DATABASE_URL']), {'pool': True, 'pool_size': int(os.environ.get('MOBILEGIS_DB_POOL_SIZE', '4'))}
+    if os.environ.get('MOBILEGIS_DATABASE_URL', '').strip():   # hosting platforms (Render…) inject secrets this way
+        # strip(): a value pasted from a terminal often carries a trailing newline, which libpq would read as part of the database name
+        return with_ssl(os.environ['MOBILEGIS_DATABASE_URL'].strip()), {'pool': True, 'pool_size': int(os.environ.get('MOBILEGIS_DB_POOL_SIZE', '4'))}
     custom = os.environ.get('MOBILEGIS_DB_CONFIG')
     path = (ROOT / custom if custom and not Path(custom).is_absolute() else Path(custom)) if custom else ROOT / 'config/database.local.json'
     if not path.is_file():
