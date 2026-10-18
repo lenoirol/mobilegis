@@ -88,6 +88,21 @@ def register(email, display_name, password):
         raise AuthError('Email này đã được đăng ký.', 409)
 
 
+def create_user(admin_id, email, display_name, password, role='customer'):
+    """Admin creates an account directly (for staff or a visitor who cannot self-register)."""
+    if role not in ROLES:
+        raise AuthError('Vai trò không hợp lệ.')
+    email, name, password = normalize_email(email), check_name(display_name), check_password(password)
+    try:
+        with db.connect() as c:
+            user = c.execute(f'INSERT INTO mobilegis.app_users(email,display_name,password_hash,role) VALUES(%s,%s,%s,%s) RETURNING {USER_COLUMNS}',
+                             (email, name, hash_secret(password), role)).fetchone()
+            log_event(c, 'user_created', user['id'], email, f'{role} by {admin_id}')
+            return user
+    except psycopg.errors.UniqueViolation:
+        raise AuthError('Email này đã được đăng ký.', 409)
+
+
 def create_session(c, user_id):
     token, csrf = secrets.token_urlsafe(32), secrets.token_urlsafe(24)
     c.execute("INSERT INTO mobilegis.app_sessions(token_hash,user_id,csrf_token,expires_at) "

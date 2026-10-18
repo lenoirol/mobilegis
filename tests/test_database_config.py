@@ -39,7 +39,7 @@ class DatabaseConfigTests(unittest.TestCase):
             target, extra = db._load()
             self.assertIsInstance(target, str)
             self.assertTrue(extra['pool'])
-            self.assertEqual(db.health()['schema_version'], 4)
+            self.assertEqual(db.health()['schema_version'], 5)
             rows = db.observations('gee_recovery', 2025, '25750')
             self.assertEqual(len(rows), 1)
             with db.connect() as c:   # session setting applied after connect (poolers reject startup options)

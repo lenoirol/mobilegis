@@ -106,7 +106,7 @@ def health():
         for k in ('lst','ndvi','tvdi'):
             count=c.execute(f'SELECT count(*) AS n FROM mobilegis.{k}_observations').fetchone()['n']
             metrics.append({'index':k,'table':k+'_observations','rows':count})
-        if version not in (2,3,4) or any(m['rows']!=sum(r['rows'] for r in counts) for m in metrics) or not set(SOURCES).issubset({r['dataset_id'] for r in counts}):
+        if version not in (2,3,4,5) or any(m['rows']!=sum(r['rows'] for r in counts) for m in metrics) or not set(SOURCES).issubset({r['dataset_id'] for r in counts}):
             raise RuntimeError('CSDL chưa nhập đủ ba bộ nghiên cứu. Chạy thiết lập hoặc import_postgres.py bằng tài khoản chủ CSDL.')
         return {'engine':'PostgreSQL / PostGIS','postgres_version':row['postgres'],'schema_version':version,'postgis':row['postgis'],'datasets':counts,'metric_tables':metrics}
 

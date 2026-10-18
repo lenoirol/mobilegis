@@ -7,7 +7,7 @@ import {toast} from './ui/toast.js';
 let users = [], me = null, tabs;
 const when = iso => iso ? new Date(iso).toLocaleString('vi-VN', {dateStyle: 'short', timeStyle: 'short'}) : '—';
 const EVENTS = {register: 'Đăng ký', login: 'Đăng nhập', login_failed: 'Đăng nhập sai', password_changed: 'Đổi mật khẩu', reset_requested: 'Yêu cầu đặt lại', reset_issued: 'Cấp mã đặt lại',
-  reset_cancelled: 'Hủy yêu cầu', password_reset: 'Đã đặt lại mật khẩu', role_changed: 'Đổi vai trò', activated: 'Kích hoạt', deactivated: 'Vô hiệu hóa', user_deleted: 'Xóa tài khoản', admin_created: 'Tạo quản trị viên'};
+  user_created: 'Admin tạo tài khoản', reset_cancelled: 'Hủy yêu cầu', password_reset: 'Đã đặt lại mật khẩu', role_changed: 'Đổi vai trò', activated: 'Kích hoạt', deactivated: 'Vô hiệu hóa', user_deleted: 'Xóa tài khoản', admin_created: 'Tạo quản trị viên'};
 
 async function api(target, method = 'GET', body) {
   if (method === 'GET') return get(target);
@@ -63,8 +63,8 @@ function eventsTable(events) {
     events.length ? null : h('tr', null, h('td', {colSpan: 4, class: 'empty'}, 'Chưa có sự kiện.')));
 }
 async function refresh() {
-  const [list, resets, events, info] = await Promise.all([api('/api/admin/users'), api('/api/admin/resets'), api('/api/admin/events'), api('/api/info')]);
-  users = list; overview(info, resets); usersTable(); resetsTable(resets); eventsTable(events);
+  const [list, resets, events, info, feedback] = await Promise.all([api('/api/admin/users'), api('/api/admin/resets'), api('/api/admin/events'), api('/api/info'), api('/api/admin/feedback').catch(() => [])]);
+  users = list; overview(info, resets); usersTable(); resetsTable(resets); eventsTable(events); feedbackTable(feedback);
 }
 async function audits() {
   try {
@@ -73,8 +73,17 @@ async function audits() {
     mount($('#auditRows'), ...list.map(a => h('tr', null, h('th', {scope: 'row', class: 'name'}, String(a.year)), h('td', {class: 'num mono'}, `${a.valid_means.lst} / ${a.valid_means.ndvi} / ${a.valid_means.tvdi} trên 167`), h('td', {class: 'mono small'}, [...new Set((a.scenes || []).map(s => s.acquisition_date))].sort().join(', ')))));
   } catch (_) { mount($('#auditRows'), h('tr', null, h('td', {colSpan: 3, class: 'empty'}, 'Không tải được metadata.'))); }
 }
+const KIND = {data_error: 'Số liệu sai', suggestion: 'Góp ý', ui_error: 'Lỗi hiển thị'};
+function feedbackTable(list) {
+  const open = list.filter(f => f.status === 'new').length;
+  tabs.counts.feedback.hidden = !open; tabs.counts.feedback.textContent = open;
+  if (!list.length) return mount($('#feedbackRows'), h('tr', null, h('td', {colSpan: 6, class: 'empty'}, 'Chưa có góp ý nào.')));
+  mount($('#feedbackRows'), ...list.map(f => h('tr', null, h('td', {class: 'mono small'}, when(f.created_at)), h('td', null, KIND[f.kind] || f.kind), h('td', {class: 'mono small'}, f.code || '—'),
+    h('td', {class: 'small'}, f.message), h('td', null, f.display_name ? h('b', null, f.display_name) : '—', f.email ? h('small', {class: 'mono'}, f.email) : null),
+    h('td', null, h('button', {class: 'btn sm' + (f.status === 'new' ? ' primary' : ''), type: 'button', on: {click: () => act(() => api(`/api/admin/feedback/${f.id}/status`, 'POST', {status: f.status === 'new' ? 'done' : 'new'}))}}, f.status === 'new' ? 'Đánh dấu đã xử lý' : 'Đã xử lý · mở lại')))));
+}
 function selectTab(name) {
-  for (const id of ['overview', 'system', 'users', 'resets', 'events']) $('#tab-' + id).hidden = id !== name;
+  for (const id of ['overview', 'system', 'users', 'resets', 'feedback', 'content', 'events']) $('#tab-' + id).hidden = id !== name;
 }
 
 (async () => {
@@ -82,10 +91,14 @@ function selectTab(name) {
   if (!session.user) { location.replace(url('login.html') + '?next=' + encodeURIComponent(location.pathname)); return; }
   if (session.user.role !== 'admin') { $('#denied').hidden = false; $('#logout').hidden = true; return; }
   me = session.user; $('#who').textContent = me.display_name; $('#app').hidden = false;
-  const resetCount = h('span', {class: 'count', hidden: true}, '0');
-  tabs = segmented([{value: 'overview', label: 'Tổng quan'}, {value: 'users', label: 'Tài khoản'}, {value: 'resets', label: ['Quên mật khẩu', resetCount]}, {value: 'events', label: 'Nhật ký'}, {value: 'system', label: 'Kỹ thuật'}], 'overview', selectTab, {label: 'Mục quản trị'});
-  tabs.counts = {reset: resetCount}; tabs.el.classList.add('admin-tabs');
+  const resetCount = h('span', {class: 'count', hidden: true}, '0'), feedbackCount = h('span', {class: 'count', hidden: true}, '0');
+  tabs = segmented([{value: 'overview', label: 'Tổng quan'}, {value: 'users', label: 'Tài khoản'}, {value: 'resets', label: ['Quên mật khẩu', resetCount]}, {value: 'feedback', label: ['Góp ý', feedbackCount]}, {value: 'content', label: 'Nội dung'}, {value: 'events', label: 'Nhật ký'}, {value: 'system', label: 'Kỹ thuật'}], 'overview', selectTab, {label: 'Mục quản trị'});
+  tabs.counts = {reset: resetCount, feedback: feedbackCount}; tabs.el.classList.add('admin-tabs');
   $('#tabsHost').append(tabs.el); tabs.place();
   $('#logout').onclick = async () => { await fetch(url('api/auth/logout'), {method: 'POST', credentials: 'same-origin'}); location.href = url('login.html'); };
+  $('#createUser').addEventListener('submit', e => { e.preventDefault(); const form = e.target, body = Object.fromEntries(new FormData(form));
+    act(async () => { await api('/api/admin/users', 'POST', body); form.reset(); }, 'Đã tạo tài khoản.'); });
+  get('/api/notice').then(n => { $('#noticeForm [name=text]').value = n.text || ''; }).catch(() => {});
+  $('#noticeForm').addEventListener('submit', e => { e.preventDefault(); act(() => api('/api/admin/notice', 'POST', {text: e.target.text.value}), 'Đã lưu thông báo.'); });
   audits(); try { await refresh(); } catch (error) { toast(error.message, {error: true}); }
 })();

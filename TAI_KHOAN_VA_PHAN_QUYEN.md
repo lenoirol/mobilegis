@@ -53,3 +53,9 @@ Role `mobilegis_app` được cấp SELECT/INSERT/UPDATE/DELETE trên ba bảng 
 - Chưa có xác minh email và chưa gửi email tự động; quên mật khẩu dựa vào quản trị viên.
 - Chưa có HTTPS tự động. Nếu mở ra Internet phải đặt sau HTTPS và không mở cổng PostgreSQL.
 - Chưa kiểm thử tải nhiều người đồng thời. Nhật ký DEMO (`audit_log`) vẫn ghi tài khoản kết nối CSDL, chưa ghi từng người dùng.
+
+## Đợt 2: khu vực đã lưu, góp ý, thông báo (schema 5)
+
+- **Khách hàng đã đăng nhập:** lưu tối đa 30 khu vực và xem bảng so sánh nhanh ở trang chủ ("Khu vực của tôi"); gửi góp ý/báo sai số liệu (tối đa 5 lần mỗi giờ); xuất báo cáo một khu vực ra PDF bằng nút "Xuất PDF" (dùng hộp thoại in của trình duyệt).
+- **Quản trị viên:** tạo tài khoản trực tiếp (tab Tài khoản), xử lý góp ý (tab Góp ý), đặt thông báo đầu trang (tab Nội dung).
+- **Nâng cấp CSDL đã có:** chạy một lần `python scripts/migrate_engagement.py --user <chủ CSDL>` (cục bộ) hoặc `python scripts/migrate_engagement.py --supabase`. **Triển khai mã mới lên Render trước, rồi mới chạy lệnh Supabase**, vì mã cũ không nhận schema 5.

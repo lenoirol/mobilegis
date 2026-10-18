@@ -86,7 +86,7 @@ def verify(app_dsn):
         print(f"  API health: OK · {[d['dataset_id'] + ':' + str(d['rows']) for d in health['datasets']]}")
     finally:
         os.environ.pop('MOBILEGIS_DATABASE_URL', None)
-    ok = not bad and valid == 167 and version == 4
+    ok = not bad and valid == 167 and version >= 4
     print('  KẾT QUẢ:', 'ĐẠT' if ok else 'KHÔNG ĐẠT')
     return ok
 

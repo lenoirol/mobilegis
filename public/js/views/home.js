@@ -4,10 +4,11 @@ import {data, indexRows} from '../core/data.js';
 import {INDEX, INDICES, CANONICAL_SOURCE, fmt, normalize, confidence, shortName} from '../core/format.js';
 import {areaSentence, ranked, cityMean} from '../core/insight.js';
 import {toast} from '../ui/toast.js';
+import {session, onSession, get, post, env, url} from '../core/api.js';
 import {stagger} from '../core/motion.js';
 
 const policy = window.ViewerPolicy;
-let root, built = false, rows, geo, year, firstYear, host = {};
+let root, built = false, rows, geo, year, firstYear, host = {}, favorites = [], shown = null;
 
 const link = (code, index = 'lst', y = year) => `#/ban-do?khu-vuc=${code}&nam=${y}&chi-so=${index}`;
 const nameOf = code => geo.features.find(f => f.id === code)?.properties.full_name || code;
@@ -29,7 +30,7 @@ function locate(lat, lng) {
   return null;
 }
 
-function showArea(code) {
+function showArea(code, scroll = true) {
   const feature = geo.features.find(f => f.id === code);
   if (!feature) return;
   const lines = INDICES.map(k => {
@@ -40,10 +41,56 @@ function showArea(code) {
       h('p', null, areaSentence(rows, code, year, k, [firstYear])));
   });
   mount(host.area, h('div', {class: 'home-area-head'}, h('div', null, h('span', {class: 'eyebrow'}, `Mùa khô ${year}`), h('h2', null, feature.properties.full_name)),
-      h('a', {class: 'btn primary', href: link(code)}, icon('map', 18), 'Xem trên bản đồ')), ...lines,
+      h('div', {class: 'home-actions'}, h('a', {class: 'btn primary', href: link(code)}, icon('map', 18), 'Xem trên bản đồ'), ...areaButtons(code))), h('p', {class: 'print-only small'}, `MobileGIS TP.HCM · báo cáo khu vực · in ngày ${new Date().toLocaleDateString('vi-VN')}`), ...lines,
     h('p', {class: 'small muted'}, 'Nhiệt độ ở đây là nhiệt độ bề mặt (mặt đường, mái nhà, tán cây), không phải nhiệt độ không khí. “Tin cậy” cho biết phần ảnh dùng được nhiều hay ít, không phải độ chính xác.'));
-  host.area.hidden = false;
-  host.area.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+  host.area.hidden = false; shown = code;
+  if (scroll) host.area.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+}
+
+function areaButtons(code) {
+  const buttons = [h('button', {class: 'btn', type: 'button', on: {click: () => printArea()}}, icon('download', 16), 'Xuất PDF')];
+  if (!env.api) return buttons;
+  if (!session.user) return [h('a', {class: 'btn', href: url('login.html') + '?next=' + encodeURIComponent(location.pathname + location.hash)}, icon('user', 16), 'Đăng nhập để lưu'), ...buttons];
+  const saved = favorites.includes(code);
+  return [h('button', {class: 'btn' + (saved ? ' on' : ''), type: 'button', 'aria-pressed': String(saved), on: {click: () => toggleFavorite(code)}}, icon(saved ? 'check' : 'plus', 16), saved ? 'Đã lưu' : 'Lưu khu vực'),
+    h('button', {class: 'btn', type: 'button', on: {click: () => feedbackDialog(code)}}, icon('alert', 16), 'Góp ý / báo sai'), ...buttons];
+}
+function printArea() {
+  document.body.classList.add('printing-area');
+  const done = () => { document.body.classList.remove('printing-area'); window.removeEventListener('afterprint', done); };
+  window.addEventListener('afterprint', done); window.print(); setTimeout(done, 4000);
+}
+async function toggleFavorite(code) {
+  try {
+    if (favorites.includes(code)) { await fetch(url('api/me/favorites/' + code), {method: 'DELETE', credentials: 'same-origin', headers: {'X-Token': session.token}}).then(r => { if (!r.ok) throw new Error('Không bỏ lưu được.'); }); favorites = favorites.filter(c => c !== code); toast('Đã bỏ lưu khu vực.'); }
+    else { await post('/api/me/favorites', {code}); favorites = [...favorites, code]; toast('Đã lưu khu vực. Xem ở mục “Khu vực của tôi”.'); }
+  } catch (error) { toast(error.message, {error: true}); }
+  refreshMine(); if (shown) showArea(shown, false);
+}
+function feedbackDialog(code) {
+  const kind = h('select', {class: 'select', name: 'kind'}, h('option', {value: 'data_error'}, 'Số liệu có vẻ sai'), h('option', {value: 'suggestion'}, 'Góp ý, đề xuất'), h('option', {value: 'ui_error'}, 'Lỗi hiển thị / sử dụng'));
+  const message = h('textarea', {class: 'input', name: 'message', rows: 5, maxlength: 1000, required: true, placeholder: 'Mô tả ngắn gọn điều bạn thấy (5–1000 ký tự)'});
+  const dialog = h('dialog', null, h('form', {class: 'dlg-form', method: 'dialog', on: {submit: async e => {
+    e.preventDefault();
+    try { await post('/api/feedback', {kind: kind.value, code, message: message.value}); dialog.close(); dialog.remove(); toast('Đã gửi. Cảm ơn bạn đã góp ý!'); }
+    catch (error) { toast(error.message, {error: true}); }
+  }}}, h('h2', null, 'Góp ý về ' + nameOf(code)), h('label', {class: 'field'}, h('span', null, 'Loại góp ý'), kind), h('label', {class: 'field'}, h('span', null, 'Nội dung'), message),
+    h('div', {class: 'dlg-actions'}, h('button', {class: 'btn', type: 'button', on: {click: () => { dialog.close(); dialog.remove(); }}}, 'Hủy'), h('button', {class: 'btn primary', type: 'submit'}, 'Gửi'))));
+  document.body.append(dialog); dialog.showModal();
+}
+async function refreshMine() {
+  if (!host.mine) return;
+  if (!env.api) { host.mine.hidden = true; return; }
+  if (!session.user) { favorites = []; mount(host.mine, h('h2', null, 'Khu vực của tôi'), h('p', {class: 'muted'}, 'Đăng nhập để lưu các khu vực bạn quan tâm và so sánh chúng cạnh nhau.'), h('a', {class: 'btn', href: url('login.html') + '?next=' + encodeURIComponent(location.pathname + location.hash)}, icon('user', 16), 'Đăng nhập')); host.mine.hidden = false; return; }
+  host.mine.hidden = false;
+  if (!favorites.length) return mount(host.mine, h('h2', null, 'Khu vực của tôi'), h('p', {class: 'muted'}, 'Chưa lưu khu vực nào. Tìm một phường/xã ở trên rồi bấm “Lưu khu vực”.'));
+  const head = ['Khu vực', ...INDICES.map(k => INDEX[k].label), ''];
+  const body = favorites.map(code => { const row = rows.get(code, year); return h('tr', null,
+    h('th', {scope: 'row', class: 'name'}, h('button', {class: 'linklike', type: 'button', on: {click: () => { host.input.value = nameOf(code); showArea(code); }}}, shortName(nameOf(code)))),
+    ...INDICES.map(k => { const ok = policy.eligible(row, k); return h('td', {class: 'num mono' + (ok ? '' : ' muted')}, ok ? fmt(row[k], INDEX[k].digits) : 'chưa đủ dữ liệu'); }),
+    h('td', null, h('button', {class: 'btn sm', type: 'button', on: {click: () => toggleFavorite(code)}}, 'Bỏ lưu'))); });
+  mount(host.mine, h('h2', null, 'Khu vực của tôi'), h('p', {class: 'muted'}, `So sánh nhanh các khu vực đã lưu, mùa khô ${year}. Ô “chưa đủ dữ liệu” nghĩa là ảnh dùng được dưới 50%.`),
+    h('div', {class: 'scroll card flat'}, h('table', {class: 'tbl'}, h('thead', null, h('tr', null, ...head.map((t, i) => h('th', {class: i > 0 && i < 4 ? 'num' : ''}, t)))), h('tbody', null, ...body))));
 }
 
 function results(query) {
@@ -85,13 +132,14 @@ async function build() {
   host.results = h('div', {class: 'dock-results home-results', role: 'listbox', 'aria-label': 'Kết quả tìm kiếm'});
   host.locate = h('button', {class: 'btn', type: 'button', on: {click: useMyLocation}}, icon('locate', 18), 'Dùng vị trí của tôi');
   host.area = h('section', {class: 'card home-area', hidden: true, 'aria-live': 'polite'});
+  host.mine = h('section', {class: 'block home-mine', hidden: true});
 
   mount(root,
     h('header', {class: 'home-hero'}, h('span', {class: 'eyebrow'}, 'TP. Hồ Chí Minh · 167 xã/phường · ' + firstYear + '–' + year),
       h('h1', null, 'Chỗ bạn ở nóng đến đâu, xanh đến đâu?'),
       h('p', null, 'Nhiệt độ bề mặt và độ xanh của cây cối từ ảnh vệ tinh Landsat, so sánh từng phường/xã với cả thành phố qua các năm.'),
       h('div', {class: 'home-search'}, h('div', {class: 'search-wrap'}, icon('search', 18), host.input), host.locate), host.results),
-    host.area,
+    host.area, host.mine,
     h('section', {class: 'block'}, h('h2', null, `Cả thành phố, mùa khô ${year}`),
       h('div', {class: 'kpi-row'}, stat('Nhiệt độ bề mặt trung bình', fmt(lst, 1), ' °C', delta(lst, lst0, 1, ' °C')), stat('Độ xanh trung bình', fmt(ndvi, 2), '', delta(ndvi, ndvi0, 2, '')),
         stat('Khu vực có đủ dữ liệu', String(reliable), ' / 167', 'Khu vực thiếu ảnh không được tính')),
@@ -103,6 +151,8 @@ async function build() {
     h('section', {class: 'block home-go'}, h('a', {class: 'btn primary', href: '#/ban-do'}, icon('map', 18), 'Mở bản đồ'), h('a', {class: 'btn', href: '#/bang-so-lieu'}, icon('table', 18), 'Xem bảng số liệu'), h('a', {class: 'btn', href: '#/du-lieu'}, icon('info', 18), 'Cách đọc và độ tin cậy')),
     h('p', {class: 'small muted foot'}, 'Thông tin để tham khảo, không thay thế quan trắc hay đánh giá chính thức. Độ khô là chỉ số thử nghiệm.'));
   root.classList.add('page'); stagger(root, ':scope > .home-hero, :scope > .block');
+  const load = async () => { favorites = env.api && session.user ? await get('/api/me/favorites').catch(() => []) : []; refreshMine(); if (shown) showArea(shown, false); };
+  onSession(load); load();
 }
 
 export function init(section) {

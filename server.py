@@ -10,6 +10,7 @@ if (ROOT.parent/'.pg-libs').is_dir():sys.path.insert(0,str(ROOT.parent/'.pg-libs
 import database as db
 import analysis
 from auth_api import router as auth_router,require_admin_write
+from engagement_api import router as engagement_router
 from http_utils import read_json
 import psycopg
 from fastapi import FastAPI,Request,HTTPException,Query,Depends
@@ -37,6 +38,7 @@ async def lifespan(app):
 app=FastAPI(title='MobileGIS TP.HCM',version='2026.10.PG4',lifespan=lifespan,
  description='PostGIS ranh giới và thống kê có nguồn; TIFF/XYZ lưu riêng. TVDI thử nghiệm.')
 app.include_router(auth_router)
+app.include_router(engagement_router)
 @app.exception_handler(psycopg.OperationalError)
 def db_error(request,exc):return JSONResponse({'error':'Không kết nối được PostgreSQL. Kiểm tra CSDL; không tự chuyển sang dữ liệu cũ.'},503)
 @app.exception_handler(psycopg.IntegrityError)

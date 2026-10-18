@@ -1,6 +1,6 @@
 /* App shell: splash → data preload → hash router with View Transitions. Views are lazy ES modules kept alive once created. */
 import {$, $$, h, icon, mount} from './core/dom.js';
-import {loadSession, session, onSession, detectApi, env} from './core/api.js';
+import {loadSession, session, onSession, detectApi, env, get} from './core/api.js';
 import {data} from './core/data.js';
 import {createStore} from './core/store.js';
 import {CANONICAL_SOURCE, SOURCES} from './core/format.js';
@@ -96,6 +96,7 @@ async function boot() {
   onSession(roleClass);
   await loadSession();
   mountAccount($('#account'));
+  if (env.api) get('/api/notice').then(n => { if (n.text && sessionStorage.getItem('mg-notice') !== n.text) { const box = $('#notice'); mount(box, h('span', null, n.text), h('button', {type: 'button', 'aria-label': 'Đóng thông báo', on: {click: () => { box.hidden = true; document.body.classList.remove('has-notice'); try { sessionStorage.setItem('mg-notice', n.text); } catch (_) {} }}}, '×')); box.hidden = false; document.body.classList.add('has-notice'); } }).catch(() => {});
 
   splashStep(1, 'Đang tải ranh giới 167 xã/phường…');
   const geo = data.geo();

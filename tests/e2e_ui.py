@@ -128,6 +128,34 @@ with sync_playwright() as p:
     pg.click('dialog button[type=submit]');pg.wait_for_timeout(1200);ok('demo point added',pg.is_visible('text=E2E_DIEM'))
     pg.once('dialog',lambda d:d.accept());pg.locator('tr:has-text("E2E_DIEM") >> text=Xóa').click();pg.wait_for_timeout(1200);ok('demo point deleted',not pg.is_visible('text=E2E_DIEM'))
     ok('no console errors (admin)',not errors,errors[:3]);c.close()
+    # ================= customer: saved areas, feedback, notice =================
+    import database as _db
+    CUST_EMAIL,CUST_ID=auth_support.create_user('customer')
+    errors.clear();c,pg=boot(b);pg.goto(U+'/login.html')
+    pg.fill('#panelLogin [name=email]',CUST_EMAIL);pg.fill('#panelLogin [name=password]',auth_support.PASSWORD);pg.click('#panelLogin .auth-submit');pg.wait_for_url(lambda u:'login' not in u,timeout=10000);pg.goto(U+'/');pg.wait_for_selector('.home-hero',timeout=20000);pg.wait_for_timeout(800)
+    ok('customer: no admin links in nav',not pg.is_visible('#nav a[data-route=gia-lap]'))
+    pg.fill('.home-search input','Bến Thành');pg.click('.home-results .res >> nth=0');pg.wait_for_selector('.home-area:not([hidden]) .home-line')
+    pg.click('.home-area button:has-text("Lưu khu vực")');pg.wait_for_selector('.home-mine table',timeout=8000);ok('customer: saved area appears in "Khu vực của tôi"','Bến Thành' in pg.inner_text('.home-mine'))
+    pg.click('.home-area button:has-text("Góp ý")');pg.wait_for_selector('dialog[open]');FB='E2E góp ý '+str(CUST_ID)
+    pg.fill('dialog textarea',FB+' số liệu cần xem lại');pg.click('dialog button[type=submit]');pg.wait_for_timeout(1000);ok('customer: feedback sent',not pg.is_visible('dialog[open]'))
+    ok('customer: print button present',pg.is_visible('.home-area button:has-text("Xuất PDF")'))
+    pg.reload();pg.wait_for_selector('.home-mine table',timeout=15000);ok('customer: saved area survives reload',True)
+    ok('no console errors (customer)',not errors,errors[:3]);c.close()
+    # admin triages the feedback and sets a notice
+    errors.clear();c,pg=boot(b);pg.goto(U+'/login.html')
+    pg.fill('#panelLogin [name=email]',ADMIN_EMAIL);pg.fill('#panelLogin [name=password]',auth_support.PASSWORD);pg.click('#panelLogin .auth-submit');pg.wait_for_url(U+'/admin.html',timeout=10000);pg.wait_for_selector('.stat',timeout=10000)
+    pg.click('.admin-tabs button:has-text("Góp ý")');pg.wait_for_selector('#feedbackRows tr');ok('admin sees the feedback',FB in pg.inner_text('#feedbackRows'))
+    pg.click(f'#feedbackRows tr:has-text("{FB}") button');pg.wait_for_timeout(900);ok('admin marks feedback handled','Đã xử lý' in pg.inner_text(f'#feedbackRows tr:has-text("{FB}")'))
+    pg.click('.admin-tabs button:has-text("Nội dung")');pg.fill('#noticeForm textarea','Bảo trì thử nghiệm E2E');pg.click('#noticeForm button');pg.wait_for_timeout(900)
+    pg.click('.admin-tabs button:has-text("Tài khoản")');pg.click('.create-user summary');NEWMAIL=f'e2e-{CUST_ID}@example.test'
+    pg.fill('#createUser [name=email]',NEWMAIL);pg.fill('#createUser [name=display_name]','Tạo bởi admin');pg.fill('#createUser [name=password]','Mat-khau-12345');pg.click('#createUser button[type=submit]');pg.wait_for_timeout(1200)
+    ok('admin created an account',NEWMAIL in pg.inner_text('#userRows'))
+    pg.goto(U+'/');pg.wait_for_selector('#notice:not([hidden])',timeout=15000);ok('notice banner shows for visitors','Bảo trì thử nghiệm E2E' in pg.inner_text('#notice'))
+    pg.click('.admin-tabs button:has-text("Nội dung")') if False else None
+    with _db.connect() as cn:
+        cn.execute("DELETE FROM mobilegis.site_settings WHERE key='notice'");cn.execute("DELETE FROM mobilegis.feedback WHERE message LIKE %s",('E2E góp ý %',));cn.execute('DELETE FROM mobilegis.app_users WHERE email=%s',(NEWMAIL,))
+    auth_support.delete_user(CUST_ID)
+    ok('no console errors (admin 2)',not errors,errors[:3]);c.close()
     # ================= mobile =================
     errors.clear();c,pg=boot(b,mob=True);pg.goto(U+'/');wait_app(pg);pg.wait_for_timeout(800)
     ok('mobile: home has no overflow',not pg.evaluate("document.documentElement.scrollWidth>document.documentElement.clientWidth"));pg.screenshot(path=S+'/e_m_home.png')

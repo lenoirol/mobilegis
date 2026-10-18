@@ -198,3 +198,22 @@
 .kpi-card em{font-size:.5em;font-style:normal;font-weight:700;margin-left:3px}
 .kpi-card small{font-size:12px}
 @media (max-width:860px){.home-lists{grid-template-columns:minmax(0,1fr)}.home-line{grid-template-columns:minmax(0,1fr)}}
+
+.home-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn.on{background:var(--signal)}
+.home-mine{margin-top:36px}
+.linklike{all:unset;cursor:pointer;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.linklike:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.print-only{display:none}
+.notice{position:fixed;top:var(--top);left:0;right:0;z-index:950;display:flex;justify-content:center;align-items:center;gap:12px;background:var(--signal);border-bottom:var(--bw) solid var(--ink);padding:7px 16px;font:600 14px/1.35 var(--f-sans);text-align:center}
+.notice button{all:unset;cursor:pointer;font-weight:800;padding:2px 8px}
+body.has-notice #main{padding-top:calc(var(--top) + 40px)}
+body.has-notice .map-shell{margin-top:40px}
+@media print{
+  body.printing-area #top,body.printing-area #nav,body.printing-area #notice,body.printing-area .skip,body.printing-area #toasts,
+  body.printing-area .home-hero,body.printing-area .home-page>.block,body.printing-area .home-page>.foot,body.printing-area .home-area .btn{display:none!important}
+  body.printing-area .view:not(#view-trang-chu){display:none!important}
+  body.printing-area .print-only{display:block}
+  body.printing-area .home-area{box-shadow:none;border:2px solid #000;margin:0}
+  body.printing-area{background:#fff}
+}

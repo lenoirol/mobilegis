@@ -39,6 +39,10 @@ def grant_access(c,role):
         for table in ('app_users','app_sessions','password_resets'):
             c.execute(sql.SQL('GRANT SELECT,INSERT,UPDATE,DELETE ON {} TO {}').format(sql.Identifier('mobilegis',table),sql.Identifier(role)))
         c.execute(sql.SQL('GRANT SELECT,INSERT ON mobilegis.auth_events TO {}').format(sql.Identifier(role)))
+        for table in ('user_favorites','feedback','site_settings'):   # schema 5 (engagement), present only once migration 005 ran
+            exists=c.execute("SELECT to_regclass(%s) IS NOT NULL AS ok",('mobilegis.'+table,)).fetchone()
+            if exists['ok'] if isinstance(exists,dict) else exists[0]:
+                c.execute(sql.SQL('GRANT SELECT,INSERT,UPDATE,DELETE ON {} TO {}').format(sql.Identifier('mobilegis',table),sql.Identifier(role)))
         c.execute(sql.SQL('GRANT USAGE,SELECT ON ALL SEQUENCES IN SCHEMA mobilegis TO {}').format(sql.Identifier(role)))
 
 if __name__=='__main__':
