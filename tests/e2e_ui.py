@@ -120,9 +120,12 @@ with sync_playwright() as p:
     ok('mobile: tab bar at bottom',pg.evaluate("document.querySelector('#nav').getBoundingClientRect().bottom")>=840)
     ok('mobile: no horizontal overflow',not pg.evaluate("document.documentElement.scrollWidth>document.documentElement.clientWidth"))
     pg.screenshot(path=S+'/e_m_map.png')
+    pg.tap('button.metric[data-index=ndvi]');pg.wait_for_timeout(700)
+    ok('mobile: tapping a value tile switches the map layer','chi-so=ndvi' in pg.url,pg.url)
+    ok('mobile: duplicate index cards are hidden in the Layers tab',not pg.is_visible('.idx-grid'))
     pg.click('.sheet-handle');pg.wait_for_timeout(800);ok('sheet opens',pg.get_attribute('.map-shell','data-snap')=='open');pg.screenshot(path=S+'/e_m_sheet.png')
     pg.click('.sheet-tab[data-tab=dock]');pg.wait_for_timeout(500);ok('sheet shows controls',pg.is_visible('.dock-inner'));pg.screenshot(path=S+'/e_m_dock.png')
-    pg.click('.idx-card[data-index=ndvi]');pg.wait_for_timeout(500);pg.click('.sheet-handle');pg.wait_for_timeout(700)
+    pg.click('.sheet-handle');pg.wait_for_timeout(700)
     for route in ['bang-so-lieu','thong-ke','gia-lap','du-lieu']:
         pg.click(f'#nav a[data-route={route}]');pg.wait_for_timeout(2200)
         ok(f'mobile {route}: no overflow',not pg.evaluate("document.documentElement.scrollWidth>document.documentElement.clientWidth"));pg.screenshot(path=f'{S}/e_m_{route}.png')

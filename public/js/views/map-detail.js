@@ -20,10 +20,12 @@ export function rasterLink(source, state) {
   return source === 'gee_recovery' && year === 2025 ? '/api/gee_recovery/rasters/indices_2025_recovery_batch1_120m.tif' : `/api/gee/rasters/indices_${year}_120m.tif`;
 }
 
-export function createDetail({onPin, onTable, onClose}) {
+export function createDetail({onPin, onTable, onClose, onIndex}) {
   const tiles = INDICES.map(key => ({key, value: h('b', {class: 'mono num'}, '—'), unit: h('small', null), tag: h('span', {class: 'tag missing'}, 'Thiếu'), root: null}));
   tiles.forEach(t => {
-    t.root = h('div', {class: 'metric', dataset: {index: t.key}}, h('small', {class: 'mono'}, INDEX[t.key].label + (INDEX[t.key].experimental ? ' *' : '')), t.value, t.unit, t.tag);
+    // The tile doubles as the layer switch: tapping LST / NDVI / TVDI shows that layer on the map straight away.
+    t.root = h('button', {class: 'metric', type: 'button', dataset: {index: t.key}, title: `Hiện lớp ${INDEX[t.key].label} trên bản đồ`, 'aria-pressed': 'false', on: {click: () => onIndex?.(t.key)}},
+      h('small', {class: 'mono'}, INDEX[t.key].label + (INDEX[t.key].experimental ? ' *' : '')), t.value, t.unit, t.tag);
   });
   const name = h('h2', {class: 'detail-name'}, 'Chạm vào một xã/phường');
   const sub = h('p', {class: 'detail-sub mono'});
@@ -57,7 +59,7 @@ export function createDetail({onPin, onTable, onClose}) {
       sub.textContent = feature ? `Mã ${feature.id} · ${fmt(feature.properties.area_km2_source, 2)} km² (nguồn)` : 'Chọn trên bản đồ hoặc tìm theo tên';
       tiles.forEach(t => {
         const q = policy.quality(row, t.key), [cls, text] = QUALITY_LABEL[q];
-        t.root.classList.toggle('active', t.key === state.index);
+        t.root.classList.toggle('active', t.key === state.index); t.root.setAttribute('aria-pressed', String(t.key === state.index));
         countTo(t.value, row?.[t.key], v => fmt(v, INDEX[t.key].digits), 600);
         if (!valid(row?.[t.key])) t.value.textContent = '—';
         t.unit.textContent = INDEX[t.key].unit;
@@ -114,7 +116,7 @@ export function createDetail({onPin, onTable, onClose}) {
     const row = rows.find(r => r.year === state.year);
     name.textContent = state.selected || (state.mode === 'user' ? 'Chọn điểm trong CSV' : 'Chọn điểm thực hành');
     sub.textContent = row ? `Tọa độ ${row.lat}, ${row.lon}${row.containing_units?.length ? ' · ' + row.containing_units.map(u => u.name).join(', ') : ''}` : '';
-    tiles.forEach(t => { countTo(t.value, row?.[t.key], v => fmt(v, INDEX[t.key].digits), 600); if (!valid(row?.[t.key])) t.value.textContent = '—'; t.unit.textContent = INDEX[t.key].unit; t.tag.className = 'tag signal'; t.tag.textContent = state.mode === 'user' ? 'CSV' : 'Giả lập'; t.root.classList.toggle('active', t.key === state.index); t.root.classList.remove('flag'); });
+    tiles.forEach(t => { countTo(t.value, row?.[t.key], v => fmt(v, INDEX[t.key].digits), 600); if (!valid(row?.[t.key])) t.value.textContent = '—'; t.unit.textContent = INDEX[t.key].unit; t.tag.className = 'tag signal'; t.tag.textContent = state.mode === 'user' ? 'CSV' : 'Giả lập'; t.root.classList.toggle('active', t.key === state.index); t.root.setAttribute('aria-pressed', String(t.key === state.index)); t.root.classList.remove('flag'); });
     note.className = 'callout warn';
     note.textContent = state.mode === 'user' ? 'Giá trị tại tọa độ trong CSV nhóm cung cấp; chưa biết điểm đơn hay vùng đệm, không phải trung bình xã/phường. Chưa có mã cảnh/script GEE để tái kiểm chứng.' : 'Điểm thực hành do quản trị viên nhập, không phải số đo vệ tinh.';
     probe.hidden = true; cover.hidden = true;

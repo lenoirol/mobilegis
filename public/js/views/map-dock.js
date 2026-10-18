@@ -68,7 +68,7 @@ export function createDock({onIndex, onYear, onDisplay, onToggle, onPick, onPlay
   const el = h('div', {class: 'dock-inner'},
     h('div', {class: 'dock-head'}, h('span', {class: 'eyebrow'}, 'Không gian và thời gian'), h('h1', null, 'Bản đồ môi trường')),
     group('Tìm khu vực', h('div', {class: 'search-wrap'}, icon('search', 18), searchInput), results),
-    group('Chỉ số', h('div', {class: 'idx-grid'}, ...indexButtons), indexHelp),
+    group('Chỉ số', h('div', {class: 'idx-grid'}, ...indexButtons), h('p', {class: 'dock-help idx-mobile-hint'}, 'Chạm vào ô LST, NDVI hoặc TVDI ở tab “Khu vực” để đổi lớp trên bản đồ.'), indexHelp),
     group('Mốc quan sát', h('div', {class: 'year-row'}, yearNum, yearTag, playBtn), slider, ticks),
     group('Cách hiển thị', displaySeg.el, displayHint),
     group('Lớp phủ', check('boundaries', 'Ranh giới xã/phường'), check('labels', 'Tên khu vực (tự tránh chồng)'), check('landcover', 'Lớp phủ đất ESA 2021'), check('compare', 'So sánh kéo màn hình 2020 | năm chọn'),

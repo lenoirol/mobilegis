@@ -81,7 +81,9 @@
 .detail-sub{font-size:12px;color:var(--ink-3);margin:6px 0 0}
 .close-btn{width:36px;height:36px;flex:none;transform:rotate(-90deg)}
 .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.metric{display:grid;gap:3px;border:var(--bw) solid var(--ink);border-radius:var(--radius);padding:9px 10px;background:#fff;transition:background .2s,transform .2s var(--ease)}
+.metric{display:grid;gap:3px;justify-items:start;text-align:left;cursor:pointer;font:inherit;color:inherit;border:var(--bw) solid var(--ink);border-radius:var(--radius);padding:9px 10px;background:#fff;transition:background .2s,transform .2s var(--ease)}
+.metric:hover:not(.active){background:var(--signal-soft);transform:translateY(-2px)}
+.metric:active{transform:translateY(1px)}
 .metric.active{background:var(--signal);transform:translateY(-3px);box-shadow:var(--shadow-sm)}
 .metric small:first-child{font-size:10px;letter-spacing:.1em;font-weight:700;color:var(--ink-2)}
 .metric b{font-size:25px;line-height:1.05;font-weight:800;letter-spacing:-.04em}
@@ -163,8 +165,12 @@
   .dock-head h1{font-size:24px}
   .close-btn{display:none}
   .metric b{font-size:22px}
+  .idx-grid{display:none}
   .swipe-l,.swipe-r{top:64px}
 }
 /* Leaflet's own controls must sit below our floating panels and the phone bottom sheet. */
 .leaflet-top,.leaflet-bottom{z-index:700}
 @media (max-width:860px){.leaflet-control-scale{display:none}}
+
+.idx-mobile-hint{display:none}
+@media (max-width:860px){.idx-mobile-hint{display:block;background:var(--signal-soft);border:var(--bw) solid var(--ink);border-radius:var(--radius);padding:9px 11px;color:var(--ink)}}

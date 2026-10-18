@@ -45,6 +45,11 @@ function build(section) {
     onMode: changeMode,
   });
   detail = createDetail({
+    onIndex: k => {   // tapping a value tile shows that layer; on phones the sheet drops to its peek so the map is visible
+      stopPlay(); probe = null;
+      store.set({index: k});
+      ms.set({landcover: false, visible: true, ...(mobile() ? {snap: 'peek'} : {})});
+    },
     onPin: () => { const s = store.get(); if (s.pinned.includes(s.selected)) return; if (s.pinned.length >= 4) return toast('Tối đa 4 khu vực so sánh. Bỏ bớt ở tab Thống kê.', {error: true}); store.set({pinned: [...s.pinned, s.selected]}); toast('Đã thêm vào so sánh ở tab Thống kê.'); },
     onTable: () => nav('bang-so-lieu', {q: store.get().selected}),
     onClose: () => ms.set({detailOpen: !ms.get().detailOpen}),
