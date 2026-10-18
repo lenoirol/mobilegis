@@ -20,7 +20,7 @@ const DISPLAYS = ['raster', 'zones', 'change', 'coverage'];
 let shell, engine, dock, detail, locator, store, nav;
 let D = {source: CANONICAL_SOURCE, geo: null, rows: null, layers: null, cover: null, points: [], years: YEARS};
 let engineData = null, probe = null, playTimer = null, probeToken = 0, shown = false, fitted = false, urlTimer = null;
-const ms = createStore({display: 'raster', landcover: false, compare: false, swipe: 50, opacity: 1, boundaries: true, labels: true, basemap: 'voyager', visible: true,
+const ms = createStore({display: 'raster', landcover: false, compare: false, swipe: 50, opacity: 1, boundaries: true, labels: true, basemap: 'streets', visible: true,
   mode: 'real', legendOpen: true, snap: 'peek', detailOpen: true, dockOpen: true});
 const merged = () => ({...store.get(), ...ms.get()});
 

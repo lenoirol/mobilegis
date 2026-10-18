@@ -22,7 +22,7 @@ Cột "Tự động" là kết quả của bộ kiểm tra trình duyệt `tests
 | F10 | Nếu còn thời gian | Dùng khi mạng yếu | Giao diện, ranh giới, số liệu đã xem vẫn mở được (bộ nhớ đệm) | Chưa đo tự động | |
 | F11 | Ngoài đề cương | Mở `#/gia-lap` khi chưa đăng nhập quản trị | Bị đưa về bản đồ | Đạt | |
 | F12 | Bắt buộc | Chạm một điểm trên bản đồ (chế độ Chi tiết) để xem giá trị ô 120 m, kể cả bản tĩnh không có máy chủ | Hiện tọa độ và giá trị ô gần nhất; ô thiếu dữ liệu ghi rõ "thiếu dữ liệu" | Đạt (thử thủ công; 60/60 điểm khớp cách tính của máy chủ) | |
-| F13 | Bắt buộc | Bản đồ nền toàn cầu: thu nhỏ ra thế giới, đổi nền Bản đồ / Vệ tinh / Đường phố / Nhẹ; ô bản đồ định vị Thế giới – Việt Nam – TP.HCM | Nền hiện đúng; nhãn QĐ. Hoàng Sa, QĐ. Trường Sa, Biển Đông; mất mạng thì tự về nền Nhẹ | Đạt với nền Nhẹ và ô định vị (thủ công). Nền trực tuyến cần nhóm kiểm tra bằng mắt | |
+| F13 | Bắt buộc | Bản đồ nền toàn cầu: thu nhỏ ra thế giới, đổi nền Bản đồ (OpenStreetMap) / Vệ tinh (Esri) / Nhẹ (Natural Earth, không cần mạng); ô bản đồ định vị Thế giới – Việt Nam – TP.HCM | Nền hiện đúng; nhãn QĐ. Hoàng Sa, QĐ. Trường Sa, Biển Đông; mất mạng thì tự về nền Nhẹ | Đạt với nền Nhẹ và ô định vị (thủ công). Nền trực tuyến cần nhóm kiểm tra bằng mắt | |
 
 Ghi chú: F12, F13 và phần tắt lớp chỉ số ở F4 được thêm sau lần chạy 81 kiểm tra tự động; cần chạy lại `tests/e2e_ui.py` để cập nhật cột "Tự động".
 

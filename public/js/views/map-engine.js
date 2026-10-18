@@ -15,11 +15,9 @@ export const CHANGE_GRADIENT = `linear-gradient(90deg,${CHANGE_RAMP.join(',')})`
 
 const tile = (meta, options = {}) => L.tileLayer(url(meta.url) + '?style=pg3', {bounds: meta.bounds, minNativeZoom: meta.min_zoom, maxNativeZoom: meta.max_native_zoom, maxZoom: 18, noWrap: true, ...options});
 
-/* Global basemaps. All are built from OpenStreetMap data or plain imagery and draw no 'nine-dash line'
+/* Global basemaps, no API key needed (CARTO now requires one, so it is not used). Built from OpenStreetMap data or plain imagery and draw no 'nine-dash line'
    (Google, Bing and China-worldview styles are deliberately not used). The app adds its own Vietnamese sea labels on top. */
 export const BASEMAPS = {
-  voyager: {url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    options: {maxZoom: 19, subdomains: 'abcd', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/attributions">CARTO</a>'}},
   streets: {url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
     options: {maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}},
   satellite: {url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
