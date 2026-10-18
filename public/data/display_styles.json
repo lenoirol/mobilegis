@@ -1,0 +1,49 @@
+{
+  "version": "2026.10.PG3",
+  "reference": "Teacher supplied LST-NDVI-TVDI palette",
+  "note": "Display endpoints only; physical observations outside display range are preserved; NoData remains transparent.",
+  "indices": {
+    "lst": {
+      "min": 20,
+      "max": 45,
+      "colors": [
+        "#0000FF",
+        "#0066FF",
+        "#00FFFF",
+        "#00FF00",
+        "#FFFF00",
+        "#FFCC00",
+        "#FF6600",
+        "#FF0000"
+      ]
+    },
+    "ndvi": {
+      "min": -0.2,
+      "max": 1,
+      "colors": [
+        "#FF0000",
+        "#FF7F00",
+        "#FFFF00",
+        "#ADFF2F",
+        "#00FF00",
+        "#00FFFF",
+        "#007FFF",
+        "#0000FF"
+      ]
+    },
+    "tvdi": {
+      "min": 0,
+      "max": 1,
+      "colors": [
+        "#066b00",
+        "#0bc400",
+        "#0ce100",
+        "#00ff00",
+        "#ffff00",
+        "#ffcc00",
+        "#ff6600",
+        "#ff0000"
+      ]
+    }
+  }
+}

@@ -1,0 +1,747 @@
+{
+  "version": "2026.10",
+  "generated_at": "2026-10-04T07:58:29Z",
+  "absolute": {
+    "2020": {
+      "lst": {
+        "url": "/data/tiles/lst_2020/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "ndvi": {
+        "url": "/data/tiles/ndvi_2020/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "tvdi": {
+        "url": "/data/tiles/tvdi_2020/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      }
+    },
+    "2021": {
+      "lst": {
+        "url": "/data/tiles/lst_2021/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "ndvi": {
+        "url": "/data/tiles/ndvi_2021/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "tvdi": {
+        "url": "/data/tiles/tvdi_2021/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      }
+    },
+    "2022": {
+      "lst": {
+        "url": "/data/tiles/lst_2022/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "ndvi": {
+        "url": "/data/tiles/ndvi_2022/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "tvdi": {
+        "url": "/data/tiles/tvdi_2022/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      }
+    },
+    "2023": {
+      "lst": {
+        "url": "/data/tiles/lst_2023/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "ndvi": {
+        "url": "/data/tiles/ndvi_2023/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "tvdi": {
+        "url": "/data/tiles/tvdi_2023/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      }
+    },
+    "2024": {
+      "lst": {
+        "url": "/data/tiles/lst_2024/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "ndvi": {
+        "url": "/data/tiles/ndvi_2024/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "tvdi": {
+        "url": "/data/tiles/tvdi_2024/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      }
+    },
+    "2025": {
+      "lst": {
+        "url": "/data/tiles/lst_2025/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "ndvi": {
+        "url": "/data/tiles/ndvi_2025/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "tvdi": {
+        "url": "/data/tiles/tvdi_2025/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.316707793309217,
+            106.32426976521346
+          ],
+          [
+            11.502522274696462,
+            107.57984038357091
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      }
+    }
+  },
+  "change": {
+    "lst": {
+      "url": "/data/tiles/change_lst_2020_2025/{z}/{x}/{y}.png",
+      "bounds": [
+        [
+          10.316707793309217,
+          106.32426976521346
+        ],
+        [
+          11.502522274696462,
+          107.57984038357091
+        ]
+      ],
+      "min_zoom": 7,
+      "max_native_zoom": 12,
+      "tiles": 174,
+      "from": 2020,
+      "to": 2025,
+      "min": -10,
+      "max": 10,
+      "valid_pairs": 409977,
+      "note": "Only co-located valid samples in both years; acquisition dates differ. TVDI edges fitted independently."
+    },
+    "ndvi": {
+      "url": "/data/tiles/change_ndvi_2020_2025/{z}/{x}/{y}.png",
+      "bounds": [
+        [
+          10.316707793309217,
+          106.32426976521346
+        ],
+        [
+          11.502522274696462,
+          107.57984038357091
+        ]
+      ],
+      "min_zoom": 7,
+      "max_native_zoom": 12,
+      "tiles": 174,
+      "from": 2020,
+      "to": 2025,
+      "min": -0.3,
+      "max": 0.3,
+      "valid_pairs": 409977,
+      "note": "Only co-located valid samples in both years; acquisition dates differ. TVDI edges fitted independently."
+    },
+    "tvdi": {
+      "url": "/data/tiles/change_tvdi_2020_2025/{z}/{x}/{y}.png",
+      "bounds": [
+        [
+          10.316707793309217,
+          106.32426976521346
+        ],
+        [
+          11.502522274696462,
+          107.57984038357091
+        ]
+      ],
+      "min_zoom": 7,
+      "max_native_zoom": 12,
+      "tiles": 174,
+      "from": 2020,
+      "to": 2025,
+      "min": -0.4,
+      "max": 0.4,
+      "valid_pairs": 303402,
+      "note": "Only co-located valid samples in both years; acquisition dates differ. TVDI edges fitted independently."
+    }
+  },
+  "query": {
+    "lst_2020": {
+      "path": "lst_2020.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "ndvi_2020": {
+      "path": "ndvi_2020.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "tvdi_2020": {
+      "path": "tvdi_2020.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "lst_2021": {
+      "path": "lst_2021.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "ndvi_2021": {
+      "path": "ndvi_2021.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "tvdi_2021": {
+      "path": "tvdi_2021.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "lst_2022": {
+      "path": "lst_2022.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "ndvi_2022": {
+      "path": "ndvi_2022.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "tvdi_2022": {
+      "path": "tvdi_2022.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "lst_2023": {
+      "path": "lst_2023.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "ndvi_2023": {
+      "path": "ndvi_2023.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "tvdi_2023": {
+      "path": "tvdi_2023.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "lst_2024": {
+      "path": "lst_2024.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "ndvi_2024": {
+      "path": "ndvi_2024.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "tvdi_2024": {
+      "path": "tvdi_2024.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "lst_2025": {
+      "path": "lst_2025.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "ndvi_2025": {
+      "path": "ndvi_2025.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "tvdi_2025": {
+      "path": "tvdi_2025.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "change_lst": {
+      "path": "change_lst.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "change_ndvi": {
+      "path": "change_ndvi.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    },
+    "change_tvdi": {
+      "path": "change_tvdi.bin",
+      "width": 1137,
+      "height": 1086,
+      "bounds": [
+        106.32426976521347,
+        10.31670779330923,
+        107.57984038357093,
+        11.50252227469647
+      ]
+    }
+  },
+  "context": {
+    "worldcover": {
+      "url": "/data/tiles/worldcover_2021/{z}/{x}/{y}.png",
+      "bounds": [
+        [
+          10.316707793309217,
+          106.32426976521346
+        ],
+        [
+          11.502522274696462,
+          107.57984038357091
+        ]
+      ],
+      "min_zoom": 7,
+      "max_native_zoom": 12,
+      "tiles": 174,
+      "year": 2021,
+      "title": "Lớp phủ đất ESA WorldCover 2021",
+      "gee_asset": "ESA/WorldCover/v200",
+      "source": "https://esa-worldcover.org/en/data-access",
+      "catalog": "https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200",
+      "license": "CC BY 4.0",
+      "download_method": "Public ESA AWS COG; not computed or exported through GEE",
+      "source_resolution_m": 10,
+      "sample_resolution_m": 120,
+      "classes": [
+        {
+          "code": 10,
+          "name": "Cây thân gỗ",
+          "color": "#006400"
+        },
+        {
+          "code": 20,
+          "name": "Cây bụi",
+          "color": "#ffbb22"
+        },
+        {
+          "code": 30,
+          "name": "Đồng cỏ",
+          "color": "#ffff4c"
+        },
+        {
+          "code": 40,
+          "name": "Đất trồng trọt",
+          "color": "#f096ff"
+        },
+        {
+          "code": 50,
+          "name": "Khu xây dựng",
+          "color": "#fa0000"
+        },
+        {
+          "code": 60,
+          "name": "Đất trống / thực vật thưa",
+          "color": "#b4b4b4"
+        },
+        {
+          "code": 70,
+          "name": "Băng tuyết",
+          "color": "#f0f0f0"
+        },
+        {
+          "code": 80,
+          "name": "Mặt nước thường xuyên",
+          "color": "#0064c8"
+        },
+        {
+          "code": 90,
+          "name": "Đất ngập nước thân thảo",
+          "color": "#0096a0"
+        },
+        {
+          "code": 95,
+          "name": "Rừng ngập mặn",
+          "color": "#00cf75"
+        },
+        {
+          "code": 100,
+          "name": "Rêu và địa y",
+          "color": "#fae6a0"
+        }
+      ],
+      "sha256": "5d82d0551d729a7ad027140cfa60cef81e21fee963349420316ca5735f6b683e"
+    },
+    "rgb_2020": {
+      "url": "/data/tiles/rgb_2020/{z}/{x}/{y}.png",
+      "bounds": [
+        [
+          10.316707793309217,
+          106.32426976521346
+        ],
+        [
+          11.502522274696462,
+          107.57984038357091
+        ]
+      ],
+      "min_zoom": 7,
+      "max_native_zoom": 12,
+      "tiles": 174,
+      "year": 2020,
+      "title": "Landsat màu tự nhiên 2020",
+      "dates": [
+        "2020-01-15",
+        "2020-02-23",
+        "2020-02-23",
+        "2020-01-15"
+      ],
+      "sample_resolution_m": 120,
+      "source": "USGS Landsat C2 L2 through Microsoft Planetary Computer",
+      "method": "QA-masked first-valid low-cloud mosaic; reflectance stretch 0–0.3, gamma 1.3; not live satellite imagery"
+    },
+    "rgb_2025": {
+      "url": "/data/tiles/rgb_2025/{z}/{x}/{y}.png",
+      "bounds": [
+        [
+          10.316707793309217,
+          106.32426976521346
+        ],
+        [
+          11.502522274696462,
+          107.57984038357091
+        ]
+      ],
+      "min_zoom": 7,
+      "max_native_zoom": 12,
+      "tiles": 174,
+      "year": 2025,
+      "title": "Landsat màu tự nhiên 2025",
+      "dates": [
+        "2025-02-28",
+        "2025-03-01",
+        "2025-02-04",
+        "2025-02-05"
+      ],
+      "sample_resolution_m": 120,
+      "source": "USGS Landsat C2 L2 through Microsoft Planetary Computer",
+      "method": "QA-masked first-valid low-cloud mosaic; reflectance stretch 0–0.3, gamma 1.3; not live satellite imagery"
+    }
+  },
+  "no_data": "Never fill missing samples with zero or fabricated values."
+}

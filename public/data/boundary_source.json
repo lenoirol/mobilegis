@@ -1,0 +1,20 @@
+{
+  "source": "https://github.com/thanglequoc/vietnamese-provinces-database",
+  "commit": "cd58063299585146ded3981f2272946ef19ced54",
+  "upstream_reference_map": "https://sapnhap.bando.com.vn",
+  "license": "MIT (repository); reference boundaries, not cadastral certification",
+  "downloaded_at": "2026-09-28T02:53:35Z",
+  "source_count": 168,
+  "included_count": 167,
+  "excluded_code": "26732",
+  "simplification_degrees": 4e-05,
+  "repaired_geometry_codes": [],
+  "administrative_list_2025_url": "https://raw.githubusercontent.com/thanglequoc/vietnamese-provinces-database/v3.0.2/json/simplified_json_generated_data_vn_units.json",
+  "list_verification": {
+    "status": "matched",
+    "reference_count": 168,
+    "missing": [],
+    "extra": []
+  },
+  "sha256": "17aa99b958e14ac427a28c7fa023ed0c1b060f539e25d1055c68e9f64e9cea96"
+}

@@ -1,0 +1,458 @@
+[
+  {
+    "lat": 10.41,
+    "lon": 106.96,
+    "year": 2020,
+    "lst": 39.18015715686413,
+    "ndvi": 0.43100061766037184,
+    "tvdi": 0.9132971902354596,
+    "name": "Cần Giờ",
+    "original_name": "Can Gio",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2020.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "27664",
+        "name": "Xã Cần Giờ"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.41,
+    "lon": 106.96,
+    "year": 2021,
+    "lst": 35.33512999209758,
+    "ndvi": 0.4634102300814777,
+    "tvdi": 0.5695978293916729,
+    "name": "Cần Giờ",
+    "original_name": "Can Gio",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2021.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "27664",
+        "name": "Xã Cần Giờ"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.41,
+    "lon": 106.96,
+    "year": 2022,
+    "lst": 35.15127267168643,
+    "ndvi": 0.4769102792560727,
+    "tvdi": 0.5805736382695351,
+    "name": "Cần Giờ",
+    "original_name": "Can Gio",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2022.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "27664",
+        "name": "Xã Cần Giờ"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.41,
+    "lon": 106.96,
+    "year": 2023,
+    "lst": 36.34860150484322,
+    "ndvi": 0.5051383776784137,
+    "tvdi": 0.6598328047316513,
+    "name": "Cần Giờ",
+    "original_name": "Can Gio",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2023.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "27664",
+        "name": "Xã Cần Giờ"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.41,
+    "lon": 106.96,
+    "year": 2024,
+    "lst": 35.39104975205578,
+    "ndvi": 0.4881915230293998,
+    "tvdi": 0.5097502961093738,
+    "name": "Cần Giờ",
+    "original_name": "Can Gio",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2024.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "27664",
+        "name": "Xã Cần Giờ"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.41,
+    "lon": 106.96,
+    "year": 2025,
+    "lst": 31.55694119612546,
+    "ndvi": 0.4807288807729891,
+    "tvdi": 0.35312102951053503,
+    "name": "Cần Giờ",
+    "original_name": "Can Gio",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2025.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "27664",
+        "name": "Xã Cần Giờ"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 11.03,
+    "lon": 106.49,
+    "year": 2020,
+    "lst": 37.13213751077248,
+    "ndvi": 0.5205682932275824,
+    "tvdi": 0.7569849614953682,
+    "name": "Củ Chi",
+    "original_name": "Cu Chi",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2020.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "27511",
+        "name": "Xã Nhuận Đức"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 11.03,
+    "lon": 106.49,
+    "year": 2021,
+    "lst": 35.17978922400838,
+    "ndvi": 0.6448786670915535,
+    "tvdi": 0.6075668403472329,
+    "name": "Củ Chi",
+    "original_name": "Cu Chi",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2021.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "27511",
+        "name": "Xã Nhuận Đức"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 11.03,
+    "lon": 106.49,
+    "year": 2022,
+    "lst": 35.626362932400866,
+    "ndvi": 0.6209879601790274,
+    "tvdi": 0.7027488968135929,
+    "name": "Củ Chi",
+    "original_name": "Cu Chi",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2022.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "27511",
+        "name": "Xã Nhuận Đức"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 11.03,
+    "lon": 106.49,
+    "year": 2023,
+    "lst": 39.60058897818374,
+    "ndvi": 0.5330514821570399,
+    "tvdi": 0.9830032077817183,
+    "name": "Củ Chi",
+    "original_name": "Cu Chi",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2023.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "27511",
+        "name": "Xã Nhuận Đức"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 11.03,
+    "lon": 106.49,
+    "year": 2024,
+    "lst": 36.491853405866415,
+    "ndvi": 0.5584237929391694,
+    "tvdi": 0.6902049195486133,
+    "name": "Củ Chi",
+    "original_name": "Cu Chi",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2024.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "27511",
+        "name": "Xã Nhuận Đức"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 11.03,
+    "lon": 106.49,
+    "year": 2025,
+    "lst": 33.80744705826726,
+    "ndvi": 0.5634107155901533,
+    "tvdi": 0.5746307370498666,
+    "name": "Củ Chi",
+    "original_name": "Cu Chi",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2025.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "27511",
+        "name": "Xã Nhuận Đức"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.85,
+    "lon": 106.76,
+    "year": 2020,
+    "lst": 41.23352722060545,
+    "ndvi": 0.21273443398478634,
+    "tvdi": 0.8331903617287028,
+    "name": "Thủ Đức",
+    "original_name": "Thu Duc",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2020.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "26824",
+        "name": "Phường Thủ Đức"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.85,
+    "lon": 106.76,
+    "year": 2021,
+    "lst": 44.1841181194781,
+    "ndvi": 0.21515473281568925,
+    "tvdi": 1.0,
+    "name": "Thủ Đức",
+    "original_name": "Thu Duc",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2021.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "26824",
+        "name": "Phường Thủ Đức"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.85,
+    "lon": 106.76,
+    "year": 2022,
+    "lst": 40.65132210202508,
+    "ndvi": 0.2033085027031398,
+    "tvdi": 0.8881295320325847,
+    "name": "Thủ Đức",
+    "original_name": "Thu Duc",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2022.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "26824",
+        "name": "Phường Thủ Đức"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.85,
+    "lon": 106.76,
+    "year": 2023,
+    "lst": 43.55536537223383,
+    "ndvi": 0.211375500050632,
+    "tvdi": 1.0,
+    "name": "Thủ Đức",
+    "original_name": "Thu Duc",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2023.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "26824",
+        "name": "Phường Thủ Đức"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.85,
+    "lon": 106.76,
+    "year": 2024,
+    "lst": 42.544667323987504,
+    "ndvi": 0.1922272801717059,
+    "tvdi": 0.9178404339831608,
+    "name": "Thủ Đức",
+    "original_name": "Thu Duc",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2024.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "26824",
+        "name": "Phường Thủ Đức"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.85,
+    "lon": 106.76,
+    "year": 2025,
+    "lst": 43.29675778874741,
+    "ndvi": 0.19744191450718002,
+    "tvdi": 1.0,
+    "name": "Thủ Đức",
+    "original_name": "Thu Duc",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2025.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "26824",
+        "name": "Phường Thủ Đức"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.776,
+    "lon": 106.701,
+    "year": 2020,
+    "lst": 38.4899967773585,
+    "ndvi": 0.20783833234224025,
+    "tvdi": 0.7335927358591675,
+    "name": "Trung tâm TP.HCM",
+    "original_name": "Trung tam TP.HCM",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2020.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "26740",
+        "name": "Phường Sài Gòn"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.776,
+    "lon": 106.701,
+    "year": 2021,
+    "lst": 38.060071486037764,
+    "ndvi": 0.212696928356037,
+    "tvdi": 0.7651960734668164,
+    "name": "Trung tâm TP.HCM",
+    "original_name": "Trung tam TP.HCM",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2021.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "26740",
+        "name": "Phường Sài Gòn"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.776,
+    "lon": 106.701,
+    "year": 2022,
+    "lst": 38.01888088163524,
+    "ndvi": 0.21060355296805375,
+    "tvdi": 0.7882219492775585,
+    "name": "Trung tâm TP.HCM",
+    "original_name": "Trung tam TP.HCM",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2022.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "26740",
+        "name": "Phường Sài Gòn"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.776,
+    "lon": 106.701,
+    "year": 2023,
+    "lst": 38.664411339496866,
+    "ndvi": 0.2093457967249375,
+    "tvdi": 0.807023105194424,
+    "name": "Trung tâm TP.HCM",
+    "original_name": "Trung tam TP.HCM",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2023.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "26740",
+        "name": "Phường Sài Gòn"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.776,
+    "lon": 106.701,
+    "year": 2024,
+    "lst": 38.849372559433974,
+    "ndvi": 0.20350093530691787,
+    "tvdi": 0.7563942713906698,
+    "name": "Trung tâm TP.HCM",
+    "original_name": "Trung tam TP.HCM",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2024.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "26740",
+        "name": "Phường Sài Gòn"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  },
+  {
+    "lat": 10.776,
+    "lon": 106.701,
+    "year": 2025,
+    "lst": 40.59787848515726,
+    "ndvi": 0.2151850363056859,
+    "tvdi": 0.988291451267507,
+    "name": "Trung tâm TP.HCM",
+    "original_name": "Trung tam TP.HCM",
+    "source": "GEE Landsat 8/9 Collection 2 Level 2, mua kho 2025.0",
+    "dataset": "user_csv",
+    "containing_units": [
+      {
+        "code": "26740",
+        "name": "Phường Sài Gòn"
+      }
+    ],
+    "method_status": "user_provided_not_reproduced"
+  }
+]

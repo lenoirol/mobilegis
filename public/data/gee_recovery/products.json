@@ -1,0 +1,1903 @@
+{
+  "source_id": "gee_recovery",
+  "version": "2026.10.GEE7",
+  "absolute": {
+    "2025": {
+      "ndvi": {
+        "url": "/data/tiles/gee_recovery_ndvi_2025/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "lst": {
+        "url": "/data/tiles/gee_recovery_lst_2025/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "tvdi": {
+        "url": "/data/tiles/gee_recovery_tvdi_2025/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      }
+    },
+    "2020": {
+      "ndvi": {
+        "url": "/data/tiles/gee_ndvi_2020/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "lst": {
+        "url": "/data/tiles/gee_lst_2020/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "tvdi": {
+        "url": "/data/tiles/gee_tvdi_2020/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      }
+    },
+    "2021": {
+      "ndvi": {
+        "url": "/data/tiles/gee_ndvi_2021/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "lst": {
+        "url": "/data/tiles/gee_lst_2021/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "tvdi": {
+        "url": "/data/tiles/gee_tvdi_2021/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      }
+    },
+    "2022": {
+      "ndvi": {
+        "url": "/data/tiles/gee_ndvi_2022/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "lst": {
+        "url": "/data/tiles/gee_lst_2022/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "tvdi": {
+        "url": "/data/tiles/gee_tvdi_2022/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      }
+    },
+    "2023": {
+      "ndvi": {
+        "url": "/data/tiles/gee_ndvi_2023/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "lst": {
+        "url": "/data/tiles/gee_lst_2023/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "tvdi": {
+        "url": "/data/tiles/gee_tvdi_2023/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      }
+    },
+    "2024": {
+      "ndvi": {
+        "url": "/data/tiles/gee_ndvi_2024/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "lst": {
+        "url": "/data/tiles/gee_lst_2024/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      },
+      "tvdi": {
+        "url": "/data/tiles/gee_tvdi_2024/{z}/{x}/{y}.png",
+        "bounds": [
+          [
+            10.312344724508907,
+            106.32315588059667
+          ],
+          [
+            11.510121946498282,
+            107.58320721057623
+          ]
+        ],
+        "min_zoom": 7,
+        "max_native_zoom": 12,
+        "tiles": 174
+      }
+    }
+  },
+  "query": {
+    "ndvi_2025": {
+      "path": "gee_recovery_ndvi_2025.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "lst_2025": {
+      "path": "gee_recovery_lst_2025.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "tvdi_2025": {
+      "path": "gee_recovery_tvdi_2025.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "ndvi_2020": {
+      "path": "gee_ndvi_2020.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "lst_2020": {
+      "path": "gee_lst_2020.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "tvdi_2020": {
+      "path": "gee_tvdi_2020.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "ndvi_2021": {
+      "path": "gee_ndvi_2021.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "lst_2021": {
+      "path": "gee_lst_2021.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "tvdi_2021": {
+      "path": "gee_tvdi_2021.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "ndvi_2022": {
+      "path": "gee_ndvi_2022.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "lst_2022": {
+      "path": "gee_lst_2022.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "tvdi_2022": {
+      "path": "gee_tvdi_2022.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "ndvi_2023": {
+      "path": "gee_ndvi_2023.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "lst_2023": {
+      "path": "gee_lst_2023.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "tvdi_2023": {
+      "path": "gee_tvdi_2023.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "ndvi_2024": {
+      "path": "gee_ndvi_2024.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "lst_2024": {
+      "path": "gee_lst_2024.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "tvdi_2024": {
+      "path": "gee_tvdi_2024.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "change_ndvi": {
+      "path": "gee_recovery_change_ndvi.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "change_lst": {
+      "path": "gee_recovery_change_lst.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    },
+    "change_tvdi": {
+      "path": "gee_recovery_change_tvdi.bin",
+      "width": 1141,
+      "height": 1097,
+      "bounds": [
+        106.32315588059667,
+        10.312344724508911,
+        107.58320721057623,
+        11.510121946498282
+      ]
+    }
+  },
+  "context": {
+    "worldcover": {
+      "url": "/data/tiles/gee_worldcover_2021/{z}/{x}/{y}.png",
+      "bounds": [
+        [
+          10.31271412745732,
+          106.32370525760224
+        ],
+        [
+          11.509396135854951,
+          107.58219298585419
+        ]
+      ],
+      "min_zoom": 7,
+      "max_native_zoom": 12,
+      "tiles": 174,
+      "year": 2021,
+      "source_resolution_m": 10,
+      "sample_resolution_m": 30,
+      "stats_resolution_m": 10,
+      "source": "ESA WorldCover v200 exported through Google Earth Engine",
+      "gee_asset": "ESA/WorldCover/v200",
+      "license": "CC BY 4.0",
+      "classes": [
+        {
+          "code": 10,
+          "name": "Cây thân gỗ",
+          "color": "#006400"
+        },
+        {
+          "code": 20,
+          "name": "Cây bụi",
+          "color": "#ffbb22"
+        },
+        {
+          "code": 30,
+          "name": "Đồng cỏ",
+          "color": "#ffff4c"
+        },
+        {
+          "code": 40,
+          "name": "Đất trồng trọt",
+          "color": "#f096ff"
+        },
+        {
+          "code": 50,
+          "name": "Khu xây dựng",
+          "color": "#fa0000"
+        },
+        {
+          "code": 60,
+          "name": "Đất trống / thực vật thưa",
+          "color": "#b4b4b4"
+        },
+        {
+          "code": 70,
+          "name": "Băng tuyết",
+          "color": "#f0f0f0"
+        },
+        {
+          "code": 80,
+          "name": "Mặt nước thường xuyên",
+          "color": "#0064c8"
+        },
+        {
+          "code": 90,
+          "name": "Đất ngập nước thân thảo",
+          "color": "#0096a0"
+        },
+        {
+          "code": 95,
+          "name": "Rừng ngập mặn",
+          "color": "#00cf75"
+        },
+        {
+          "code": 100,
+          "name": "Rêu và địa y",
+          "color": "#fae6a0"
+        }
+      ],
+      "download": "/api/gee/rasters/worldcover_2021_10m.tif",
+      "sha256_original": "3c68a7c35b589f78c8915d01dd5657f277ddbcc5d21812556e062eb5e109fa08"
+    }
+  },
+  "change": {
+    "ndvi": {
+      "url": "/data/tiles/gee_recovery_change_ndvi_2020_2025/{z}/{x}/{y}.png",
+      "bounds": [
+        [
+          10.312344724508907,
+          106.32315588059667
+        ],
+        [
+          11.510121946498282,
+          107.58320721057623
+        ]
+      ],
+      "min_zoom": 7,
+      "max_native_zoom": 12,
+      "tiles": 174,
+      "from": 2020,
+      "to": 2025,
+      "min": -0.3,
+      "max": 0.3,
+      "valid_pairs": 419071,
+      "note": "GEE 2020 vs gap-only recovered 2025; different scene dates, not causal."
+    },
+    "lst": {
+      "url": "/data/tiles/gee_recovery_change_lst_2020_2025/{z}/{x}/{y}.png",
+      "bounds": [
+        [
+          10.312344724508907,
+          106.32315588059667
+        ],
+        [
+          11.510121946498282,
+          107.58320721057623
+        ]
+      ],
+      "min_zoom": 7,
+      "max_native_zoom": 12,
+      "tiles": 174,
+      "from": 2020,
+      "to": 2025,
+      "min": -10,
+      "max": 10,
+      "valid_pairs": 419071,
+      "note": "GEE 2020 vs gap-only recovered 2025; different scene dates, not causal."
+    },
+    "tvdi": {
+      "url": "/data/tiles/gee_recovery_change_tvdi_2020_2025/{z}/{x}/{y}.png",
+      "bounds": [
+        [
+          10.312344724508907,
+          106.32315588059667
+        ],
+        [
+          11.510121946498282,
+          107.58320721057623
+        ]
+      ],
+      "min_zoom": 7,
+      "max_native_zoom": 12,
+      "tiles": 174,
+      "from": 2020,
+      "to": 2025,
+      "min": -0.4,
+      "max": 0.4,
+      "valid_pairs": 340897,
+      "note": "GEE 2020 vs gap-only recovered 2025; different scene dates, not causal."
+    }
+  },
+  "audits": {
+    "2025": {
+      "year": 2025,
+      "original_files": [
+        {
+          "file": "MobileGIS_indices_2025_120m.tif",
+          "sha256": "27ae33782d5a161dfb521cbb829c253408855c0073b9f3fb0efaa9fe808d323a",
+          "bytes": 6840200,
+          "download": "/api/gee/originals/MobileGIS_indices_2025_120m.tif"
+        },
+        {
+          "file": "MobileGIS_units_2025_120m.csv",
+          "sha256": "24f79dc7a02c36833f43ad32dcc3e64b82baa5ce263147f875673dc9875e57be",
+          "bytes": 72271,
+          "download": "/api/gee/originals/MobileGIS_units_2025_120m.csv"
+        },
+        {
+          "file": "MobileGIS_scenes_2025.csv",
+          "sha256": "12ea69a979241c78d45406fa59e0b8556c3e218599dc3b682e905066a46bb331",
+          "bytes": 1002,
+          "download": "/api/gee/originals/MobileGIS_scenes_2025.csv"
+        },
+        {
+          "file": "MobileGIS_recovery_2025_batch1_120m.tif",
+          "sha256": "905dce70ebd1ea7ef5d5833c3ae362840e39b4b604cebd24d851a6f1c6c4d9f4",
+          "download": "/api/gee_recovery/originals/MobileGIS_recovery_2025_batch1_120m.tif"
+        },
+        {
+          "file": "MobileGIS_recovery_2025_batch1_scenes.csv",
+          "sha256": "af0302168bf20b594d348c74950631e4b019cf3f5b8d8e398a2eab9a09dd2e11",
+          "download": "/api/gee_recovery/originals/MobileGIS_recovery_2025_batch1_scenes.csv"
+        },
+        {
+          "file": "MobileGIS_recovery_2025_batch1_diagnostics.csv",
+          "sha256": "3f07c8fee65b9bb44f190c6a48151d7c530b4b2833b2fcd90b1bbc350f748602",
+          "download": "/api/gee_recovery/originals/MobileGIS_recovery_2025_batch1_diagnostics.csv"
+        }
+      ],
+      "units": 167,
+      "method": "Preserve every finite baseline value; fill only entirely missing triplets in five target wards with same-scene Jan–Apr 2025 pixels.",
+      "original_bad_coverage": {
+        "ndvi": 121,
+        "lst": 121,
+        "tvdi": 90
+      },
+      "valid_means": {
+        "ndvi": 167,
+        "lst": 167,
+        "tvdi": 167
+      },
+      "missing_units": {
+        "ndvi": [],
+        "lst": [],
+        "tvdi": []
+      },
+      "finite_pixels": {
+        "ndvi": 429578,
+        "lst": 429578,
+        "tvdi": 390322
+      },
+      "raster": "/api/gee_recovery/rasters/indices_2025_recovery_batch1_120m.tif",
+      "scenes": [
+        {
+          "system:index": "0",
+          "CLOUD_COVER": "1.95",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_124052_20250301_20250304_02_T1",
+          "acquisition_date": "2025-03-01",
+          "dry_intercept": "47.45196199151837",
+          "dry_slope": "-14.633679215915045",
+          "resolution_m": "120",
+          "tvdi_bins": "12",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "31.787145635790605",
+          "wet_slope": "0.045859301022968486",
+          "year": "2025",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "1",
+          "CLOUD_COVER": "5.12",
+          "LANDSAT_PRODUCT_ID": "LC09_L2SP_124053_20250205_20250206_02_T1",
+          "acquisition_date": "2025-02-05",
+          "dry_intercept": "47.79594993266267",
+          "dry_slope": "-17.785904392363125",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "28.63745151456647",
+          "wet_slope": "-0.18005275697088943",
+          "year": "2025",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "2",
+          "CLOUD_COVER": "2.21",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_125052_20250204_20250208_02_T1",
+          "acquisition_date": "2025-02-04",
+          "dry_intercept": "46.981818975327435",
+          "dry_slope": "-14.630135467832078",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "35.64258621060873",
+          "wet_slope": "-14.187539343419962",
+          "year": "2025",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "3",
+          "CLOUD_COVER": "0.33",
+          "LANDSAT_PRODUCT_ID": "LC09_L2SP_125053_20250228_20250301_02_T1",
+          "acquisition_date": "2025-02-28",
+          "dry_intercept": "48.73698872203495",
+          "dry_slope": "-15.340724124886828",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "34.54565714623769",
+          "wet_slope": "-4.3364905323217835",
+          "year": "2025",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "scene_index": "1",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_124052_20250112_20250122_02_T1",
+          "acquisition_date": "2025-01-12",
+          "day_of_year": "12",
+          "CLOUD_COVER": "11.48",
+          "WRS_PATH": "124.0",
+          "WRS_ROW": "52.0",
+          "target_joint_pixels": "119.0",
+          "year": "2025",
+          "recovery_batch": "1",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_slope": "-3.007004496949085",
+          "wet_intercept": "30.950888079641313",
+          "dry_slope": "-12.0620904832987",
+          "dry_intercept": "42.4115626098942"
+        },
+        {
+          "scene_index": "2",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20250112_20250122_02_T1",
+          "acquisition_date": "2025-01-12",
+          "day_of_year": "12",
+          "CLOUD_COVER": "27.61",
+          "WRS_PATH": "124.0",
+          "WRS_ROW": "53.0",
+          "target_joint_pixels": "125.0",
+          "year": "2025",
+          "recovery_batch": "1",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_slope": "-1.2198807522515085",
+          "wet_intercept": "28.339735184380817",
+          "dry_slope": "-12.329364865642553",
+          "dry_intercept": "43.94688389476855"
+        },
+        {
+          "scene_index": "3",
+          "LANDSAT_PRODUCT_ID": "LC09_L2SP_125052_20250228_20250301_02_T1",
+          "acquisition_date": "2025-02-28",
+          "day_of_year": "59",
+          "CLOUD_COVER": "3.29",
+          "WRS_PATH": "125.0",
+          "WRS_ROW": "52.0",
+          "target_joint_pixels": "7124.0",
+          "year": "2025",
+          "recovery_batch": "1",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_slope": "-10.206806430495782",
+          "wet_intercept": "38.77130018232891",
+          "dry_slope": "-17.02689527390128",
+          "dry_intercept": "50.1743214856999"
+        },
+        {
+          "scene_index": "4",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_125053_20250425_20250429_02_T1",
+          "acquisition_date": "2025-04-25",
+          "day_of_year": "115",
+          "CLOUD_COVER": "26.79",
+          "WRS_PATH": "125.0",
+          "WRS_ROW": "53.0",
+          "target_joint_pixels": "15.0",
+          "year": "2025",
+          "recovery_batch": "1",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_slope": "-20.791357871675217",
+          "wet_intercept": "41.769083739489844",
+          "dry_slope": "-16.494328426759424",
+          "dry_intercept": "52.11138890230592"
+        }
+      ]
+    },
+    "2020": {
+      "year": 2020,
+      "original_files": [
+        {
+          "file": "MobileGIS_indices_2020_120m.tif",
+          "sha256": "880a394f1bee10f428428641fcb14a0be149323cb9c77e4b63805c4ffc0104bc",
+          "bytes": 7949943,
+          "download": "/api/gee/originals/MobileGIS_indices_2020_120m.tif"
+        },
+        {
+          "file": "MobileGIS_units_2020_120m.csv",
+          "sha256": "536f2c7ccd23fef2d52902010bb3fb260c4b6a7bd6c56f6e07554e82fb2eb777",
+          "bytes": 73784,
+          "download": "/api/gee/originals/MobileGIS_units_2020_120m.csv"
+        },
+        {
+          "file": "MobileGIS_scenes_2020.csv",
+          "sha256": "7fca7fbacd92f38188bc6907c9fcca6686b647fa11b8179998672a4b506b4337",
+          "bytes": 995,
+          "download": "/api/gee/originals/MobileGIS_scenes_2020.csv"
+        }
+      ],
+      "units": 167,
+      "method": "Recomputed directly from exported TIFF using original uploaded polygons; unweighted pixel centres, float64 means. Original GEE weighted means may differ.",
+      "original_bad_coverage": {
+        "ndvi": 0,
+        "lst": 0,
+        "tvdi": 0
+      },
+      "valid_means": {
+        "ndvi": 167,
+        "lst": 167,
+        "tvdi": 167
+      },
+      "missing_units": {
+        "ndvi": [],
+        "lst": [],
+        "tvdi": []
+      },
+      "finite_pixels": {
+        "ndvi": 449497,
+        "lst": 449497,
+        "tvdi": 383753
+      },
+      "mean_differences": {
+        "ndvi": {
+          "max_absolute": 0.0011911707819894368,
+          "median_absolute": 0.0
+        },
+        "lst": {
+          "max_absolute": 0.007846075263799435,
+          "median_absolute": 0.0
+        },
+        "tvdi": {
+          "max_absolute": 0.0007441592409552777,
+          "median_absolute": 0.0
+        }
+      },
+      "raster": "/api/gee/rasters/indices_2020_120m.tif",
+      "scenes": [
+        {
+          "system:index": "0",
+          "CLOUD_COVER": "0.2",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_124052_20200115_20200824_02_T1",
+          "acquisition_date": "2020-01-15",
+          "dry_intercept": "47.690212737961524",
+          "dry_slope": "-16.914275139020884",
+          "resolution_m": "120",
+          "tvdi_bins": "12",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "32.09222812806094",
+          "wet_slope": "-1.0582416991259067",
+          "year": "2020",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "1",
+          "CLOUD_COVER": "0.41",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20200115_20200823_02_T1",
+          "acquisition_date": "2020-01-15",
+          "dry_intercept": "45.61747481317775",
+          "dry_slope": "-13.628549977349143",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "30.858759251736544",
+          "wet_slope": "-1.19823907581767",
+          "year": "2020",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "2",
+          "CLOUD_COVER": "0.23",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_125052_20200223_20200822_02_T1",
+          "acquisition_date": "2020-02-23",
+          "dry_intercept": "48.91205209773501",
+          "dry_slope": "-15.327777574633306",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "37.77384465604638",
+          "wet_slope": "-8.373675963951866",
+          "year": "2020",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "3",
+          "CLOUD_COVER": "0.26",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_125053_20200223_20200822_02_T1",
+          "acquisition_date": "2020-02-23",
+          "dry_intercept": "48.09396854638406",
+          "dry_slope": "-15.123090538191946",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "34.49368419239883",
+          "wet_slope": "-5.852404685667009",
+          "year": "2020",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        }
+      ]
+    },
+    "2021": {
+      "year": 2021,
+      "original_files": [
+        {
+          "file": "MobileGIS_indices_2021_120m.tif",
+          "sha256": "534e34cc7872fb2ffe8ad3114426cac9bb77ef7c943d2a302644cd8025b1b6c3",
+          "bytes": 8293329,
+          "download": "/api/gee/originals/MobileGIS_indices_2021_120m.tif"
+        },
+        {
+          "file": "MobileGIS_units_2021_120m.csv",
+          "sha256": "934eca042fd2e3684efe1c169ae2d687a2b216e7820f2671699c436b2859a801",
+          "bytes": 73223,
+          "download": "/api/gee/originals/MobileGIS_units_2021_120m.csv"
+        },
+        {
+          "file": "MobileGIS_scenes_2021.csv",
+          "sha256": "2c9151d00473ed9d5002cd06500d7c8d10c57411432a8a0c48e2847e4ed21748",
+          "bytes": 996,
+          "download": "/api/gee/originals/MobileGIS_scenes_2021.csv"
+        }
+      ],
+      "units": 167,
+      "method": "Recomputed directly from exported TIFF using original uploaded polygons; unweighted pixel centres, float64 means. Original GEE weighted means may differ.",
+      "original_bad_coverage": {
+        "ndvi": 0,
+        "lst": 0,
+        "tvdi": 0
+      },
+      "valid_means": {
+        "ndvi": 167,
+        "lst": 167,
+        "tvdi": 167
+      },
+      "missing_units": {
+        "ndvi": [],
+        "lst": [],
+        "tvdi": []
+      },
+      "finite_pixels": {
+        "ndvi": 460332,
+        "lst": 460332,
+        "tvdi": 421765
+      },
+      "mean_differences": {
+        "ndvi": {
+          "max_absolute": 0.0008816251309530787,
+          "median_absolute": 0.0
+        },
+        "lst": {
+          "max_absolute": 0.007909358723814819,
+          "median_absolute": 0.0
+        },
+        "tvdi": {
+          "max_absolute": 0.0004386638803524634,
+          "median_absolute": 0.0
+        }
+      },
+      "raster": "/api/gee/rasters/indices_2021_120m.tif",
+      "scenes": [
+        {
+          "system:index": "0",
+          "CLOUD_COVER": "0.07",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_124052_20210306_20210312_02_T1",
+          "acquisition_date": "2021-03-06",
+          "dry_intercept": "52.232473112133235",
+          "dry_slope": "-18.12643422568071",
+          "resolution_m": "120",
+          "tvdi_bins": "13",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "34.37800431040521",
+          "wet_slope": "-1.3653187882653308",
+          "year": "2021",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "1",
+          "CLOUD_COVER": "0.01",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20210306_20210312_02_T1",
+          "acquisition_date": "2021-03-06",
+          "dry_intercept": "49.96463780789781",
+          "dry_slope": "-14.323772013248917",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "32.24516961572057",
+          "wet_slope": "-0.6276298823116863",
+          "year": "2021",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "2",
+          "CLOUD_COVER": "1.04",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_125052_20210313_20210318_02_T1",
+          "acquisition_date": "2021-03-13",
+          "dry_intercept": "49.73581368748848",
+          "dry_slope": "-16.88963034969563",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "38.202621223204375",
+          "wet_slope": "-7.997719149544629",
+          "year": "2021",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "3",
+          "CLOUD_COVER": "18.9",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_125053_20210313_20210318_02_T1",
+          "acquisition_date": "2021-03-13",
+          "dry_intercept": "46.55884955315279",
+          "dry_slope": "-13.35506905300091",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "35.221167715600565",
+          "wet_slope": "-5.152377958337252",
+          "year": "2021",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        }
+      ]
+    },
+    "2022": {
+      "year": 2022,
+      "original_files": [
+        {
+          "file": "MobileGIS_indices_2022_120m.tif",
+          "sha256": "0cb74f781d7bad805024437d3be37a6de66785d300fd32770423e23c41c5304a",
+          "bytes": 7411476,
+          "download": "/api/gee/originals/MobileGIS_indices_2022_120m.tif"
+        },
+        {
+          "file": "MobileGIS_units_2022_120m.csv",
+          "sha256": "0521ee62f328e517a4beb14578d3f2eab175727a3055f95c29cf6df2f1fa005b",
+          "bytes": 73634,
+          "download": "/api/gee/originals/MobileGIS_units_2022_120m.csv"
+        },
+        {
+          "file": "MobileGIS_scenes_2022.csv",
+          "sha256": "1748f3ef8938d395e3974850554c0afe7db60daa78b53e5674844929d8e20e2c",
+          "bytes": 1000,
+          "download": "/api/gee/originals/MobileGIS_scenes_2022.csv"
+        }
+      ],
+      "units": 167,
+      "method": "Recomputed directly from exported TIFF using original uploaded polygons; unweighted pixel centres, float64 means. Original GEE weighted means may differ.",
+      "original_bad_coverage": {
+        "ndvi": 0,
+        "lst": 0,
+        "tvdi": 0
+      },
+      "valid_means": {
+        "ndvi": 167,
+        "lst": 167,
+        "tvdi": 167
+      },
+      "missing_units": {
+        "ndvi": [],
+        "lst": [],
+        "tvdi": []
+      },
+      "finite_pixels": {
+        "ndvi": 408334,
+        "lst": 408334,
+        "tvdi": 369273
+      },
+      "mean_differences": {
+        "ndvi": {
+          "max_absolute": 0.001286846503130934,
+          "median_absolute": 0.0
+        },
+        "lst": {
+          "max_absolute": 0.01735129678208125,
+          "median_absolute": 0.0
+        },
+        "tvdi": {
+          "max_absolute": 0.00048184331829487226,
+          "median_absolute": 0.0
+        }
+      },
+      "raster": "/api/gee/rasters/indices_2022_120m.tif",
+      "scenes": [
+        {
+          "system:index": "0",
+          "CLOUD_COVER": "9.33",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_124052_20220120_20220127_02_T1",
+          "acquisition_date": "2022-01-20",
+          "dry_intercept": "46.16655520164313",
+          "dry_slope": "-16.398195094285754",
+          "resolution_m": "120",
+          "tvdi_bins": "10",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "31.605564353136504",
+          "wet_slope": "-3.4505084527273695",
+          "year": "2022",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "1",
+          "CLOUD_COVER": "8.63",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20220325_20220330_02_T1",
+          "acquisition_date": "2022-03-25",
+          "dry_intercept": "56.708179008773875",
+          "dry_slope": "-17.944472520187936",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "36.8797527141501",
+          "wet_slope": "-3.7660343476362073",
+          "year": "2022",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "2",
+          "CLOUD_COVER": "0.18",
+          "LANDSAT_PRODUCT_ID": "LC09_L2SP_125052_20220119_20230501_02_T1",
+          "acquisition_date": "2022-01-19",
+          "dry_intercept": "45.15754889793681",
+          "dry_slope": "-15.610736218893624",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "34.009567240330554",
+          "wet_slope": "-6.039588508505364",
+          "year": "2022",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "3",
+          "CLOUD_COVER": "9.92",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_125053_20220111_20220122_02_T1",
+          "acquisition_date": "2022-01-11",
+          "dry_intercept": "46.83729124518148",
+          "dry_slope": "-14.995306898893485",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "33.854411131707586",
+          "wet_slope": "-6.6218618694291855",
+          "year": "2022",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        }
+      ]
+    },
+    "2023": {
+      "year": 2023,
+      "original_files": [
+        {
+          "file": "MobileGIS_indices_2023_120m.tif",
+          "sha256": "762ed0413a524d5874127a1d35268b7f36db5095fcd051f06b635b19d99c5cab",
+          "bytes": 7946496,
+          "download": "/api/gee/originals/MobileGIS_indices_2023_120m.tif"
+        },
+        {
+          "file": "MobileGIS_units_2023_120m.csv",
+          "sha256": "7ba3027272232fb0d518f10f8516839136355d2965aef12a0be6660150a99b4b",
+          "bytes": 73529,
+          "download": "/api/gee/originals/MobileGIS_units_2023_120m.csv"
+        },
+        {
+          "file": "MobileGIS_scenes_2023.csv",
+          "sha256": "ac4de967f03d744e1a72025d8bbfdf5b921036dd5b407aa5840b7886689f4bcf",
+          "bytes": 997,
+          "download": "/api/gee/originals/MobileGIS_scenes_2023.csv"
+        }
+      ],
+      "units": 167,
+      "method": "Recomputed directly from exported TIFF using original uploaded polygons; unweighted pixel centres, float64 means. Original GEE weighted means may differ.",
+      "original_bad_coverage": {
+        "ndvi": 0,
+        "lst": 0,
+        "tvdi": 0
+      },
+      "valid_means": {
+        "ndvi": 167,
+        "lst": 167,
+        "tvdi": 167
+      },
+      "missing_units": {
+        "ndvi": [],
+        "lst": [],
+        "tvdi": []
+      },
+      "finite_pixels": {
+        "ndvi": 437193,
+        "lst": 437193,
+        "tvdi": 407079
+      },
+      "mean_differences": {
+        "ndvi": {
+          "max_absolute": 0.0008043294845588855,
+          "median_absolute": 0.0
+        },
+        "lst": {
+          "max_absolute": 0.010174589366215514,
+          "median_absolute": 0.0
+        },
+        "tvdi": {
+          "max_absolute": 0.0003044023021440134,
+          "median_absolute": 0.0
+        }
+      },
+      "raster": "/api/gee/rasters/indices_2023_120m.tif",
+      "scenes": [
+        {
+          "system:index": "0",
+          "CLOUD_COVER": "1.25",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_124052_20230224_20230301_02_T1",
+          "acquisition_date": "2023-02-24",
+          "dry_intercept": "55.01543048053908",
+          "dry_slope": "-21.104606982867097",
+          "resolution_m": "120",
+          "tvdi_bins": "12",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "37.73172095988129",
+          "wet_slope": "-4.844621777564696",
+          "year": "2023",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "1",
+          "CLOUD_COVER": "1.27",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20230224_20230301_02_T1",
+          "acquisition_date": "2023-02-24",
+          "dry_intercept": "52.1528465404019",
+          "dry_slope": "-16.970383075481344",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "33.97785795853642",
+          "wet_slope": "-2.4322927315972627",
+          "year": "2023",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "2",
+          "CLOUD_COVER": "0.63",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_125052_20230319_20230324_02_T1",
+          "acquisition_date": "2023-03-19",
+          "dry_intercept": "53.94592546382115",
+          "dry_slope": "-17.371111191439674",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "39.447969513372264",
+          "wet_slope": "-7.843703742710209",
+          "year": "2023",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "3",
+          "CLOUD_COVER": "13.54",
+          "LANDSAT_PRODUCT_ID": "LC09_L2SP_125053_20230311_20230313_02_T1",
+          "acquisition_date": "2023-03-11",
+          "dry_intercept": "47.454441377926535",
+          "dry_slope": "-17.85219759745742",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "33.019090978632256",
+          "wet_slope": "-6.761298730362671",
+          "year": "2023",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        }
+      ]
+    },
+    "2024": {
+      "year": 2024,
+      "original_files": [
+        {
+          "file": "MobileGIS_indices_2024_120m.tif",
+          "sha256": "b2998870166878918d950961e5917bcfe8afcc161381c721d05823b3af6ab508",
+          "bytes": 8193231,
+          "download": "/api/gee/originals/MobileGIS_indices_2024_120m.tif"
+        },
+        {
+          "file": "MobileGIS_units_2024_120m.csv",
+          "sha256": "6e2c7582f4e3fe1ebd217ea0192483650fbfb5ad66ce76e34ba94da7a70d09da",
+          "bytes": 72738,
+          "download": "/api/gee/originals/MobileGIS_units_2024_120m.csv"
+        },
+        {
+          "file": "MobileGIS_scenes_2024.csv",
+          "sha256": "af75bcdfeb3dc6e3ae88b9cdcecc5d1c0a130147237e458f5c1feef2f474b68e",
+          "bytes": 995,
+          "download": "/api/gee/originals/MobileGIS_scenes_2024.csv"
+        }
+      ],
+      "units": 167,
+      "method": "Recomputed directly from exported TIFF using original uploaded polygons; unweighted pixel centres, float64 means. Original GEE weighted means may differ.",
+      "original_bad_coverage": {
+        "ndvi": 0,
+        "lst": 0,
+        "tvdi": 0
+      },
+      "valid_means": {
+        "ndvi": 167,
+        "lst": 167,
+        "tvdi": 167
+      },
+      "missing_units": {
+        "ndvi": [],
+        "lst": [],
+        "tvdi": []
+      },
+      "finite_pixels": {
+        "ndvi": 460329,
+        "lst": 460329,
+        "tvdi": 403405
+      },
+      "mean_differences": {
+        "ndvi": {
+          "max_absolute": 0.0012012681972574657,
+          "median_absolute": 0.0
+        },
+        "lst": {
+          "max_absolute": 0.009115160180016346,
+          "median_absolute": 0.0
+        },
+        "tvdi": {
+          "max_absolute": 0.00033282776467180586,
+          "median_absolute": 0.0
+        }
+      },
+      "raster": "/api/gee/rasters/indices_2024_120m.tif",
+      "scenes": [
+        {
+          "system:index": "0",
+          "CLOUD_COVER": "0.34",
+          "LANDSAT_PRODUCT_ID": "LC09_L2SP_124052_20240203_20240208_02_T1",
+          "acquisition_date": "2024-02-03",
+          "dry_intercept": "46.44740435402804",
+          "dry_slope": "-13.435079647357107",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "37.43938274914555",
+          "wet_slope": "-8.036866035262138",
+          "year": "2024",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "1",
+          "CLOUD_COVER": "0.75",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20240211_20240213_02_T1",
+          "acquisition_date": "2024-02-11",
+          "dry_intercept": "49.90238409765511",
+          "dry_slope": "-16.1713660696684",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "31.990590050568567",
+          "wet_slope": "-0.9452955402790574",
+          "year": "2024",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "2",
+          "CLOUD_COVER": "0.06",
+          "LANDSAT_PRODUCT_ID": "LC08_L2SP_125052_20240218_20240223_02_T1",
+          "acquisition_date": "2024-02-18",
+          "dry_intercept": "51.320394760820726",
+          "dry_slope": "-17.115455382844164",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "38.841181317764914",
+          "wet_slope": "-8.010556855400653",
+          "year": "2024",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        },
+        {
+          "system:index": "3",
+          "CLOUD_COVER": "2.04",
+          "LANDSAT_PRODUCT_ID": "LC09_L2SP_125053_20240226_20240228_02_T1",
+          "acquisition_date": "2024-02-26",
+          "dry_intercept": "48.1774833368782",
+          "dry_slope": "-16.38377816815454",
+          "resolution_m": "120",
+          "tvdi_bins": "15",
+          "tvdi_status": "experimental_fit",
+          "wet_intercept": "34.811595707607076",
+          "wet_slope": "-4.689292446226105",
+          "year": "2024",
+          ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+        }
+      ]
+    }
+  },
+  "available_years": [
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "pending_years": [],
+  "generated_at": "2026-10-04T10:11:18Z",
+  "method": "Independent GEE source. Grid centres; do not mix with legacy PC seasonal results.",
+  "baseline_2025_audit": {
+    "year": 2025,
+    "original_files": [
+      {
+        "file": "MobileGIS_indices_2025_120m.tif",
+        "sha256": "27ae33782d5a161dfb521cbb829c253408855c0073b9f3fb0efaa9fe808d323a",
+        "bytes": 6840200,
+        "download": "/api/gee/originals/MobileGIS_indices_2025_120m.tif"
+      },
+      {
+        "file": "MobileGIS_units_2025_120m.csv",
+        "sha256": "24f79dc7a02c36833f43ad32dcc3e64b82baa5ce263147f875673dc9875e57be",
+        "bytes": 72271,
+        "download": "/api/gee/originals/MobileGIS_units_2025_120m.csv"
+      },
+      {
+        "file": "MobileGIS_scenes_2025.csv",
+        "sha256": "12ea69a979241c78d45406fa59e0b8556c3e218599dc3b682e905066a46bb331",
+        "bytes": 1002,
+        "download": "/api/gee/originals/MobileGIS_scenes_2025.csv"
+      }
+    ],
+    "units": 167,
+    "method": "Recomputed directly from exported TIFF using original uploaded polygons; unweighted pixel centres, float64 means. Original GEE weighted means may differ.",
+    "original_bad_coverage": {
+      "ndvi": 121,
+      "lst": 121,
+      "tvdi": 90
+    },
+    "valid_means": {
+      "ndvi": 162,
+      "lst": 162,
+      "tvdi": 162
+    },
+    "missing_units": {
+      "ndvi": [
+        "Phường Dĩ An",
+        "Phường Tân Đông Hiệp",
+        "Phường Đông Hoà",
+        "Phường Thuận Giao",
+        "Phường An Phú"
+      ],
+      "lst": [
+        "Phường Dĩ An",
+        "Phường Tân Đông Hiệp",
+        "Phường Đông Hoà",
+        "Phường Thuận Giao",
+        "Phường An Phú"
+      ],
+      "tvdi": [
+        "Phường Dĩ An",
+        "Phường Tân Đông Hiệp",
+        "Phường Đông Hoà",
+        "Phường Thuận Giao",
+        "Phường An Phú"
+      ]
+    },
+    "finite_pixels": {
+      "ndvi": 423253,
+      "lst": 423253,
+      "tvdi": 383997
+    },
+    "mean_differences": {
+      "ndvi": {
+        "max_absolute": 0.004284707541412525,
+        "median_absolute": 0.0004860577519370246
+      },
+      "lst": {
+        "max_absolute": 0.09949883179968566,
+        "median_absolute": 0.006108185956712475
+      },
+      "tvdi": {
+        "max_absolute": 0.003758325872915691,
+        "median_absolute": 0.00046872204044454135
+      }
+    },
+    "raster": "/api/gee/rasters/indices_2025_120m.tif",
+    "scenes": [
+      {
+        "system:index": "0",
+        "CLOUD_COVER": "1.95",
+        "LANDSAT_PRODUCT_ID": "LC08_L2SP_124052_20250301_20250304_02_T1",
+        "acquisition_date": "2025-03-01",
+        "dry_intercept": "47.45196199151837",
+        "dry_slope": "-14.633679215915045",
+        "resolution_m": "120",
+        "tvdi_bins": "12",
+        "tvdi_status": "experimental_fit",
+        "wet_intercept": "31.787145635790605",
+        "wet_slope": "0.045859301022968486",
+        "year": "2025",
+        ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+      },
+      {
+        "system:index": "1",
+        "CLOUD_COVER": "5.12",
+        "LANDSAT_PRODUCT_ID": "LC09_L2SP_124053_20250205_20250206_02_T1",
+        "acquisition_date": "2025-02-05",
+        "dry_intercept": "47.79594993266267",
+        "dry_slope": "-17.785904392363125",
+        "resolution_m": "120",
+        "tvdi_bins": "15",
+        "tvdi_status": "experimental_fit",
+        "wet_intercept": "28.63745151456647",
+        "wet_slope": "-0.18005275697088943",
+        "year": "2025",
+        ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+      },
+      {
+        "system:index": "2",
+        "CLOUD_COVER": "2.21",
+        "LANDSAT_PRODUCT_ID": "LC08_L2SP_125052_20250204_20250208_02_T1",
+        "acquisition_date": "2025-02-04",
+        "dry_intercept": "46.981818975327435",
+        "dry_slope": "-14.630135467832078",
+        "resolution_m": "120",
+        "tvdi_bins": "15",
+        "tvdi_status": "experimental_fit",
+        "wet_intercept": "35.64258621060873",
+        "wet_slope": "-14.187539343419962",
+        "year": "2025",
+        ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+      },
+      {
+        "system:index": "3",
+        "CLOUD_COVER": "0.33",
+        "LANDSAT_PRODUCT_ID": "LC09_L2SP_125053_20250228_20250301_02_T1",
+        "acquisition_date": "2025-02-28",
+        "dry_intercept": "48.73698872203495",
+        "dry_slope": "-15.340724124886828",
+        "resolution_m": "120",
+        "tvdi_bins": "15",
+        "tvdi_status": "experimental_fit",
+        "wet_intercept": "34.54565714623769",
+        "wet_slope": "-4.3364905323217835",
+        "year": "2025",
+        ".geo": "{\"type\":\"MultiPoint\",\"coordinates\":[]}"
+      }
+    ]
+  },
+  "recovery": {
+    "status": "published_separate_source",
+    "year": 2025,
+    "batch": 1,
+    "method": "Preserve every finite baseline value; fill only entirely missing triplets in five target wards with same-scene Jan–Apr 2025 pixels.",
+    "filled_pixels": 6325,
+    "discarded_outside_target_pixels": 351,
+    "baseline_sha256": "e99d071d2b91ec7bbeecbe7c937c20b2fdbeb2dbdad1afbc4848fd6b721eede5",
+    "input_files": [
+      {
+        "file": "MobileGIS_recovery_2025_batch1_120m.tif",
+        "sha256": "905dce70ebd1ea7ef5d5833c3ae362840e39b4b604cebd24d851a6f1c6c4d9f4"
+      },
+      {
+        "file": "MobileGIS_recovery_2025_batch1_scenes.csv",
+        "sha256": "af0302168bf20b594d348c74950631e4b019cf3f5b8d8e398a2eab9a09dd2e11"
+      },
+      {
+        "file": "MobileGIS_recovery_2025_batch1_diagnostics.csv",
+        "sha256": "3f07c8fee65b9bb44f190c6a48151d7c530b4b2833b2fcd90b1bbc350f748602"
+      }
+    ],
+    "scenes": [
+      {
+        "scene_index": "1",
+        "LANDSAT_PRODUCT_ID": "LC08_L2SP_124052_20250112_20250122_02_T1",
+        "acquisition_date": "2025-01-12",
+        "day_of_year": "12",
+        "CLOUD_COVER": "11.48",
+        "WRS_PATH": "124.0",
+        "WRS_ROW": "52.0",
+        "target_joint_pixels": "119.0",
+        "year": "2025",
+        "recovery_batch": "1",
+        "resolution_m": "120",
+        "tvdi_bins": "15",
+        "tvdi_status": "experimental_fit",
+        "wet_slope": "-3.007004496949085",
+        "wet_intercept": "30.950888079641313",
+        "dry_slope": "-12.0620904832987",
+        "dry_intercept": "42.4115626098942"
+      },
+      {
+        "scene_index": "2",
+        "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20250112_20250122_02_T1",
+        "acquisition_date": "2025-01-12",
+        "day_of_year": "12",
+        "CLOUD_COVER": "27.61",
+        "WRS_PATH": "124.0",
+        "WRS_ROW": "53.0",
+        "target_joint_pixels": "125.0",
+        "year": "2025",
+        "recovery_batch": "1",
+        "resolution_m": "120",
+        "tvdi_bins": "15",
+        "tvdi_status": "experimental_fit",
+        "wet_slope": "-1.2198807522515085",
+        "wet_intercept": "28.339735184380817",
+        "dry_slope": "-12.329364865642553",
+        "dry_intercept": "43.94688389476855"
+      },
+      {
+        "scene_index": "3",
+        "LANDSAT_PRODUCT_ID": "LC09_L2SP_125052_20250228_20250301_02_T1",
+        "acquisition_date": "2025-02-28",
+        "day_of_year": "59",
+        "CLOUD_COVER": "3.29",
+        "WRS_PATH": "125.0",
+        "WRS_ROW": "52.0",
+        "target_joint_pixels": "7124.0",
+        "year": "2025",
+        "recovery_batch": "1",
+        "resolution_m": "120",
+        "tvdi_bins": "15",
+        "tvdi_status": "experimental_fit",
+        "wet_slope": "-10.206806430495782",
+        "wet_intercept": "38.77130018232891",
+        "dry_slope": "-17.02689527390128",
+        "dry_intercept": "50.1743214856999"
+      },
+      {
+        "scene_index": "4",
+        "LANDSAT_PRODUCT_ID": "LC08_L2SP_125053_20250425_20250429_02_T1",
+        "acquisition_date": "2025-04-25",
+        "day_of_year": "115",
+        "CLOUD_COVER": "26.79",
+        "WRS_PATH": "125.0",
+        "WRS_ROW": "53.0",
+        "target_joint_pixels": "15.0",
+        "year": "2025",
+        "recovery_batch": "1",
+        "resolution_m": "120",
+        "tvdi_bins": "15",
+        "tvdi_status": "experimental_fit",
+        "wet_slope": "-20.791357871675217",
+        "wet_intercept": "41.769083739489844",
+        "dry_slope": "-16.494328426759424",
+        "dry_intercept": "52.11138890230592"
+      }
+    ],
+    "per_scene_filled_pixels": {
+      "1": 1,
+      "2": 0,
+      "3": 6324,
+      "4": 0
+    },
+    "wards": [
+      {
+        "code": "25942",
+        "name": "Phường Dĩ An",
+        "before": {
+          "ndvi": null,
+          "ndvi_pixels": 70,
+          "ndvi_coverage": 0.04713804713804714,
+          "lst": null,
+          "lst_pixels": 70,
+          "lst_coverage": 0.04713804713804714,
+          "tvdi": null,
+          "tvdi_pixels": 70,
+          "tvdi_coverage": 0.04713804713804714
+        },
+        "after": {
+          "ndvi": 0.24770715288458758,
+          "ndvi_pixels": 1473,
+          "ndvi_coverage": 0.9919191919191919,
+          "lst": 43.078090420403775,
+          "lst_pixels": 1473,
+          "lst_coverage": 0.9919191919191919,
+          "tvdi": 0.7164174955646784,
+          "tvdi_pixels": 1473,
+          "tvdi_coverage": 0.9919191919191919
+        },
+        "enough_at_10_percent": true,
+        "enough_at_50_percent": true
+      },
+      {
+        "code": "25945",
+        "name": "Phường Tân Đông Hiệp",
+        "before": {
+          "ndvi": null,
+          "ndvi_pixels": 111,
+          "ndvi_coverage": 0.07484828051247472,
+          "lst": null,
+          "lst_pixels": 111,
+          "lst_coverage": 0.07484828051247472,
+          "tvdi": null,
+          "tvdi_pixels": 110,
+          "tvdi_coverage": 0.07417397167902899
+        },
+        "after": {
+          "ndvi": 0.3963300593068443,
+          "ndvi_pixels": 1445,
+          "ndvi_coverage": 0.9743762643290627,
+          "lst": 39.63777867617492,
+          "lst_pixels": 1445,
+          "lst_coverage": 0.9743762643290627,
+          "tvdi": 0.6008292731391704,
+          "tvdi_pixels": 1444,
+          "tvdi_coverage": 0.973701955495617
+        },
+        "enough_at_10_percent": true,
+        "enough_at_50_percent": true
+      },
+      {
+        "code": "25951",
+        "name": "Phường Đông Hoà",
+        "before": {
+          "ndvi": null,
+          "ndvi_pixels": 103,
+          "ndvi_coverage": 0.07074175824175824,
+          "lst": null,
+          "lst_pixels": 103,
+          "lst_coverage": 0.07074175824175824,
+          "tvdi": null,
+          "tvdi_pixels": 99,
+          "tvdi_coverage": 0.06799450549450549
+        },
+        "after": {
+          "ndvi": 0.35266350237679045,
+          "ndvi_pixels": 1412,
+          "ndvi_coverage": 0.9697802197802198,
+          "lst": 40.09528478076708,
+          "lst_pixels": 1412,
+          "lst_coverage": 0.9697802197802198,
+          "tvdi": 0.590089814766543,
+          "tvdi_pixels": 1408,
+          "tvdi_coverage": 0.967032967032967
+        },
+        "enough_at_10_percent": true,
+        "enough_at_50_percent": true
+      },
+      {
+        "code": "25969",
+        "name": "Phường Thuận Giao",
+        "before": {
+          "ndvi": null,
+          "ndvi_pixels": 9,
+          "ndvi_coverage": 0.007614213197969543,
+          "lst": null,
+          "lst_pixels": 9,
+          "lst_coverage": 0.007614213197969543,
+          "tvdi": null,
+          "tvdi_pixels": 9,
+          "tvdi_coverage": 0.007614213197969543
+        },
+        "after": {
+          "ndvi": 0.30886014392575806,
+          "ndvi_pixels": 1181,
+          "ndvi_coverage": 0.9991539763113367,
+          "lst": 42.69474214138771,
+          "lst_pixels": 1181,
+          "lst_coverage": 0.9991539763113367,
+          "tvdi": 0.754999053468147,
+          "tvdi_pixels": 1181,
+          "tvdi_coverage": 0.9991539763113367
+        },
+        "enough_at_10_percent": true,
+        "enough_at_50_percent": true
+      },
+      {
+        "code": "25975",
+        "name": "Phường An Phú",
+        "before": {
+          "ndvi": null,
+          "ndvi_pixels": 46,
+          "ndvi_coverage": 0.039723661485319514,
+          "lst": null,
+          "lst_pixels": 46,
+          "lst_coverage": 0.039723661485319514,
+          "tvdi": null,
+          "tvdi_pixels": 46,
+          "tvdi_coverage": 0.039723661485319514
+        },
+        "after": {
+          "ndvi": 0.2768302992025046,
+          "ndvi_pixels": 1153,
+          "ndvi_coverage": 0.9956822107081175,
+          "lst": 43.670041837799786,
+          "lst_pixels": 1153,
+          "lst_coverage": 0.9956822107081175,
+          "tvdi": 0.8102597019603639,
+          "tvdi_pixels": 1153,
+          "tvdi_coverage": 0.9956822107081175
+        },
+        "enough_at_10_percent": true,
+        "enough_at_50_percent": true
+      }
+    ],
+    "limitations": "Different dates and per-scene TVDI fits. Review coverage and scientific comparability before adoption. Do not replace active GEE files with this candidate directly."
+  }
+}

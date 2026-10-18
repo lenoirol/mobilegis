@@ -1,0 +1,85 @@
+{
+  "filename": "MobileGIS_LST_NDVI_TVDI_2020_2025.csv",
+  "sha256": "d833db2b03f3eb9091a150d3c4ca0ea886404b7aad056b924394554788f73c47",
+  "rows": 24,
+  "points": 4,
+  "years": [
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "all_points_have_six_years": true,
+  "ranges": {
+    "lst": [
+      31.55694119612546,
+      44.1841181194781
+    ],
+    "ndvi": [
+      0.1922272801717059,
+      0.6448786670915535
+    ],
+    "tvdi": [
+      0.35312102951053503,
+      1.0
+    ]
+  },
+  "tvdi_equal_one": 3,
+  "point_locations": [
+    {
+      "name": "Trung tâm TP.HCM",
+      "lat": 10.776,
+      "lon": 106.701,
+      "units": [
+        {
+          "code": "26740",
+          "name": "Phường Sài Gòn"
+        }
+      ]
+    },
+    {
+      "name": "Thủ Đức",
+      "lat": 10.85,
+      "lon": 106.76,
+      "units": [
+        {
+          "code": "26824",
+          "name": "Phường Thủ Đức"
+        }
+      ]
+    },
+    {
+      "name": "Cần Giờ",
+      "lat": 10.41,
+      "lon": 106.96,
+      "units": [
+        {
+          "code": "27664",
+          "name": "Xã Cần Giờ"
+        }
+      ]
+    },
+    {
+      "name": "Củ Chi",
+      "lat": 11.03,
+      "lon": 106.49,
+      "units": [
+        {
+          "code": "27511",
+          "name": "Xã Nhuận Đức"
+        }
+      ]
+    }
+  ],
+  "source_claim": "GEE Landsat 8/9 Collection 2 Level 2, mùa khô; as stated in supplied CSV",
+  "missing_method_metadata": [
+    "GEE script / export task",
+    "scene IDs and acquisition dates",
+    "seasonal aggregation and cloud mask",
+    "point vs buffer sampling and buffer radius",
+    "TVDI wet/dry edge method"
+  ],
+  "interpretation": "Point-labelled series; no assumption of ward mean or independent ground truth. Values preserved exactly; display names and integer years normalized."
+}
