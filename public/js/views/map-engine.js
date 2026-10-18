@@ -2,7 +2,7 @@
    Presentation rules (viewer-policy.js): zones below 50 % coverage are grey + dashed; empty is never 0. */
 import {h} from '../core/dom.js';
 import {INDEX, colorOf, valid, fmt, pct, shortName} from '../core/format.js';
-import {url} from '../core/api.js';
+import {url, get} from '../core/api.js';
 
 const L = window.L;
 const policy = window.ViewerPolicy;
@@ -15,11 +15,32 @@ export const CHANGE_GRADIENT = `linear-gradient(90deg,${CHANGE_RAMP.join(',')})`
 
 const tile = (meta, options = {}) => L.tileLayer(url(meta.url) + '?style=pg3', {bounds: meta.bounds, minNativeZoom: meta.min_zoom, maxNativeZoom: meta.max_native_zoom, maxZoom: 18, noWrap: true, ...options});
 
+/* Global basemaps. All are built from OpenStreetMap data or plain imagery and draw no 'nine-dash line'
+   (Google, Bing and China-worldview styles are deliberately not used). The app adds its own Vietnamese sea labels on top. */
+export const BASEMAPS = {
+  voyager: {url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+    options: {maxZoom: 19, subdomains: 'abcd', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/attributions">CARTO</a>'}},
+  streets: {url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    options: {maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}},
+  satellite: {url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    options: {maxZoom: 19, maxNativeZoom: 18, attribution: 'Ảnh: Esri, Maxar, Earthstar Geographics'}},
+};
+const SEA_LABELS = [
+  {lat: 16.5, lng: 112.0, text: 'QĐ. Hoàng Sa (Việt Nam)', cls: 'isl'},
+  {lat: 10.0, lng: 114.2, text: 'QĐ. Trường Sa (Việt Nam)', cls: 'isl'},
+  {lat: 13.6, lng: 113.2, text: 'Biển Đông', cls: 'sea'},
+];
+
 export function createEngine(container, handlers) {
-  const map = L.map(container, {zoomControl: false, preferCanvas: true, zoomSnap: .25, zoomDelta: .5, wheelPxPerZoomLevel: 90, minZoom: 6, maxZoom: 18}).setView([10.85, 106.9], 9);
+  const map = L.map(container, {zoomControl: false, preferCanvas: true, zoomSnap: .25, zoomDelta: .5, wheelPxPerZoomLevel: 90, minZoom: 2, maxZoom: 18, worldCopyJump: true}).setView([10.85, 106.9], 9);
   for (const [name, z] of [['context', 250], ['indices', 350], ['comparison', 355], ['labels', 450], ['probe', 470]]) map.createPane(name).style.zIndex = z;
   map.attributionControl.setPrefix(false).addAttribution('Landsat: USGS · Ranh giới: VPDB · © MobileGIS');
   L.control.scale({imperial: false, position: 'bottomleft'}).addTo(map);
+  // Vietnamese names for the sea and the two archipelagos, shown from world view down to regional view.
+  const seaLabels = L.layerGroup(SEA_LABELS.map(l => L.marker([l.lat, l.lng], {pane: 'labels', interactive: false, keyboard: false,
+    icon: L.divIcon({className: 'mg-sea-label ' + l.cls, html: (l.cls === 'isl' ? '<i></i>' : '') + '<span>' + l.text + '</span>', iconSize: null})})));
+  const syncSea = () => { const on = map.getZoom() <= 9.5; if (on && !map.hasLayer(seaLabels)) seaLabels.addTo(map); if (!on && map.hasLayer(seaLabels)) seaLabels.remove(); };
+  map.on('zoomend', syncSea); syncSea();
 
   let ctx = null;           // {geo, rows (indexRows), layers, cover, state}
   const layers = {zones: null, base: null, raster: null, other: null, labels: null, points: null, probe: null, gps: null};
@@ -105,10 +126,24 @@ export function createEngine(container, handlers) {
     lastBase = key;
     layers.base?.remove(); layers.base = null;
     container.classList.toggle('has-base', s.basemap !== 'plain');
-    if (s.basemap === 'streets') {
-      const base = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '© OpenStreetMap'});
-      base.on('tileerror', () => { if (layers.base === base) handlers.baseFailed?.(); });
+    const online = BASEMAPS[s.basemap];
+    if (online) {
+      const base = L.tileLayer(online.url, online.options);
+      // Fall back to the plain base only when the provider is unreachable (errors and no tile at all), not on a stray missing tile.
+      let loaded = 0, failed = 0;
+      base.on('tileload', () => { loaded++; });
+      base.on('tileerror', () => { failed++; if (layers.base === base && !loaded && failed >= 4) handlers.baseFailed?.(); });
       layers.base = base.addTo(map);
+    } else if (s.basemap === 'plain') {
+      // Offline world: Natural Earth land drawn as vectors, so the global view works without Internet.
+      const group = L.layerGroup();
+      layers.base = group.addTo(map);
+      get('/data/world_land.json').then(world => {
+        if (layers.base !== group) return;
+        L.geoJSON(world, {pane: 'context', interactive: false, style: f => f.properties.kind === 'vn'
+          ? {color: '#0e0e0c', weight: 1, fillColor: '#fff3b0', fillOpacity: 1}
+          : {color: '#0e0e0c', weight: .8, opacity: .55, fillColor: '#fffdf6', fillOpacity: 1}}).addTo(group);
+      }).catch(() => {});
     } else if (s.basemap.startsWith('rgb')) {
       const meta = ctx.layers.context?.[s.basemap];
       if (meta) layers.base = tile(meta, {pane: 'context', attribution: 'Landsat: USGS'}).addTo(map);

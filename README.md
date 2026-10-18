@@ -4,7 +4,7 @@
 
 **https://lenoirol.github.io/mobilegis/** là bản demo tĩnh trên GitHub Pages (tự cập nhật khi đẩy thay đổi trong `public/`).
 Xem được bản đồ, bảng số liệu, bảng tổng, so sánh khu vực, tương quan và sàng lọc TVDI (tính từ số liệu trung bình khu vực đã xuất sẵn).
-Đăng nhập, thống kê theo pixel, tra cứu ô và giả lập cần máy chủ FastAPI + PostgreSQL/PostGIS nên chỉ có khi chạy bản đầy đủ trên máy.
+Đăng nhập, thống kê theo pixel và giả lập cần máy chủ FastAPI + PostgreSQL/PostGIS nên chỉ có khi chạy bản đầy đủ trên máy. Tra cứu giá trị ô 120 m tại điểm chạm chạy được cả ở bản tĩnh (đọc các khối lưới trong `public/data/query/`, tạo bằng `scripts/export_static_query.py`).
 
 ## Đưa lên Internet (Render + Supabase, miễn phí)
 
@@ -176,6 +176,7 @@ public/data/landcover_stats.json  Tỷ lệ ô mẫu WorldCover theo đơn vị
 data/rasters/                 18 GeoTIFF 120 m để mở trong QGIS
 data/context/                 GeoTIFF WorldCover và RGB hai mốc
 data/query_grid/              Lưới nhị phân tra cứu pixel qua máy chủ
+public/data/query/            Cùng lưới, chia khối 256×256 nén gzip để tra cứu không cần máy chủ
 data/gee_boundary/            Shapefile ZIP ranh giới gốc để nhập GEE
 data/sources/                 GeoJSON nguyên bản, giấy phép, danh mục STAC
 data/sampled_inputs/          Kênh đã tải, lấy mẫu về lưới chung

@@ -118,7 +118,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15) rotate(-6de
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
 .brand:hover{background:none}
 .brand svg{width:36px;height:36px;flex:none;transition:transform .5s var(--ease-spring)}
-.brand:hover svg{transform:rotate(90deg)}
+.brand:hover svg{transform:rotate(-8deg) scale(1.06)}
 .brand-name{display:grid;font-weight:800;font-size:21px;line-height:1;letter-spacing:-.03em}
 .brand-name b{font:700 10px/1 var(--f-mono);letter-spacing:.3em;margin-top:5px}
 #nav{position:relative;display:flex;gap:2px;margin:0 auto}
@@ -164,8 +164,12 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15) rotate(-6de
 #splash.done{transform:translateY(-101%)}
 .splash-inner{display:grid;gap:26px;justify-items:start;width:min(420px,86vw)}
 .splash-mark{width:84px;height:84px}
-.splash-mark .a{fill:none;stroke:var(--signal);stroke-width:5;stroke-dasharray:260;stroke-dashoffset:260;animation:draw 1.1s var(--ease) .1s forwards}
-.splash-mark .b{fill:var(--signal);transform-origin:50% 50%;transform:scale(0);animation:pop .5s var(--ease-spring) .7s forwards}
+.splash-mark g{transform-box:view-box;transform-origin:50% 50%}
+.splash-mark .t{transform:scale(0);animation:pop .5s var(--ease-spring) .05s forwards}
+.splash-mark .c{opacity:0;transform:translateY(10px) scale(.85);animation:cityIn .55s var(--ease-spring) .4s forwards}
+.splash-mark .s,.splash-mark .f{opacity:0;animation:fade-in .35s var(--ease) .85s forwards}
+@keyframes cityIn{to{opacity:1;transform:none}}
+@keyframes fade-in{to{opacity:1}}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes pop{to{transform:scale(1)}}
 .splash-title{font-size:clamp(40px,9vw,64px);font-weight:800;letter-spacing:-.04em;line-height:.95}

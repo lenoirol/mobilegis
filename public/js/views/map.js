@@ -7,18 +7,20 @@ import {createStore} from '../core/store.js';
 import {countTo} from '../core/motion.js';
 import {toast} from '../ui/toast.js';
 import {communeAt} from '../core/geo.js';
+import {staticSample} from '../core/sample.js';
 import {createEngine, COVERAGE_GRADIENT, CHANGE_GRADIENT} from './map-engine.js';
 import {createDock} from './map-dock.js';
 import {createDetail} from './map-detail.js';
+import {createLocator} from './map-locator.js';
 
 const policy = window.ViewerPolicy;
 const mobile = () => matchMedia('(max-width:860px)').matches;
 const DISPLAYS = ['raster', 'zones', 'change', 'coverage'];
 
-let shell, engine, dock, detail, store, nav;
+let shell, engine, dock, detail, locator, store, nav;
 let D = {source: CANONICAL_SOURCE, geo: null, rows: null, layers: null, cover: null, points: [], years: YEARS};
 let engineData = null, probe = null, playTimer = null, probeToken = 0, shown = false, fitted = false, urlTimer = null;
-const ms = createStore({display: 'raster', landcover: false, compare: false, swipe: 50, opacity: 1, boundaries: true, labels: true, basemap: 'plain', visible: true,
+const ms = createStore({display: 'raster', landcover: false, compare: false, swipe: 50, opacity: 1, boundaries: true, labels: true, basemap: 'voyager', visible: true,
   mode: 'real', legendOpen: true, snap: 'peek', detailOpen: true, dockOpen: true});
 const merged = () => ({...store.get(), ...ms.get()});
 
@@ -56,6 +58,11 @@ function build(section) {
     onClose: () => ms.set({detailOpen: !ms.get().detailOpen}),
   });
 
+  locator = createLocator({
+    onFocus: (lat, lng) => engine.map.flyTo([lat, lng], Math.max(engine.map.getZoom(), 12), {duration: .7}),
+    onFitAll: () => engine.fitAll(),
+  });
+  el.locator = locator.el;
   el.handle = h('button', {class: 'sheet-handle', type: 'button', 'aria-label': 'Mở rộng bảng thông tin', on: {click: () => ms.set({snap: ms.get().snap === 'open' ? 'peek' : 'open'})}}, icon('up', 22));
   el.dockWrap = h('aside', {class: 'dock', 'aria-label': 'Công cụ bản đồ'}, dock.el);
   el.detailWrap = h('aside', {class: 'detail', 'aria-label': 'Thông tin khu vực'}, detail.el);
@@ -68,8 +75,11 @@ function build(section) {
   el.fabs = h('div', {class: 'fabs'},
     fab('plus', 'Phóng to', () => engine.map.zoomIn(1)), fab('minus', 'Thu nhỏ', () => engine.map.zoomOut(1)),
     fab('locate', 'Vị trí của tôi', locate), fab('extent', 'Xem toàn vùng', () => engine.fitAll()), fab('share', 'Sao chép liên kết', share));
+  el.globeBtn = fab('globe', 'Bản đồ định vị', () => locator.setOpen(!locator.open));
+  el.fabs.append(el.globeBtn);
+  locator.onToggle(v => { el.globeBtn.setAttribute('aria-pressed', String(v)); el.globeBtn.classList.toggle('on', v); });
 
-  shell = h('div', {class: 'map-shell'}, el.map, el.loader, el.kpis, el.status, el.error, el.swipe, el.legend, el.fabs, el.dockToggle, el.detailOpen, el.panels);
+  shell = h('div', {class: 'map-shell'}, el.map, el.loader, el.kpis, el.status, el.error, el.swipe, el.legend, el.locator, el.fabs, el.dockToggle, el.detailOpen, el.panels);
   section.append(shell);
   wireSwipe();
 }
@@ -127,16 +137,17 @@ function stopPlay() { if (playTimer) { clearInterval(playTimer); playTimer = nul
 
 async function probeAt(latlng) {
   const s = merged();
-  if (!env.api) return;   // pixel lookup is a server endpoint
-  if (s.mode !== 'real' || s.landcover || (s.display !== 'raster' && s.display !== 'change')) return;
+  if (s.mode !== 'real' || !s.visible || s.landcover || (s.display !== 'raster' && s.display !== 'change')) return;
   const token = ++probeToken, change = s.display === 'change' ? 1 : 0;
   probe = {lat: latlng.lat, lng: latlng.lng, loading: true, change}; engine.ripple(latlng); sync();
   try {
-    const r = await get(`/api/sample?lat=${latlng.lat}&lon=${latlng.lng}&year=${s.year}&index=${s.index}&change=${change}&source=${s.source}`);
+    // With the server: /api/sample. Static demo (no server): the same 120 m grid read from exported blocks in the browser.
+    const r = env.api ? await get(`/api/sample?lat=${latlng.lat}&lon=${latlng.lng}&year=${s.year}&index=${s.index}&change=${change}&source=${s.source}`)
+      : await staticSample({lat: latlng.lat, lng: latlng.lng, year: s.year, index: s.index, change, source: s.source});
     if (token !== probeToken) return;
     probe = {lat: latlng.lat, lng: latlng.lng, value: r.value, change, unavailable: r.status === 'unavailable'};
     engine.ripple(latlng, valid(r.value));
-  } catch (_) { if (token !== probeToken) return; probe = {lat: latlng.lat, lng: latlng.lng, error: 'Tra cứu ô mẫu cần máy chủ đang chạy.'}; }
+  } catch (_) { if (token !== probeToken) return; probe = {lat: latlng.lat, lng: latlng.lng, error: env.api ? 'Không tra cứu được ô này: máy chủ không phản hồi.' : 'Không tải được dữ liệu ô này (kiểm tra kết nối mạng).'}; }
   sync();
 }
 function locate() {
@@ -206,6 +217,12 @@ const statusText = (s, tile) => {
   return '';
 };
 
+function feedLocator() {
+  if (!locator || !engine || !D.geo) return;
+  const b = engine.map.getBounds();
+  locator.update({geo: D.geo, code: ms.get().mode === 'real' ? store.get().selected : null, bounds: {west: b.getWest(), south: b.getSouth(), east: b.getEast(), north: b.getNorth()}});
+}
+
 // ---- sync ----------------------------------------------------------------------------------------------------------------------------------------------
 let tileState = null;
 function sync() {
@@ -215,7 +232,7 @@ function sync() {
   const years = D.years, search = (D.geo?.features || []).map(f => ({id: f.id, name: f.properties.full_name}));
   dock.sync(s, {years, search: s.mode === 'real' ? search : [...new Set(D.points.map(p => p.name))].map(n => ({id: n, name: n})), canChange: !!D.layers?.change?.[s.index] && s.mode === 'real', canCompare: !!D.layers?.absolute?.[2020]?.[s.index], playing: !!playTimer});
   detail.render(s, D, probe, {pinned: store.get().pinned});
-  renderLegend(s); renderKpis(s);
+  renderLegend(s); renderKpis(s); feedLocator();
   el.swipe.hidden = !(tileState?.compare && s.display === 'raster');
   el.swipe.style.setProperty('--x', s.swipe + '%'); el.swipe.querySelector('.swipe-r').textContent = s.year;
   el.swipe.querySelector('.swipe-line').setAttribute('aria-valuenow', Math.round(s.swipe));
@@ -231,7 +248,7 @@ function insets() {
 }
 function occupiedRects() {
   const origin = el.map.getBoundingClientRect(), rects = [];
-  for (const node of [el.kpis, el.legend, el.fabs, ...(mobile() ? [el.panels] : [el.dockWrap, el.detailWrap])]) {
+  for (const node of [el.kpis, el.legend, el.locator, el.fabs, ...(mobile() ? [el.panels] : [el.dockWrap, el.detailWrap])]) {
     if (!node || node.hidden) continue;
     const r = node.getBoundingClientRect();
     if (r.width && r.height) rects.push({x: r.left - origin.left, y: r.top - origin.top, w: r.width, h: r.height});
@@ -244,7 +261,7 @@ export async function init(section, ctx) {
   store = ctx.store; nav = ctx.navigate;
   section.classList.add('map-view');
   build(section);
-  if (mobile()) ms.set({legendOpen: false});
+  if (mobile()) { ms.set({legendOpen: false}); locator.setOpen(false); } else locator.setOpen(true);
   try {
     D.geo = await data.geo();
     await loadSource(store.get().source);
@@ -256,10 +273,10 @@ export async function init(section, ctx) {
     select: (id, latlng) => select(id, false), probe: probeAt,
     loading: (on, message) => { el.loader.classList.toggle('on', on); if (message && env.api) toast(message, {error: true}); },   // static hosts 404 on empty edge tiles
     tileState: t => { tileState = t; const missing = t.missing; if (el.status) { const text = statusText(merged(), t); el.status.hidden = !text; el.status.textContent = text; } },
-    baseFailed: () => { ms.set({basemap: 'plain'}); toast('Không kết nối được nền đường phố; đã chuyển sang nền nhẹ. Số liệu và ranh giới vẫn dùng được.', {error: true}); },
+    baseFailed: () => { ms.set({basemap: 'plain'}); toast('Không tải được bản đồ nền trực tuyến; đã chuyển sang nền nhẹ. Số liệu và ranh giới vẫn dùng được.', {error: true}); },
     occupied: occupiedRects,
   });
-  engine.map.on('zoomend moveend', () => {});
+  engine.map.on('zoomend moveend', feedLocator);
   store.subscribe(() => sync());
   ms.subscribe((next, prev) => {
     if (next.dockOpen !== prev.dockOpen || next.detailOpen !== prev.detailOpen) { engine.setInsets(insets()); setTimeout(() => engine.invalidate(), 320); }

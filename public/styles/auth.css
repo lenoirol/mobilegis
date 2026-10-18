@@ -5,7 +5,7 @@ body.auth-page{min-height:100dvh;display:grid;place-items:start center;padding:0
 .auth-brand{display:flex;gap:12px;align-items:center;text-decoration:none;width:fit-content}
 .auth-brand:hover{background:none}
 .auth-brand svg{width:48px;height:48px;transition:transform .6s var(--ease-spring)}
-.auth-brand:hover svg{transform:rotate(180deg)}
+.auth-brand:hover svg{transform:rotate(-8deg) scale(1.06)}
 .auth-brand .brand-name{font-size:30px}
 .auth-tagline{font-size:17px;color:var(--ink-2);margin:0;max-width:34ch}
 .auth-card{background:var(--card);border:var(--bw) solid var(--ink);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;animation:rise .6s var(--ease) both}

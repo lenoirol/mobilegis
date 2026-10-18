@@ -44,7 +44,7 @@ export function createDock({onIndex, onYear, onDisplay, onToggle, onPick, onPlay
 
   const displaySeg = segmented(DISPLAY, 'raster', v => onDisplay(v), {label: 'Chế độ hiển thị', layout: 'grid2'});
   const displayHint = h('p', {class: 'dock-help'});
-  const basemapSeg = segmented([{value: 'plain', label: 'Nhẹ'}, {value: 'streets', label: 'Đường phố', title: 'Cần Internet'}, {value: 'rgb2020', label: 'Ảnh 2020'}, {value: 'rgb2025', label: 'Ảnh 2025'}], 'plain', v => onToggle('basemap', v), {label: 'Bản đồ nền', layout: 'grid2'});
+  const basemapSeg = segmented([{value: 'voyager', label: 'Bản đồ', title: 'Bản đồ thế giới · cần Internet'}, {value: 'satellite', label: 'Vệ tinh', title: 'Ảnh vệ tinh thế giới · cần Internet'}, {value: 'streets', label: 'Đường phố', title: 'OpenStreetMap · cần Internet'}, {value: 'plain', label: 'Nhẹ', title: 'Không cần Internet'}, {value: 'rgb2020', label: 'Ảnh 2020'}, {value: 'rgb2025', label: 'Ảnh 2025'}], 'voyager', v => onToggle('basemap', v), {label: 'Bản đồ nền', layout: 'grid2'});
   const baseNote = h('p', {class: 'dock-help'});
 
   const checks = {};
@@ -71,7 +71,7 @@ export function createDock({onIndex, onYear, onDisplay, onToggle, onPick, onPlay
     group('Xem gì?', h('div', {class: 'idx-grid'}, ...indexButtons), indexHelp),
     group('Năm', h('div', {class: 'year-row'}, yearNum, yearTag, playBtn), slider, ticks),
     group('Cách xem', displaySeg.el, displayHint),
-    group('Lớp phủ', check('boundaries', 'Ranh giới xã/phường'), check('labels', 'Tên khu vực (tự tránh chồng)'), check('landcover', 'Lớp phủ đất ESA 2021'), check('compare', 'So sánh kéo màn hình 2020 | năm chọn'),
+    group('Lớp phủ', check('visible', 'Lớp chỉ số đang xem (nhiệt độ / độ xanh / độ khô)'), check('boundaries', 'Ranh giới xã/phường'), check('labels', 'Tên khu vực (tự tránh chồng)'), check('landcover', 'Lớp phủ đất ESA 2021'), check('compare', 'So sánh kéo màn hình 2020 | năm chọn'),
       h('div', {class: 'opacity-row'}, h('span', {class: 'field'}, h('span', null, 'Độ đậm của lớp')), opacityVal), opacity),
     group('Bản đồ nền', basemapSeg.el, baseNote), advanced);
 
@@ -113,11 +113,11 @@ export function createDock({onIndex, onYear, onDisplay, onToggle, onPick, onPlay
       playBtn.disabled = years.length < 2 || state.display === 'change' || state.landcover || state.mode !== 'real';
       displaySeg.set(state.display); displaySeg.setDisabled([...(context.canChange ? [] : ['change']), ...(state.mode === 'real' ? [] : ['raster', 'zones', 'change', 'coverage'])]);
       displayHint.textContent = DISPLAY_HINT[state.display];
-      checks.boundaries.checked = state.boundaries; checks.labels.checked = state.labels; checks.landcover.checked = state.landcover; checks.compare.checked = state.compare;
+      checks.visible.checked = state.visible; checks.boundaries.checked = state.boundaries; checks.labels.checked = state.labels; checks.landcover.checked = state.landcover; checks.compare.checked = state.compare;
       checks.compare.disabled = !context.canCompare || state.display !== 'raster' || state.landcover || state.mode !== 'real'; checks.landcover.disabled = state.mode !== 'real';
       opacity.value = Math.round(state.opacity * 100); opacity.style.setProperty('--fill', opacity.value + '%'); opacityVal.textContent = opacity.value + '%';
       basemapSeg.set(state.basemap);
-      baseNote.textContent = state.basemap === 'plain' ? 'Nền nhẹ: số liệu và ranh giới nằm trên máy chủ, không cần Internet.' : state.basemap === 'streets' ? 'Nền đường phố trực tuyến · cần Internet.' : 'Ảnh nghiên cứu màu tự nhiên của bộ xử lý cũ, dùng làm bối cảnh. Vùng trống là pixel đã bị loại.';
+      baseNote.textContent = state.basemap === 'plain' ? 'Nền nhẹ: số liệu và ranh giới nằm trên máy chủ, không cần Internet.' : state.basemap === 'voyager' ? 'Bản đồ thế giới (dữ liệu OpenStreetMap, CARTO) · cần Internet. Thu nhỏ để xem toàn cầu.' : state.basemap === 'satellite' ? 'Ảnh vệ tinh thế giới (Esri) · cần Internet. Chỉ là ảnh, không có ranh giới quốc gia.' : state.basemap === 'streets' ? 'Bản đồ đường phố OpenStreetMap · cần Internet.' : 'Ảnh nghiên cứu màu tự nhiên của bộ xử lý cũ, dùng làm bối cảnh. Vùng trống là pixel đã bị loại.';
       sourceSeg.set(state.source); modeSeg.set(state.mode); modeSeg.setDisabled(env.api ? [] : ['demo']);
       sourceNote.textContent = SOURCES[state.source]?.long || '';
     },
