@@ -55,7 +55,7 @@ function build(section) {
     onClose: () => ms.set({detailOpen: !ms.get().detailOpen}),
   });
 
-  el.handle = h('button', {class: 'sheet-handle', type: 'button', 'aria-label': 'Kéo để mở hoặc đóng bảng thông tin', on: {click: () => ms.set({snap: ms.get().snap === 'open' ? 'peek' : 'open'})}}, h('i'));
+  el.handle = h('button', {class: 'sheet-handle', type: 'button', 'aria-label': 'Mở rộng bảng thông tin', on: {click: () => ms.set({snap: ms.get().snap === 'open' ? 'peek' : 'open'})}}, icon('up', 22));
   el.dockWrap = h('aside', {class: 'dock', 'aria-label': 'Công cụ bản đồ'}, dock.el);
   el.detailWrap = h('aside', {class: 'detail', 'aria-label': 'Thông tin khu vực'}, detail.el);
   el.body = h('div', {class: 'panels-body'}, el.dockWrap, el.detailWrap);
@@ -70,7 +70,7 @@ function build(section) {
 
   shell = h('div', {class: 'map-shell'}, el.map, el.loader, el.kpis, el.status, el.error, el.swipe, el.legend, el.fabs, el.dockToggle, el.detailOpen, el.panels);
   section.append(shell);
-  wireSwipe(); wireSheet();
+  wireSwipe();
 }
 
 // ---- data ------------------------------------------------------------------------------------------------------
@@ -165,20 +165,6 @@ function wireSwipe() {
   });
   line.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') set(ms.get().swipe - 3); if (e.key === 'ArrowRight') set(ms.get().swipe + 3); });
 }
-function wireSheet() {
-  let startY = 0, dragging = false, startSnap = 'peek';
-  el.handle.addEventListener('pointerdown', e => { if (!mobile()) return; dragging = true; startY = e.clientY; startSnap = ms.get().snap; el.panels.classList.add('dragging'); el.handle.setPointerCapture(e.pointerId); });
-  el.handle.addEventListener('pointermove', e => { if (!dragging) return; const dy = e.clientY - startY; el.panels.style.setProperty('--sheet-drag', Math.max(startSnap === 'open' ? 0 : -400, dy) + 'px'); });
-  const end = e => {
-    if (!dragging) return; dragging = false; el.panels.classList.remove('dragging');
-    const dy = e.clientY - startY; el.panels.style.removeProperty('--sheet-drag');
-    if (Math.abs(dy) < 8) return;   // treated as a tap (click handler toggles)
-    el.handle.dataset.dragged = '1'; setTimeout(() => delete el.handle.dataset.dragged, 50);
-    ms.set({snap: dy < 0 ? 'open' : 'peek'});
-  };
-  el.handle.addEventListener('pointerup', end); el.handle.addEventListener('pointercancel', end);
-  el.handle.addEventListener('click', e => { if (el.handle.dataset.dragged) e.stopImmediatePropagation(); }, true);
-}
 
 // ---- legend / kpis --------------------------------------------------------------------------------------------------------------------
 function renderLegend(s) {
@@ -227,7 +213,7 @@ function sync() {
   el.swipe.style.setProperty('--x', s.swipe + '%'); el.swipe.querySelector('.swipe-r').textContent = s.year;
   el.swipe.querySelector('.swipe-line').setAttribute('aria-valuenow', Math.round(s.swipe));
   const text = statusText(s, tileState); el.status.hidden = !text; el.status.textContent = text; el.status.classList.toggle('err', !!store.get().error);
-  shell.dataset.snap = s.snap;
+  shell.dataset.snap = s.snap; el.handle.setAttribute('aria-label', s.snap === 'open' ? 'Thu gọn bảng thông tin' : 'Mở rộng bảng thông tin');
   shell.classList.toggle('dock-collapsed', !s.dockOpen); shell.classList.toggle('detail-collapsed', !s.detailOpen);
   clearTimeout(urlTimer); urlTimer = setTimeout(() => { if (shown) history.replaceState(null, '', shareUrl().slice(shareUrl().indexOf('#'))); }, 400);
 }

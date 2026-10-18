@@ -209,11 +209,11 @@ body:not(.is-admin) .admin-only{display:none!important}
 
 /* ---------- mobile ---------- */
 @media (max-width:860px){
-  :root{--top:56px;--tabbar:68px}
+  :root{--top:56px;--safe-bottom:max(env(safe-area-inset-bottom),14px);--tabbar:calc(70px + var(--safe-bottom))}
   #top{padding:0 14px;gap:10px}
   .brand-name{font-size:18px}.brand svg{width:30px;height:30px}
   .top-right #sourceChip{display:none}
-  #nav{position:fixed;inset:auto 0 0 0;z-index:1100;margin:0;height:var(--tabbar);padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:var(--paper);border-top:var(--bw) solid var(--ink);display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:4px}
+  #nav{position:fixed;inset:auto 0 0 0;z-index:1100;margin:0;height:var(--tabbar);padding:8px 8px calc(8px + var(--safe-bottom));background:var(--paper);border-top:var(--bw) solid var(--ink);display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:4px}
   #nav a{flex-direction:column;justify-content:center;gap:3px;padding:6px 2px;font-size:11px;font-weight:700;letter-spacing:0}
   #nav a svg{display:block}
   #main{padding-bottom:var(--tabbar)}

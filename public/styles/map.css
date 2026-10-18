@@ -148,16 +148,18 @@
   .fabs .icon-btn:nth-child(-n+2){display:none}
   .dock-toggle,.detail-open{display:none!important}
   .map-status{top:68px}
-  .legend{left:10px;bottom:226px;width:min(250px,calc(100% - 78px));padding:8px 10px}
+  .legend{left:10px;bottom:236px;width:min(250px,calc(100% - 78px));padding:8px 10px}
   .detail-head .eyebrow{display:none}
   .detail-name{font-size:23px}
   [data-snap=open] .legend{display:none}
   .panels{position:absolute;z-index:830;left:0;right:0;bottom:0;height:min(82%,640px);display:grid;grid-template-rows:auto minmax(0,1fr);background:var(--card);border:var(--bw) solid var(--ink);border-bottom:0;border-radius:18px 18px 0 0;box-shadow:0 -6px 0 var(--ink);
-    transform:translateY(calc(100% - 214px + var(--sheet-drag,0px)));transition:transform .5s var(--ease)}
+    transform:translateY(calc(100% - 222px));transition:transform .5s var(--ease)}
   .panels.dragging{transition:none}
-  [data-snap=open] .panels{transform:translateY(var(--sheet-drag,0px))}
-  .sheet-handle{display:grid;place-items:center;height:26px;border:0;background:transparent;touch-action:none;cursor:grab;width:100%}
-  .sheet-handle i{width:48px;height:5px;border-radius:3px;background:var(--ink)}
+  [data-snap=open] .panels{transform:none}
+  /* A real button (no drag): the arrow points up to open the sheet and down to close it. */
+  .sheet-handle{display:grid;place-items:center;justify-self:center;width:64px;height:34px;margin:-18px 0 2px;border:var(--bw) solid var(--ink);border-radius:var(--radius);background:var(--signal);color:var(--ink);box-shadow:var(--shadow-sm);cursor:pointer;touch-action:manipulation}
+  .sheet-handle svg{width:24px;height:24px;transition:transform .35s var(--ease)}
+  [data-snap=open] .sheet-handle svg{transform:rotate(180deg)}
   /* One panel, no tabs: the dock and detail containers dissolve and their pieces are ordered in a single scrolling column. */
   .panels-body{display:flex;flex-direction:column;gap:14px;padding:4px 16px 32px;overflow:auto;min-height:0;overscroll-behavior:contain}
   .dock,.detail,.dock-inner,.detail-inner{display:contents}
