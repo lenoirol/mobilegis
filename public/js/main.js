@@ -10,12 +10,13 @@ import {toast} from './ui/toast.js';
 
 export const store = createStore({source: CANONICAL_SOURCE, index: 'lst', year: 2025, selected: '26743', pinned: ['26743', '27664', '25747'], error: null});
 
+/* Visitors see Bản đồ, Chuyên gia and Giới thiệu. `nav` says which tab stays highlighted for routes that have no tab of their own. */
 const ROUTES = [
-  {id: 'trang-chu', icon: 'grid', long: 'Trang chủ', short: 'Trang chủ', title: 'Trang chủ', load: () => import('./views/home.js')},
   {id: 'ban-do', icon: 'map', long: 'Bản đồ', short: 'Bản đồ', title: 'Bản đồ môi trường', load: () => import('./views/map.js')},
-  {id: 'bang-so-lieu', icon: 'table', long: 'Số liệu', short: 'Số liệu', title: 'Bảng số liệu', load: () => import('./views/table.js')},
-  {id: 'thong-ke', icon: 'chart', long: 'Thống kê', short: 'Thống kê', title: 'Thống kê', load: () => import('./views/stats.js')},
-  {id: 'gia-lap', icon: 'flask', long: 'Giả lập', short: 'Giả lập', title: 'Kịch bản giả lập', adminOnly: true, load: () => import('./views/scenario.js')},
+  {id: 'chuyen-gia', icon: 'chart', long: 'Chuyên gia', short: 'Chuyên gia', title: 'Dành cho chuyên gia', load: () => import('./views/experts.js')},
+  {id: 'bang-so-lieu', nav: 'chuyen-gia', hidden: true, title: 'Bảng số liệu', load: () => import('./views/table.js')},
+  {id: 'thong-ke', nav: 'chuyen-gia', hidden: true, title: 'Thống kê', load: () => import('./views/stats.js')},
+  {id: 'gia-lap', nav: 'chuyen-gia', hidden: true, adminOnly: true, title: 'Kịch bản giả lập (ngoài đề cương)', load: () => import('./views/scenario.js')},
   {id: 'du-lieu', icon: 'info', long: 'Giới thiệu', short: 'Giới thiệu', title: 'Giới thiệu', load: () => import('./views/about.js')},
 ];
 const views = new Map();   // id → {section, module, ready}
@@ -27,13 +28,13 @@ export const navigate = (id, params = {}) => {
 };
 const parseHash = () => {
   const [path, query = ''] = location.hash.replace(/^#\/?/, '').split('?');
-  return {id: ROUTES.some(r => r.id === path) ? path : 'trang-chu', params: Object.fromEntries(new URLSearchParams(query))};
+  return {id: ROUTES.some(r => r.id === path) ? path : 'ban-do', params: Object.fromEntries(new URLSearchParams(query))};
 };
 
 // ---- nav -----------------------------------------------------------------------------
 function buildNav() {
   const nav = $('#nav');
-  for (const route of ROUTES) {
+  for (const route of ROUTES.filter(r => !r.hidden)) {
     nav.append(h('a', {href: '#/' + route.id, class: route.adminOnly ? 'admin-only' : '', dataset: {route: route.id}},
       icon(route.icon, 20), h('span', {class: 'l-long'}, route.long), h('span', {class: 'l-short'}, route.short)));
   }
@@ -62,7 +63,7 @@ async function ensureView(route) {
 
 async function show({id, params}, animate = true) {
   let route = ROUTES.find(r => r.id === id);
-  if (route.adminOnly && session.user?.role !== 'admin') { route = ROUTES[0]; id = route.id; params = {}; if (location.hash !== '#/' + id) history.replaceState(null, '', '#/' + id); }
+  if (route.adminOnly && session.user?.role !== 'admin') { route = ROUTES.find(r => r.id === 'ban-do'); id = route.id; params = {}; if (location.hash !== '#/' + id) history.replaceState(null, '', '#/' + id); }
   let entry;
   try { entry = await ensureView(route); }
   catch (error) { console.error(error); toast('Không mở được màn hình này: ' + error.message, {error: true}); return; }
@@ -70,7 +71,7 @@ async function show({id, params}, animate = true) {
     if (current && current !== entry) { current.section.hidden = true; current.module.hide?.(); }
     entry.section.hidden = false;
     current = entry;
-    $$('#nav a').forEach(a => a.dataset.route === id ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
+    $$('#nav a').forEach(a => a.dataset.route === (route.nav || id) ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
     document.title = `${route.title} · MobileGIS TP.HCM`;
     placeInk();
     window.scrollTo(0, 0);

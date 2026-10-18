@@ -185,3 +185,9 @@
 .leaflet-top,.leaflet-bottom{z-index:700}
 @media (max-width:860px){.leaflet-control-scale{display:none}}
 
+
+.tvdi-classes{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin:6px 0 2px;font-size:10px;line-height:1.2;text-align:center}
+.tvdi-classes span{display:grid;gap:1px}.tvdi-classes b{font-size:9px}
+
+.alert-tvdi{border-color:#b3261e;background:#ffe9e6;font-weight:600}
+.panels-body .alert-tvdi{order:2}

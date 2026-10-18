@@ -1,5 +1,5 @@
 /* Plain-language reading of one area against the whole city. Only areas with adequate sample coverage are compared. */
-import {INDEX, fmt, valid} from './format.js';
+import {INDEX, fmt, tvdiClass} from './format.js';
 
 const policy = window.ViewerPolicy;
 const same = {lst: .3, ndvi: .03, tvdi: .03};   // differences smaller than this read as "about average"
@@ -27,6 +27,7 @@ export function areaSentence(rows, code, year, index, years = []) {
   const dir = Math.abs(diff) < same[index] ? `xấp xỉ mức trung bình thành phố (${fmt(mean, spec.digits)}${w.unit})`
     : `${diff > 0 ? w.high : w.low} mức trung bình thành phố khoảng ${fmt(Math.abs(diff), spec.digits)}${w.unit}`;
   let text = `${w.noun} ${dir}. Xếp ${place}/${list.length} khu vực đủ dữ liệu (1 là ${index === 'ndvi' ? 'xanh nhất' : index === 'tvdi' ? 'khô nhất' : 'nóng nhất'}).`;
+  if (index === 'tvdi') text += ` Mức khô: ${tvdiClass(row.tvdi).name.toLowerCase()}.`;
   const first = years[0];
   if (first && first < year) {
     const past = rows.get(code, first);

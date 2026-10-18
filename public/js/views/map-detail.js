@@ -1,6 +1,6 @@
 /* Right-hand detail card: selected area, metrics with sample-quality tags, trend, provenance, land cover. */
 import {h, icon, mount} from '../core/dom.js';
-import {INDEX, INDICES, fmt, pct, valid, dmy, confidence} from '../core/format.js';
+import {INDEX, INDICES, fmt, pct, valid, dmy, confidence, tvdiClass, TVDI_ALERT} from '../core/format.js';
 import {areaSentence} from '../core/insight.js';
 import {data} from '../core/data.js';
 import {countTo} from '../core/motion.js';
@@ -33,6 +33,7 @@ export function createDetail({onPin, onTable, onClose, onIndex}) {
   });
   const name = h('h2', {class: 'detail-name'}, 'Chạm vào một xã/phường');
   const sub = h('p', {class: 'detail-sub mono'});
+  const alertBox = h('div', {class: 'callout alert-tvdi', role: 'alert', hidden: true});
   const note = h('div', {class: 'callout'});
   const tech = h('p', {class: 'dock-help'});
   const probe = h('div', {class: 'probe', hidden: true});
@@ -49,7 +50,7 @@ export function createDetail({onPin, onTable, onClose, onIndex}) {
 
   const el = h('div', {class: 'detail-inner'},
     h('div', {class: 'detail-head'}, h('div', null, h('span', {class: 'eyebrow'}, 'Thông tin khu vực'), name, sub), closeBtn),
-    h('div', {class: 'metrics'}, ...tiles.map(t => t.root)), note, tech, probe, chartTitle, chartHost, chartNote, cover, provenance,
+    h('div', {class: 'metrics'}, ...tiles.map(t => t.root)), alertBox, note, tech, probe, chartTitle, chartHost, chartNote, cover, provenance,
     h('div', {class: 'detail-actions'}, pinBtn, tableBtn, download));
 
   return {
@@ -57,7 +58,7 @@ export function createDetail({onPin, onTable, onClose, onIndex}) {
     render(state, D, probeData, opts = {}) {
       const real = state.mode === 'real', idx = INDEX[state.index];
       el.classList.toggle('is-empty', !state.selected);
-      if (!real) return renderPoint(state, D);
+      if (!real) { alertBox.hidden = true; return renderPoint(state, D); }
       const feature = D.geo?.features.find(f => f.id === state.selected);
       const row = D.rows?.get(state.selected, state.year);
       name.textContent = feature?.properties.full_name || 'Chạm vào một xã/phường';
@@ -67,9 +68,12 @@ export function createDetail({onPin, onTable, onClose, onIndex}) {
         t.root.classList.toggle('active', t.key === state.index); t.root.setAttribute('aria-pressed', String(t.key === state.index));
         countTo(t.value, row?.[t.key], v => fmt(v, INDEX[t.key].digits), 600);
         if (!valid(row?.[t.key])) t.value.textContent = '—';
-        t.unit.textContent = INDEX[t.key].unit;
+        t.unit.textContent = t.key === 'tvdi' ? (tvdiClass(row?.tvdi)?.name ? 'Mức: ' + tvdiClass(row.tvdi).name.toLowerCase() : '') : INDEX[t.key].unit;
         t.tag.className = 'tag ' + cls; t.tag.textContent = q === 'adequate' ? 'Tin cậy ' + confidence(row?.[t.key + '_coverage']).text.toLowerCase() : text; t.root.classList.toggle('flag', q !== 'adequate');
       });
+      const hot = feature && policy.eligible(row, 'tvdi') && row.tvdi >= TVDI_ALERT;
+      alertBox.hidden = !hot;
+      if (hot) alertBox.textContent = `Cảnh báo thử nghiệm: độ khô ${fmt(row.tvdi)} (mức rất khô) ở mốc ${state.year}. Độ khô là chỉ số thử nghiệm, không phải cảnh báo hạn chính thức.`;
       const q = policy.quality(row, state.index), cov = row?.[state.index + '_coverage'];
       note.className = 'callout' + (q === 'adequate' ? '' : ' warn');
       note.textContent = !feature ? 'Chọn một khu vực để xem số liệu và so sánh với trung bình thành phố.'

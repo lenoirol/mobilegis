@@ -54,14 +54,12 @@ Role `mobilegis_app` được cấp SELECT/INSERT/UPDATE/DELETE trên ba bảng 
 - Chưa có HTTPS tự động. Nếu mở ra Internet phải đặt sau HTTPS và không mở cổng PostgreSQL.
 - Chưa kiểm thử tải nhiều người đồng thời. Nhật ký DEMO (`audit_log`) vẫn ghi tài khoản kết nối CSDL, chưa ghi từng người dùng.
 
-## Đợt 2: khu vực đã lưu, góp ý, thông báo (schema 5)
+## Phần mở rộng ngoài đề cương (đã thu gọn ngày 18/10/2026)
 
-- **Khách hàng đã đăng nhập:** lưu tối đa 30 khu vực và xem bảng so sánh nhanh ở trang chủ ("Khu vực của tôi"); gửi góp ý/báo sai số liệu (tối đa 5 lần mỗi giờ); xuất báo cáo một khu vực ra PDF bằng nút "Xuất PDF" (dùng hộp thoại in của trình duyệt).
-- **Quản trị viên:** tạo tài khoản trực tiếp (tab Tài khoản), xử lý góp ý (tab Góp ý), đặt thông báo đầu trang (tab Nội dung).
-- **Nâng cấp CSDL đã có:** chạy một lần `python scripts/migrate_engagement.py --user <chủ CSDL>` (cục bộ) hoặc `python scripts/migrate_engagement.py --supabase`. **Triển khai mã mới lên Render trước, rồi mới chạy lệnh Supabase**, vì mã cũ không nhận schema 5.
+Đề cương nhóm 6 yêu cầu bản thử nghiệm MobileGIS đơn giản, không phải WebGIS. Vì vậy giao diện khách chỉ còn **Bản đồ**, **Chuyên gia** (bảng số liệu và thống kê) và **Giới thiệu**. Trang chủ, tab Giả lập, điểm thực hành và CSV 4 điểm không còn nằm trong luồng của khách.
 
-## Đợt 3: điểm nhấn, ghi chú khu vực, lượt dùng (schema 6)
-
-- **Điểm nhấn** (tối đa 6) hiện ở trang chủ; **ghi chú theo khu vực** (tối đa 500 ký tự) hiện trên thẻ khu vực ở trang chủ và bản đồ. Cả hai do quản trị viên nhập ở tab Nội dung và luôn là mô tả của người quản trị, không phải số liệu vệ tinh.
-- **Lượt dùng:** bộ đếm ẩn danh theo ngày (trang, khu vực, lớp bản đồ). Không lưu IP, tài khoản hay thông tin trình duyệt. Xem ở tab Lượt dùng (30 ngày gần nhất).
-- **Nâng cấp CSDL đã có:** `scripts/migrate_engagement.py` nay áp dụng cả migration 005 và 006 (chạy lại an toàn). Với Supabase: triển khai mã mới lên Render trước, rồi chạy `python scripts/migrate_engagement.py --supabase`.
+- **Còn dùng:** thông báo đầu trang (admin đặt ở tab Nội dung), ghi chú theo khu vực (hiện trong thẻ khu vực trên bản đồ), bộ đếm lượt dùng ẩn danh (tab Lượt dùng), admin tạo tài khoản.
+- **Giả lập:** chỉ quản trị viên, mở từ mục Chuyên gia; ngoài đề cương, không phải dự báo.
+- **Còn trong mã nhưng không có giao diện:** API lưu khu vực, góp ý, điểm nhấn (`/api/me/favorites`, `/api/feedback`, `/api/admin/feedback`, `/api/admin/highlights`) và bảng tương ứng (schema 5–6). Giao diện cũ của trang chủ nằm ở `luu_tru/giao_dien_cu/home.js`.
+- **Nâng cấp CSDL đã có:** `python scripts/migrate_engagement.py --user <chủ CSDL>` (cục bộ) hoặc `--supabase`; áp dụng migration 005 và 006, chạy lại an toàn. Triển khai mã mới lên Render trước khi chạy lệnh Supabase.
+- Hồ sơ kiểm thử cho báo cáo: `kiem_thu/BAN_KIEM_THU.md`.

@@ -20,6 +20,13 @@ export const INDEX = {
 };
 /** Plain-language reliability from the share of valid pixels: Cao ≥ 80 %, Vừa 50–80 %, Thấp < 50 %. Coverage is not accuracy. */
 export const confidence = coverage => !valid(coverage) ? {key: 'none', text: 'Chưa rõ'} : coverage >= .8 ? {key: 'high', text: 'Cao'} : coverage >= .5 ? {key: 'mid', text: 'Vừa'} : {key: 'low', text: 'Thấp'};
+/** TVDI dryness classes (5 equal steps, the usual grading in TVDI studies). Thresholds are a display convention, not a validated drought scale. */
+export const TVDI_CLASSES = [
+  {max: .2, name: 'Rất ẩm'}, {max: .4, name: 'Ẩm'}, {max: .6, name: 'Trung bình'}, {max: .8, name: 'Khô'}, {max: 1.0001, name: 'Rất khô'},
+];
+/** A selected area is flagged when its TVDI reaches this value (the "Rất khô" class). Experimental, not an official drought warning. */
+export const TVDI_ALERT = 0.8;
+export const tvdiClass = v => valid(v) ? TVDI_CLASSES.find(c => v < c.max) || TVDI_CLASSES.at(-1) : null;
 export const INDICES = ['lst', 'ndvi', 'tvdi'];
 export const YEARS = [2020, 2021, 2022, 2023, 2024, 2025];
 

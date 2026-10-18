@@ -2,10 +2,11 @@
 import {h, mount, icon, $} from '../core/dom.js';
 import {get, env} from '../core/api.js';
 import {data, layersFor, indexRows} from '../core/data.js';
-import {INDEX, fmt, valid, CANONICAL_SOURCE, SOURCES, rampCss, YEARS} from '../core/format.js';
+import {INDEX, fmt, valid, CANONICAL_SOURCE, SOURCES, rampCss, YEARS, TVDI_CLASSES} from '../core/format.js';
 import {createStore} from '../core/store.js';
 import {countTo} from '../core/motion.js';
 import {toast} from '../ui/toast.js';
+import {communeAt} from '../core/geo.js';
 import {createEngine, COVERAGE_GRADIENT, CHANGE_GRADIENT} from './map-engine.js';
 import {createDock} from './map-dock.js';
 import {createDetail} from './map-detail.js';
@@ -141,7 +142,12 @@ async function probeAt(latlng) {
 function locate() {
   if (!window.isSecureContext) return toast('GPS cần HTTPS hoặc localhost. Kết nối HTTP qua địa chỉ mạng LAN không hỗ trợ GPS.', {error: true});
   if (!navigator.geolocation) return toast('Trình duyệt không hỗ trợ GPS.', {error: true});
-  navigator.geolocation.getCurrentPosition(p => { engine.gps(p.coords.latitude, p.coords.longitude, p.coords.accuracy); toast('Đã đặt vị trí của bạn lên bản đồ. Tọa độ không được lưu.'); },
+  navigator.geolocation.getCurrentPosition(p => {
+    engine.gps(p.coords.latitude, p.coords.longitude, p.coords.accuracy);
+    const code = D.geo && ms.get().mode === 'real' ? communeAt(D.geo, p.coords.latitude, p.coords.longitude) : null;
+    if (code) { select(code, false); toast(`Bạn đang ở ${D.geo.features.find(f => f.id === code).properties.full_name}. Tọa độ không được lưu.`); }
+    else toast(D.geo ? 'Vị trí của bạn nằm ngoài 167 xã/phường được thống kê.' : 'Đã đặt vị trí của bạn lên bản đồ. Tọa độ không được lưu.');
+  },
     () => toast('Không lấy được vị trí. Kiểm tra quyền GPS của trình duyệt.', {error: true}), {timeout: 10000, enableHighAccuracy: true});
 }
 function shareUrl() {
@@ -182,6 +188,7 @@ function renderLegend(s) {
     body = h('div', null, h('b', null, 'Độ phủ mẫu hợp lệ'), h('i', {class: 'ramp', style: {background: COVERAGE_GRADIENT}}), h('div', {class: 'ramp-ends mono'}, h('span', null, '0%'), h('span', null, '100%')), h('small', null, 'Tỷ lệ ô mẫu; không phải độ chính xác.'));
   } else {
     body = h('div', null, h('b', null, `${idx.name}${idx.experimental ? ' · thử nghiệm' : ''}`), h('i', {class: 'ramp', style: {background: rampCss(s.index)}}), h('div', {class: 'ramp-ends mono'}, h('span', null, `${idx.min} ${idx.unit}`.trim()), h('span', null, `${idx.max} ${idx.unit}`.trim())),
+      s.index === 'tvdi' ? h('div', {class: 'tvdi-classes'}, ...TVDI_CLASSES.map((c, i) => h('span', null, h('b', {class: 'mono'}, `${i ? TVDI_CLASSES[i - 1].max.toString().replace('.', ',') : '0'}–${Math.min(c.max, 1).toString().replace('.', ',')}`), c.name))) : null,
       h('small', null, 'Thang cố định giữa các năm, theo tài liệu của cô. Trống/xám: thiếu mẫu, không phải 0.' + (s.display === 'zones' ? ' Nét đứt: dưới 50% độ phủ.' : '')));
   }
   mount(el.legend, toggle, s.legendOpen ? body : null);

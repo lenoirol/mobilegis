@@ -18,7 +18,7 @@
   <h1>Trang quản trị</h1>
   <div id="tabsHost"></div>
   <section class="panel" id="tab-overview"><div class="stat-row" id="cards"></div><h2>Việc quản trị viên làm được</h2>
-    <ul class="admin-todo"><li><b>Tài khoản:</b> đổi vai trò, khóa/mở, xóa; cấp mã khi người dùng quên mật khẩu.</li><li><b>Giả lập:</b> chỉ quản trị viên tạo kịch bản; kết quả tách khỏi số liệu hiện trạng (menu “Giả lập” trên trang chính).</li><li><b>Điểm thực hành:</b> thêm/sửa/xóa ở “Số liệu” trên trang chính; luôn ghi rõ không phải số đo vệ tinh.</li><li><b>Số liệu vệ tinh 2020–2025:</b> chỉ đọc, không sửa qua web để giữ độ tin cậy khoa học. Năm mới được nạp bằng script.</li></ul></section>
+    <ul class="admin-todo"><li><b>Tài khoản:</b> đổi vai trò, khóa/mở, xóa; cấp mã khi người dùng quên mật khẩu.</li><li><b>Giả lập:</b> công cụ thử nghiệm <b>ngoài đề cương</b>, chỉ quản trị viên dùng; mở từ <a href="./#/gia-lap">trang Giả lập</a>. Không phải dự báo.</li><li><b>Điểm thực hành:</b> thêm/sửa/xóa ở “Số liệu” trên trang chính; luôn ghi rõ không phải số đo vệ tinh.</li><li><b>Số liệu vệ tinh 2020–2025:</b> chỉ đọc, không sửa qua web để giữ độ tin cậy khoa học. Năm mới được nạp bằng script.</li></ul></section>
   <section class="panel" id="tab-system" hidden><h2>Hệ thống</h2><div class="scroll card flat"><table class="tbl"><tbody id="systemRows"></tbody></table></div>
     <h2>Bộ xuất GEE đã kiểm tra</h2><div class="scroll card flat"><table class="tbl"><thead><tr><th>Năm</th><th class="num">Có LST / NDVI / TVDI</th><th>Ngày chụp các cảnh</th></tr></thead><tbody id="auditRows"></tbody></table></div>
     <h2>Tài liệu kỹ thuật</h2><div class="link-grid" id="docLinks"></div></section>
@@ -32,17 +32,9 @@
     <p class="small muted">Phải còn ít nhất một quản trị viên đang hoạt động. Vô hiệu hóa tài khoản sẽ đăng xuất người đó ngay.</p></section>
   <section class="panel" id="tab-resets" hidden><div id="codeBox" class="codebox" hidden></div><div class="scroll card flat"><table class="tbl"><thead><tr><th>Người dùng</th><th>Trạng thái</th><th>Yêu cầu lúc</th><th>Hết hạn</th><th>Thao tác</th></tr></thead><tbody id="resetRows"></tbody></table></div>
     <p class="small muted">Bấm “Cấp mã”, rồi gửi mã cho người dùng qua kênh riêng (nhắn tin, gặp trực tiếp). Mã chỉ hiện một lần, dùng được một lần, hiệu lực 30 phút.</p></section>
-  <section class="panel" id="tab-feedback" hidden><div class="scroll card flat"><table class="tbl"><thead><tr><th>Gửi lúc</th><th>Loại</th><th>Khu vực</th><th>Nội dung</th><th>Người gửi</th><th>Trạng thái</th></tr></thead><tbody id="feedbackRows"></tbody></table></div>
-    <p class="small muted">Khách đã đăng nhập mới gửi được góp ý (tối đa 5 mỗi giờ). Đánh dấu “Đã xử lý” khi đã kiểm tra hoặc sửa.</p></section>
   <section class="panel" id="tab-content" hidden><h2>Thông báo đầu trang</h2><form id="noticeForm" class="create-form"><label class="field"><span>Nội dung (tối đa 300 ký tự, để trống để gỡ thông báo)</span><textarea class="input" name="text" rows="3" maxlength="300"></textarea></label>
     <button class="btn primary" type="submit">Lưu thông báo</button></form>
     <p class="small muted">Thông báo hiện ở đầu mọi trang cho khách; mỗi người có thể đóng nó. Chỉ là văn bản thuần, không có liên kết hay định dạng.</p>
-    <h2>Điểm nhấn trên trang chủ</h2><form id="highlightForm" class="create-form"><label class="field"><span>Tiêu đề (tối đa 120 ký tự)</span><input class="input" name="title" required maxlength="120"></label>
-      <label class="field"><span>Nội dung (tối đa 400 ký tự)</span><textarea class="input" name="body" rows="3" required maxlength="400"></textarea></label>
-      <label class="field"><span>Khu vực liên quan (không bắt buộc)</span><select class="select" name="code" data-areas><option value="">Không gắn khu vực</option></select></label>
-      <button class="btn primary" type="submit">Thêm điểm nhấn</button></form>
-    <div class="scroll card flat"><table class="tbl"><thead><tr><th>Tiêu đề</th><th>Nội dung</th><th>Khu vực</th><th></th></tr></thead><tbody id="highlightRows"></tbody></table></div>
-    <p class="small muted">Tối đa 6 điểm nhấn. Chỉ viết điều có thể kiểm chứng bằng số liệu trên web; không đưa kết luận về nguyên nhân hay dự báo.</p>
     <h2>Ghi chú theo khu vực</h2><form id="noteForm" class="create-form"><label class="field"><span>Khu vực</span><select class="select" name="code" data-areas required><option value="">Chọn khu vực</option></select></label>
       <label class="field"><span>Ghi chú (tối đa 500 ký tự, để trống để xóa)</span><textarea class="input" name="text" rows="3" maxlength="500"></textarea></label>
       <button class="btn primary" type="submit">Lưu ghi chú</button></form>

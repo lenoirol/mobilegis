@@ -1,7 +1,7 @@
 /* About page for visitors: what the numbers mean, how far to trust them, where they come from. Technical material is in a closed section; system details live in the admin console. */
 import {h, mount, icon} from '../core/dom.js';
 import {data} from '../core/data.js';
-import {INDEX, INDICES, YEARS, rampCss} from '../core/format.js';
+import {INDEX, INDICES, YEARS, rampCss, TVDI_CLASSES} from '../core/format.js';
 import {stagger} from '../core/motion.js';
 import {url, env} from '../core/api.js';
 
@@ -42,6 +42,9 @@ async function build() {
       h('p', null, 'MobileGIS TP.HCM cho bạn xem nhiệt độ bề mặt, độ xanh và độ khô của từng xã/phường trong mùa khô 2020–2025, tính từ ảnh vệ tinh Landsat 8/9. Dưới đây là cách đọc và mức tin cậy của các con số.')),
     h('div', {class: 'method-grid'}, ...cards),
     h('section', {class: 'block'}, h('h2', null, 'Cách đọc bản đồ'), h('div', {class: 'read-grid'}, ...READING.map(([t, d], i) => h('article', {class: 'read-card reveal', style: {'--i': i}}, h('b', {class: 'mono'}, String(i + 1).padStart(2, '0')), h('h3', null, t), h('p', {class: 'muted'}, d))))),
+    h('section', {class: 'block'}, h('h2', null, 'Các mức độ khô'), h('p', {class: 'muted'}, 'Độ khô (TVDI) được chia thành 5 mức bằng nhau để dễ đọc. Đây là cách chia thường gặp trong các nghiên cứu TVDI, dùng để mô tả chứ không phải thang hạn hán đã kiểm định.'),
+      h('div', {class: 'scroll card flat'}, h('table', {class: 'tbl'}, h('thead', null, h('tr', null, h('th', null, 'Khoảng giá trị'), h('th', null, 'Mức'))),
+        h('tbody', null, ...TVDI_CLASSES.map((c, i) => h('tr', null, h('td', {class: 'mono'}, `${i ? String(TVDI_CLASSES[i - 1].max).replace('.', ',') : '0'} – ${String(Math.min(c.max, 1)).replace('.', ',')}`), h('td', null, c.name))))))),
     h('section', {class: 'block'}, h('h2', null, 'Mỗi năm có bao nhiêu khu vực đủ dữ liệu?'), h('p', {class: 'muted'}, 'Số xã/phường có từ 50% diện tích ảnh dùng được. Những nơi còn lại vẫn xem được trên bản đồ nhưng được đánh dấu “tin cậy thấp”.'), coverage),
     h('section', {class: 'block'}, h('h2', null, 'Dữ liệu từ đâu'),
       h('div', {class: 'two-col'},

@@ -1,0 +1,181 @@
+﻿code,unit,year,index,geotiff_mean,app_value,abs_diff,valid_pixels_geotiff,valid_pixels_app,same_at_display_precision,recovery_pixels
+26743,Phường Bến Thành (đô thị trung tâm),2020,ndvi,0.288219,0.288219,0.00e+00,128,128,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2020,lst,38.727171,38.727171,0.00e+00,128,128,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2020,tvdi,0.383294,0.383294,0.00e+00,128,128,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2020,ndvi,0.144369,0.144369,0.00e+00,75,75,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2020,lst,39.752353,39.752353,0.00e+00,75,75,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2020,tvdi,0.340386,0.340386,0.00e+00,61,61,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2020,ndvi,0.292595,0.292595,0.00e+00,774,774,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2020,lst,41.416014,41.416014,0.00e+00,774,774,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2020,tvdi,0.668064,0.668064,0.00e+00,773,773,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2020,ndvi,0.39427,0.39427,0.00e+00,1075,1075,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2020,lst,39.350414,39.350414,0.00e+00,1075,1075,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2020,tvdi,0.632248,0.632248,0.00e+00,1039,1039,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2020,ndvi,0.57132,0.57132,0.00e+00,6521,6521,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2020,lst,36.691762,36.691762,0.00e+00,6521,6521,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2020,tvdi,0.553998,0.553998,0.00e+00,5475,5475,True,0
+26983,Phường Bảy Hiền (nội đô),2020,ndvi,0.187177,0.187177,0.00e+00,187,187,True,0
+26983,Phường Bảy Hiền (nội đô),2020,lst,40.93088,40.93088,0.00e+00,187,187,True,0
+26983,Phường Bảy Hiền (nội đô),2020,tvdi,0.487066,0.487066,0.00e+00,187,187,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2020,ndvi,0.579576,0.579576,0.00e+00,4309,4309,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2020,lst,36.425995,36.425995,0.00e+00,4309,4309,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2020,tvdi,0.496158,0.496158,0.00e+00,4226,4226,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2020,ndvi,0.55886,0.55886,0.00e+00,4782,4782,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2020,lst,36.52332,36.52332,0.00e+00,4782,4782,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2020,tvdi,0.783406,0.783406,0.00e+00,4680,4680,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2020,ndvi,0.609616,0.609616,0.00e+00,8881,8881,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2020,lst,31.220443,31.220443,0.00e+00,8881,8881,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2020,tvdi,0.147468,0.147468,0.00e+00,7709,7709,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2020,ndvi,0.408344,0.408344,0.00e+00,16492,16492,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2020,lst,31.653048,31.653048,0.00e+00,16492,16492,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2020,tvdi,0.144793,0.144793,0.00e+00,11540,11540,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2021,ndvi,0.244466,0.244466,0.00e+00,128,128,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2021,lst,37.264713,37.264713,0.00e+00,128,128,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2021,tvdi,0.116218,0.116218,0.00e+00,128,128,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2021,ndvi,0.130188,0.130188,0.00e+00,75,75,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2021,lst,38.29254,38.29254,0.00e+00,75,75,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2021,tvdi,0.139157,0.139157,0.00e+00,73,73,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2021,ndvi,0.270367,0.270367,0.00e+00,774,774,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2021,lst,39.620723,39.620723,0.00e+00,774,774,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2021,tvdi,0.390769,0.390769,0.00e+00,774,774,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2021,ndvi,0.400745,0.400745,0.00e+00,1076,1076,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2021,lst,39.15501,39.15501,0.00e+00,1076,1076,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2021,tvdi,0.535717,0.535717,0.00e+00,1063,1063,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2021,ndvi,0.512122,0.512122,0.00e+00,6522,6522,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2021,lst,39.631307,39.631307,0.00e+00,6522,6522,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2021,tvdi,0.799807,0.799807,0.00e+00,6365,6365,True,0
+26983,Phường Bảy Hiền (nội đô),2021,ndvi,0.16978,0.16978,0.00e+00,187,187,True,0
+26983,Phường Bảy Hiền (nội đô),2021,lst,39.39681,39.39681,0.00e+00,187,187,True,0
+26983,Phường Bảy Hiền (nội đô),2021,tvdi,0.259098,0.259098,0.00e+00,187,187,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2021,ndvi,0.541978,0.541978,0.00e+00,4303,4303,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2021,lst,36.208142,36.208142,0.00e+00,4303,4303,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2021,tvdi,0.349212,0.349212,0.00e+00,4294,4294,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2021,ndvi,0.519888,0.519888,0.00e+00,4780,4780,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2021,lst,40.08682,40.08682,0.00e+00,4780,4780,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2021,tvdi,0.754132,0.754132,0.00e+00,4658,4658,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2021,ndvi,0.593607,0.593607,0.00e+00,9268,9268,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2021,lst,31.528196,31.528196,0.00e+00,9268,9268,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2021,tvdi,0.234697,0.234697,0.00e+00,5654,5654,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2021,ndvi,0.400885,0.400885,0.00e+00,16493,16493,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2021,lst,31.605439,31.605439,0.00e+00,16493,16493,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2021,tvdi,0.194824,0.194824,0.00e+00,9677,9677,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2022,ndvi,0.263386,0.263386,0.00e+00,128,128,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2022,lst,34.814313,34.814313,0.00e+00,128,128,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2022,tvdi,0.286877,0.286877,0.00e+00,128,128,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2022,ndvi,0.13994,0.13994,0.00e+00,75,75,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2022,lst,36.188088,36.188088,0.00e+00,75,75,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2022,tvdi,0.321422,0.321422,0.00e+00,72,72,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2022,ndvi,0.294406,0.294406,0.00e+00,774,774,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2022,lst,37.844885,37.844885,0.00e+00,774,774,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2022,tvdi,0.673272,0.673272,0.00e+00,773,773,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2022,ndvi,0.420265,0.420265,0.00e+00,1076,1076,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2022,lst,34.948971,34.948971,0.00e+00,1076,1076,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2022,tvdi,0.511502,0.511502,0.00e+00,1051,1051,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2022,ndvi,0.526145,0.526145,0.00e+00,6522,6522,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2022,lst,34.882943,34.882943,0.00e+00,6522,6522,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2022,tvdi,0.679552,0.679552,0.00e+00,6334,6334,True,0
+26983,Phường Bảy Hiền (nội đô),2022,ndvi,0.185439,0.185439,0.00e+00,187,187,True,0
+26983,Phường Bảy Hiền (nội đô),2022,lst,36.757294,36.757294,0.00e+00,187,187,True,0
+26983,Phường Bảy Hiền (nội đô),2022,tvdi,0.420194,0.420194,0.00e+00,187,187,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2022,ndvi,0.612695,0.612695,0.00e+00,4299,4299,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2022,lst,32.528655,32.528655,0.00e+00,4299,4299,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2022,tvdi,0.42821,0.42821,0.00e+00,4176,4176,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2022,ndvi,0.574237,0.574237,0.00e+00,2915,2915,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2022,lst,44.320369,44.320369,0.00e+00,2915,2915,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2022,tvdi,0.815273,0.815273,0.00e+00,2478,2478,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2022,ndvi,0.625103,0.625103,0.00e+00,9148,9148,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2022,lst,33.785994,33.785994,0.00e+00,9148,9148,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2022,tvdi,0.192094,0.192094,0.00e+00,4921,4921,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2022,ndvi,0.402628,0.402628,0.00e+00,16015,16015,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2022,lst,32.914695,32.914695,0.00e+00,16015,16015,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2022,tvdi,0.168054,0.168054,0.00e+00,8328,8328,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2023,ndvi,0.272346,0.272346,0.00e+00,128,128,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2023,lst,40.086742,40.086742,0.00e+00,128,128,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2023,tvdi,0.23754,0.23754,0.00e+00,128,128,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2023,ndvi,0.149257,0.149257,0.00e+00,75,75,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2023,lst,41.011461,41.011461,0.00e+00,75,75,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2023,tvdi,0.211376,0.211376,0.00e+00,75,75,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2023,ndvi,0.27456,0.27456,0.00e+00,774,774,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2023,lst,42.201682,42.201682,0.00e+00,774,774,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2023,tvdi,0.410739,0.410739,0.00e+00,774,774,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2023,ndvi,0.409856,0.409856,0.00e+00,1074,1074,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2023,lst,40.99015,40.99015,0.00e+00,1074,1074,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2023,tvdi,0.469525,0.469525,0.00e+00,1042,1042,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2023,ndvi,0.523841,0.523841,0.00e+00,6479,6479,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2023,lst,41.741406,41.741406,0.00e+00,6479,6479,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2023,tvdi,0.676661,0.676661,0.00e+00,6340,6340,True,0
+26983,Phường Bảy Hiền (nội đô),2023,ndvi,0.181956,0.181956,0.00e+00,187,187,True,0
+26983,Phường Bảy Hiền (nội đô),2023,lst,41.663451,41.663451,0.00e+00,187,187,True,0
+26983,Phường Bảy Hiền (nội đô),2023,tvdi,0.292952,0.292952,0.00e+00,187,187,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2023,ndvi,0.510317,0.510317,0.00e+00,3968,3968,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2023,lst,39.315908,39.315908,0.00e+00,3968,3968,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2023,tvdi,0.388176,0.388176,0.00e+00,3948,3948,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2023,ndvi,0.574183,0.574183,0.00e+00,3043,3043,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2023,lst,40.10403,40.10403,0.00e+00,3043,3043,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2023,tvdi,0.730868,0.730868,0.00e+00,2941,2941,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2023,ndvi,0.601042,0.601042,0.00e+00,9152,9152,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2023,lst,32.75208,32.75208,0.00e+00,9152,9152,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2023,tvdi,0.097883,0.097883,0.00e+00,8469,8469,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2023,ndvi,0.431573,0.431573,0.00e+00,15918,15918,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2023,lst,32.34086,32.34086,0.00e+00,15918,15918,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2023,tvdi,0.064969,0.064969,0.00e+00,12205,12205,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2024,ndvi,0.276665,0.276665,0.00e+00,128,128,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2024,lst,39.430108,39.430108,0.00e+00,128,128,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2024,tvdi,0.297286,0.297286,0.00e+00,128,128,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2024,ndvi,0.143755,0.143755,0.00e+00,75,75,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2024,lst,40.338339,40.338339,0.00e+00,75,75,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2024,tvdi,0.261914,0.261914,0.00e+00,71,71,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2024,ndvi,0.271882,0.271882,0.00e+00,774,774,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2024,lst,42.113277,42.113277,0.00e+00,774,774,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2024,tvdi,0.549037,0.549037,0.00e+00,774,774,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2024,ndvi,0.413508,0.413508,0.00e+00,1076,1076,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2024,lst,40.068279,40.068279,0.00e+00,1076,1076,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2024,tvdi,0.557218,0.557218,0.00e+00,1041,1041,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2024,ndvi,0.549287,0.549287,0.00e+00,6522,6522,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2024,lst,38.946066,38.946066,0.00e+00,6522,6522,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2024,tvdi,0.626512,0.626512,0.00e+00,6003,6003,True,0
+26983,Phường Bảy Hiền (nội đô),2024,ndvi,0.177353,0.177353,0.00e+00,187,187,True,0
+26983,Phường Bảy Hiền (nội đô),2024,lst,41.489845,41.489845,0.00e+00,187,187,True,0
+26983,Phường Bảy Hiền (nội đô),2024,tvdi,0.380807,0.380807,0.00e+00,187,187,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2024,ndvi,0.567571,0.567571,0.00e+00,4311,4311,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2024,lst,37.897994,37.897994,0.00e+00,4311,4311,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2024,tvdi,0.488337,0.488337,0.00e+00,4271,4271,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2024,ndvi,0.572192,0.572192,0.00e+00,4782,4782,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2024,lst,38.736825,38.736825,0.00e+00,4782,4782,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2024,tvdi,0.790751,0.790751,0.00e+00,4269,4269,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2024,ndvi,0.656515,0.656515,0.00e+00,9267,9267,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2024,lst,31.309546,31.309546,0.00e+00,9267,9267,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2024,tvdi,0.253717,0.253717,0.00e+00,6923,6923,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2024,ndvi,0.443976,0.443976,0.00e+00,16492,16492,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2024,lst,31.151027,31.151027,0.00e+00,16492,16492,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2024,tvdi,0.134366,0.134366,0.00e+00,11112,11112,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2025,ndvi,0.266505,0.266505,0.00e+00,128,128,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2025,lst,40.055766,40.055766,0.00e+00,128,128,True,0
+26743,Phường Bến Thành (đô thị trung tâm),2025,tvdi,0.600945,0.600945,0.00e+00,128,128,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2025,ndvi,0.149966,0.149966,0.00e+00,75,75,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2025,lst,40.647738,40.647738,0.00e+00,75,75,True,0
+27265,"Phường Khánh Hội (đô thị, ven sông)",2025,tvdi,0.550959,0.550959,0.00e+00,66,66,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2025,ndvi,0.289651,0.289651,0.00e+00,774,774,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2025,lst,42.852015,42.852015,0.00e+00,774,774,True,0
+27442,"Phường Bình Tân (đô thị, công nghiệp)",2025,tvdi,0.856314,0.856314,0.00e+00,772,772,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2025,ndvi,0.435093,0.435093,0.00e+00,839,839,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2025,lst,32.969829,32.969829,0.00e+00,839,839,True,0
+25747,Phường Thủ Dầu Một (đô thị Bình Dương),2025,tvdi,0.322467,0.322467,0.00e+00,831,831,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2025,ndvi,0.529344,0.529344,0.00e+00,6454,6454,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2025,lst,34.579328,34.579328,0.00e+00,6454,6454,True,0
+25888,"Phường Tân Uyên (công nghiệp, Bình Dương)",2025,tvdi,0.603525,0.603525,0.00e+00,6309,6309,True,0
+26983,Phường Bảy Hiền (nội đô),2025,ndvi,0.184152,0.184152,0.00e+00,187,187,True,0
+26983,Phường Bảy Hiền (nội đô),2025,lst,42.217188,42.217188,0.00e+00,187,187,True,0
+26983,Phường Bảy Hiền (nội đô),2025,tvdi,0.700109,0.700109,0.00e+00,187,187,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2025,ndvi,0.580345,0.580345,0.00e+00,3992,3992,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2025,lst,30.962021,30.962021,0.00e+00,3992,3992,True,0
+27511,"Xã Nhuận Đức (nông nghiệp, Củ Chi)",2025,tvdi,0.324358,0.324358,0.00e+00,3979,3979,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2025,ndvi,0.599161,0.599161,0.00e+00,4784,4784,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2025,lst,35.564466,35.564466,0.00e+00,4784,4784,True,0
+26575,"Xã Ngãi Giao (nông nghiệp, Bà Rịa)",2025,tvdi,0.789922,0.789922,0.00e+00,4590,4590,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2025,ndvi,0.651119,0.651119,0.00e+00,8924,8924,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2025,lst,31.002531,31.002531,0.00e+00,8924,8924,True,0
+27664,"Xã Cần Giờ (rừng ngập mặn, ven biển)",2025,tvdi,0.124136,0.124136,0.00e+00,5500,5500,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2025,ndvi,0.452657,0.452657,0.00e+00,16489,16489,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2025,lst,31.875157,31.875157,0.00e+00,16489,16489,True,0
+27673,"Xã An Thới Đông (rừng ngập mặn, Cần Giờ)",2025,tvdi,0.162349,0.162349,0.00e+00,8655,8655,True,0
