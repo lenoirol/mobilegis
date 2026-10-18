@@ -22,6 +22,7 @@ import database as db
 
 CONFIG = Path(os.environ['MOBILEGIS_SUPABASE_CONFIG']) if os.environ.get('MOBILEGIS_SUPABASE_CONFIG') else ROOT / 'config/supabase.local.json'
 SCHEMA = 'mobilegis'
+LOG_TABLES = {'audit_log', 'auth_events'}
 
 
 def load_config():
@@ -71,7 +72,11 @@ def verify(app_dsn):
         valid = c.execute('SELECT count(*) AS n FROM mobilegis.admin_units WHERE ST_IsValid(geom) AND ST_SRID(geom)=4326').fetchone()['n']
         version = c.execute('SELECT max(version) AS v FROM mobilegis.schema_migrations').fetchone()['v']
         postgis = c.execute('SELECT postgis_lib_version() AS v').fetchone()['v']
-    bad = {t: (expected[t], actual[t]) for t in expected if expected[t] != actual[t]}
+    # Append-only logs keep growing on the source after the backup was taken: they only need to be no larger than the source.
+    bad = {t: (expected[t], actual[t]) for t in expected if (actual[t] > expected[t] if t in LOG_TABLES else actual[t] != expected[t])}
+    for t in LOG_TABLES & set(expected):
+        if actual[t] != expected[t]:
+            print(f'  ghi chú: {t} có {actual[t]} dòng trên đích, {expected[t]} ở nguồn (nhật ký tăng sau lúc sao lưu)')
     print(f'  {len(expected)} bảng, tổng {sum(actual.values()):,} dòng; schema {version}; PostGIS {postgis}; hình học hợp lệ {valid}/167')
     if bad:
         print('  LỆCH SỐ DÒNG (nguồn, đích):', bad)

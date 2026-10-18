@@ -6,6 +6,7 @@ from psycopg.types.json import Jsonb
 INDICES=('lst','ndvi','tvdi')
 LIMITS={'lst':(-80,100),'ndvi':(-1,1),'tvdi':(0,1)}
 
+@db.cached
 def statistics(source,year,index,coverage=.5,code=None):
     if source not in db.SOURCES or index not in INDICES:raise ValueError('Nguồn/chỉ số không hợp lệ.')
     q='''SELECT s.*,a.name,m.coverage,m.valid_pixels FROM mobilegis.pixel_statistics s
@@ -20,6 +21,7 @@ def statistics(source,year,index,coverage=.5,code=None):
             'scope':'Pixel-centre statistics within each original reference polygon; not annual averages.',
             'units':rows}
 
+@db.cached
 def landcover(source,year,index,coverage=.5,code=None):
     if source not in db.SOURCES or index not in INDICES:raise ValueError('Nguồn/chỉ số không hợp lệ.')
     q='''SELECT s.class_code,s.class_name,sum(s.valid_count)::bigint AS valid_count,
@@ -33,6 +35,7 @@ def landcover(source,year,index,coverage=.5,code=None):
     return {'classes':rows,'reference_year':2021,'sample_resolution_m':120,
             'note':'Lớp phủ 2021 lấy mẫu gần nhất trên lưới chỉ số 120 m; không phải lớp phủ của từng năm. Tính trên pixel hợp lệ, không dùng tỷ lệ lớp phủ để suy ra nhiệt độ.'}
 
+@db.cached
 def correlations(source,year,coverage=.5):
     rows=db.observations(source,year);results=[]
     for x,y in (('ndvi','lst'),('tvdi','lst'),('ndvi','tvdi')):

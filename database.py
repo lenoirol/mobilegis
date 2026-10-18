@@ -16,8 +16,8 @@ def _load():
     Order: MOBILEGIS_DATABASE_URL, then the JSON file named by MOBILEGIS_DB_CONFIG, then config/database.local.json.
     A JSON file with a "dsn" key targets a remote server (e.g. Supabase) and uses a connection pool unless "pool" is false.
     """
-    if os.environ.get('MOBILEGIS_DATABASE_URL'):
-        return os.environ['MOBILEGIS_DATABASE_URL'], {}
+    if os.environ.get('MOBILEGIS_DATABASE_URL'):   # hosting platforms (Render…) inject secrets this way
+        return with_ssl(os.environ['MOBILEGIS_DATABASE_URL']), {'pool': True, 'pool_size': int(os.environ.get('MOBILEGIS_DB_POOL_SIZE', '4'))}
     custom = os.environ.get('MOBILEGIS_DB_CONFIG')
     path = (ROOT / custom if custom and not Path(custom).is_absolute() else Path(custom)) if custom else ROOT / 'config/database.local.json'
     if not path.is_file():
@@ -66,6 +66,36 @@ def connect():
     options = {'connect_timeout': 5, 'row_factory': dict_row, 'options': '-c statement_timeout=15000'}
     return psycopg.connect(target, **options) if isinstance(target, str) else psycopg.connect(**target, **options)
 
+# ---- read cache for immutable research data -----------------------------------------------------------------
+# Observations, boundaries, land cover and pixel statistics never change while the server runs, but every query is a
+# network round trip when the database is remote (about 0.3 s to Supabase from Vietnam). Cache them per process.
+# MOBILEGIS_CACHE_SECONDS=0 turns it off; the default is 10 minutes. Demo points, runs and accounts are never cached.
+import functools, threading, time
+_CACHE = {}
+_CACHE_LOCK = threading.Lock()
+
+def cached(function):
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        ttl = float(os.environ.get('MOBILEGIS_CACHE_SECONDS', '600'))
+        if ttl <= 0:
+            return function(*args, **kwargs)
+        key = (repr(_load()[0]), function.__module__, function.__name__, args, tuple(sorted(kwargs.items())))
+        now = time.monotonic()
+        with _CACHE_LOCK:
+            hit = _CACHE.get(key)
+        if hit and hit[0] > now:
+            return hit[1]
+        value = function(*args, **kwargs)   # exceptions are never cached
+        with _CACHE_LOCK:
+            _CACHE[key] = (now + ttl, value)
+        return value
+    return wrapper
+
+def clear_cache():
+    with _CACHE_LOCK:
+        _CACHE.clear()
+
 def health():
     with connect() as c:
         row=c.execute("SELECT current_setting('server_version') AS postgres,postgis_lib_version() AS postgis").fetchone()
@@ -79,12 +109,14 @@ def health():
             raise RuntimeError('CSDL chưa nhập đủ ba bộ nghiên cứu. Chạy thiết lập hoặc import_postgres.py bằng tài khoản chủ CSDL.')
         return {'engine':'PostgreSQL / PostGIS','postgres_version':row['postgres'],'schema_version':version,'postgis':row['postgis'],'datasets':counts,'metric_tables':metrics}
 
+@cached
 def document(key):
     with connect() as c:
         r=c.execute('SELECT payload FROM mobilegis.documents WHERE key=%s',(key,)).fetchone()
         if not r:raise KeyError(key)
         return r['payload']
 
+@cached
 def observations(source='gee_recovery',year=None,code=None,index=None,coverage=0):
     if source not in SOURCES:raise ValueError('Nguồn không hợp lệ.')
     if index and index not in ('lst','ndvi','tvdi'):raise ValueError('Chỉ số không hợp lệ.')
@@ -98,6 +130,7 @@ def observations(source='gee_recovery',year=None,code=None,index=None,coverage=0
     # Normalized SQL columns are authoritative, JSONB retains provenance extras.
     return [r.pop('payload')|r for r in rows]
 
+@cached
 def metric_observations(index,source='gee_recovery',year=None,code=None,coverage=0):
     if index not in ('lst','ndvi','tvdi') or source not in SOURCES:raise ValueError('Chỉ số hoặc nguồn không hợp lệ.')
     query=f'SELECT m.dataset_id,m.code,m.year,m.{index},m.valid_pixels,m.sampled_pixels,m.coverage,o.dates,a.name FROM mobilegis.{index}_observations m JOIN mobilegis.unit_observations o USING(dataset_id,code,year) JOIN mobilegis.admin_units a ON a.boundary_id=o.boundary_id AND a.code=o.code WHERE m.dataset_id=%s AND m.coverage>=%s'
@@ -107,6 +140,7 @@ def metric_observations(index,source='gee_recovery',year=None,code=None,coverage
     with connect() as c:rows=c.execute(query+' ORDER BY m.code,m.year',params).fetchall()
     return [{**r,'dates':[d.isoformat() for d in r['dates']]} for r in rows]
 
+@cached
 def boundaries(lat=None,lon=None,original=False):
     geometry='geom_original' if original else 'geom'
     query=f'SELECT code,properties,ST_AsGeoJSON({geometry},15)::json AS geometry FROM mobilegis.admin_units WHERE boundary_id=%s'
@@ -116,9 +150,11 @@ def boundaries(lat=None,lon=None,original=False):
     with connect() as c:rows=c.execute(query+' ORDER BY code',params).fetchall()
     return {'type':'FeatureCollection','features':[{'type':'Feature','id':r['code'],'properties':r['properties'],'geometry':r['geometry']} for r in rows]}
 
+@cached
 def points():
     with connect() as c:return [r['payload'] for r in c.execute("SELECT payload FROM mobilegis.point_observations WHERE dataset_id='user_csv' ORDER BY name,year")]
 
+@cached
 def cover(source):
     with connect() as c:return [r['payload'] for r in c.execute('SELECT payload FROM mobilegis.landcover_statistics WHERE dataset_id=%s ORDER BY code',(source,))]
 

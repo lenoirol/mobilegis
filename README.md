@@ -6,6 +6,11 @@
 Xem được bản đồ, bảng số liệu, bảng tổng, so sánh khu vực, tương quan và sàng lọc TVDI (tính từ số liệu trung bình khu vực đã xuất sẵn).
 Đăng nhập, thống kê theo pixel, tra cứu ô và giả lập cần máy chủ FastAPI + PostgreSQL/PostGIS nên chỉ có khi chạy bản đầy đủ trên máy.
 
+## Đưa lên Internet (Render + Supabase, miễn phí)
+
+`render.yaml` và **[RENDER_HUONG_DAN.md](RENDER_HUONG_DAN.md)** hướng dẫn từng bước đưa bản đầy đủ (có đăng nhập, thống kê, giả lập) lên Render với cơ sở dữ liệu trên Supabase
+(xem thêm [SUPABASE_HUONG_DAN.md](SUPABASE_HUONG_DAN.md)).
+
 ## Giao diện mới · UI2
 
 Giao diện đã được xây lại (tối giản hiện đại pha brutalism, màn hình khởi động, chuyển cảnh mượt, thanh tab dưới đáy trên điện thoại,

@@ -57,6 +57,8 @@ def validate(o):
     return name,lat,lon,int(year),lst,ndvi,tvdi,source
 @app.get('/api/info')
 def info(request:Request):return {'version':VERSION,'project':str(ROOT),'port':request.url.port,'database':db.health(),'architecture':'PostGIS + local raster storage → FastAPI REST/XYZ → WebGIS/PWA'}
+@app.get('/api/ping')
+def ping():return {'ok':True}   # for host health checks: never touches the database
 @app.get('/api/health')
 def health():return {'status':'ok',**db.health()}
 @app.get('/api/observations')

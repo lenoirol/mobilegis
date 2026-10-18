@@ -1,0 +1,21 @@
+# Render Blueprint: chạy cả ứng dụng (giao diện + API) trên một địa chỉ, dùng Supabase làm cơ sở dữ liệu.
+# Dùng trong Render: New → Blueprint → chọn kho lenoirol/mobilegis.
+services:
+  - type: web
+    name: mobilegis
+    runtime: python
+    plan: free
+    region: singapore            # chọn cùng khu vực với project Supabase (xem Project Settings → General)
+    buildCommand: pip install -r requirements-server.txt
+    startCommand: python server.py --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/ping
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: MOBILEGIS_DATABASE_URL     # chuỗi kết nối Session pooler của role mobilegis_app (nhập tay trên Render, không nằm trong Git)
+        sync: false
+      - key: MOBILEGIS_DB_POOL_SIZE
+        value: "4"
+      - key: MOBILEGIS_CACHE_SECONDS    # dữ liệu nghiên cứu không đổi: đệm lâu để đỡ truy vấn qua Internet
+        value: "3600"

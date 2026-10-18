@@ -48,6 +48,19 @@ class DatabaseConfigTests(unittest.TestCase):
                 db.demo()
             self.assertIn(target, db._POOLS)   # one pool per DSN, created once and reused
 
+    def test_environment_variable_dsn_uses_tls_for_remote_hosts_and_the_pool(self):
+        old = os.environ.get('MOBILEGIS_DATABASE_URL')
+        os.environ['MOBILEGIS_DATABASE_URL'] = 'postgresql://u:p@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres'
+        try:
+            target, extra = db._load()
+            self.assertEqual(conninfo_to_dict(target)['sslmode'], 'require')
+            self.assertTrue(extra['pool'])
+            self.assertEqual(extra['pool_size'], 4)
+        finally:
+            os.environ.pop('MOBILEGIS_DATABASE_URL', None)
+            if old is not None:
+                os.environ['MOBILEGIS_DATABASE_URL'] = old
+
     def test_pool_can_be_switched_off_and_missing_file_is_a_clear_error(self):
         with tempfile.TemporaryDirectory() as temp:
             path = Path(temp) / 'x.json'
@@ -57,6 +70,35 @@ class DatabaseConfigTests(unittest.TestCase):
             os.environ['MOBILEGIS_DB_CONFIG'] = str(Path(temp) / 'missing.json')
             with self.assertRaises(RuntimeError):
                 db._load()
+
+
+class CacheTests(unittest.TestCase):
+    def setUp(self):
+        db.clear_cache()
+
+    def test_immutable_reads_are_cached_and_writes_are_not(self):
+        first = db.observations('gee_recovery', 2025, '25750')
+        real_connect = db.connect
+        db.connect = lambda: (_ for _ in ()).throw(AssertionError('a cached read must not open a connection'))
+        try:
+            self.assertEqual(db.observations('gee_recovery', 2025, '25750'), first)
+            self.assertIs(db.observations('gee_recovery', 2025, '25750'), first)
+        finally:
+            db.connect = real_connect
+        self.assertNotEqual(db.observations('gee_recovery', 2024, '25750'), first)   # other arguments are other entries
+        self.assertFalse(hasattr(db.demo, 'cache_clear'))   # demo points stay live
+
+    def test_cache_can_be_disabled_and_errors_are_not_cached(self):
+        os.environ['MOBILEGIS_CACHE_SECONDS'] = '0'
+        try:
+            a = db.observations('gee_recovery', 2025, '25750')
+            self.assertIsNot(db.observations('gee_recovery', 2025, '25750'), a)
+        finally:
+            os.environ.pop('MOBILEGIS_CACHE_SECONDS', None)
+        with self.assertRaises(ValueError):
+            db.observations('nope')
+        with self.assertRaises(ValueError):
+            db.observations('nope')
 
 
 if __name__ == '__main__':
