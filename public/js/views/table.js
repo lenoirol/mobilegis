@@ -2,7 +2,7 @@
    Never fills missing values (— = no data, never 0). Low-sample rows keep their numbers and are flagged. */
 import {h, mount, icon} from '../core/dom.js';
 import {data, indexRows} from '../core/data.js';
-import {post, isAdmin, onSession, get} from '../core/api.js';
+import {post, isAdmin, onSession, get, url, env} from '../core/api.js';
 import {INDEX, INDICES, YEARS, SOURCES, CANONICAL_SOURCE, fmt, pct, dmy, normalize, valid, shortName, download, toCsv} from '../core/format.js';
 import {segmented} from '../ui/seg.js';
 import {toast} from '../ui/toast.js';
@@ -193,7 +193,7 @@ async function render() {
   if (!root) return;
   const mine = ++ticket;
   S.view = S.mode === 'real' ? S.view : 'detail';
-  viewSeg.set(S.view); viewSeg.el.hidden = S.mode !== 'real'; modeSeg.set(S.mode); yearSelect.value = S.year; sourceSeg.set(S.source); indexSeg.set(S.index);
+  viewSeg.set(S.view); viewSeg.el.hidden = S.mode !== 'real'; modeSeg.set(S.mode); modeSeg.setDisabled(env.api ? [] : ['demo']); yearSelect.value = S.year; sourceSeg.set(S.source); indexSeg.set(S.index);
   mount(controlsHost, modeSeg.el, field('Tìm khu vực', searchInput), field('Năm', yearSelect),
     S.mode === 'real' && S.view === 'summary' ? [field('Xếp hạng theo', indexSeg.el), field('Ngưỡng độ phủ', covSelect)] : null,
     S.mode === 'real' && S.view === 'detail' ? h('label', {class: 'check'}, onlyBox, 'Chỉ khu vực đủ mẫu (≥ 50% cả 3 chỉ số)') : null,
@@ -216,7 +216,7 @@ async function render() {
   mount(actionsHost, exportBtn,
     S.mode === 'demo' ? h('button', {class: 'btn admin-only', type: 'button', on: {click: () => editorDialog()}}, icon('plus', 16), 'Thêm điểm') : null,
     S.mode === 'demo' ? h('label', {class: 'btn admin-only', for: 'importFile'}, icon('download', 16), 'Nhập CSV', h('input', {id: 'importFile', type: 'file', accept: '.csv', hidden: true, on: {change: e => { importCsv(e.target.files[0]); e.target.value = ''; }}})) : null,
-    S.mode === 'demo' && !isAdmin() ? h('span', {class: 'small muted'}, 'Chỉ quản trị viên được thêm/sửa/xóa điểm thực hành. ', h('a', {href: '/login.html'}, 'Đăng nhập')) : null);
+    S.mode === 'demo' && !isAdmin() ? h('span', {class: 'small muted'}, 'Chỉ quản trị viên được thêm/sửa/xóa điểm thực hành. ', env.api ? h('a', {href: url('login.html')}, 'Đăng nhập') : null) : null);
   mount(body, h('p', {class: 'callout'}, hint),
     S.view === 'summary' && real ? summaryView(rows) : [h('p', {class: 'count mono'}, `${shown.length.toLocaleString('vi-VN')} dòng`), detailTable(shown, editorDialog, removeRecord)]);
   if (!shownOnce || S.view === 'summary') { stagger(body); shownOnce = true; }

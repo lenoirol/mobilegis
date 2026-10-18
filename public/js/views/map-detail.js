@@ -3,6 +3,7 @@ import {h, icon, mount} from '../core/dom.js';
 import {INDEX, INDICES, fmt, pct, valid, dmy} from '../core/format.js';
 import {countTo} from '../core/motion.js';
 import {lineChart, stackBar} from '../ui/charts.js';
+import {url, env} from '../core/api.js';
 
 const policy = window.ViewerPolicy;
 const QUALITY_LABEL = {adequate: ['ok', 'Đủ mẫu'], limited: ['low', 'Ít mẫu'], unknown: ['low', 'Chưa rõ'], missing: ['missing', 'Thiếu']};
@@ -100,7 +101,7 @@ export function createDetail({onPin, onTable, onClose}) {
         mount(cover, h('h3', {class: 'dock-title'}, 'Lớp phủ đất 2021 · mẫu ESA'), stackBar(classes), h('div', {class: 'cover-top'}, ...classes.slice(0, 3).map(c => h('span', null, h('i', {style: {background: c.color}}), `${c.name} ${fmt(c.percent, 1)}%`))),
           h('p', {class: 'dock-help'}, 'Tỷ lệ trong các ô mẫu có phân loại; không phải diện tích địa chính.'));
       }
-      download.href = rasterLink(state.source, state); download.hidden = !D.layers;
+      download.href = url(rasterLink(state.source, state)); download.hidden = !D.layers || !env.api;   // GeoTIFF files are served by the API
       download.querySelector('span').textContent = state.landcover ? 'Tải lớp phủ 2021' : state.display === 'change' ? 'Tải GeoTIFF chênh lệch' : 'Tải GeoTIFF ' + state.year;
       pinBtn.hidden = !feature; tableBtn.hidden = !feature;
       pinBtn.disabled = opts.pinned?.includes(state.selected);

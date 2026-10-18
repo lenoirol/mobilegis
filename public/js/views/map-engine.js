@@ -2,6 +2,7 @@
    Presentation rules (viewer-policy.js): zones below 50 % coverage are grey + dashed; empty is never 0. */
 import {h} from '../core/dom.js';
 import {INDEX, colorOf, valid, fmt, pct, shortName} from '../core/format.js';
+import {url} from '../core/api.js';
 
 const L = window.L;
 const policy = window.ViewerPolicy;
@@ -12,7 +13,7 @@ export const coverageColor = v => !valid(v) ? '#c9c4b0' : v < .5 ? lerpHex(COVER
 export const COVERAGE_GRADIENT = `linear-gradient(90deg,${COVERAGE_RAMP.join(',')})`;
 export const CHANGE_GRADIENT = `linear-gradient(90deg,${CHANGE_RAMP.join(',')})`;
 
-const tile = (meta, options = {}) => L.tileLayer(meta.url + '?style=pg3', {bounds: meta.bounds, minNativeZoom: meta.min_zoom, maxNativeZoom: meta.max_native_zoom, maxZoom: 18, noWrap: true, ...options});
+const tile = (meta, options = {}) => L.tileLayer(url(meta.url) + '?style=pg3', {bounds: meta.bounds, minNativeZoom: meta.min_zoom, maxNativeZoom: meta.max_native_zoom, maxZoom: 18, noWrap: true, ...options});
 
 export function createEngine(container, handlers) {
   const map = L.map(container, {zoomControl: false, preferCanvas: true, zoomSnap: .25, zoomDelta: .5, wheelPxPerZoomLevel: 90, minZoom: 6, maxZoom: 18}).setView([10.85, 106.9], 9);

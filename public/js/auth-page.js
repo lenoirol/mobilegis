@@ -1,5 +1,6 @@
 /* Login / register / forgot-password page. Talks only to /api/auth/*. */
 (() => {
+  const base = new URL('./', document.baseURI).href, u = p => base + p.replace(/^\//, '');
   const $ = s => document.querySelector(s);
   const panels = {login: $('#panelLogin'), register: $('#panelRegister'), forgot: $('#panelForgot')};
   const message = $('#authMessage');
@@ -34,7 +35,7 @@
     button.disabled = true;
     try { await action(values(form)); } catch (error) { notify(error.message); } finally { button.disabled = false; }
   }
-  const enter = data => { location.replace(next || (data.user.role === 'admin' ? '/admin.html' : '/')); };
+  const enter = data => { location.replace(next || (data.user.role === 'admin' ? u('admin.html') : base)); };
 
   $('#tabLogin').onclick = () => show('login');
   $('#tabRegister').onclick = () => show('register');
@@ -46,27 +47,27 @@
     button.ariaLabel = hidden ? 'Ẩn mật khẩu' : 'Hiện mật khẩu';
   });
 
-  panels.login.onsubmit = e => { e.preventDefault(); guarded(panels.login, async v => enter(await post('/api/auth/login', v))); };
+  panels.login.onsubmit = e => { e.preventDefault(); guarded(panels.login, async v => enter(await post(u('api/auth/login'), v))); };
   panels.register.onsubmit = e => {
     e.preventDefault();
     guarded(panels.register, async v => {
       if (v.password !== v.confirm) throw new Error('Hai mật khẩu nhập vào chưa giống nhau.');
-      enter(await post('/api/auth/register', {display_name: v.display_name, email: v.email, password: v.password}));
+      enter(await post(u('api/auth/register'), {display_name: v.display_name, email: v.email, password: v.password}));
     });
   };
   $('#formForgot').onsubmit = e => {
     e.preventDefault();
-    guarded($('#formForgot'), async v => { const r = await post('/api/auth/forgot', v); notify(r.message, 'ok'); });
+    guarded($('#formForgot'), async v => { const r = await post(u('api/auth/forgot'), v); notify(r.message, 'ok'); });
   };
   $('#formReset').onsubmit = e => {
     e.preventDefault();
     guarded($('#formReset'), async v => {
-      await post('/api/auth/reset', {...v, code: v.code.trim().toUpperCase()});
+      await post(u('api/auth/reset'), {...v, code: v.code.trim().toUpperCase()});
       show('login'); notify('Đã đặt lại mật khẩu. Hãy đăng nhập bằng mật khẩu mới.', 'ok');
     });
   };
 
   // Already signed in? Go straight to the app instead of showing the form again.
-  fetch('/api/session', {credentials: 'same-origin'}).then(r => r.json()).then(s => { if (s.user) enter(s); }).catch(() => {});
+  fetch(u('api/session'), {credentials: 'same-origin'}).then(r => r.json()).then(s => { if (s.user) enter(s); }).catch(() => {});
   if (new URLSearchParams(location.search).get('tab') === 'register') show('register');
 })();

@@ -3,6 +3,9 @@ import {h, mount, icon} from '../core/dom.js';
 import {data} from '../core/data.js';
 import {INDEX, INDICES, YEARS, rampCss, fmt, valid, fmtInt} from '../core/format.js';
 import {stagger} from '../core/motion.js';
+import {url, env} from '../core/api.js';
+
+const GH = 'https://github.com/lenoirol/mobilegis/blob/main/';
 
 const policy = window.ViewerPolicy;
 let root, built = false;
@@ -32,9 +35,10 @@ async function build() {
   const methodCards = INDICES.map((k, i) => h('article', {class: 'card method reveal', style: {'--i': i}}, h('span', {class: 'eyebrow'}, INDEX[k].unit ? `${INDEX[k].label} · ${INDEX[k].unit}` : INDEX[k].label + (INDEX[k].experimental ? ' · thử nghiệm' : '')),
     h('h3', null, INDEX[k].name), h('i', {class: 'ramp', style: {background: rampCss(k)}}), h('div', {class: 'ramp-ends mono'}, h('span', null, `${INDEX[k].min}`), h('span', null, `${INDEX[k].max}`)),
     h('code', {class: 'formula'}, METHODS[k].formula), h('p', {class: 'muted'}, METHODS[k].text)));
-  const links = [['/data/gee_recovery/observations.csv', 'CSV hiện trạng 2020–2025'], ['/data/gee_recovery/products.json', 'Metadata & kiểm tra nguồn'], ['/api/documents/gee_script.js', 'Script xuất GEE'], ['/api/documents/gee_next_years.md', 'Quy trình xuất 2020–2024'], ['/data/hcm_167.geojson', 'Ranh giới GeoJSON'], ['/data/landsat_manifest.json', 'Danh mục cảnh và tham số TVDI']];
-  const docs = [['/docs', 'Tài liệu REST API'], ['/api/documents/schema.sql', 'SQL tạo bảng và migration'], ['/api/documents/database_design.md', 'Thiết kế CSDL'], ['/api/documents/quickstart.md', 'Cách chạy PostgreSQL'], ['/api/documents/pg3_guide.md', 'Hướng dẫn PG3']];
-  const linkList = items => h('div', {class: 'link-grid'}, ...items.map(([href, label]) => h('a', {class: 'btn sm', href, ...(href.startsWith('/docs') ? {target: '_blank', rel: 'noopener'} : {download: ''})}, icon('download', 15), label)));
+  const links = [['/data/gee_recovery/observations.csv', 'CSV hiện trạng 2020–2025'], ['/data/gee_recovery/products.json', 'Metadata & kiểm tra nguồn'], env.api ? ['/api/documents/gee_script.js', 'Script xuất GEE'] : [GH + 'scripts/gee_mobilegis.js', 'Script xuất GEE'], env.api ? ['/api/documents/gee_next_years.md', 'Quy trình xuất 2020–2024'] : [GH + 'GEE_2020_2024.md', 'Quy trình xuất 2020–2024'], ['/data/hcm_167.geojson', 'Ranh giới GeoJSON'], ['/data/landsat_manifest.json', 'Danh mục cảnh và tham số TVDI']];
+  const docs = env.api ? [['/docs', 'Tài liệu REST API'], ['/api/documents/schema.sql', 'SQL tạo bảng và migration'], ['/api/documents/database_design.md', 'Thiết kế CSDL'], ['/api/documents/quickstart.md', 'Cách chạy PostgreSQL'], ['/api/documents/pg3_guide.md', 'Hướng dẫn PG3']]
+    : [[GH + 'database/schema.sql', 'SQL tạo bảng'], [GH + 'database/DESIGN.md', 'Thiết kế CSDL'], [GH + 'DATABASE_POSTGRESQL.md', 'Cách chạy PostgreSQL'], [GH + 'TAI_KHOAN_VA_PHAN_QUYEN.md', 'Tài khoản và phân quyền'], [GH + 'GIAO_DIEN_MOI.md', 'Giao diện mới']];
+  const linkList = items => h('div', {class: 'link-grid'}, ...items.map(([href, label]) => { const external = href.startsWith('http') || href.startsWith('/docs'); return h('a', {class: 'btn sm', href: external ? href : url(href), ...(external ? {target: '_blank', rel: 'noopener'} : {download: ''})}, icon(external ? 'share' : 'download', 15), label); }));
 
   mount(root,
     h('header', {class: 'page-head'}, h('span', {class: 'eyebrow'}, 'Hiểu dữ liệu trước khi đọc kết quả'), h('h1', null, 'Dữ liệu & phương pháp'),
@@ -60,7 +64,8 @@ async function build() {
         h('div', {class: 'scroll card flat'}, h('table', {class: 'tbl'}, h('thead', null, h('tr', null, h('th', null, 'Chỉ số'), h('th', null, 'Bảng SQL riêng'), h('th', {class: 'num'}, 'Bản ghi'))),
           h('tbody', null, ...info.database.metric_tables.map(m => h('tr', null, h('th', {scope: 'row', class: 'name'}, m.index.toUpperCase()), h('td', {class: 'mono'}, m.table), h('td', {class: 'num mono'}, fmtInt(m.rows))))))),
         h('p', {class: 'muted small'}, 'LST, NDVI và TVDI nằm trong ba bảng riêng của cùng một database. GeoTIFF, tile và lưới tra cứu lưu trên đĩa, không nằm trong PostGIS. GEE bản gốc, bản bổ sung 2025 và bộ cũ được giữ riêng; chỉ điểm thực hành có thể thêm/sửa/xóa và có nhật ký.'))
-        : h('p', {class: 'callout err'}, 'Không truy vấn được CSDL. Kiểm tra PostgreSQL; không coi dữ liệu đệm là cập nhật mới.'), linkList(docs))),
+        : env.api ? h('p', {class: 'callout err'}, 'Không truy vấn được CSDL. Kiểm tra PostgreSQL; không coi dữ liệu đệm là cập nhật mới.')
+          : h('p', {class: 'callout'}, 'Đây là bản demo tĩnh trên GitHub Pages: không có máy chủ và không có PostgreSQL. Số liệu lấy từ các tệp JSON đã xuất sẵn từ CSDL. Bản đầy đủ chạy với FastAPI + PostGIS (xem hướng dẫn trong kho mã).'), linkList(docs))),
     h('p', {class: 'small muted foot'}, 'Ứng dụng phục vụ học tập, nghiên cứu và trình diễn; không phải hệ thống hỗ trợ quyết định chính thức. TVDI là thử nghiệm; LST là nhiệt độ bề mặt.'));
   root.classList.add('page'); stagger(root, ':scope > .page-head, :scope > .block, :scope > .method-grid');
 }

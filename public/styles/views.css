@@ -169,3 +169,6 @@
   .kpi-card{padding:12px 12px;box-shadow:var(--shadow-sm)}
   .kpi-card b{font-size:26px}.kpi-card span{font-size:10px}
 }
+
+/* static demo: blocks that only exist with the server */
+.stats-page.static .server-only{display:none}

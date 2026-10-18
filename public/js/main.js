@@ -1,6 +1,6 @@
 /* App shell: splash → data preload → hash router with View Transitions. Views are lazy ES modules kept alive once created. */
 import {$, $$, h, icon, mount} from './core/dom.js';
-import {loadSession, session, onSession} from './core/api.js';
+import {loadSession, session, onSession, detectApi, env} from './core/api.js';
 import {data} from './core/data.js';
 import {createStore} from './core/store.js';
 import {CANONICAL_SOURCE, SOURCES} from './core/format.js';
@@ -88,7 +88,8 @@ async function boot() {
   buildNav();
   const first = !sessionStorage.getItem('mg-seen');
   const started = performance.now();
-  splashStep(0, 'Đang kiểm tra phiên đăng nhập…');
+  splashStep(0, 'Đang kiểm tra máy chủ…');
+  await detectApi();   // false on GitHub Pages: the app then runs as a static demo
   const roleClass = () => { document.body.classList.remove('is-guest', 'is-customer', 'is-admin'); document.body.classList.add('is-' + (session.user?.role || 'guest')); };
   onSession(roleClass);
   await loadSession();
@@ -106,7 +107,8 @@ async function boot() {
   splashStep(4, store.get().error ? 'Một phần dữ liệu chưa sẵn sàng' : 'Sẵn sàng');
 
   const chip = $('#sourceChip');
-  chip.querySelector('span').textContent = store.get().error ? 'Chưa đủ dữ liệu' : SOURCES[CANONICAL_SOURCE].label;
+  chip.querySelector('span').textContent = store.get().error ? 'Chưa đủ dữ liệu' : env.api ? SOURCES[CANONICAL_SOURCE].label : 'Demo tĩnh · ' + SOURCES[CANONICAL_SOURCE].label;
+  if (!env.api) chip.title = 'Bản demo tĩnh trên GitHub Pages: không có máy chủ, đăng nhập, thống kê pixel và giả lập.';
   if (store.get().error) chip.querySelector('.dot').style.background = 'var(--coral)';
 
   window.addEventListener('hashchange', () => show(parseHash()));
@@ -120,6 +122,10 @@ async function boot() {
   splash.classList.add('done');
   setTimeout(() => splash.remove(), reduced() ? 20 : 1000);
 
-  if ('serviceWorker' in navigator && window.isSecureContext) navigator.serviceWorker.register('/sw.js').catch(() => {});
+  if (!env.api && !sessionStorage.getItem('mg-static-note')) {
+    sessionStorage.setItem('mg-static-note', '1');
+    setTimeout(() => toast('Đây là bản demo tĩnh: xem bản đồ, bảng số liệu và so sánh khu vực. Đăng nhập, thống kê pixel và giả lập cần chạy máy chủ (xem hướng dẫn trong kho mã).', {ms: 12000}), 1800);
+  }
+  if ('serviceWorker' in navigator && window.isSecureContext) navigator.serviceWorker.register('sw.js').catch(() => {});
 }
 boot();

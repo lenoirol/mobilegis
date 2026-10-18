@@ -1,7 +1,7 @@
 /* Scenario view: independent-offset simulations saved to PostgreSQL (admin only). Results are never mixed with observed data
    and are never presented as forecasts. */
 import {h, mount, icon} from '../core/dom.js';
-import {get, post, isAdmin, onSession} from '../core/api.js';
+import {get, post, isAdmin, onSession, url, env} from '../core/api.js';
 import {data, indexRows} from '../core/data.js';
 import {INDEX, INDICES, YEARS, SOURCES, CANONICAL_SOURCE, fmt, valid, download, toCsv} from '../core/format.js';
 import {countTo} from '../core/motion.js';
@@ -82,7 +82,12 @@ async function loadRun() {
 
 function render() {
   const admin = isAdmin();
-  el.formWrap.hidden = !admin; el.lock.hidden = admin;
+  el.formWrap.hidden = !admin || !env.api; el.lock.hidden = admin && env.api;
+  if (!env.api) {   // static demo: nothing can be saved or listed
+    el.lock.replaceChildren(icon('flask', 28), h('h2', null, 'Giả lập cần máy chủ'), h('p', {class: 'muted'}, 'Bản demo tĩnh trên GitHub Pages không có PostgreSQL nên không tạo hay lưu được kịch bản. Chạy bản đầy đủ trên máy của bạn để dùng chức năng này (xem hướng dẫn trong kho mã).'),
+      h('a', {class: 'btn primary', href: 'https://github.com/lenoirol/mobilegis', target: '_blank', rel: 'noopener'}, 'Mở kho mã trên GitHub'));
+    el.history.hidden = true;
+  }
 }
 
 export function init(section) {
@@ -98,14 +103,14 @@ export function init(section) {
     }}}, icon('download', 16), 'Xuất CSV kết quả'));
   el.formWrap = h('article', {class: 'card scenario-card'}, h('span', {class: 'eyebrow'}, 'Tạo mới'), h('h2', null, 'Tạo và lưu một lần chạy'), buildForm());
   el.lock = h('article', {class: 'card lock-card', hidden: true}, icon('lock', 28), h('h2', null, 'Chỉ quản trị viên được tạo giả lập'), h('p', {class: 'muted'}, 'Mỗi lần chạy được ghi vào PostgreSQL nên cần tài khoản quản trị. Bạn vẫn xem được các kết quả đã lưu ở bên dưới.'),
-    h('a', {class: 'btn primary', href: '/login.html?next=' + encodeURIComponent('/#/gia-lap')}, 'Đăng nhập'));
+    h('a', {class: 'btn primary', href: url('login.html') + '?next=' + encodeURIComponent(location.pathname + '#/gia-lap')}, 'Đăng nhập'));
   root = h('div', {class: 'page scenario-page'},
     h('header', {class: 'page-head'}, h('span', {class: 'eyebrow'}, 'Kết quả tách biệt với hiện trạng'), h('h1', null, 'Kịch bản giả lập'),
       h('p', null, 'Công cụ minh họa giả định, không phải dự báo đã kiểm chứng. Mỗi chỉ số được cộng mức thay đổi độc lập; không mô phỏng quan hệ vật lý giữa cây xanh, nhiệt độ và độ khô.')),
     el.formWrap, el.lock,
-    h('section', {class: 'block'}, h('h2', null, 'Lịch sử kết quả'), el.empty, el.result),
+    (el.history = h('section', {class: 'block'}, h('h2', null, 'Lịch sử kết quả'), el.empty, el.result)),
     h('p', {class: 'small muted'}, 'CSDL có thể lưu RMSE/MAE/Bias của một mô hình đã kiểm định. Bản này chỉ có giả lập; không tạo số đánh giá độ chính xác khi chưa có dữ liệu đối chứng.'));
   section.append(root);
   onSession(render); render();
 }
-export function show() { render(); loadRuns(); }
+export function show() { render(); if (env.api) loadRuns(); }

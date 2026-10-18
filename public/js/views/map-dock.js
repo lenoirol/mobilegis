@@ -2,6 +2,7 @@
 import {h, icon, mount} from '../core/dom.js';
 import {INDEX, INDICES, rampCss, normalize, SOURCES} from '../core/format.js';
 import {segmented} from '../ui/seg.js';
+import {env} from '../core/api.js';
 
 const DISPLAY = [
   {value: 'raster', label: 'Ảnh vệ tinh', title: 'Phân bố từng ô ảnh 120 m'},
@@ -106,7 +107,7 @@ export function createDock({onIndex, onYear, onDisplay, onToggle, onPick, onPlay
       opacity.value = Math.round(state.opacity * 100); opacity.style.setProperty('--fill', opacity.value + '%'); opacityVal.textContent = opacity.value + '%';
       basemapSeg.set(state.basemap);
       baseNote.textContent = state.basemap === 'plain' ? 'Nền nhẹ: số liệu và ranh giới nằm trên máy chủ, không cần Internet.' : state.basemap === 'streets' ? 'Nền đường phố trực tuyến · cần Internet.' : 'Ảnh nghiên cứu màu tự nhiên của bộ xử lý cũ, dùng làm bối cảnh. Vùng trống là pixel đã bị loại.';
-      sourceSeg.set(state.source); modeSeg.set(state.mode);
+      sourceSeg.set(state.source); modeSeg.set(state.mode); modeSeg.setDisabled(env.api ? [] : ['demo']);
       sourceNote.textContent = SOURCES[state.source]?.long || '';
     },
     resetSearch() { searchInput.value = ''; results.replaceChildren(); results.classList.remove('on'); },

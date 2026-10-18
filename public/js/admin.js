@@ -1,6 +1,6 @@
 /* Admin console: accounts, password-reset requests, security log, system overview. Text is inserted as text nodes only. */
 import {$, h, mount, icon} from './core/dom.js';
-import {session, loadSession, get, post} from './core/api.js';
+import {session, loadSession, get, post, url} from './core/api.js';
 import {segmented} from './ui/seg.js';
 import {toast} from './ui/toast.js';
 
@@ -9,15 +9,15 @@ const when = iso => iso ? new Date(iso).toLocaleString('vi-VN', {dateStyle: 'sho
 const EVENTS = {register: 'Đăng ký', login: 'Đăng nhập', login_failed: 'Đăng nhập sai', password_changed: 'Đổi mật khẩu', reset_requested: 'Yêu cầu đặt lại', reset_issued: 'Cấp mã đặt lại',
   reset_cancelled: 'Hủy yêu cầu', password_reset: 'Đã đặt lại mật khẩu', role_changed: 'Đổi vai trò', activated: 'Kích hoạt', deactivated: 'Vô hiệu hóa', user_deleted: 'Xóa tài khoản', admin_created: 'Tạo quản trị viên'};
 
-async function api(url, method = 'GET', body) {
-  if (method === 'GET') return get(url);
+async function api(target, method = 'GET', body) {
+  if (method === 'GET') return get(target);
   if (method === 'DELETE') {
-    const response = await fetch(url, {method, credentials: 'same-origin', headers: {'X-Token': session.token}});
+    const response = await fetch(url(target), {method, credentials: 'same-origin', headers: {'X-Token': session.token}});
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || 'Có lỗi xảy ra.');
     return data;
   }
-  return post(url, body ?? {});
+  return post(target, body ?? {});
 }
 const act = async (fn, okText) => { try { await fn(); if (okText) toast(okText); await refresh(); } catch (error) { toast(error.message, {error: true}); } };
 
@@ -70,13 +70,13 @@ function selectTab(name) {
 
 (async () => {
   await loadSession();
-  if (!session.user) { location.replace('/login.html?next=/admin.html'); return; }
+  if (!session.user) { location.replace(url('login.html') + '?next=' + encodeURIComponent(location.pathname)); return; }
   if (session.user.role !== 'admin') { $('#denied').hidden = false; $('#logout').hidden = true; return; }
   me = session.user; $('#who').textContent = me.display_name; $('#app').hidden = false;
   const resetCount = h('span', {class: 'count', hidden: true}, '0');
   tabs = segmented([{value: 'overview', label: 'Tổng quan'}, {value: 'users', label: 'Tài khoản'}, {value: 'resets', label: ['Quên mật khẩu', resetCount]}, {value: 'events', label: 'Nhật ký'}], 'overview', selectTab, {label: 'Mục quản trị'});
   tabs.counts = {reset: resetCount}; tabs.el.classList.add('admin-tabs');
   $('#tabsHost').append(tabs.el); tabs.place();
-  $('#logout').onclick = async () => { await fetch('/api/auth/logout', {method: 'POST', credentials: 'same-origin'}); location.href = '/login.html'; };
+  $('#logout').onclick = async () => { await fetch(url('api/auth/logout'), {method: 'POST', credentials: 'same-origin'}); location.href = url('login.html'); };
   try { await refresh(); } catch (error) { toast(error.message, {error: true}); }
 })();

@@ -1,5 +1,5 @@
 import {h, mount, icon} from '../core/dom.js';
-import {session, post, loadSession, onSession} from '../core/api.js';
+import {session, post, loadSession, onSession, url, env} from '../core/api.js';
 import {toast} from './toast.js';
 
 /** Header account chip: guest → "Đăng nhập"; signed in → avatar menu (admin page, change password, sign out). */
@@ -7,13 +7,14 @@ export function mountAccount(host) {
   const render = () => {
     const user = session.user;
     if (!user) {
-      mount(host, h('a', {class: 'btn primary sm', href: '/login.html?next=' + encodeURIComponent(location.pathname + location.hash)}, icon('user', 16), 'Đăng nhập'));
+      if (!env.api) return mount(host);   // static demo: no accounts
+      mount(host, h('a', {class: 'btn primary sm', href: url('login.html') + '?next=' + encodeURIComponent(location.pathname + location.hash)}, icon('user', 16), 'Đăng nhập'));
       return;
     }
     const admin = user.role === 'admin';
     const menu = h('div', {class: 'acct-menu', role: 'menu', hidden: true},
       h('div', {class: 'acct-who'}, h('strong', null, user.display_name), h('small', null, `${user.email} · ${admin ? 'Quản trị viên' : 'Khách hàng'}`)),
-      admin && h('a', {href: '/admin.html', role: 'menuitem'}, 'Trang quản trị'),
+      admin && h('a', {href: url('admin.html'), role: 'menuitem'}, 'Trang quản trị'),
       h('button', {type: 'button', role: 'menuitem', on: {click: () => { menu.hidden = true; passwordDialog(); }}}, 'Đổi mật khẩu'),
       h('button', {type: 'button', role: 'menuitem', on: {click: async () => { try { await post('/api/auth/logout'); } finally { location.reload(); } }}}, 'Đăng xuất'));
     const button = h('button', {class: 'acct-btn', type: 'button', 'aria-haspopup': 'menu', 'aria-expanded': 'false', title: user.email,

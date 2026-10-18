@@ -1,6 +1,6 @@
 /* Map view: composes the Leaflet engine, control dock, detail card, legend, quick stats and the mobile bottom sheet. */
 import {h, mount, icon, $} from '../core/dom.js';
-import {get} from '../core/api.js';
+import {get, env} from '../core/api.js';
 import {data, layersFor, indexRows} from '../core/data.js';
 import {INDEX, fmt, valid, CANONICAL_SOURCE, SOURCES, rampCss, YEARS} from '../core/format.js';
 import {createStore} from '../core/store.js';
@@ -122,6 +122,7 @@ function stopPlay() { if (playTimer) { clearInterval(playTimer); playTimer = nul
 
 async function probeAt(latlng) {
   const s = merged();
+  if (!env.api) return;   // pixel lookup is a server endpoint
   if (s.mode !== 'real' || s.landcover || (s.display !== 'raster' && s.display !== 'change')) return;
   const token = ++probeToken, change = s.display === 'change' ? 1 : 0;
   probe = {lat: latlng.lat, lng: latlng.lng, loading: true, change}; engine.ripple(latlng); sync();
@@ -258,7 +259,7 @@ export async function init(section, ctx) {
   }
   engine = createEngine(el.map, {
     select: (id, latlng) => select(id, false), probe: probeAt,
-    loading: (on, message) => { el.loader.classList.toggle('on', on); if (message) toast(message, {error: true}); },
+    loading: (on, message) => { el.loader.classList.toggle('on', on); if (message && env.api) toast(message, {error: true}); },   // static hosts 404 on empty edge tiles
     tileState: t => { tileState = t; const missing = t.missing; if (el.status) { const text = statusText(merged(), t); el.status.hidden = !text; el.status.textContent = text; } },
     baseFailed: () => { ms.set({basemap: 'plain'}); toast('Không kết nối được nền đường phố; đã chuyển sang nền nhẹ. Số liệu và ranh giới vẫn dùng được.', {error: true}); },
     occupied: occupiedRects,
