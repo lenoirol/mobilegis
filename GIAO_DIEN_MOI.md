@@ -40,3 +40,10 @@ giả lập tách khỏi hiện trạng và chỉ quản trị viên được t�
 - `python -m unittest discover -s tests` và `node --test tests/viewer-policy.test.cjs` (API, DB, quy tắc hiển thị).
 - `tests/e2e_ui.py`: chạy Chrome thật bằng Playwright qua toàn bộ màn hình (khách, quản trị, điện thoại 390 px).
   Cần máy chủ đang chạy và `.venv/bin/pip install playwright`. Xem đầu tệp để biết cách chạy.
+
+## Demo tĩnh trên GitHub Pages
+Mọi đường dẫn trong giao diện là **tương đối** (hàm `url()` trong `js/core/api.js`), nên cùng một mã chạy ở `/` (máy chủ thật) và ở
+`/mobilegis/` (GitHub Pages). Khi không có `api/health`, ứng dụng tự vào chế độ tĩnh (`body.is-static`):
+ẩn đăng nhập và điểm thực hành, tắt tra cứu ô, giả lập và thống kê theo pixel (hiện thông báo), còn tương quan và sàng lọc TVDI tính ngay
+trong trình duyệt từ số liệu khu vực. Quy trình xuất bản: `.github/workflows/pages.yml` (bật Pages với nguồn "GitHub Actions").
+Kiểm thử tĩnh cục bộ: phục vụ `public/` bằng `python -m http.server` ở một thư mục cha tên `mobilegis`.

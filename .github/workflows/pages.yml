@@ -1,0 +1,39 @@
+# Xuất bản bản demo tĩnh của giao diện (thư mục public/) lên GitHub Pages.
+# Không có máy chủ FastAPI/PostgreSQL trên Pages: ứng dụng tự nhận biết và chạy ở chế độ demo tĩnh.
+name: Xuất bản GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lấy mã nguồn
+        uses: actions/checkout@v4
+      - name: Cấu hình Pages
+        uses: actions/configure-pages@v5
+      - name: Đóng gói thư mục public
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - name: Triển khai
+        id: deployment
+        uses: actions/deploy-pages@v4

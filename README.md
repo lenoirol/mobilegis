@@ -1,5 +1,11 @@
 # MobileGIS TP.HCM với dữ liệu Landsat
 
+## Demo trực tuyến
+
+**https://lenoirol.github.io/mobilegis/** là bản demo tĩnh trên GitHub Pages (tự cập nhật khi đẩy thay đổi trong `public/`).
+Xem được bản đồ, bảng số liệu, bảng tổng, so sánh khu vực, tương quan và sàng lọc TVDI (tính từ số liệu trung bình khu vực đã xuất sẵn).
+Đăng nhập, thống kê theo pixel, tra cứu ô và giả lập cần máy chủ FastAPI + PostgreSQL/PostGIS nên chỉ có khi chạy bản đầy đủ trên máy.
+
 ## Giao diện mới · UI2
 
 Giao diện đã được xây lại (tối giản hiện đại pha brutalism, màn hình khởi động, chuyển cảnh mượt, thanh tab dưới đáy trên điện thoại,
