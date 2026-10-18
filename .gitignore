@@ -1,0 +1,16 @@
+# Local credentials and environments must never be committed.
+config/*.local.json
+.venv/
+.legacy/
+database/backups/
+__pycache__/
+*.pyc
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+
+# macOS
+.DS_Store
+
+# Playwright / kiểm thử tạm
+.pytest_cache/

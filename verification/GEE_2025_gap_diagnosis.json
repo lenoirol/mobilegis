@@ -1,0 +1,320 @@
+{
+  "year": 2025,
+  "status": "diagnosed_locally_recovery_exports_pending",
+  "baseline_files": [
+    {
+      "file": "MobileGIS_indices_2025_120m.tif",
+      "sha256": "27ae33782d5a161dfb521cbb829c253408855c0073b9f3fb0efaa9fe808d323a"
+    },
+    {
+      "file": "MobileGIS_units_2025_120m.csv",
+      "sha256": "24f79dc7a02c36833f43ad32dcc3e64b82baa5ce263147f875673dc9875e57be"
+    },
+    {
+      "file": "MobileGIS_scenes_2025.csv",
+      "sha256": "12ea69a979241c78d45406fa59e0b8556c3e218599dc3b682e905066a46bb331"
+    }
+  ],
+  "threshold": {
+    "min_pixels": 5,
+    "min_coverage": 0.1,
+    "recommended_review_coverage": 0.5
+  },
+  "wards": [
+    {
+      "code": "25942",
+      "name": "Phường Dĩ An",
+      "sampled_pixels": 1485,
+      "lst_pixels": 70,
+      "ndvi_pixels": 70,
+      "tvdi_pixels": 70,
+      "lst_coverage": 0.04713804713804714,
+      "ndvi_coverage": 0.04713804713804714,
+      "tvdi_coverage": 0.04713804713804714
+    },
+    {
+      "code": "25945",
+      "name": "Phường Tân Đông Hiệp",
+      "sampled_pixels": 1483,
+      "lst_pixels": 111,
+      "ndvi_pixels": 111,
+      "tvdi_pixels": 110,
+      "lst_coverage": 0.07484828051247472,
+      "ndvi_coverage": 0.07484828051247472,
+      "tvdi_coverage": 0.07417397167902899
+    },
+    {
+      "code": "25951",
+      "name": "Phường Đông Hoà",
+      "sampled_pixels": 1456,
+      "lst_pixels": 103,
+      "ndvi_pixels": 103,
+      "tvdi_pixels": 99,
+      "lst_coverage": 0.07074175824175824,
+      "ndvi_coverage": 0.07074175824175824,
+      "tvdi_coverage": 0.06799450549450549
+    },
+    {
+      "code": "25969",
+      "name": "Phường Thuận Giao",
+      "sampled_pixels": 1182,
+      "lst_pixels": 9,
+      "ndvi_pixels": 9,
+      "tvdi_pixels": 9,
+      "lst_coverage": 0.007614213197969543,
+      "ndvi_coverage": 0.007614213197969543,
+      "tvdi_coverage": 0.007614213197969543
+    },
+    {
+      "code": "25975",
+      "name": "Phường An Phú",
+      "sampled_pixels": 1158,
+      "lst_pixels": 46,
+      "ndvi_pixels": 46,
+      "tvdi_pixels": 46,
+      "lst_coverage": 0.039723661485319514,
+      "ndvi_coverage": 0.039723661485319514,
+      "tvdi_coverage": 0.039723661485319514
+    }
+  ],
+  "cached_qa_grid": {
+    "crs": "EPSG:32648",
+    "shape": [
+      1086,
+      1137
+    ],
+    "transform": [
+      120.0,
+      0.0,
+      645000.0,
+      0.0,
+      -120.0,
+      1271880.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "cached_scene_diagnostics": [
+    {
+      "scene": "LC08_L2SP_124052_20250301_02_T1",
+      "date": "2025-03-01",
+      "wards": {
+        "25942": {
+          "footprint": 0,
+          "qa_clear": 0,
+          "optical_valid": 0,
+          "joint_valid": 0,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25945": {
+          "footprint": 0,
+          "qa_clear": 0,
+          "optical_valid": 0,
+          "joint_valid": 0,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25951": {
+          "footprint": 2,
+          "qa_clear": 2,
+          "optical_valid": 2,
+          "joint_valid": 2,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25969": {
+          "footprint": 0,
+          "qa_clear": 0,
+          "optical_valid": 0,
+          "joint_valid": 0,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25975": {
+          "footprint": 0,
+          "qa_clear": 0,
+          "optical_valid": 0,
+          "joint_valid": 0,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        }
+      }
+    },
+    {
+      "scene": "LC09_L2SP_124053_20250205_02_T1",
+      "date": "2025-02-05",
+      "wards": {
+        "25942": {
+          "footprint": 0,
+          "qa_clear": 0,
+          "optical_valid": 0,
+          "joint_valid": 0,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25945": {
+          "footprint": 0,
+          "qa_clear": 0,
+          "optical_valid": 0,
+          "joint_valid": 0,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25951": {
+          "footprint": 9,
+          "qa_clear": 9,
+          "optical_valid": 9,
+          "joint_valid": 9,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25969": {
+          "footprint": 0,
+          "qa_clear": 0,
+          "optical_valid": 0,
+          "joint_valid": 0,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25975": {
+          "footprint": 0,
+          "qa_clear": 0,
+          "optical_valid": 0,
+          "joint_valid": 0,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        }
+      }
+    },
+    {
+      "scene": "LC08_L2SP_125052_20250204_02_T1",
+      "date": "2025-02-04",
+      "wards": {
+        "25942": {
+          "footprint": 1485,
+          "qa_clear": 73,
+          "optical_valid": 73,
+          "joint_valid": 73,
+          "qa_rejected": 1412,
+          "cloud_or_shadow": 1412,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25945": {
+          "footprint": 1483,
+          "qa_clear": 107,
+          "optical_valid": 107,
+          "joint_valid": 107,
+          "qa_rejected": 1376,
+          "cloud_or_shadow": 1376,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25951": {
+          "footprint": 1456,
+          "qa_clear": 99,
+          "optical_valid": 99,
+          "joint_valid": 99,
+          "qa_rejected": 1357,
+          "cloud_or_shadow": 1357,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25969": {
+          "footprint": 1182,
+          "qa_clear": 10,
+          "optical_valid": 10,
+          "joint_valid": 10,
+          "qa_rejected": 1172,
+          "cloud_or_shadow": 1172,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25975": {
+          "footprint": 1158,
+          "qa_clear": 40,
+          "optical_valid": 40,
+          "joint_valid": 40,
+          "qa_rejected": 1118,
+          "cloud_or_shadow": 1118,
+          "optical_clear_but_thermal_missing": 0
+        }
+      }
+    },
+    {
+      "scene": "LC09_L2SP_125053_20250228_02_T1",
+      "date": "2025-02-28",
+      "wards": {
+        "25942": {
+          "footprint": 2,
+          "qa_clear": 2,
+          "optical_valid": 2,
+          "joint_valid": 2,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25945": {
+          "footprint": 0,
+          "qa_clear": 0,
+          "optical_valid": 0,
+          "joint_valid": 0,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25951": {
+          "footprint": 0,
+          "qa_clear": 0,
+          "optical_valid": 0,
+          "joint_valid": 0,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25969": {
+          "footprint": 0,
+          "qa_clear": 0,
+          "optical_valid": 0,
+          "joint_valid": 0,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        },
+        "25975": {
+          "footprint": 0,
+          "qa_clear": 0,
+          "optical_valid": 0,
+          "joint_valid": 0,
+          "qa_rejected": 0,
+          "cloud_or_shadow": 0,
+          "optical_clear_but_thermal_missing": 0
+        }
+      }
+    }
+  ],
+  "caveat": "Cached USGS inputs are nearest-neighbour samples on a different local grid. These counts support a hypothesis, not exact attribution of GEE export masks. Run the provided GEE diagnostics to confirm.",
+  "report_scope": {
+    "file": "C:/Users/phuhuy/Downloads/mục 8 linh mục 9 phương.docx",
+    "sections": [
+      "4.2",
+      "5.2",
+      "6.3",
+      "7.1",
+      "8.1"
+    ],
+    "years": [
+      2020,
+      2025
+    ],
+    "year_2026_required": false
+  }
+}

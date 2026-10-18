@@ -1,0 +1,5 @@
+#databaseStatus { margin: 0 0 24px; }
+#databaseHealth { color: #096b59; font-weight: 650; }
+#tvdiScreening { margin: 24px 0; }
+#tvdiScreening .tableWrap { max-height: 360px; overflow: auto; }
+#tvdiScreening th { position: sticky; top: 0; background: #edf4f0; }

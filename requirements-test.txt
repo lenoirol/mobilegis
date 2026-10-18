@@ -1,0 +1,4 @@
+# Test dependencies. Install after requirements-server.txt and requirements-processing.txt.
+httpx2
+# Optional: browser end-to-end test (tests/e2e_ui.py) drives the installed Google Chrome.
+playwright

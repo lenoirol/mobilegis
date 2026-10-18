@@ -1,0 +1,25 @@
+/* Bright, high-contrast research interface. Keep data colours independent. */
+body{background:#f3faf6;color:#173b34}
+header{background:#fff;border-bottom:2px solid #d9ede2}
+.analysis-card{border-color:#cbded4;box-shadow:0 5px 22px #1c5a3510}
+.muted,.small,#tableNotice,#sourceAvailability{color:#405d52}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:24px 0}
+.chart-grid section{min-width:0;background:#fff;border:1px solid #d8e8df;border-radius:12px;padding:14px}
+.chart-grid h3{font-size:17px;margin:5px 0 12px}.chart-grid svg{width:100%;height:auto;font-family:'Segoe UI',sans-serif}
+.scenario-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 24px}
+.scenario-fields select,.scenario-fields input{max-width:none}
+#scenarioMethod,#statsStatus{line-height:1.7;color:#294b3d}
+#researchAppendix>summary{font-size:18px;padding:5px 0}
+#pixelAnalysis .tableWrap{max-height:430px}
+.map-label{font-size:12px;line-height:18px;font-weight:600;background:#fffffff5;padding:4px 8px;border:1px solid #b6cbbd;box-shadow:0 1px 5px #1d382822;color:#193d30;white-space:nowrap}
+.selected-label{border:2px solid #116846;color:#075333}
+#map{background:#ecf3ee}.leaflet-pane.leaflet-labels-pane{pointer-events:none}
+#baseNote,#legend small,#source,#chart text{font-size:12px;color:#3d574b}
+#versionTag{font-size:12px;white-space:nowrap}#mapSummary{pointer-events:none}
+#pixelAnalysis label{max-width:480px}#pixelAnalysis .quality-kpis small{font-size:13px;color:#365347}
+#scenarioRows td:last-child{font-size:11px;max-width:220px;overflow-wrap:anywhere}
+#saveScenario,#saveScenario:hover{background:#086d54;color:#fff;border-color:#07533f}
+#saveScenario:disabled{background:#496d5f;color:#fff;opacity:1;cursor:wait}
+.primary:hover{background:#075944;color:#fff}
+@media(max-width:1100px){header{gap:10px;padding:12px 18px}header .brand{font-size:24px}nav button{padding:8px 10px}#versionTag{font-size:10px}}
+@media(max-width:760px){.chart-grid,.scenario-fields{grid-template-columns:1fr}.chart-grid{gap:12px}.chart-grid section{padding:9px}header nav{overflow-x:auto}header nav button{white-space:nowrap;font-size:11px;padding:7px 5px}#mapLabels+span{font-size:12px}#source{font-size:12px}#legend small{font-size:11px}.map-legend{width:170px}#mapSummary strong{font-size:12px}#pixelAnalysis h2{font-size:22px}.page{padding:22px 12px}}

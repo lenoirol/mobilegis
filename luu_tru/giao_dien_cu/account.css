@@ -1,0 +1,20 @@
+/* Account chip, menu and dialogs for the main app (header). */
+#account{position:relative;margin-left:auto;display:flex;align-items:center}
+.account-login{background:var(--brand);color:#fff!important;text-decoration:none;font-weight:700;padding:9px 18px;border-radius:999px;white-space:nowrap}
+.account-login:hover{background:var(--brand-dark)}
+.account-chip{display:flex;align-items:center;gap:8px;border-radius:999px!important;padding:4px 12px 4px 4px!important;background:#fffdf0!important;border:2px solid var(--ink)!important}
+.account-avatar{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--sun);font-weight:800}
+.account-name{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
+.account-menu{position:absolute;right:0;top:calc(100% + 8px);z-index:2000;min-width:230px;background:#fff;border:2px solid var(--ink);border-radius:12px;box-shadow:0 10px 30px #2b210040;padding:6px;display:flex;flex-direction:column}
+.account-menu[hidden]{display:none}
+.account-menu a,.account-menu button{display:block;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:8px;color:var(--ink);font-weight:600;text-decoration:none;width:100%}
+.account-menu a:hover,.account-menu button:hover{background:#fff1a8}
+.account-who{padding:8px 12px 10px;border-bottom:1px solid var(--line);margin-bottom:4px}
+.account-who small{display:block;color:var(--muted)}
+.account-dialog{border:2px solid var(--ink);border-radius:14px;padding:22px;max-width:380px;width:92vw;background:#fff;color:var(--ink)}
+.account-dialog::backdrop{background:#2b210066}
+.account-dialog label{display:block;font-weight:700;margin:12px 0 0}
+.account-dialog input{display:block;width:100%;margin-top:4px;padding:10px;border-radius:8px}
+.account-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:16px}
+.account-message{color:var(--danger);min-height:1.2em;font-weight:600}
+@media(max-width:760px){#account{order:2}.account-name{display:none}.account-chip{padding:3px!important}.account-login{padding:7px 12px;font-size:13px}}

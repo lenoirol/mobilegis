@@ -1,0 +1,31 @@
+/* Chart kit styles. Marks are thin; grid/axes recede; colour is data, ink is text. */
+.ch-host{width:100%;min-width:0}
+.ch{display:block;width:100%;height:auto;overflow:visible}
+.ch-grid{stroke:var(--hair);stroke-width:1;stroke-dasharray:2 4}
+.ch-axis{stroke:var(--ink);stroke-width:1.5}
+.ch-text{font:500 11px var(--f-mono);fill:var(--ink-3)}
+.ch-text.lbl{font:600 12px var(--f-sans);fill:var(--ink)}
+.ch-val{font:700 11px var(--f-mono);fill:var(--ink)}
+.ch-direct{font:700 12px var(--f-sans)}
+.ch-empty{font:600 14px var(--f-sans);fill:var(--ink-3)}
+.ch-line{fill:none;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.ch-dot{stroke:#fff;stroke-width:2;cursor:pointer;outline:none;transition:r .15s}
+.ch-dot:hover,.ch-dot:focus{stroke:var(--ink);r:7}
+.ch-dot.pop,.ch-pt.pop{transform-box:fill-box;transform-origin:center;animation:dotpop .45s var(--ease-spring) both}
+@keyframes dotpop{from{transform:scale(0)}}
+.ch-bar{cursor:pointer;outline:none;transition:fill .15s}
+.ch-bar:hover,.ch-bar:focus{fill:var(--signal)!important;stroke:var(--ink);stroke-width:2}
+.ch-bar.h.grow{transform-box:fill-box;transform-origin:left;animation:growx .6s var(--ease) both}
+.ch-bar.v.grow-y{transform-box:fill-box;transform-origin:bottom;animation:growy .6s var(--ease) both}
+@keyframes growy{from{transform:scaleY(0)}}
+.ch-box{outline:none;cursor:pointer}
+.ch-box.grow{transform-box:fill-box;transform-origin:left;animation:growx .6s var(--ease) both}
+.ch-whisker{stroke:var(--ink);stroke-width:2}
+.ch-iqr{fill:var(--signal);stroke:var(--ink);stroke-width:2}
+.ch-median{stroke:var(--ink);stroke-width:3.5}
+.ch-box:hover .ch-iqr,.ch-box:focus .ch-iqr{fill:#fff}
+.ch-pt{stroke:var(--ink);stroke-width:1;opacity:.92;cursor:pointer;outline:none}
+.ch-pt:hover,.ch-pt:focus{stroke-width:3;opacity:1}
+.ch-tip{position:fixed;z-index:6000;pointer-events:none;background:var(--ink);color:#fff;border-radius:7px;padding:8px 11px;box-shadow:3px 3px 0 var(--signal);font-size:13px;line-height:1.35;display:grid;gap:2px;max-width:270px}
+.ch-tip b{color:var(--signal);font:700 12px var(--f-mono)}
+.ch-tip[hidden]{display:none}

@@ -1,0 +1,4 @@
+@media(max-width:760px){
+  body>header{height:94px;min-height:94px;flex-wrap:wrap;padding:8px 12px;gap:4px}
+  body>main#mapView{height:calc(100dvh - 94px)}
+}

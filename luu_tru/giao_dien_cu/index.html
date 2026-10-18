@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffd23f"><title>MobileGIS TP.HCM</title>
+  <link rel="icon" href="icon.svg"><link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="vendor/leaflet.css"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="report.css?v=2026.10.4"><link rel="stylesheet" href="experience.css?v=2026.10.gee"><link rel="stylesheet" href="database.css"><link rel="stylesheet" href="analysis.css?v=pg3">
+</head>
+<body class="viewer-mode">
+<header><a class="brand" href="/" aria-label="MobileGIS TP.HCM trang chủ">◈ <span>MobileGIS<small>TP.HCM</small></span></a>
+  <nav aria-label="Điều hướng"><button id="mapTab" class="active">Bản đồ</button><button id="dataTab">Dữ liệu</button><button id="sourcesTab">Nguồn</button></nav>
+  <span class="tag" id="versionTag">2026.10.PG4 · PostGIS</span>
+</header>
+<main id="mapView">
+  <aside id="controls">
+    <div class="intro"><div><span class="eyebrow">KHÔNG GIAN VÀ THỜI GIAN</span><h1>Bản đồ môi trường</h1></div><button id="collapseTools" aria-expanded="true" aria-controls="toolBody">Thu gọn</button></div>
+    <div id="toolBody">
+      <p class="notice" id="datasetNotice">Đang tải dữ liệu nghiên cứu…</p>
+      <label for="dataset">Bộ dữ liệu</label><select id="dataset"><option value="real">Landsat thực · 167 đơn vị</option><option value="user">CSV nhóm cung cấp · 4 điểm GEE</option><option value="demo">6 điểm giả lập · bản demo ban đầu</option></select>
+      <label for="researchSource">Nguồn Landsat nghiên cứu</label><select id="researchSource"><option value="gee">GEE · đang tải bộ xuất</option><option value="legacy">Bộ xử lý cũ · 2020–2025</option></select><p id="sourceAvailability" class="small muted" aria-live="polite"></p>
+      <label for="search">Tìm xã/phường hoặc mã hành chính</label><input id="search" placeholder="Ví dụ: Bến Thành, 26743…" autocomplete="off">
+      <div id="places" aria-label="Kết quả tìm khu vực"></div>
+      <label>Lớp chỉ số</label><div class="indices"><button data-index="lst" class="active">LST<span>Nhiệt độ</span></button><button data-index="ndvi">NDVI<span>Thực vật</span></button><button data-index="tvdi">TVDI<span>Độ khô</span></button></div>
+      <div class="row"><label for="year">Mốc quan sát</label><strong id="yearLabel">2025</strong></div><input id="year" type="range" min="2020" max="2025" value="2025" step="1">
+      <div class="row"><span id="yearRange">2020–2025</span><button id="play">▶ Phát diễn biến</button></div>
+      <label for="displayMode">Khám phá bản đồ</label><select id="displayMode"><option value="raster">Phân bố chỉ số · tile 120 m</option><option value="zones">Trung bình theo xã/phường</option><option value="change">Thay đổi 2020 → 2025</option><option value="coverage">Độ phủ dữ liệu từng khu vực</option></select>
+      <label for="basemap">Bản đồ nền</label><select id="basemap"><option value="plain">Nền nhẹ · không cần Internet</option><option value="streets">Đường phố · dễ đọc, cần Internet</option><option value="rgb_2025">Ảnh nghiên cứu · 2025, có vùng thiếu</option><option value="rgb_2020">Ảnh nghiên cứu · 2020, có vùng thiếu</option></select>
+      <p id="baseNote" class="small muted"></p>
+      <label class="check"><input id="landcover" type="checkbox"> Lớp phủ đất ESA · năm 2021</label>
+      <label class="check"><input id="compare" type="checkbox"> So sánh kéo màn hình 2020 / năm chọn</label>
+      <div id="swipeTools" hidden><label for="swipe">Vị trí đường chia</label><input id="swipe" type="range" min="5" max="95" value="50"></div>
+      <label class="check"><input id="visible" type="checkbox" checked> Hiển thị lớp chỉ số</label>
+      <label class="check"><input id="boundaries" type="checkbox" checked> Ranh giới xã/phường</label>
+      <label class="check"><input id="mapLabels" type="checkbox" checked> Nhãn khu vực · tự tránh chồng</label>
+      <label for="opacity">Độ đậm của lớp</label><input id="opacity" type="range" min="10" max="100" value="100">
+      <div class="row actions"><button id="gps">◎ Vị trí của tôi</button><button id="extent">⌖ Toàn vùng</button></div>
+      <p class="muted small" id="connectionStatus">Bản đồ nền cần Internet. Ranh giới và số liệu được lưu trên máy.</p>
+    </div>
+  </aside>
+  <section class="mapArea" aria-label="Bản đồ tương tác">
+    <div id="map"></div><div id="mapSummary" aria-live="polite"></div><div id="legend" class="map-legend"></div><div id="swipeLabels" hidden><span>2020</span><span id="swipeYear">2025</span></div><div id="mapError" role="status" hidden></div><div id="rasterStatus" role="status" hidden></div>
+    <article id="detail"><div class="detailHeading"><div><span class="eyebrow">THÔNG TIN KHU VỰC</span><h2 id="placeName">Chạm vào một xã/phường</h2></div><button id="collapseDetail" aria-expanded="true" aria-controls="detailBody" aria-label="Thu gọn thông tin">−</button></div>
+      <div id="detailBody"><p id="areaInfo" class="muted small"></p><div id="metrics"></div><p id="coverage" class="small"></p><p id="sampleInfo" class="small"></p>
+      <div class="row"><span>Diễn biến theo mốc ảnh</span><span id="unit"></span></div><svg id="chart" viewBox="0 0 360 115" role="img" aria-label="Biểu đồ giá trị theo năm"></svg>
+      <p id="source" class="muted small"></p><div id="landcoverDetail"></div><button id="pinCompare" hidden>+ Thêm vào so sánh xã/phường</button><a id="downloadRaster" class="small" hidden>Tải GeoTIFF đang xem</a></div>
+    </article>
+  </section>
+</main>
+<main id="dataView" class="page" hidden>
+  <div class="dataHeading"><div><span class="eyebrow">BẢNG THUỘC TÍNH</span><h1>Dữ liệu theo khu vực</h1></div><button id="add" class="primary" hidden>+ Thêm điểm demo</button></div>
+  <label for="tableResearchSource">Nguồn Landsat</label><select id="tableResearchSource"><option value="gee">GEE · đã hiệu chỉnh thống kê</option><option value="legacy">Bộ xử lý cũ · 2020–2025</option></select>
+  <p id="tableNotice"></p><div class="data-filters"><label>Bộ dữ liệu<select id="tableDataset"><option value="real">Landsat · 167 đơn vị</option><option value="user">CSV · 4 điểm</option><option value="demo">Dữ liệu thực hành</option></select></label><label>Tìm khu vực<input id="tableSearch" placeholder="Tên hoặc mã…"></label><label>Năm<select id="tableYear"><option value="all">Tất cả năm</option><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option></select></label></div><div class="toolbar"><a id="export" href="/data/observations_real.csv" class="button" download>↓ Xuất toàn bộ CSV</a><button id="exportFiltered">Xuất bảng đã lọc</button><label id="importLabel" class="button" for="importFile" hidden>↑ Nhập CSV demo</label><input id="importFile" type="file" accept=".csv" hidden><span id="count"></span></div>
+  <div class="tableWrap"><table><thead id="tableHead"></thead><tbody id="rows"></tbody></table></div>
+</main>
+<main id="sourcesView" class="page" hidden>
+  <span class="eyebrow">NGUỒN VÀ PHƯƠNG PHÁP</span><h1>Dữ liệu có thể kiểm tra lại</h1>
+  <p>Ranh giới tham chiếu sau sắp xếp năm 2025 được dùng thống nhất cho mọi năm 2020–2025. Kết quả các năm trước thể hiện trên ranh giới nghiên cứu này, không mô tả ranh giới lịch sử.</p>
+  <h2>Ranh giới 167 đơn vị</h2><p>Bộ dữ liệu cộng đồng <a href="https://github.com/thanglequoc/vietnamese-provinces-database/tree/v4.2.0" target="_blank" rel="noopener">Vietnamese Provinces Database v4.2.0</a>, dẫn nguồn bản đồ tham chiếu <a href="https://sapnhap.bando.com.vn" target="_blank" rel="noopener">Nhà xuất bản Tài nguyên Môi trường và Bản đồ Việt Nam</a>. Loại đặc khu Côn Đảo (26732); giữ các xã đảo ven bờ, gồm Thạnh An (27676). Đây là ranh giới tham khảo, không phải hồ sơ địa chính được chứng nhận.</p>
+  <p id="boundaryAudit"></p><p><a href="/data/hcm_167.geojson" download>Tải GeoJSON</a> · <a href="/data/boundary_source.json" download>Phiên bản và mã kiểm tra nguồn</a></p>
+  <h2>Ảnh Landsat và cách xử lý</h2><p><a href="https://doi.org/10.5066/P9OGBGM6" target="_blank" rel="noopener">USGS Landsat 8/9 Collection 2 Level-2</a>, tải từ <a href="https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2" target="_blank" rel="noopener">Microsoft Planetary Computer</a>. Chọn ảnh ít mây trong tháng 1–4, ghép các cảnh theo ưu tiên ít mây. Các vùng có thể có ngày chụp khác nhau; đây không phải nhiệt độ trung bình năm.</p>
+  <ul><li>NDVI = (NIR − Red) / (NIR + Red), sau hệ số phản xạ 0,0000275 và offset −0,2.</li><li>LST (°C) = ST_B10 × 0,00341802 + 149 − 273,15.</li><li>Lưới thử nghiệm 120 m, lấy mẫu gần nhất; lọc QA_PIXEL, QA_RADSAT trên lưới lấy mẫu. Mây nhỏ có thể bị bỏ sót; không thay thế phân tích đầy đủ ở 30 m.</li><li>TVDI thử nghiệm: hồi quy rìa ướt/khô từ phân vị 5%/95% theo nhóm NDVI của từng cảnh, loại nước, không ngoại suy ngoài miền NDVI được khớp. Chỉ số cần được kiểm chứng trước khi diễn giải khô hạn.</li><li>Trung bình xã/phường chỉ tính từ pixel hợp lệ. Ít hơn 5 pixel hoặc dưới 10% vùng mẫu thì để trống; không gán 0 hay nội suy.</li></ul>
+  <p><a href="/data/landsat_manifest.json" download>Tải danh mục cảnh và tham số TVDI</a> · <a href="/data/observations_real.csv" download>Tải bảng thống kê</a></p>
+  <div class="tableWrap"><table><thead><tr><th>Năm</th><th>Mã cảnh</th><th>Ngày chụp</th><th>Mây toàn cảnh</th><th>Pixel sử dụng</th></tr></thead><tbody id="sceneRows"></tbody></table></div>
+  <h2>CSV nhóm cung cấp</h2><p>File MobileGIS_LST_NDVI_TVDI_2020_2025.csv có 24 dòng tại 4 tọa độ, đủ các năm 2020–2025. Cột nguồn ghi GEE Landsat 8/9 Collection 2 Level 2, mùa khô. File chưa có mã cảnh, ngày ảnh, vùng đệm, phương pháp tổng hợp hay script TVDI nên chưa tái kiểm chứng được quy trình. Ba dòng TVDI bằng 1 được giữ nguyên, chưa suy diễn là lỗi hay tình trạng hạn hán.</p>
+  <p>Tên điểm Củ Chi trong file ứng với tọa độ thuộc xã Nhuận Đức theo lớp ranh giới tham chiếu; tên điểm Trung tâm TP.HCM thuộc phường Sài Gòn. Việc gắn đơn vị chỉ giúp định vị, không biến giá trị điểm thành trung bình xã/phường. Chọn bộ CSV ở tab Bản đồ để xem marker và biểu đồ riêng.</p>
+  <p><a href="/data/user_supplied_original.csv" download>Tải CSV nguyên gốc</a> · <a href="/data/user_csv_source.json" download>Kết quả kiểm tra CSV và nguồn</a></p>
+  <h2>Dùng trên điện thoại và khi mất mạng</h2><p>Giao diện hỗ trợ màn hình nhỏ. Khi mở qua localhost hoặc HTTPS, ứng dụng có thể lưu giao diện, ranh giới, bảng số liệu và những ảnh chỉ số đã xem. Bản đồ nền OSM không được tải hàng loạt; ảnh chưa xem và file GeoTIFF vẫn cần kết nối tới máy chủ. GPS cần HTTPS hoặc localhost và quyền của bạn.</p>
+</main>
+<dialog id="editor"><form id="form"><h2 id="formTitle">Thêm dữ liệu demo</h2><input name="id" type="hidden"><label>Tên khu vực<input name="name" required maxlength="150"></label><div class="fields"><label>Vĩ độ<input name="lat" type="number" step="any" min="-90" max="90" required></label><label>Kinh độ<input name="lon" type="number" step="any" min="-180" max="180" required></label><label>Năm<input name="year" type="number" min="2020" max="2025" required value="2025"></label><label>LST (°C)<input name="lst" type="number" step="any" min="-80" max="100" required></label><label>NDVI<input name="ndvi" type="number" step="any" min="-1" max="1" required></label><label>TVDI<input name="tvdi" type="number" step="any" min="0" max="1" required></label></div><label>Nguồn<input name="source" required maxlength="500"></label><p id="formError" role="alert"></p><div class="row"><button type="button" id="cancel">Hủy</button><button class="primary" type="submit">Lưu dữ liệu demo</button></div></form></dialog>
+<div id="toast" role="status" hidden></div><script src="vendor/leaflet.js"></script><script src="app.js?v=pg3"></script>
+<script src="experience.js?v=pg3"></script><script src="report.js?v=2026.10.gee"></script><script src="gee.js?v=pg3"></script><script src="insights.js?v=pg3"></script>
+<script src="database-ui.js?v=pg3"></script>
+<script src="analysis-ui.js?v=pg3"></script>
+<script src="viewer-policy.js?v=viewer1"></script><script src="viewer-ui.js?v=viewer1"></script>
+<script src="js/session.js?v=pg4"></script><script src="js/data-table.js?v=pg4"></script>
+<link rel="stylesheet" href="viewer.css?v=viewer1"><link rel="stylesheet" href="data-table.css?v=pg4"><link rel="stylesheet" href="account.css?v=pg4"><link rel="stylesheet" href="theme.css?v=pg4">
+</body></html>

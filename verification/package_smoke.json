@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "version": "2026.10.GEE6 · đủ dữ liệu GEE 2020–2025",
+  "point_value": 40.287506103515625,
+  "gee_point_value": 40.21232604980469,
+  "gee_years": [
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "gee_2020_value": 38.37001419067383,
+  "gee_change_value": 1.8423118591308594,
+  "auto_port_fallback": true,
+  "isolated_folder": "C:\\Users\\phuhuy\\AppData\\Local\\Temp\\MobileGIS_package_smoke_fu1v_eu9",
+  "note": "Subset boot check plus full ZIP CRC integrity; no GIS libraries needed by server."
+}

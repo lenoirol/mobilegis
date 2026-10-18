@@ -1,0 +1,97 @@
+/* Real map experience. Extends existing CRUD without changing research values. */
+state.pinned=['26743','27664','25747'];state.visual=null;state.cover=[];
+const originalRender=render,originalDetail=renderDetail,originalRaster=renderRaster,originalLegend=renderLegend,originalZones=zoneStyle;
+function stopPlay(){if(state.timer){clearInterval(state.timer);state.timer=null;$('#play').textContent='▶ Phát diễn biến';}}
+const changeMode=()=>state.mode==='real'&&$('#displayMode').value==='change';
+function gradientColor(v,lo,hi,colors){if(!valid(v))return '#c5cdd0';const t=Math.max(0,Math.min(1,(v-lo)/(hi-lo)))*2,i=Math.min(1,Math.floor(t)),rgb=c=>[1,3,5].map(p=>parseInt(c.slice(p,p+2),16));return '#'+rgb(colors[i]).map((v,k)=>Math.round(v+(rgb(colors[i+1])[k]-v)*(t-i)).toString(16).padStart(2,'0')).join('');}
+function mapTile(meta,options={}){return L.tileLayer(meta.url+'?style=pg3',{bounds:meta.bounds,minNativeZoom:meta.min_zoom,maxNativeZoom:meta.max_native_zoom,maxZoom:18,noWrap:true,...options});}
+for(const [name,z] of [['context',250],['comparison',355],['labels',450]]){state.map.createPane(name);state.map.getPane(name).style.zIndex=z;}
+L.control.scale({imperial:false,position:'bottomleft'}).addTo(state.map);
+function renderBase(){
+  state.base?.remove();state.base=null;
+  // Local neutral background is reliable offline; imagery remains an optional research layer.
+  state.map.eachLayer(l=>{if(l instanceof L.TileLayer&&l._url?.includes('tile.openstreetmap.org'))l.remove();});
+  $('#mapError').hidden=true;const id=$('#basemap').value;
+  if(id==='streets'){const layer=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap contributors'});state.base=layer;layer.on('tileerror',()=>{if(state.base!==layer)return;$('#basemap').value='plain';renderBase();$('#baseNote').textContent='Không kết nối được nền đường phố; đã chuyển sang nền nhẹ. Dữ liệu chỉ số và ranh giới vẫn dùng được.';}).addTo(state.map);$('#baseNote').textContent='Nền đường phố trực tuyến · cần Internet.';}
+  else if(id==='plain')$('#baseNote').textContent='Nền nhẹ · số liệu và ranh giới cục bộ.';
+  else{const info=state.visual?.context?.[id];if(info){state.base=mapTile(info,{pane:'context',attribution:'Landsat: USGS · ESA WorldCover'}).addTo(state.map);$('#baseNote').textContent=`Ảnh nghiên cứu ${info.year} · ${info.dates.join(', ')} · mẫu 120 m. Vùng nền trống là pixel đã bị loại/mất dữ liệu, không phải lỗi tải. Chọn Đường phố để định vị đầy đủ; không tự tô kín ảnh.`;}else $('#baseNote').textContent='Ảnh nền bổ sung chưa sẵn sàng.';}
+  connection();
+}
+connection=function(){ $('#connectionStatus').textContent=!navigator.onLine?'Ngoại tuyến · chỉ lớp đã lưu đệm xem được; tra cứu ô mẫu cần máy chủ.':$('#basemap').value==='streets'?'Nền đường phố cần Internet; số liệu và các lớp khác nằm trên máy chủ.':'Ảnh nền, chỉ số và ranh giới đã lưu cục bộ · không cần Internet khi máy chủ đang chạy.';};
+window.addEventListener('online',connection);window.addEventListener('offline',connection);
+const originalChoose=choose;
+choose=function(id,zoom=true){$('#sampleInfo').textContent='';state.sampleRequest=(state.sampleRequest||0)+1;originalChoose(id,false);if($('#detailBody').hidden)$('#collapseDetail').click();if(zoom&&state.mode==='real'){const layer=state.zones?.getLayers().find(l=>l.feature.id===id);if(layer)state.map.fitBounds(layer.getBounds(),{maxZoom:13,paddingTopLeft:[25,25],paddingBottomRight:innerWidth<=760?[25,Math.min(260,state.map.getSize().y*.45)]:[Math.min(390,state.map.getSize().x*.4),25]});}else if(zoom)originalChoose(id,true);};
+zoneStyle=function(f){const s=originalZones(f),mode=$('#displayMode').value;if($('#landcover').checked)s.fillOpacity=0;if(state.mode==='real'&&mode==='coverage'&&!$('#landcover').checked){const r=state.real.find(r=>r.code===f.id&&r.year===state.year);s.fillColor=gradientColor(r?.[state.index+'_coverage'],0,1,['#ecbca3','#f4d373','#0d8165']);s.fillOpacity=$('#visible').checked?Number($('#opacity').value)/100:0;}return s;};
+renderRaster=function(){
+  state.raster?.remove();state.other?.remove();state.raster=null;state.other=null;$('#rasterStatus').hidden=true;$('#swipeTools').hidden=true;$('#swipeLabels').hidden=true;state.map.getPane('comparison').style.clipPath='';
+  if(state.mode!=='real'||!$('#visible').checked)return;
+  const mode=$('#displayMode').value;let meta;
+  if($('#landcover').checked)meta=state.visual?.context?.worldcover;
+  else if(mode==='change')meta=state.visual?.change?.[state.index];
+  else if(mode==='raster')meta=state.visual?.absolute?.[state.year]?.[state.index];
+  else return;
+  if(!meta){if(mode==='raster')originalRaster();return;}
+  state.raster=mapTile(meta,{pane:'indices',opacity:Number($('#opacity').value)/100}).addTo(state.map);
+  state.raster.on('loading',()=>{$('#rasterStatus').textContent='Đang tải mảnh bản đồ…';$('#rasterStatus').hidden=false;}).on('load',()=>$('#rasterStatus').hidden=true).on('tileerror',()=>showMapError('Mảnh bản đồ chưa tải được. Kiểm tra máy chủ hoặc bộ nhớ đệm.'));
+  if($('#compare').checked&&mode==='raster'&&!$('#landcover').checked){const other=state.visual.absolute['2020']?.[state.index];if(other){state.other=mapTile(other,{pane:'comparison',opacity:Number($('#opacity').value)/100}).addTo(state.map);$('#swipeTools').hidden=false;$('#swipeLabels').hidden=false;$('#swipeYear').textContent=state.year;updateSwipe();}}
+};
+function updateSwipe(){state.map.getPane('comparison').style.clipPath=`inset(0 ${100-Number($('#swipe').value)}% 0 0)`;}
+renderLegend=function(){
+  const box=$('#legend');
+  if(state.mode==='real'&&$('#landcover').checked){box.replaceChildren(el('strong','Lớp phủ đất · 2021'));for(const c of state.visual?.context?.worldcover?.classes||[]){if([70,100].includes(c.code))continue;const item=el('div');item.className='legend-item';const dot=el('span');dot.className='legend-dot';dot.style.background=c.color;item.append(dot,el('span',c.name));box.append(item);}box.append(el('small','ESA WorldCover · lấy mẫu 120 m'));return;}
+  if(!changeMode()&&!(state.mode==='real'&&$('#displayMode').value==='coverage'))return originalLegend();
+  const change=changeMode(),cfg=state.visual?.change?.[state.index],lo=change?(cfg?.min??-1):0,hi=change?(cfg?.max??1):100,colors=change?['#2171b5','#f7f7f7','#c53a32']:['#ecbca3','#f4d373','#0d8165'];box.replaceChildren(el('strong',change?'Thay đổi 2025 − 2020':'Độ phủ mẫu hợp lệ'));const bar=el('div');bar.className='gradient';bar.style.background=`linear-gradient(90deg,${colors.join(',')})`;box.append(bar,el('div',`${lo} → ${hi} ${change?specs[state.index].unit:'%'}`),el('small',change?'Xanh: giảm · đỏ: tăng · trống: thiếu cặp mẫu.':'Độ phủ là tỷ lệ ô mẫu; không phải độ chính xác.'));
+};
+function renderSummary(){const box=$('#mapSummary');box.replaceChildren();const real=state.mode==='real',cover=real&&$('#landcover').checked,r=state.real.filter(r=>r.year===state.year),n=cover?state.cover.filter(r=>r.valid_pixels>0).length:r.filter(r=>valid(r[state.index])).length;for(const [value,label] of [[cover?'Lớp phủ 2021':changeMode()?'2020 → 2025':state.year,'Mốc hiển thị'],[real?`${n}/167`:`${records().filter(r=>r.year===state.year).length} điểm`,cover?'Có lớp phủ':'Có chỉ số'],[real?'120 m':'CSV','Lưới / nguồn']]){const c=el('div');c.append(el('strong',String(value)),el('span',label));box.append(c);}}
+renderDetail=function(){
+  originalDetail();$('#pinCompare').hidden=state.mode!=='real'||!selectedRow();$('#landcoverDetail').replaceChildren();const r=selectedRow();
+  if(state.mode==='real'){$('#downloadRaster').hidden=false;$('#downloadRaster').href=$('#landcover').checked?'/api/rasters/worldcover_2021_120m.tif':changeMode()?`/api/rasters/change_${state.index}_2020_2025_120m.tif`:`/api/rasters/${state.index}_${state.year}_120m.tif`;$('#downloadRaster').textContent=$('#landcover').checked?'Tải GeoTIFF lớp phủ 2021 · mẫu 120 m':changeMode()?'Tải GeoTIFF chênh lệch 2025 − 2020':'Tải GeoTIFF chỉ số của năm đang chọn';}
+  if(changeMode()&&r){const a=state.real.find(x=>x.code===state.selected&&x.year===2020),v=valid(a?.[state.index])&&valid(r[state.index])?r[state.index]-a[state.index]:null;$('#coverage').textContent+=` Δ trung bình: ${fmt(v)} ${specs[state.index].unit}. Khác Δ ô mẫu trên bản đồ.`;}
+  const cover=state.mode==='real'?state.cover.find(c=>c.code===state.selected):null;
+  if(cover){$('#landcoverDetail').append(el('h3','Lớp phủ đất 2021 · mẫu ESA'));const bar=el('div');bar.className='cover-bar';for(const c of cover.classes.filter(c=>c.percent>0)){const seg=el('span');seg.style.width=c.percent+'%';seg.style.background=c.color;seg.title=c.name+': '+c.percent+'%';bar.append(seg);}const list=el('p');list.className='cover-list';for(const c of [...cover.classes].sort((a,b)=>b.percent-a.percent).filter(c=>c.percent>0).slice(0,3))list.append(el('span',`${c.name}: ${c.percent}%`));$('#landcoverDetail').append(bar,list,el('small','Tỷ lệ trong các ô mẫu có phân loại; không phải diện tích địa chính.'));}
+};
+renderChart=function(){const svg=$('#chart');svg.replaceChildren();const seq=records().filter(r=>key(r)===state.selected),values=seq.map(r=>r[state.index]).filter(valid);if(!values.length){svg.append(svgNode('text',{x:180,y:55,'text-anchor':'middle'},'Thiếu dữ liệu'));return;}let lo=Math.min(...values),hi=Math.max(...values),pad=Math.max((hi-lo)*.2,state.index==='lst'?1:.02);lo-=pad;hi+=pad;for(let i=0;i<3;i++){const v=lo+(hi-lo)*i/2,cy=90-i*32;svg.append(svgNode('line',{x1:42,x2:350,y1:cy,y2:cy,stroke:'#dbe7e0'}),svgNode('text',{x:37,y:cy+3,'text-anchor':'end'},fmt(v,state.index==='lst'?1:2)));}let last=null;for(let year=2020;year<=2025;year++){const r=seq.find(r=>r.year===year),x=48+(year-2020)*59;svg.append(svgNode('text',{x,y:110,'text-anchor':'middle'},String(year)));if(!valid(r?.[state.index])){last=null;continue;}const cy=90-(r[state.index]-lo)/(hi-lo)*64;if(last)svg.append(svgNode('line',{x1:last.x,y1:last.cy,x2:x,y2:cy,stroke:'#08705b','stroke-width':2.5}));const dot=svgNode('circle',{cx:x,cy,r:3.5,fill:'#08705b'});dot.append(svgNode('title',{},`${year}: ${fmt(r[state.index])}`));svg.append(dot);last={x,cy};}};
+function renderLabels(){
+ state.labels?.remove();state.labels=null;
+ if(state.mode==='demo'||!state.zones||state.map.getZoom()<11||!$('#mapLabels').checked||!$('#boundaries').checked)return;
+ const origin=$('#map').getBoundingClientRect(),occupied=[];
+ for(const id of ['mapSummary','legend','detail']){const node=$('#'+id);if(node.hidden)continue;const r=node.getBoundingClientRect();occupied.push({x:r.left-origin.left,y:r.top-origin.top,w:r.width,h:r.height});}
+ const collides=(a,b)=>a.x<b.x+b.w+8&&a.x+a.w+8>b.x&&a.y<b.y+b.h+6&&a.y+a.h+6>b.y;
+ const canvas=document.createElement('canvas'),context=canvas.getContext('2d');context.font='600 12px Segoe UI';
+ state.labels=L.layerGroup();const bounds=state.map.getBounds(),size=state.map.getSize();let count=0;
+ const layers=[...state.zones.getLayers()].sort((a,b)=>Number(b.feature.id===state.selected)-Number(a.feature.id===state.selected));
+ for(const layer of layers){
+  const p=layer.getBounds().getCenter();if(!bounds.contains(p))continue;
+  const text=layer.feature.properties.full_name,pt=state.map.latLngToContainerPoint(p),w=context.measureText(text).width+20;
+  const box={x:pt.x-w/2,y:pt.y-14,w,h:28};
+  if(box.x<8||box.y<8||box.x+w>size.x-8||box.y+28>size.y-8||occupied.some(r=>collides(box,r)))continue;
+  occupied.push(box);const label=el('span',text);
+  L.marker(p,{icon:L.divIcon({className:'',html:'',iconSize:[0,0]}),pane:'labels',interactive:false})
+   .bindTooltip(label,{permanent:true,direction:'center',className:'map-label'+(layer.feature.id===state.selected?' selected-label':'')}).addTo(state.labels);
+  if(++count>=(state.map.getZoom()>=14?22:12))break;
+ }
+ state.labels.addTo(state.map);
+}
+state.map.on('moveend',renderLabels);
+$('#mapLabels').onchange=renderLabels;
+state.map.on('resize',renderLabels);
+render=function(){if(state.mode==='real'&&!state.selected&&state.geo)state.selected='26743';const signature=[state.mode,state.year,state.index,$('#displayMode').value,$('#landcover').checked].join('/');if(signature!==state.sampleSignature){$('#sampleInfo').textContent='';state.sampleRequest=(state.sampleRequest||0)+1;state.sampleSignature=signature;}originalRender();$('#year').disabled=changeMode();$('#compare').disabled=state.mode!=='real';$('#landcover').disabled=state.mode!=='real';$('#tableDataset').value=state.mode;renderSummary();renderLabels();window.dispatchEvent(new Event('researchchange'));};
+async function sampleAt(point){const request=state.sampleRequest=(state.sampleRequest||0)+1;$('#sampleInfo').textContent='Đang tra cứu ô mẫu tại vị trí chạm…';try{const r=await json(`/api/sample?lat=${point.lat}&lon=${point.lng}&year=${state.year}&index=${state.index}&change=${changeMode()?1:0}`);if(request!==state.sampleRequest)return;$('#sampleInfo').textContent=`${point.lat.toFixed(4)}, ${point.lng.toFixed(4)}: ${valid(r.value)?fmt(r.value)+' '+specs[state.index].unit:'thiếu dữ liệu'}. ${changeMode()?'Chênh lệch hai năm. ':''}Ô mẫu gần nhất 120 m; khác trung bình xã/phường.`;}catch{if(request===state.sampleRequest)$('#sampleInfo').textContent='Tra cứu ô mẫu cần kết nối máy chủ. Thống kê đã tải vẫn xem được.';}}
+state.map.on('click',e=>{if(state.mode==='real'&&!$('#landcover').checked)sampleAt(e.latlng);});
+$('#basemap').onchange=renderBase;$('#swipe').oninput=updateSwipe;
+for(const id of ['compare','landcover'])$('#'+id).onchange=()=>{stopPlay();render();};
+$('#displayMode').onchange=()=>{stopPlay();if(changeMode()){state.year=2025;$('#year').value=2025;}$('#sampleInfo').textContent='';render();};
+$('#opacity').addEventListener('input',()=>state.other?.setOpacity(Number($('#opacity').value)/100));
+$('#year').addEventListener('input',()=>{$('#sampleInfo').textContent='';state.sampleRequest=(state.sampleRequest||0)+1;});
+document.querySelectorAll('[data-index]').forEach(b=>b.addEventListener('click',()=>{$('#sampleInfo').textContent='';state.sampleRequest=(state.sampleRequest||0)+1;}));
+const oldPlay=$('#play').onclick;$('#play').onclick=()=>{if(changeMode()||$('#landcover').checked)return toast('Chọn chế độ Phân bố chỉ số để phát các mốc.');oldPlay();};
+$('#pinCompare').onclick=()=>{if(!state.pinned.includes(state.selected)){if(state.pinned.length>=4)return toast('Tối đa 4 đơn vị; bỏ bớt ở tab Phân tích.');state.pinned.push(state.selected);}window.dispatchEvent(new Event('researchchange'));toast('Đã thêm vào so sánh xã/phường ở tab Phân tích.');};
+function filteredRecords(){const q=normalize($('#tableSearch').value),year=$('#tableYear').value;return records().filter(r=>(year==='all'||r.year===Number(year))&&normalize(r.name+' '+(r.code||'')).includes(q));}
+renderTable=function(){const real=state.mode==='real';$('#tableDataset').value=state.mode;$('#add').hidden=state.mode!=='demo';$('#importLabel').hidden=state.mode!=='demo';$('#export').href=real?'/data/observations_real.csv':state.mode==='user'?'/data/user_supplied_original.csv':'/api/export';$('#tableNotice').textContent=real?'Landsat · thống kê xã/phường theo mốc ảnh. Ô trống là thiếu dữ liệu.':state.mode==='user'?'CSV nhóm cung cấp · giữ nguyên số liệu.':'Dữ liệu thực hành giả lập.';const head=el('tr');(real?['Mã','Khu vực','Năm','LST °C','NDVI','TVDI *','Độ phủ LST / NDVI / TVDI','Ngày ảnh']:['Khu vực','Năm','LST °C','NDVI','TVDI','Nguồn',...(state.mode==='demo'?['Thao tác']:[])]).forEach(h=>head.append(el('th',h)));$('#tableHead').replaceChildren(head);$('#rows').replaceChildren();const rows=filteredRecords();$('#count').textContent=`${rows.length} / ${records().length} bản ghi`;for(const r of rows){const tr=el('tr');(real?[r.code,r.name,r.year,fmt(r.lst),fmt(r.ndvi),fmt(r.tvdi),['lst','ndvi','tvdi'].map(k=>(r[k+'_coverage']*100).toFixed(0)+'%').join(' / '),r.dates.join(', ')]:[r.name,r.year,fmt(r.lst),fmt(r.ndvi),fmt(r.tvdi),r.source]).forEach(v=>tr.append(el('td',v)));if(state.mode==='demo'){const td=el('td'),edit=el('button','Sửa'),del=el('button','Xóa');edit.onclick=()=>editor(r);del.onclick=async()=>{if(confirm(`Xóa ${r.name}, năm ${r.year}?`)){try{await json('/api/delete',{id:r.id});await refreshDemo();}catch(e){toast(e.message);}}};td.append(edit,del);tr.append(td);}$('#rows').append(tr);}};
+$('#tableSearch').oninput=renderTable;$('#tableYear').onchange=renderTable;$('#tableDataset').onchange=()=>{const mode=$('#tableDataset').value;$('#dataset').value=mode;$('#dataset').dispatchEvent(new Event('change'));};
+function downloadText(text,name,type='text/csv;charset=utf-8'){const url=URL.createObjectURL(new Blob([text],{type})),a=el('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+$('#exportFiltered').onclick=()=>{const rows=filteredRecords();if(!rows.length)return toast('Không có dòng nào để xuất.');const cols=Object.keys(rows[0]).filter(k=>k!=='id'),cell=v=>'"'+String(v??'').replace(/"/g,'""')+'"';downloadText('\ufeff'+[cols.map(cell).join(','),...rows.map(r=>cols.map(k=>cell(Array.isArray(r[k])?JSON.stringify(r[k]):r[k])).join(','))].join('\r\n'),`MobileGIS_${state.mode}_filtered.csv`);};
+Promise.allSettled([json('/data/visual_products.json'),json('/data/landcover_stats.json'),json('/api/info')]).then(result=>{state.legacyVisual=result[0].status==='fulfilled'?result[0].value:null;state.legacyCover=result[1].status==='fulfilled'?result[1].value:[];if(state.researchSource!=='legacy'&&state.gee){state.visual={...state.gee,context:{...state.legacyVisual?.context,...state.gee.context}};state.cover=state.geeCover;}else{state.visual=state.legacyVisual;state.cover=state.legacyCover;}if(result[2].status==='fulfilled'){const i=result[2].value;$('#versionTag').textContent=`${i.database?'2026.10.PG3 · PostGIS':'2026.10'} · ${i.port} · 167 đơn vị`;$('#versionTag').title=i.project;}renderBase();if(state.geo){if(!state.selected)state.selected='26743';render();}if(innerWidth<=760){if(!$('#toolBody').hidden)$('#collapseTools').click();if(!$('#detailBody').hidden)$('#collapseDetail').click();setTimeout(()=>{state.map.invalidateSize();extent();},90);}});
+const extra=el('section');extra.id='geeTools';extra.innerHTML='<h2>Lớp phủ đất và nguồn bổ sung</h2><p>WorldCover chỉ mô tả năm 2021. Nguồn GEE mới dùng file bạn đã xuất: thống kê lưới 10 m, tile hiển thị khoảng 30 m. Nguồn cũ tải từ COG công khai ESA và lấy mẫu 120 m. Chọn nguồn để xem đúng thống kê; không dùng lớp phủ 2021 thay cho bản đồ mọi năm.</p><p><a href="https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200" target="_blank" rel="noopener">Danh mục GEE ESA WorldCover</a> · <a href="https://esa-worldcover.org/en/data-access" target="_blank" rel="noopener">Nguồn ESA</a> · <a href="/data/visual_products.json" download>Metadata nguồn cũ</a></p><p>Ảnh nền màu tự nhiên 2020/2025 thuộc bộ xử lý cũ, dùng làm bối cảnh và ghi ngày cảnh, không thay thế lớp chỉ số GEE. Trạng thái nhập và số đơn vị có chỉ số từng năm GEE nằm ở bảng “Bộ xuất GEE đã kiểm tra” phía trên.</p><p>© ESA WorldCover project 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium · CC BY 4.0.</p>';
+$('#sourcesView').append(extra);
+const docs=el('p');for(const [url,label] of [['quickstart.md','Hướng dẫn bản mới'],['gee_guide.md','Hướng dẫn GEE từ đầu'],['gee_script.js','Script xuất GEE'],['hcm167_GEE.zip','Ranh giới nhập GEE']]){const a=el('a',label);a.href='/api/documents/'+url;a.download=url;docs.append(a,document.createTextNode(' · '));}extra.append(docs);

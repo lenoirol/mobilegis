@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "version": "2026.10.GEE7 · GEE 2020–2025, đã bổ sung 5 phường năm 2025",
+  "point_value": 40.287506103515625,
+  "gee_point_value": 40.21232604980469,
+  "gee_years": [
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "gee_2020_value": 38.37001419067383,
+  "gee_change_value": 1.8423118591308594,
+  "auto_port_fallback": true,
+  "recovery_valid_units_2025": 167,
+  "recovery_point": 43.172332763671875,
+  "isolated_folder": "C:\\Users\\phuhuy\\AppData\\Local\\Temp\\MobileGIS_package_smoke_ngj0ht96",
+  "note": "Subset boot check plus full ZIP CRC integrity; no GIS libraries needed by server."
+}

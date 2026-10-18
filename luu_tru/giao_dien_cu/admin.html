@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffd23f"><title>Quản trị · MobileGIS TP.HCM</title>
+  <link rel="icon" href="icon.svg"><link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="auth.css?v=pg4">
+</head>
+<body class="admin-page">
+<header>
+  <a class="auth-brand" href="/admin.html"><span class="auth-logo">◈</span><span>MobileGIS<small>QUẢN TRỊ</small></span></a>
+  <span class="admin-spacer"></span>
+  <span class="admin-who" id="who"></span>
+  <span class="admin-header-actions"><a class="btn" href="/">Mở bản đồ</a><button class="btn" id="logout" type="button">Đăng xuất</button></span>
+</header>
+<main class="admin-main" id="app" hidden>
+  <h1>Trang quản trị</h1>
+  <div class="admin-tabs" role="tablist" aria-label="Mục quản trị">
+    <button type="button" role="tab" data-tab="overview" class="active">Tổng quan</button>
+    <button type="button" role="tab" data-tab="users">Tài khoản</button>
+    <button type="button" role="tab" data-tab="resets">Quên mật khẩu<span class="count" id="resetCount" hidden>0</span></button>
+    <button type="button" role="tab" data-tab="events">Nhật ký</button>
+  </div>
+
+  <section class="admin-panel" id="tab-overview">
+    <div class="cards" id="cards"></div>
+    <h2>Dữ liệu và hệ thống</h2>
+    <div class="scroll"><table class="tbl"><tbody id="systemRows"></tbody></table></div>
+    <p class="auth-small">Dữ liệu nghiên cứu (LST, NDVI, TVDI hiện trạng) chỉ đọc. Quản trị viên được thêm điểm thực hành và lưu giả lập ở ứng dụng chính; mọi giả lập tách khỏi số liệu hiện trạng.</p>
+  </section>
+
+  <section class="admin-panel" id="tab-users" hidden>
+    <div class="scroll"><table class="tbl"><thead><tr><th>Người dùng</th><th>Vai trò</th><th>Trạng thái</th><th>Tạo lúc</th><th>Đăng nhập gần nhất</th><th>Thao tác</th></tr></thead><tbody id="userRows"></tbody></table></div>
+    <p class="auth-small">Phải còn ít nhất một quản trị viên đang hoạt động. Vô hiệu hóa tài khoản sẽ đăng xuất người đó ngay.</p>
+  </section>
+
+  <section class="admin-panel" id="tab-resets" hidden>
+    <div id="codeBox" class="codebox" hidden></div>
+    <div class="scroll"><table class="tbl"><thead><tr><th>Người dùng</th><th>Trạng thái</th><th>Yêu cầu lúc</th><th>Hết hạn</th><th>Thao tác</th></tr></thead><tbody id="resetRows"></tbody></table></div>
+    <p class="auth-small">Bấm “Cấp mã”, rồi gửi mã cho người dùng qua kênh riêng (nhắn tin, gặp trực tiếp). Mã chỉ hiện một lần, dùng được một lần, hiệu lực 30 phút.</p>
+  </section>
+
+  <section class="admin-panel" id="tab-events" hidden>
+    <div class="scroll"><table class="tbl"><thead><tr><th>Thời gian</th><th>Sự kiện</th><th>Tài khoản</th><th>Chi tiết</th></tr></thead><tbody id="eventRows"></tbody></table></div>
+  </section>
+</main>
+<p class="empty" id="denied" hidden>Bạn không có quyền quản trị. <a href="/">Về trang chính</a></p>
+<div id="toast" class="toast" role="status" hidden></div>
+<script src="js/admin-page.js?v=pg4"></script>
+</body>
+</html>

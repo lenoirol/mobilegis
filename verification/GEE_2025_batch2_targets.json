@@ -1,0 +1,363 @@
+{
+  "year": 2025,
+  "purpose": "GEE recovery batch 2 (gap-only, same season, same QA)",
+  "min_missing_share": 0.1,
+  "recovery_raster_sha256": "dff58c3b170ffe2a76613a7ad6efb71bf3093f454682268a2df1e0a180cc6a4c",
+  "targets": [
+    {
+      "code": "25750",
+      "name": "Phường Phú Lợi",
+      "sampled_pixels": 1249,
+      "coverage_min": 0.1177,
+      "missing_triplets": 1102,
+      "missing_share": 0.8823,
+      "partial_pixels_kept": 0,
+      "now_valid_triplets": 147
+    },
+    {
+      "code": "25891",
+      "name": "Phường Tân Khánh",
+      "sampled_pixels": 2664,
+      "coverage_min": 0.1704,
+      "missing_triplets": 2208,
+      "missing_share": 0.8288,
+      "partial_pixels_kept": 2,
+      "now_valid_triplets": 454
+    },
+    {
+      "code": "25760",
+      "name": "Phường Bình Dương",
+      "sampled_pixels": 4045,
+      "coverage_min": 0.2262,
+      "missing_triplets": 3129,
+      "missing_share": 0.7735,
+      "partial_pixels_kept": 1,
+      "now_valid_triplets": 915
+    },
+    {
+      "code": "26800",
+      "name": "Phường Linh Xuân",
+      "sampled_pixels": 866,
+      "coverage_min": 0.2667,
+      "missing_triplets": 635,
+      "missing_share": 0.7333,
+      "partial_pixels_kept": 0,
+      "now_valid_triplets": 231
+    },
+    {
+      "code": "25987",
+      "name": "Phường Bình Hoà",
+      "sampled_pixels": 1291,
+      "coverage_min": 0.2928,
+      "missing_triplets": 905,
+      "missing_share": 0.701,
+      "partial_pixels_kept": 8,
+      "now_valid_triplets": 378
+    },
+    {
+      "code": "25849",
+      "name": "Phường Hoà Lợi",
+      "sampled_pixels": 2385,
+      "coverage_min": 0.3216,
+      "missing_triplets": 1618,
+      "missing_share": 0.6784,
+      "partial_pixels_kept": 0,
+      "now_valid_triplets": 767
+    },
+    {
+      "code": "25966",
+      "name": "Phường Lái Thiêu",
+      "sampled_pixels": 1061,
+      "coverage_min": 0.3431,
+      "missing_triplets": 694,
+      "missing_share": 0.6541,
+      "partial_pixels_kept": 3,
+      "now_valid_triplets": 364
+    },
+    {
+      "code": "25846",
+      "name": "Phường Thới Hoà",
+      "sampled_pixels": 2624,
+      "coverage_min": 0.4005,
+      "missing_triplets": 1563,
+      "missing_share": 0.5957,
+      "partial_pixels_kept": 10,
+      "now_valid_triplets": 1051
+    },
+    {
+      "code": "26506",
+      "name": "Phường Vũng Tàu",
+      "sampled_pixels": 1024,
+      "coverage_min": 0.4814,
+      "missing_triplets": 518,
+      "missing_share": 0.5059,
+      "partial_pixels_kept": 13,
+      "now_valid_triplets": 493
+    },
+    {
+      "code": "25978",
+      "name": "Phường Thuận An",
+      "sampled_pixels": 1126,
+      "coverage_min": 0.5089,
+      "missing_triplets": 548,
+      "missing_share": 0.4867,
+      "partial_pixels_kept": 5,
+      "now_valid_triplets": 573
+    },
+    {
+      "code": "26803",
+      "name": "Phường Tam Bình",
+      "sampled_pixels": 687,
+      "coverage_min": 0.556,
+      "missing_triplets": 305,
+      "missing_share": 0.444,
+      "partial_pixels_kept": 0,
+      "now_valid_triplets": 382
+    },
+    {
+      "code": "27559",
+      "name": "Xã Hóc Môn",
+      "sampled_pixels": 1116,
+      "coverage_min": 0.5565,
+      "missing_triplets": 495,
+      "missing_share": 0.4435,
+      "partial_pixels_kept": 0,
+      "now_valid_triplets": 621
+    },
+    {
+      "code": "27553",
+      "name": "Xã Củ Chi",
+      "sampled_pixels": 4524,
+      "coverage_min": 0.563,
+      "missing_triplets": 1967,
+      "missing_share": 0.4348,
+      "partial_pixels_kept": 10,
+      "now_valid_triplets": 2547
+    },
+    {
+      "code": "27568",
+      "name": "Xã Đông Thạnh",
+      "sampled_pixels": 2108,
+      "coverage_min": 0.5849,
+      "missing_triplets": 866,
+      "missing_share": 0.4108,
+      "partial_pixels_kept": 9,
+      "now_valid_triplets": 1233
+    },
+    {
+      "code": "25771",
+      "name": "Phường Chánh Hiệp",
+      "sampled_pixels": 1403,
+      "coverage_min": 0.5909,
+      "missing_triplets": 553,
+      "missing_share": 0.3942,
+      "partial_pixels_kept": 21,
+      "now_valid_triplets": 829
+    },
+    {
+      "code": "25920",
+      "name": "Phường Tân Hiệp",
+      "sampled_pixels": 3271,
+      "coverage_min": 0.6056,
+      "missing_triplets": 1265,
+      "missing_share": 0.3867,
+      "partial_pixels_kept": 25,
+      "now_valid_triplets": 1981
+    },
+    {
+      "code": "26596",
+      "name": "Xã Châu Đức",
+      "sampled_pixels": 5884,
+      "coverage_min": 0.7011,
+      "missing_triplets": 1631,
+      "missing_share": 0.2772,
+      "partial_pixels_kept": 128,
+      "now_valid_triplets": 4125
+    },
+    {
+      "code": "27541",
+      "name": "Xã Phú Hoà Đông",
+      "sampled_pixels": 4142,
+      "coverage_min": 0.7426,
+      "missing_triplets": 1030,
+      "missing_share": 0.2487,
+      "partial_pixels_kept": 36,
+      "now_valid_triplets": 3076
+    },
+    {
+      "code": "25837",
+      "name": "Phường Chánh Phú Hoà",
+      "sampled_pixels": 4828,
+      "coverage_min": 0.7552,
+      "missing_triplets": 1157,
+      "missing_share": 0.2396,
+      "partial_pixels_kept": 25,
+      "now_valid_triplets": 3646
+    },
+    {
+      "code": "25813",
+      "name": "Phường Bến Cát",
+      "sampled_pixels": 6993,
+      "coverage_min": 0.7608,
+      "missing_triplets": 1616,
+      "missing_share": 0.2311,
+      "partial_pixels_kept": 57,
+      "now_valid_triplets": 5320
+    },
+    {
+      "code": "25747",
+      "name": "Phường Thủ Dầu Một",
+      "sampled_pixels": 1076,
+      "coverage_min": 0.7723,
+      "missing_triplets": 237,
+      "missing_share": 0.2203,
+      "partial_pixels_kept": 8,
+      "now_valid_triplets": 831
+    },
+    {
+      "code": "26773",
+      "name": "Phường Thới An",
+      "sampled_pixels": 1031,
+      "coverage_min": 0.7924,
+      "missing_triplets": 212,
+      "missing_share": 0.2056,
+      "partial_pixels_kept": 2,
+      "now_valid_triplets": 817
+    },
+    {
+      "code": "26833",
+      "name": "Phường Long Bình",
+      "sampled_pixels": 1888,
+      "coverage_min": 0.6748,
+      "missing_triplets": 366,
+      "missing_share": 0.1939,
+      "partial_pixels_kept": 248,
+      "now_valid_triplets": 1274
+    },
+    {
+      "code": "26526",
+      "name": "Phường Tam Thắng",
+      "sampled_pixels": 794,
+      "coverage_min": 0.7859,
+      "missing_triplets": 153,
+      "missing_share": 0.1927,
+      "partial_pixels_kept": 17,
+      "now_valid_triplets": 624
+    },
+    {
+      "code": "26842",
+      "name": "Phường Tăng Nhơn Phú",
+      "sampled_pixels": 1364,
+      "coverage_min": 0.8043,
+      "missing_triplets": 249,
+      "missing_share": 0.1826,
+      "partial_pixels_kept": 18,
+      "now_valid_triplets": 1097
+    },
+    {
+      "code": "27544",
+      "name": "Xã Bình Mỹ",
+      "sampled_pixels": 3789,
+      "coverage_min": 0.7899,
+      "missing_triplets": 689,
+      "missing_share": 0.1818,
+      "partial_pixels_kept": 107,
+      "now_valid_triplets": 2993
+    },
+    {
+      "code": "26662",
+      "name": "Xã Long Hải",
+      "sampled_pixels": 1824,
+      "coverage_min": 0.7741,
+      "missing_triplets": 302,
+      "missing_share": 0.1656,
+      "partial_pixels_kept": 110,
+      "now_valid_triplets": 1412
+    },
+    {
+      "code": "27496",
+      "name": "Xã Tân An Hội",
+      "sampled_pixels": 3715,
+      "coverage_min": 0.8584,
+      "missing_triplets": 523,
+      "missing_share": 0.1408,
+      "partial_pixels_kept": 3,
+      "now_valid_triplets": 3189
+    },
+    {
+      "code": "26542",
+      "name": "Phường Phước Thắng",
+      "sampled_pixels": 3225,
+      "coverage_min": 0.5972,
+      "missing_triplets": 423,
+      "missing_share": 0.1312,
+      "partial_pixels_kept": 876,
+      "now_valid_triplets": 1926
+    },
+    {
+      "code": "25912",
+      "name": "Phường Vĩnh Tân",
+      "sampled_pixels": 4239,
+      "coverage_min": 0.8662,
+      "missing_triplets": 540,
+      "missing_share": 0.1274,
+      "partial_pixels_kept": 27,
+      "now_valid_triplets": 3672
+    },
+    {
+      "code": "27526",
+      "name": "Xã Thái Mỹ",
+      "sampled_pixels": 4326,
+      "coverage_min": 0.8773,
+      "missing_triplets": 461,
+      "missing_share": 0.1066,
+      "partial_pixels_kept": 70,
+      "now_valid_triplets": 3795
+    }
+  ],
+  "target_codes": [
+    "25750",
+    "25891",
+    "25760",
+    "26800",
+    "25987",
+    "25849",
+    "25966",
+    "25846",
+    "26506",
+    "25978",
+    "26803",
+    "27559",
+    "27553",
+    "27568",
+    "25771",
+    "25920",
+    "26596",
+    "27541",
+    "25837",
+    "25813",
+    "25747",
+    "26773",
+    "26833",
+    "26526",
+    "26842",
+    "27544",
+    "26662",
+    "27496",
+    "26542",
+    "25912",
+    "27526"
+  ],
+  "already_used_scene_ids": [
+    "LC08_L2SP_124052_20250301_20250304_02_T1",
+    "LC09_L2SP_124053_20250205_20250206_02_T1",
+    "LC08_L2SP_125052_20250204_20250208_02_T1",
+    "LC09_L2SP_125053_20250228_20250301_02_T1",
+    "LC08_L2SP_124052_20250112_20250122_02_T1",
+    "LC08_L2SP_124053_20250112_20250122_02_T1",
+    "LC09_L2SP_125052_20250228_20250301_02_T1",
+    "LC08_L2SP_125053_20250425_20250429_02_T1"
+  ],
+  "max_fillable_triplets": 27960,
+  "note": "Counts are on the published 120 m grid with pixel-centre rule. A fill needs a NEW Jan–Apr 2025 L2SP scene whose LST, NDVI and TVDI are all valid at that pixel; many gaps may stay empty."
+}

@@ -1,0 +1,6 @@
+numpy>=2.0,<3
+rasterio>=1.4,<2
+shapely>=2.0,<3
+pyproj>=3.6,<4
+Pillow>=10
+pyshp>=3,<4

@@ -1,0 +1,44 @@
+{
+  "version": 3,
+  "kind": "derived statistics, not raw observations",
+  "tables": {
+    "pixel_statistics": {
+      "columns": [
+        "dataset_id",
+        "code",
+        "year",
+        "index_name",
+        "sample_count",
+        "valid_count",
+        "minimum",
+        "maximum",
+        "mean",
+        "median",
+        "stddev",
+        "q25",
+        "q75",
+        "histogram",
+        "method",
+        "raster_sha256"
+      ],
+      "rows": 9018,
+      "sha256": "cefdc86e739125954b31f7f11e94825c21d998ac83ab3b2d971ca0ad0b1a10f4"
+    },
+    "index_landcover_statistics": {
+      "columns": [
+        "dataset_id",
+        "code",
+        "year",
+        "index_name",
+        "class_code",
+        "class_name",
+        "reference_year",
+        "valid_count",
+        "mean",
+        "method"
+      ],
+      "rows": 50467,
+      "sha256": "36c35c52d8c1cfcc7687a38a1b1c78fc0bb4a888227d16666f97244f1cd162be"
+    }
+  }
+}

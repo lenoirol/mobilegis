@@ -1,0 +1,67 @@
+/* MobileGIS TP.HCM — single source of truth for colours. Load LAST.
+   Brief from the teacher: bright, fresh, yellower tone; high contrast between background and text.
+   Contrast (WCAG): ink on bg ≈ 15:1, muted on bg ≈ 7:1, white on brand ≈ 5.3:1, ink on sun ≈ 12:1. */
+:root{
+  --bg:#fff8e1;           /* page background: warm cream-yellow */
+  --surface:#ffffff;      /* cards, tables */
+  --surface-2:#fffbee;    /* zebra rows, soft panels */
+  --ink:#2b2100;          /* main text */
+  --muted:#5f5230;        /* secondary text */
+  --line:#ecd98f;         /* borders */
+  --sun:#ffd23f;          /* header, highlights */
+  --sun-strong:#f5b800;   /* accents, active underline */
+  --brand:#1e7f3c;        /* primary actions (fresh green) */
+  --brand-dark:#14602b;
+  --warn-bg:#fff0b3;      /* low-sample cells */
+  --warn-ink:#5c3d00;
+  --danger:#b3261e;
+  --ok-bg:#e3f4d8;
+  --radius:12px;
+  --shadow:0 2px 14px #5f523020;
+  /* legacy names still referenced by older stylesheets */
+  --paper:var(--bg);--green:var(--brand);
+}
+html,body{background:var(--bg)!important;color:var(--ink)!important}
+body{font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+a{color:#0f5c25}
+a:hover{color:#0a4219}
+.muted,.small,#tableNotice,#sourceAvailability,.quality-kpis small{color:var(--muted)!important}
+.eyebrow{color:#7a5200!important;letter-spacing:.08em;font-weight:700}
+
+/* header and tabs */
+body>header,header{background:var(--sun)!important;border-bottom:3px solid var(--sun-strong)!important;color:var(--ink)!important;box-shadow:var(--shadow)}
+header .brand,header .brand small{color:var(--ink)!important}
+header .tag,#viewerStatus,#versionTag{background:#fff3b0!important;color:#4a3600!important;border:1px solid #e0b800}
+nav button{color:var(--ink)!important;background:transparent!important;border:0!important;font-weight:600}
+nav button:hover{background:#ffe27a!important}
+nav button.active{background:var(--ink)!important;color:#fff!important;box-shadow:none!important}
+
+/* buttons and form controls */
+button,.button{background:var(--surface);color:var(--ink);border:1px solid #d9c36a}
+button:hover:not(:disabled),.button:hover{background:#fff3b8}
+button.primary,.primary,#saveScenario{background:var(--brand)!important;color:#fff!important;border-color:var(--brand-dark)!important}
+button.primary:hover,.primary:hover{background:var(--brand-dark)!important;color:#fff!important}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #1b5fd1;outline-offset:2px}
+select,input[type=text],input[type=search],input[type=email],input[type=password],input[type=number],textarea{background:#fff;color:var(--ink);border:1px solid #cdb44f}
+.indices button.active,#places button:hover{background:#fff1a8!important;border-color:var(--sun-strong)!important;color:var(--ink)!important}
+.indices button.active{box-shadow:0 4px 12px #f5b80040!important}
+
+/* panels */
+#controls,aside#controls{background:var(--surface-2)!important;border-right:1px solid var(--line)!important}
+#detail,.map-legend,.analysis-card,.chart-grid section,.ward-comparison section,.viewer-methods article{background:var(--surface)!important;border:1px solid var(--line)!important;box-shadow:var(--shadow)}
+.viewer-methods article{border-top:4px solid var(--sun-strong)!important}
+.quality-kpis div{background:#fff3b8!important}
+.notice,.viewer-help,.viewer-quality{background:#fff6c9!important;color:var(--ink)!important;border-left:4px solid var(--sun-strong)!important}
+.viewer-quality.limited,.viewer-quality.unknown,#metrics .limited{background:var(--warn-bg)!important;color:var(--warn-ink)!important}
+#mapSummary>*{background:#fffdf0!important;border:1px solid var(--line)}
+#viewerLoading{background:var(--bg)!important;color:var(--ink)!important}
+.page{background:transparent}
+
+/* legacy tables get the new look too; the data page uses .mg-table (data-table.css) */
+.tableWrap table{background:var(--surface);border-collapse:collapse}
+.tableWrap th{background:#ffe27a;color:var(--ink);border-bottom:2px solid var(--sun-strong)}
+.tableWrap td{border-bottom:1px solid #f1e3a8}
+.tableWrap tr:nth-child(even) td{background:var(--surface-2)}
+td[class*=viewer-cell-]{background:var(--warn-bg)!important}
+td[class*=viewer-cell-] small{color:var(--warn-ink)!important}
+#metrics>div,#metrics>article{background:#fff3b8!important;color:var(--ink)!important}

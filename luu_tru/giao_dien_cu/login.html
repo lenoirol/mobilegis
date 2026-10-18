@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffd23f"><title>Đăng nhập · MobileGIS TP.HCM</title>
+  <link rel="icon" href="icon.svg"><link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="auth.css?v=pg4">
+</head>
+<body class="auth-page">
+<main class="auth-shell">
+  <a class="auth-brand" href="/" aria-label="MobileGIS TP.HCM trang chủ"><span class="auth-logo">◈</span><span>MobileGIS<small>TP.HCM</small></span></a>
+  <p class="auth-tagline">Diễn biến nhiệt độ bề mặt (LST), thực vật (NDVI) và độ khô (TVDI) tại TP.HCM sau sáp nhập</p>
+
+  <section class="auth-card" aria-labelledby="authTitle">
+    <div class="auth-tabs" role="tablist" aria-label="Chọn thao tác">
+      <button type="button" role="tab" id="tabLogin" aria-controls="panelLogin" aria-selected="true">Đăng nhập</button>
+      <button type="button" role="tab" id="tabRegister" aria-controls="panelRegister" aria-selected="false">Đăng ký</button>
+    </div>
+    <p id="authMessage" class="auth-message" role="alert" aria-live="polite" hidden></p>
+
+    <form id="panelLogin" class="auth-form" autocomplete="on" novalidate>
+      <h1 id="authTitle">Chào mừng trở lại</h1>
+      <label>Email<input name="email" type="email" required autocomplete="email" inputmode="email" placeholder="ten@example.com"></label>
+      <label>Mật khẩu<span class="auth-pw"><input name="password" type="password" required autocomplete="current-password"><button type="button" class="auth-eye" aria-label="Hiện mật khẩu">Hiện</button></span></label>
+      <button class="auth-submit" type="submit">Đăng nhập</button>
+      <button class="auth-link" type="button" id="toForgot">Quên mật khẩu?</button>
+    </form>
+
+    <form id="panelRegister" class="auth-form" autocomplete="on" hidden novalidate>
+      <h1>Tạo tài khoản khách hàng</h1>
+      <label>Tên hiển thị<input name="display_name" type="text" required maxlength="100" autocomplete="name"></label>
+      <label>Email<input name="email" type="email" required autocomplete="email" inputmode="email"></label>
+      <label>Mật khẩu (ít nhất 8 ký tự)<span class="auth-pw"><input name="password" type="password" required minlength="8" autocomplete="new-password"><button type="button" class="auth-eye" aria-label="Hiện mật khẩu">Hiện</button></span></label>
+      <label>Nhập lại mật khẩu<input name="confirm" type="password" required autocomplete="new-password"></label>
+      <button class="auth-submit" type="submit">Đăng ký</button>
+      <p class="auth-small">Tài khoản mới có quyền xem bản đồ, bảng số liệu và thống kê. Quyền quản trị do quản trị viên cấp.</p>
+    </form>
+
+    <div id="panelForgot" class="auth-form" hidden>
+      <h1>Quên mật khẩu</h1>
+      <p class="auth-small">Hệ thống chạy cục bộ nên chưa gửi email. Bạn gửi yêu cầu, <strong>quản trị viên sẽ cấp một mã đặt lại</strong> (hiệu lực 30 phút) và gửi cho bạn qua kênh riêng.</p>
+      <form id="formForgot" novalidate>
+        <label>Email đã đăng ký<input name="email" type="email" required autocomplete="email" inputmode="email"></label>
+        <button class="auth-submit" type="submit">Gửi yêu cầu cho quản trị viên</button>
+      </form>
+      <hr>
+      <h2>Đã có mã đặt lại?</h2>
+      <form id="formReset" novalidate>
+        <label>Email<input name="email" type="email" required autocomplete="email" inputmode="email"></label>
+        <label>Mã đặt lại (8 ký tự)<input name="code" type="text" required maxlength="8" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" class="auth-code"></label>
+        <label>Mật khẩu mới (ít nhất 8 ký tự)<span class="auth-pw"><input name="new_password" type="password" required minlength="8" autocomplete="new-password"><button type="button" class="auth-eye" aria-label="Hiện mật khẩu">Hiện</button></span></label>
+        <button class="auth-submit" type="submit">Đặt lại mật khẩu</button>
+      </form>
+      <button class="auth-link" type="button" id="toLogin">← Quay lại đăng nhập</button>
+    </div>
+  </section>
+
+  <p class="auth-guest"><a href="/">Xem bản đồ không cần đăng nhập →</a></p>
+  <p class="auth-foot">Ứng dụng học tập/nghiên cứu, không phải hệ thống hỗ trợ ra quyết định chính thức.</p>
+</main>
+<script src="js/auth-page.js?v=pg4"></script>
+</body>
+</html>
