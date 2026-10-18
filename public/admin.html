@@ -18,10 +18,16 @@
   <h1>Trang quản trị</h1>
   <div id="tabsHost"></div>
   <section class="panel" id="tab-overview"><div class="stat-row" id="cards"></div><h2>Việc quản trị viên làm được</h2>
-    <ul class="admin-todo"><li><b>Tài khoản:</b> đổi vai trò, khóa/mở, xóa; cấp mã khi người dùng quên mật khẩu.</li><li><b>Giả lập:</b> công cụ thử nghiệm <b>ngoài đề cương</b>, chỉ quản trị viên dùng; mở từ <a href="./#/gia-lap">trang Giả lập</a>. Không phải dự báo.</li><li><b>Điểm thực hành:</b> thêm/sửa/xóa ở “Số liệu” trên trang chính; luôn ghi rõ không phải số đo vệ tinh.</li><li><b>Số liệu vệ tinh 2020–2025:</b> chỉ đọc, không sửa qua web để giữ độ tin cậy khoa học. Năm mới được nạp bằng script.</li></ul></section>
-  <section class="panel" id="tab-system" hidden><h2>Hệ thống</h2><div class="scroll card flat"><table class="tbl"><tbody id="systemRows"></tbody></table></div>
-    <h2>Bộ xuất GEE đã kiểm tra</h2><div class="scroll card flat"><table class="tbl"><thead><tr><th>Năm</th><th class="num">Có LST / NDVI / TVDI</th><th>Ngày chụp các cảnh</th></tr></thead><tbody id="auditRows"></tbody></table></div>
-    <h2>Tài liệu kỹ thuật</h2><div class="link-grid" id="docLinks"></div></section>
+    <ul class="admin-todo"><li><b>Tài khoản:</b> tạo, đổi vai trò, khóa/mở, xóa; cấp mã khi người dùng quên mật khẩu.</li><li><b>Dữ liệu:</b> xem năm nào đã nạp, khu vực nào còn ít dữ liệu. Số liệu vệ tinh 2020–2025 chỉ đọc, không sửa qua web; năm mới được nạp bằng script.</li><li><b>Nội dung:</b> thông báo đầu trang và ghi chú theo khu vực (hiện trong thẻ khu vực trên bản đồ). Đây là mô tả của quản trị viên, không phải số liệu vệ tinh.</li></ul>
+    <h2>Công cụ thử nghiệm</h2><p class="muted">Giả lập kịch bản nằm <b>ngoài đề cương</b> và không phải dự báo; chỉ quản trị viên dùng.</p><a class="btn" href="./#/gia-lap">Mở Giả lập</a></section>
+  <section class="panel" id="tab-data" hidden><div class="stat-row" id="dataCards"></div>
+    <h2>Mỗi năm có bao nhiêu khu vực đủ dữ liệu?</h2><p class="small muted">“Đủ dữ liệu” là từ 50% diện tích ảnh dùng được, trên tổng 167 khu vực.</p>
+    <div class="scroll card flat"><table class="tbl"><thead><tr><th>Năm</th><th class="num">Nhiệt độ</th><th class="num">Độ xanh</th><th class="num">Độ khô</th><th>Ngày chụp các cảnh</th></tr></thead><tbody id="coverageRows"></tbody></table></div>
+    <h2>Khu vực còn ít dữ liệu</h2><p class="small muted">Khu vực có chỉ số dưới 50% độ phủ ở năm gần nhất. Web đánh dấu “tin cậy thấp” và không xếp hạng các khu vực này.</p>
+    <div class="scroll card flat"><table class="tbl"><thead><tr><th>Khu vực</th><th class="num">Nhiệt độ</th><th class="num">Độ xanh</th><th class="num">Độ khô</th></tr></thead><tbody id="lowRows"></tbody></table></div>
+    <details class="card tech"><summary>Chi tiết kỹ thuật (cơ sở dữ liệu, tài liệu)</summary><div class="scroll card flat"><table class="tbl"><tbody id="systemRows"></tbody></table></div>
+      <h3>Bộ xuất GEE đã kiểm tra</h3><div class="scroll card flat"><table class="tbl"><thead><tr><th>Năm</th><th class="num">Có LST / NDVI / TVDI</th><th>Cảnh ảnh</th></tr></thead><tbody id="auditRows"></tbody></table></div>
+      <h3>Tài liệu kỹ thuật</h3><div class="link-grid" id="docLinks"></div></details></section>
   <section class="panel" id="tab-users" hidden><details class="card create-user"><summary>Tạo tài khoản mới</summary>
     <form id="createUser" class="create-form"><label class="field"><span>Email</span><input class="input" name="email" type="email" required autocomplete="off"></label>
       <label class="field"><span>Tên hiển thị</span><input class="input" name="display_name" required maxlength="100"></label>
@@ -29,20 +35,16 @@
       <label class="field"><span>Vai trò</span><select class="select" name="role"><option value="customer">Khách hàng</option><option value="admin">Quản trị viên</option></select></label>
       <button class="btn primary" type="submit">Tạo tài khoản</button></form>
     <p class="small muted">Gửi mật khẩu tạm cho người dùng qua kênh riêng và nhắc họ đổi sau khi đăng nhập.</p></details><div class="scroll card flat"><table class="tbl"><thead><tr><th>Người dùng</th><th>Vai trò</th><th>Trạng thái</th><th>Tạo lúc</th><th>Đăng nhập gần nhất</th><th>Thao tác</th></tr></thead><tbody id="userRows"></tbody></table></div>
-    <p class="small muted">Phải còn ít nhất một quản trị viên đang hoạt động. Vô hiệu hóa tài khoản sẽ đăng xuất người đó ngay.</p></section>
-  <section class="panel" id="tab-resets" hidden><div id="codeBox" class="codebox" hidden></div><div class="scroll card flat"><table class="tbl"><thead><tr><th>Người dùng</th><th>Trạng thái</th><th>Yêu cầu lúc</th><th>Hết hạn</th><th>Thao tác</th></tr></thead><tbody id="resetRows"></tbody></table></div>
+    <p class="small muted">Phải còn ít nhất một quản trị viên đang hoạt động. Vô hiệu hóa tài khoản sẽ đăng xuất người đó ngay.</p>
+    <h2>Yêu cầu quên mật khẩu</h2><div id="codeBox" class="codebox" hidden></div><div class="scroll card flat"><table class="tbl"><thead><tr><th>Người dùng</th><th>Trạng thái</th><th>Yêu cầu lúc</th><th>Hết hạn</th><th>Thao tác</th></tr></thead><tbody id="resetRows"></tbody></table></div>
     <p class="small muted">Bấm “Cấp mã”, rồi gửi mã cho người dùng qua kênh riêng (nhắn tin, gặp trực tiếp). Mã chỉ hiện một lần, dùng được một lần, hiệu lực 30 phút.</p></section>
   <section class="panel" id="tab-content" hidden><h2>Thông báo đầu trang</h2><form id="noticeForm" class="create-form"><label class="field"><span>Nội dung (tối đa 300 ký tự, để trống để gỡ thông báo)</span><textarea class="input" name="text" rows="3" maxlength="300"></textarea></label>
     <button class="btn primary" type="submit">Lưu thông báo</button></form>
-    <p class="small muted">Thông báo hiện ở đầu mọi trang cho khách; mỗi người có thể đóng nó. Chỉ là văn bản thuần, không có liên kết hay định dạng.</p>
+    <p class="small muted">Thông báo hiện ở đầu trang cho mọi người; mỗi người có thể đóng nó. Chỉ là văn bản thuần, không có liên kết hay định dạng.</p>
     <h2>Ghi chú theo khu vực</h2><form id="noteForm" class="create-form"><label class="field"><span>Khu vực</span><select class="select" name="code" data-areas required><option value="">Chọn khu vực</option></select></label>
       <label class="field"><span>Ghi chú (tối đa 500 ký tự, để trống để xóa)</span><textarea class="input" name="text" rows="3" maxlength="500"></textarea></label>
       <button class="btn primary" type="submit">Lưu ghi chú</button></form>
-    <p class="small muted">Ghi chú hiện trên thẻ khu vực ở trang chủ và bản đồ, ví dụ “có công viên lớn”, “khu công nghiệp”. Đây là mô tả của người quản trị, không phải số liệu vệ tinh.</p></section>
-  <section class="panel" id="tab-usage" hidden><div class="stat-row" id="usageCards"></div>
-    <div class="two-col"><div><h2>Khu vực được xem nhiều</h2><div class="scroll card flat"><table class="tbl"><tbody id="usageAreas"></tbody></table></div></div>
-      <div><h2>Trang và lớp bản đồ</h2><div class="scroll card flat"><table class="tbl"><tbody id="usagePages"></tbody></table></div></div></div>
-    <p class="small muted">30 ngày gần nhất. Chỉ là bộ đếm ẩn danh (trang, khu vực, lớp bản đồ); không lưu địa chỉ IP, tài khoản hay thông tin trình duyệt.</p></section>
+    <p class="small muted">Ghi chú hiện trong thẻ khu vực trên bản đồ, ví dụ “có công viên lớn”, “khu công nghiệp”. Đây là mô tả của người quản trị, không phải số liệu vệ tinh.</p></section>
   <section class="panel" id="tab-events" hidden><div class="scroll card flat"><table class="tbl"><thead><tr><th>Thời gian</th><th>Sự kiện</th><th>Tài khoản</th><th>Chi tiết</th></tr></thead><tbody id="eventRows"></tbody></table></div></section>
 </main>
 <p class="page" id="denied" hidden>Bạn không có quyền quản trị. <a href="./">Về trang chính</a></p>

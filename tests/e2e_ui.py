@@ -36,7 +36,7 @@ with sync_playwright() as p:
     ok('guest nav hides simulation',not pg.is_visible('#nav a[data-route=gia-lap]'))
     pg.goto(U+'/#/gia-lap');pg.wait_for_timeout(1500);ok('guest cannot open simulation by URL','gia-lap' not in pg.url and pg.is_visible('#map'),pg.url)
     pg.click('#nav a[data-route=chuyen-gia]');pg.wait_for_selector('.expert-card');ok('experts hub: two cards for guests',pg.locator('.expert-card:visible').count()==2)
-    pg.click('.expert-card >> nth=0');pg.wait_for_selector('.tbl tbody tr');ok('experts → table opens, tab stays on Chuyên gia',pg.get_attribute('#nav a[data-route=chuyen-gia]','aria-current')=='page')
+    pg.click('.expert-card >> nth=0');pg.wait_for_selector('.tbl tbody tr');ok('sub-page has a back button to Chuyên gia',pg.is_visible('#view-bang-so-lieu .back-link'));pg.click('#view-bang-so-lieu .back-link');pg.wait_for_selector('.expert-card:visible');ok('back button returns to the experts hub','chuyen-gia' in pg.url,pg.url);pg.click('.expert-card >> nth=0');pg.wait_for_selector('.tbl tbody tr');ok('experts → table opens, tab stays on Chuyên gia',pg.get_attribute('#nav a[data-route=chuyen-gia]','aria-current')=='page')
     pg.goto(U+'/#/ban-do');pg.wait_for_selector('#map',timeout=10000);pg.wait_for_timeout(1000)
     ok('splash removed, map view visible',pg.is_visible('#map'))
     ok('map: advanced source switch hidden for guests',not pg.is_visible('.dock-adv'))
@@ -122,7 +122,7 @@ with sync_playwright() as p:
     ok('admin: switch to original GEE source ok','bản gốc' in pg.inner_text('.dock-adv').lower())
     pg.click('.dock-adv .seg button:has-text("GEE · đã bổ sung 2025")');pg.wait_for_timeout(2000)
     pg.goto(U+'/#/thong-ke');pg.wait_for_selector('.appendix summary',timeout=20000);pg.click('.appendix summary');pg.wait_for_selector('.evidence',timeout=8000);ok('admin: appendix gallery',pg.locator('.ev-card').count()==5)
-    pg.goto(U+'/admin.html');pg.wait_for_selector('.admin-tabs');pg.click('.admin-tabs button:has-text("Kỹ thuật")');pg.wait_for_selector('#systemRows tr');ok('admin: technical tab holds database details','PostgreSQL' in pg.inner_text('#tab-system'))
+    pg.goto(U+'/admin.html');pg.wait_for_selector('.admin-tabs');pg.click('.admin-tabs button:has-text("Dữ liệu")');pg.wait_for_selector('#coverageRows tr');ok('admin data tab: coverage by year for 6 years',pg.locator('#coverageRows tr').count()==6);ok('admin data tab lists low-coverage areas',pg.locator('#lowRows tr').count()>=1 and 'Phú Lợi' in pg.inner_text('#lowRows'));pg.click('.tech summary');ok('admin: technical details are tucked into the data tab','PostgreSQL' in pg.inner_text('#tab-data'))
     # demo CRUD
     pg.goto(U+'/#/bang-so-lieu');pg.wait_for_selector('.table-page .tbl',timeout=20000);pg.click('.table-page .seg button:has-text("Điểm thực hành")');pg.wait_for_timeout(900)
     pg.click('text=Thêm điểm');pg.wait_for_selector('dialog[open]')
@@ -139,9 +139,8 @@ with sync_playwright() as p:
     pg.click('.admin-tabs button:has-text("Nội dung")');pg.fill('#noticeForm textarea','Bảo trì thử nghiệm E2E');pg.click('#noticeForm button');pg.wait_for_timeout(900)
     pg.click('.admin-tabs button:has-text("Tài khoản")');pg.click('.create-user summary');NEWMAIL=f'e2e-{CUST_ID}@example.test'
     pg.fill('#createUser [name=email]',NEWMAIL);pg.fill('#createUser [name=display_name]','Tạo bởi admin');pg.fill('#createUser [name=password]','Mat-khau-12345');pg.click('#createUser button[type=submit]');pg.wait_for_timeout(1200)
-    ok('admin created an account',NEWMAIL in pg.inner_text('#userRows'))
+    ok('admin: users tab also holds password-reset requests',pg.is_visible('#resetRows'));ok('admin created an account',NEWMAIL in pg.inner_text('#userRows'))
     pg.goto(U+'/admin.html');pg.wait_for_selector('.admin-tabs');pg.click('.admin-tabs button:has-text("Nội dung")');pg.select_option('#noteForm [name=code]','26743');pg.fill('#noteForm [name=text]','E2E ghi chú khu trung tâm');pg.click('#noteForm button[type=submit]');pg.wait_for_timeout(1000)
-    pg.click('.admin-tabs button:has-text("Lượt dùng")');pg.wait_for_selector('#usageCards .stat');ok('admin usage tab shows counters',pg.locator('#usageCards .stat').count()==3)
     pg.goto(U+'/#/ban-do');pg.wait_for_selector('#notice:not([hidden])',timeout=15000);ok('notice banner shows for visitors','Bảo trì thử nghiệm E2E' in pg.inner_text('#notice'))
     pg.goto(U+'/#/ban-do?khu-vuc=26743&nam=2025');pg.wait_for_selector('.detail-name',timeout=20000);pg.wait_for_timeout(1500);ok('map detail shows the admin note','E2E ghi chú' in pg.inner_text('.detail-inner'),pg.inner_text('.detail-inner')[:80])
     with _db.connect() as cn:

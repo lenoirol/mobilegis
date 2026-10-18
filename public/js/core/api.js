@@ -40,12 +40,4 @@ export async function loadSession() {
   for (const fn of listeners) fn(session);
   return session;
 }
-/** Anonymous usage counter (which page, area or layer was opened). Fire and forget; nothing identifies the visitor. */
-let lastHit = '';
-export function track(kind, key) {
-  const id = kind + ':' + key;
-  if (!env.api || id === lastHit) return;
-  lastHit = id;
-  fetch(url('api/hit'), {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({kind, key}), keepalive: true}).catch(() => {});
-}
 export const isAdmin = () => session.user?.role === 'admin';

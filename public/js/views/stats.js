@@ -144,7 +144,7 @@ function screeningCard() {
   [y, c].forEach(n_ => n_.addEventListener('change', run)); t.addEventListener('input', run);
   setTimeout(run, 50);
   return h('article', {class: 'card'}, h('span', {class: 'eyebrow'}, 'Sàng lọc thử nghiệm'), h('h2', null, 'Khu vực có độ khô cao'),
-    h('p', {class: 'muted'}, 'Truy vấn PostgreSQL theo năm, nguồn và độ phủ. Không phải cảnh báo hạn chính thức hay ngưỡng đã kiểm định.'),
+    h('p', {class: 'muted'}, 'Lọc theo năm, nguồn và độ phủ. Không phải cảnh báo hạn chính thức hay ngưỡng đã kiểm định.'),
     h('div', {class: 'filters flat-row'}, field('Mốc ảnh', y), field('Độ khô tối thiểu', t), field('Độ phủ tối thiểu', c)), status, list);
 }
 
@@ -194,7 +194,7 @@ async function refresh() {
   if (!root || root.closest('[hidden]')) return;
   const mine = ++ticketN;
   seg.index.set(S.index); seg.year.set(S.year); el.coverage.value = String(S.coverage); seg.source.set(S.source);
-  el.status.textContent = env.api ? 'Đang truy vấn thống kê PostgreSQL…' : 'Bản demo tĩnh · tính từ số liệu trung bình khu vực đã xuất sẵn.';
+  el.status.textContent = env.api ? 'Đang tính thống kê…' : 'Bản demo tĩnh · tính từ số liệu trung bình khu vực đã xuất sẵn.';
   mount(el.kpis, ...skeleton(4, 78));
   try {
     if (!geo) geo = await data.geo();
@@ -203,7 +203,7 @@ async function refresh() {
     if (!env.api) {   // no server: pixel statistics are unavailable, everything else is computed from unit means
       if (mine !== ticketN) return;
       current = []; clearCharts();
-      mount(el.kpis, h('div', {class: 'callout'}, 'Thống kê theo pixel (số mẫu, histogram, hộp phân vị, lớp phủ) được tính trong PostgreSQL nên chỉ có ở bản chạy với máy chủ. Các mục bên dưới tính từ trung bình xã/phường đã xuất sẵn.'));
+      mount(el.kpis, h('div', {class: 'callout'}, 'Thống kê theo pixel (số mẫu, histogram, hộp phân vị, lớp phủ) chỉ có ở bản đầy đủ chạy với máy chủ. Các mục bên dưới tính từ trung bình xã/phường đã xuất sẵn.'));
       mount(el.dist); correlations(localCorrelations()); renderWards(); ranking(); scatter();
       el.exportCsv.disabled = el.exportSvg.disabled = true; return;
     }
@@ -236,7 +236,7 @@ export function init(section, ctx) {
   }}}, icon('download', 16), 'Biểu đồ SVG');
   root = h('div', {class: 'page stats-page'},
     h('header', {class: 'page-head'}, h('span', {class: 'eyebrow'}, 'Thống kê và phân tích'), h('h1', null, 'Thống kê môi trường theo xã/phường'),
-      h('p', null, 'Tính trực tiếp từ pixel hợp lệ trong GeoTIFF và PostgreSQL, không suy ra từ trung bình xã/phường. Mọi kết quả kèm giới hạn của dữ liệu.')),
+      h('p', null, 'Tính trực tiếp từ các ô ảnh hợp lệ, không suy ra từ trung bình xã/phường. Mọi kết quả kèm giới hạn của dữ liệu.')),
     buildFilters(), el.status, el.kpis,
     h('section', {class: 'block server-only'}, h('h2', null, 'Phân bố'), el.dist, h('div', {class: 'export-row'}, el.exportCsv, el.exportSvg)),
     h('section', {class: 'block'}, h('h2', null, 'So sánh chuỗi các khu vực'), h('div', {class: 'card'}, el.ward)),

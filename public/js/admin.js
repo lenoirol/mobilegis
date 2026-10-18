@@ -73,7 +73,6 @@ async function audits() {
     mount($('#auditRows'), ...list.map(a => h('tr', null, h('th', {scope: 'row', class: 'name'}, String(a.year)), h('td', {class: 'num mono'}, `${a.valid_means.lst} / ${a.valid_means.ndvi} / ${a.valid_means.tvdi} trên 167`), h('td', {class: 'mono small'}, [...new Set((a.scenes || []).map(s => s.acquisition_date))].sort().join(', ')))));
   } catch (_) { mount($('#auditRows'), h('tr', null, h('td', {colSpan: 3, class: 'empty'}, 'Không tải được metadata.'))); }
 }
-const PAGE_NAMES = {'trang-chu': 'Trang chủ', 'ban-do': 'Bản đồ', 'bang-so-lieu': 'Số liệu', 'thong-ke': 'Thống kê', 'gia-lap': 'Giả lập', 'du-lieu': 'Giới thiệu', lst: 'Lớp Nhiệt độ', ndvi: 'Lớp Độ xanh', tvdi: 'Lớp Độ khô'};
 let areaNames = new Map();
 async function loadAreas() {
   try {
@@ -87,18 +86,21 @@ async function loadContent() {
   const content = await get('/api/content');
   window.__notes = content.notes;
 }
-async function loadUsage() {
+async function loadData() {
   try {
-    const u = await api('/api/admin/usage'), total = u.pages.reduce((s, r) => s + r.n, 0), best = u.pages[0];
+    const [rows, product] = await Promise.all([get('/data/gee_recovery/observations.json'), get('/data/gee_recovery/products.json')]);
+    const years = [...new Set(rows.map(r => r.year))].sort(), last = years.at(-1), ok = (r, k) => typeof r[k + '_coverage'] === 'number' && r[k] != null && r[k + '_coverage'] >= .5;
+    const dates = Object.fromEntries(Object.values(product.audits || {}).map(a => [a.year, [...new Set((a.scenes || []).map(x => x.acquisition_date))].sort().join(', ')]));
     const stat = (value, label) => h('div', {class: 'stat'}, h('b', {class: 'mono'}, String(value)), h('span', null, label));
-    mount($('#usageCards'), stat(total.toLocaleString('vi-VN'), 'Lượt mở trang'), stat(u.areas.reduce((s, r) => s + r.n, 0).toLocaleString('vi-VN'), 'Lượt xem khu vực'), stat(best ? PAGE_NAMES[best.key] || best.key : '—', 'Trang xem nhiều nhất'));
-    const rows = (list, name) => list.length ? list.map(r => h('tr', null, h('th', {scope: 'row', class: 'name'}, name(r.key)), h('td', {class: 'num mono'}, String(r.n)))) : [h('tr', null, h('td', {class: 'empty'}, 'Chưa có dữ liệu.'))];
-    mount($('#usageAreas'), ...rows(u.areas, k => areaNames.get(k) || k)); mount($('#usagePages'), ...rows([...u.pages, ...u.layers], k => PAGE_NAMES[k] || k));
-  } catch (error) { toast(error.message, {error: true}); }
+    const low = rows.filter(r => r.year === last && ['lst', 'ndvi', 'tvdi'].some(k => !ok(r, k)));
+    mount($('#dataCards'), stat(years.join('–').replace(/(\d+)–.*–(\d+)/, '$1–$2'), 'Giai đoạn đã nạp'), stat(rows.filter(r => r.year === last).length, `Khu vực trong bộ dữ liệu ${last}`), stat(low.length, `Khu vực còn ít dữ liệu ${last}`), stat((product.generated_at || '').slice(0, 10) || '—', 'Bộ dữ liệu tạo ngày'));
+    mount($('#coverageRows'), ...years.map(y => { const list = rows.filter(r => r.year === y); return h('tr', null, h('th', {scope: 'row', class: 'name'}, String(y)), ...['lst', 'ndvi', 'tvdi'].map(k => h('td', {class: 'num mono'}, `${list.filter(r => ok(r, k)).length} / 167`)), h('td', {class: 'mono small'}, dates[y] || '—')); }));
+    const pct = (r, k) => typeof r[k + '_coverage'] === 'number' ? Math.round(r[k + '_coverage'] * 100) + '%' : '—';
+    mount($('#lowRows'), ...(low.length ? low.sort((a, b) => (a.lst_coverage ?? 0) - (b.lst_coverage ?? 0)).map(r => h('tr', null, h('th', {scope: 'row', class: 'name'}, r.name), ...['lst', 'ndvi', 'tvdi'].map(k => h('td', {class: 'num mono' + (ok(r, k) ? '' : ' flag-low')}, pct(r, k))))) : [h('tr', null, h('td', {colSpan: 4, class: 'empty'}, 'Mọi khu vực đều đủ dữ liệu.'))]));
+  } catch (error) { toast('Không tải được dữ liệu: ' + error.message, {error: true}); }
 }
 function selectTab(name) {
-  if (name === 'usage') loadUsage();
-  for (const id of ['overview', 'system', 'users', 'resets', 'content', 'usage', 'events']) $('#tab-' + id).hidden = id !== name;
+  for (const id of ['overview', 'users', 'data', 'content', 'events']) $('#tab-' + id).hidden = id !== name;
 }
 
 (async () => {
@@ -107,7 +109,7 @@ function selectTab(name) {
   if (session.user.role !== 'admin') { $('#denied').hidden = false; $('#logout').hidden = true; return; }
   me = session.user; $('#who').textContent = me.display_name; $('#app').hidden = false;
   const resetCount = h('span', {class: 'count', hidden: true}, '0');
-  tabs = segmented([{value: 'overview', label: 'Tổng quan'}, {value: 'users', label: 'Tài khoản'}, {value: 'resets', label: ['Quên mật khẩu', resetCount]}, {value: 'content', label: 'Nội dung'}, {value: 'usage', label: 'Lượt dùng'}, {value: 'events', label: 'Nhật ký'}, {value: 'system', label: 'Kỹ thuật'}], 'overview', selectTab, {label: 'Mục quản trị'});
+  tabs = segmented([{value: 'overview', label: 'Tổng quan'}, {value: 'users', label: ['Tài khoản', resetCount]}, {value: 'data', label: 'Dữ liệu'}, {value: 'content', label: 'Nội dung'}, {value: 'events', label: 'Nhật ký'}], 'overview', selectTab, {label: 'Mục quản trị'});
   tabs.counts = {reset: resetCount}; tabs.el.classList.add('admin-tabs');
   $('#tabsHost').append(tabs.el); tabs.place();
   $('#logout').onclick = async () => { await fetch(url('api/auth/logout'), {method: 'POST', credentials: 'same-origin'}); location.href = url('login.html'); };
@@ -119,5 +121,5 @@ function selectTab(name) {
   noteForm.code.addEventListener('change', () => { noteForm.text.value = (window.__notes || {})[noteForm.code.value] || ''; });
   noteForm.addEventListener('submit', e => { e.preventDefault(); act(async () => { await api('/api/admin/notes', 'POST', {code: noteForm.code.value, text: noteForm.text.value}); await loadContent(); }, 'Đã lưu ghi chú.'); });
   await loadAreas(); loadContent().catch(() => {});
-  audits(); try { await refresh(); } catch (error) { toast(error.message, {error: true}); }
+  audits(); loadData(); try { await refresh(); } catch (error) { toast(error.message, {error: true}); }
 })();

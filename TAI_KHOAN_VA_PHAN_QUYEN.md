@@ -58,8 +58,8 @@ Role `mobilegis_app` được cấp SELECT/INSERT/UPDATE/DELETE trên ba bảng 
 
 Đề cương nhóm 6 yêu cầu bản thử nghiệm MobileGIS đơn giản, không phải WebGIS. Vì vậy giao diện khách chỉ còn **Bản đồ**, **Chuyên gia** (bảng số liệu và thống kê) và **Giới thiệu**. Trang chủ, tab Giả lập, điểm thực hành và CSV 4 điểm không còn nằm trong luồng của khách.
 
-- **Còn dùng:** thông báo đầu trang (admin đặt ở tab Nội dung), ghi chú theo khu vực (hiện trong thẻ khu vực trên bản đồ), bộ đếm lượt dùng ẩn danh (tab Lượt dùng), admin tạo tài khoản.
+- **Còn dùng:** thông báo đầu trang (admin đặt ở tab Nội dung), ghi chú theo khu vực (hiện trong thẻ khu vực trên bản đồ), admin tạo tài khoản. Trang quản trị có 5 tab: Tổng quan, Tài khoản (kèm yêu cầu quên mật khẩu), Dữ liệu (độ phủ theo năm, khu vực còn ít dữ liệu, chi tiết kỹ thuật), Nội dung, Nhật ký.
 - **Giả lập:** chỉ quản trị viên, mở từ mục Chuyên gia; ngoài đề cương, không phải dự báo.
-- **Còn trong mã nhưng không có giao diện:** API lưu khu vực, góp ý, điểm nhấn (`/api/me/favorites`, `/api/feedback`, `/api/admin/feedback`, `/api/admin/highlights`) và bảng tương ứng (schema 5–6). Giao diện cũ của trang chủ nằm ở `luu_tru/giao_dien_cu/home.js`.
+- **Còn trong mã nhưng không có giao diện:** bộ đếm lượt dùng ẩn danh (`/api/hit`, `/api/admin/usage`; giao diện đã ngừng gửi số đếm), API lưu khu vực, góp ý, điểm nhấn (`/api/me/favorites`, `/api/feedback`, `/api/admin/feedback`, `/api/admin/highlights`) và bảng tương ứng (schema 5–6). Giao diện cũ của trang chủ nằm ở `luu_tru/giao_dien_cu/home.js`.
 - **Nâng cấp CSDL đã có:** `python scripts/migrate_engagement.py --user <chủ CSDL>` (cục bộ) hoặc `--supabase`; áp dụng migration 005 và 006, chạy lại an toàn. Triển khai mã mới lên Render trước khi chạy lệnh Supabase.
 - Hồ sơ kiểm thử cho báo cáo: `kiem_thu/BAN_KIEM_THU.md`.

@@ -185,3 +185,10 @@ body.has-notice .map-shell{margin-top:40px}
 .expert-card{display:grid;gap:10px;align-content:start;text-decoration:none;color:inherit;padding:20px}
 .expert-card h2{margin:0}.expert-card p{margin:0}.expert-card .btn{justify-self:start}
 .expert-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg)}
+
+/* ---------- back link on sub-pages ---------- */
+.back-link{display:inline-flex;align-items:center;gap:6px;margin:16px 0 0 20px;padding:9px 14px;min-height:44px;border:var(--bw) solid var(--ink);border-radius:var(--radius);background:var(--card);font-weight:700;text-decoration:none;color:var(--ink);box-shadow:var(--shadow-sm)}
+.back-link svg{transform:rotate(90deg)}
+.back-link:hover{background:var(--signal)}
+.back-link+.page{padding-top:16px}
+@media (max-width:860px){.back-link{margin-left:16px}}
