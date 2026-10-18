@@ -1,0 +1,250 @@
+{
+  "status": "review_only_not_published",
+  "year": 2025,
+  "batch": 1,
+  "method": "Preserve every finite baseline value; fill only entirely missing triplets in five target wards with same-scene Jan–Apr 2025 pixels.",
+  "filled_pixels": 6325,
+  "discarded_outside_target_pixels": 351,
+  "baseline_sha256": "e99d071d2b91ec7bbeecbe7c937c20b2fdbeb2dbdad1afbc4848fd6b721eede5",
+  "input_files": [
+    {
+      "file": "MobileGIS_recovery_2025_batch1_120m.tif",
+      "sha256": "905dce70ebd1ea7ef5d5833c3ae362840e39b4b604cebd24d851a6f1c6c4d9f4"
+    },
+    {
+      "file": "MobileGIS_recovery_2025_batch1_scenes.csv",
+      "sha256": "af0302168bf20b594d348c74950631e4b019cf3f5b8d8e398a2eab9a09dd2e11"
+    },
+    {
+      "file": "MobileGIS_recovery_2025_batch1_diagnostics.csv",
+      "sha256": "3f07c8fee65b9bb44f190c6a48151d7c530b4b2833b2fcd90b1bbc350f748602"
+    }
+  ],
+  "scenes": [
+    {
+      "scene_index": "1",
+      "LANDSAT_PRODUCT_ID": "LC08_L2SP_124052_20250112_20250122_02_T1",
+      "acquisition_date": "2025-01-12",
+      "day_of_year": "12",
+      "CLOUD_COVER": "11.48",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "52.0",
+      "target_joint_pixels": "119.0",
+      "year": "2025",
+      "recovery_batch": "1",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-3.007004496949085",
+      "wet_intercept": "30.950888079641313",
+      "dry_slope": "-12.0620904832987",
+      "dry_intercept": "42.4115626098942"
+    },
+    {
+      "scene_index": "2",
+      "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20250112_20250122_02_T1",
+      "acquisition_date": "2025-01-12",
+      "day_of_year": "12",
+      "CLOUD_COVER": "27.61",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "53.0",
+      "target_joint_pixels": "125.0",
+      "year": "2025",
+      "recovery_batch": "1",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-1.2198807522515085",
+      "wet_intercept": "28.339735184380817",
+      "dry_slope": "-12.329364865642553",
+      "dry_intercept": "43.94688389476855"
+    },
+    {
+      "scene_index": "3",
+      "LANDSAT_PRODUCT_ID": "LC09_L2SP_125052_20250228_20250301_02_T1",
+      "acquisition_date": "2025-02-28",
+      "day_of_year": "59",
+      "CLOUD_COVER": "3.29",
+      "WRS_PATH": "125.0",
+      "WRS_ROW": "52.0",
+      "target_joint_pixels": "7124.0",
+      "year": "2025",
+      "recovery_batch": "1",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-10.206806430495782",
+      "wet_intercept": "38.77130018232891",
+      "dry_slope": "-17.02689527390128",
+      "dry_intercept": "50.1743214856999"
+    },
+    {
+      "scene_index": "4",
+      "LANDSAT_PRODUCT_ID": "LC08_L2SP_125053_20250425_20250429_02_T1",
+      "acquisition_date": "2025-04-25",
+      "day_of_year": "115",
+      "CLOUD_COVER": "26.79",
+      "WRS_PATH": "125.0",
+      "WRS_ROW": "53.0",
+      "target_joint_pixels": "15.0",
+      "year": "2025",
+      "recovery_batch": "1",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-20.791357871675217",
+      "wet_intercept": "41.769083739489844",
+      "dry_slope": "-16.494328426759424",
+      "dry_intercept": "52.11138890230592"
+    }
+  ],
+  "per_scene_filled_pixels": {
+    "1": 1,
+    "2": 0,
+    "3": 6324,
+    "4": 0
+  },
+  "wards": [
+    {
+      "code": "25942",
+      "name": "Phường Dĩ An",
+      "before": {
+        "ndvi": null,
+        "ndvi_pixels": 70,
+        "ndvi_coverage": 0.04713804713804714,
+        "lst": null,
+        "lst_pixels": 70,
+        "lst_coverage": 0.04713804713804714,
+        "tvdi": null,
+        "tvdi_pixels": 70,
+        "tvdi_coverage": 0.04713804713804714
+      },
+      "after": {
+        "ndvi": 0.24770715288458758,
+        "ndvi_pixels": 1473,
+        "ndvi_coverage": 0.9919191919191919,
+        "lst": 43.078090420403775,
+        "lst_pixels": 1473,
+        "lst_coverage": 0.9919191919191919,
+        "tvdi": 0.7164174955646784,
+        "tvdi_pixels": 1473,
+        "tvdi_coverage": 0.9919191919191919
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25945",
+      "name": "Phường Tân Đông Hiệp",
+      "before": {
+        "ndvi": null,
+        "ndvi_pixels": 111,
+        "ndvi_coverage": 0.07484828051247472,
+        "lst": null,
+        "lst_pixels": 111,
+        "lst_coverage": 0.07484828051247472,
+        "tvdi": null,
+        "tvdi_pixels": 110,
+        "tvdi_coverage": 0.07417397167902899
+      },
+      "after": {
+        "ndvi": 0.3963300593068443,
+        "ndvi_pixels": 1445,
+        "ndvi_coverage": 0.9743762643290627,
+        "lst": 39.63777867617492,
+        "lst_pixels": 1445,
+        "lst_coverage": 0.9743762643290627,
+        "tvdi": 0.6008292731391704,
+        "tvdi_pixels": 1444,
+        "tvdi_coverage": 0.973701955495617
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25951",
+      "name": "Phường Đông Hoà",
+      "before": {
+        "ndvi": null,
+        "ndvi_pixels": 103,
+        "ndvi_coverage": 0.07074175824175824,
+        "lst": null,
+        "lst_pixels": 103,
+        "lst_coverage": 0.07074175824175824,
+        "tvdi": null,
+        "tvdi_pixels": 99,
+        "tvdi_coverage": 0.06799450549450549
+      },
+      "after": {
+        "ndvi": 0.35266350237679045,
+        "ndvi_pixels": 1412,
+        "ndvi_coverage": 0.9697802197802198,
+        "lst": 40.09528478076708,
+        "lst_pixels": 1412,
+        "lst_coverage": 0.9697802197802198,
+        "tvdi": 0.590089814766543,
+        "tvdi_pixels": 1408,
+        "tvdi_coverage": 0.967032967032967
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25969",
+      "name": "Phường Thuận Giao",
+      "before": {
+        "ndvi": null,
+        "ndvi_pixels": 9,
+        "ndvi_coverage": 0.007614213197969543,
+        "lst": null,
+        "lst_pixels": 9,
+        "lst_coverage": 0.007614213197969543,
+        "tvdi": null,
+        "tvdi_pixels": 9,
+        "tvdi_coverage": 0.007614213197969543
+      },
+      "after": {
+        "ndvi": 0.30886014392575806,
+        "ndvi_pixels": 1181,
+        "ndvi_coverage": 0.9991539763113367,
+        "lst": 42.69474214138771,
+        "lst_pixels": 1181,
+        "lst_coverage": 0.9991539763113367,
+        "tvdi": 0.754999053468147,
+        "tvdi_pixels": 1181,
+        "tvdi_coverage": 0.9991539763113367
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25975",
+      "name": "Phường An Phú",
+      "before": {
+        "ndvi": null,
+        "ndvi_pixels": 46,
+        "ndvi_coverage": 0.039723661485319514,
+        "lst": null,
+        "lst_pixels": 46,
+        "lst_coverage": 0.039723661485319514,
+        "tvdi": null,
+        "tvdi_pixels": 46,
+        "tvdi_coverage": 0.039723661485319514
+      },
+      "after": {
+        "ndvi": 0.2768302992025046,
+        "ndvi_pixels": 1153,
+        "ndvi_coverage": 0.9956822107081175,
+        "lst": 43.670041837799786,
+        "lst_pixels": 1153,
+        "lst_coverage": 0.9956822107081175,
+        "tvdi": 0.8102597019603639,
+        "tvdi_pixels": 1153,
+        "tvdi_coverage": 0.9956822107081175
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    }
+  ],
+  "limitations": "Different dates and per-scene TVDI fits. Review coverage and scientific comparability before adoption. Do not replace active GEE files with this candidate directly."
+}

@@ -1,0 +1,4085 @@
+{
+  "year": 2025,
+  "layers": {
+    "lst": {
+      "image": "/data/rasters/lst_2025.png",
+      "bounds": [
+        [
+          10.316707793309217,
+          106.32426976521346
+        ],
+        [
+          11.502522274696462,
+          107.57984038357091
+        ]
+      ],
+      "geotiff": "/api/rasters/lst_2025_120m.tif",
+      "min": 20,
+      "max": 50,
+      "valid_pixels": 420108
+    },
+    "ndvi": {
+      "image": "/data/rasters/ndvi_2025.png",
+      "bounds": [
+        [
+          10.316707793309217,
+          106.32426976521346
+        ],
+        [
+          11.502522274696462,
+          107.57984038357091
+        ]
+      ],
+      "geotiff": "/api/rasters/ndvi_2025_120m.tif",
+      "min": -1,
+      "max": 1,
+      "valid_pixels": 420108
+    },
+    "tvdi": {
+      "image": "/data/rasters/tvdi_2025.png",
+      "bounds": [
+        [
+          10.316707793309217,
+          106.32426976521346
+        ],
+        [
+          11.502522274696462,
+          107.57984038357091
+        ]
+      ],
+      "geotiff": "/api/rasters/tvdi_2025_120m.tif",
+      "min": 0,
+      "max": 1,
+      "valid_pixels": 363386
+    }
+  },
+  "scenes": [
+    {
+      "id": "LC09_L2SP_125053_20250228_02_T1",
+      "datetime": "2025-02-28T03:14:17.419209Z",
+      "cloud_cover": 0.33,
+      "platform": "landsat-9",
+      "pixels_used": 97730,
+      "assets": {
+        "red": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/125/053/LC09_L2SP_125053_20250228_20250301_02_T1/LC09_L2SP_125053_20250228_20250301_02_T1_SR_B4.TIF",
+        "nir08": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/125/053/LC09_L2SP_125053_20250228_20250301_02_T1/LC09_L2SP_125053_20250228_20250301_02_T1_SR_B5.TIF",
+        "lwir11": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/125/053/LC09_L2SP_125053_20250228_20250301_02_T1/LC09_L2SP_125053_20250228_20250301_02_T1_ST_B10.TIF",
+        "qa_pixel": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/125/053/LC09_L2SP_125053_20250228_20250301_02_T1/LC09_L2SP_125053_20250228_20250301_02_T1_QA_PIXEL.TIF",
+        "qa_radsat": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/125/053/LC09_L2SP_125053_20250228_20250301_02_T1/LC09_L2SP_125053_20250228_20250301_02_T1_QA_RADSAT.TIF"
+      },
+      "tvdi_fit": {
+        "status": "experimental",
+        "wet_slope_intercept": [
+          -4.81427048926905,
+          34.775381740952504
+        ],
+        "dry_slope_intercept": [
+          -15.826697960010328,
+          48.85043248952573
+        ],
+        "bins": [
+          [
+            0.1312829852104187,
+            32.587074279785156,
+            45.47234344482422,
+            3108
+          ],
+          [
+            0.17556917667388916,
+            33.584808349609375,
+            45.283302307128906,
+            6229
+          ],
+          [
+            0.22440744936466217,
+            33.926605224609375,
+            45.448760986328125,
+            5926
+          ],
+          [
+            0.27493634819984436,
+            33.735198974609375,
+            44.68994140625,
+            5471
+          ],
+          [
+            0.3249531090259552,
+            33.59027862548828,
+            44.07416534423828,
+            5304
+          ],
+          [
+            0.3753966689109802,
+            33.30350875854492,
+            43.312469482421875,
+            5278
+          ],
+          [
+            0.4251505732536316,
+            33.18729782104492,
+            42.46549606323242,
+            5439
+          ],
+          [
+            0.4750548005104065,
+            33.0847282409668,
+            41.86222457885742,
+            5743
+          ],
+          [
+            0.5248868465423584,
+            33.1573600769043,
+            41.1392936706543,
+            5660
+          ],
+          [
+            0.5741308331489563,
+            32.541954040527344,
+            40.480308532714844,
+            5167
+          ],
+          [
+            0.6247352957725525,
+            31.67803382873535,
+            39.436431884765625,
+            4484
+          ],
+          [
+            0.6744769215583801,
+            31.191143035888672,
+            38.732330322265625,
+            3808
+          ],
+          [
+            0.7247253656387329,
+            30.867462158203125,
+            37.481353759765625,
+            3462
+          ],
+          [
+            0.776903510093689,
+            30.6234188079834,
+            36.15375518798828,
+            4093
+          ],
+          [
+            0.8266622424125671,
+            30.2303524017334,
+            33.82816696166992,
+            6313
+          ]
+        ],
+        "clipped_fraction": 0.11319051715627512,
+        "ndvi_domain": [
+          0.1312829852104187,
+          0.8266622424125671
+        ],
+        "note": "Per-scene 5th/95th percentile linear edges; requires independent scientific validation."
+      }
+    },
+    {
+      "id": "LC08_L2SP_124052_20250301_02_T1",
+      "datetime": "2025-03-01T03:07:30.685310Z",
+      "cloud_cover": 1.95,
+      "platform": "landsat-8",
+      "pixels_used": 12522,
+      "assets": {
+        "red": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/124/052/LC08_L2SP_124052_20250301_20250304_02_T1/LC08_L2SP_124052_20250301_20250304_02_T1_SR_B4.TIF",
+        "nir08": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/124/052/LC08_L2SP_124052_20250301_20250304_02_T1/LC08_L2SP_124052_20250301_20250304_02_T1_SR_B5.TIF",
+        "lwir11": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/124/052/LC08_L2SP_124052_20250301_20250304_02_T1/LC08_L2SP_124052_20250301_20250304_02_T1_ST_B10.TIF",
+        "qa_pixel": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/124/052/LC08_L2SP_124052_20250301_20250304_02_T1/LC08_L2SP_124052_20250301_20250304_02_T1_QA_PIXEL.TIF",
+        "qa_radsat": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/124/052/LC08_L2SP_124052_20250301_20250304_02_T1/LC08_L2SP_124052_20250301_20250304_02_T1_QA_RADSAT.TIF"
+      },
+      "tvdi_fit": {
+        "status": "experimental",
+        "wet_slope_intercept": [
+          -3.3088633890449906,
+          34.24342746898582
+        ],
+        "dry_slope_intercept": [
+          -16.772454648178865,
+          48.75540695491011
+        ],
+        "bins": [
+          [
+            0.325332373380661,
+            32.35378646850586,
+            42.51471710205078,
+            94
+          ],
+          [
+            0.3771013915538788,
+            32.57305908203125,
+            42.74269485473633,
+            138
+          ],
+          [
+            0.42561355233192444,
+            33.05841064453125,
+            41.44489288330078,
+            197
+          ],
+          [
+            0.4767100512981415,
+            33.52465057373047,
+            41.0401725769043,
+            278
+          ],
+          [
+            0.5265891551971436,
+            32.64483642578125,
+            40.55413818359375,
+            441
+          ],
+          [
+            0.5770285129547119,
+            32.352256774902344,
+            39.14658737182617,
+            613
+          ],
+          [
+            0.6269928216934204,
+            32.588096618652344,
+            38.36113739013672,
+            917
+          ],
+          [
+            0.6766971349716187,
+            32.3883171081543,
+            37.443756103515625,
+            1394
+          ],
+          [
+            0.7263897061347961,
+            32.00632858276367,
+            36.54206466674805,
+            1937
+          ],
+          [
+            0.7758195996284485,
+            31.766387939453125,
+            35.556976318359375,
+            2741
+          ],
+          [
+            0.8242020606994629,
+            30.44841957092285,
+            34.65053176879883,
+            2617
+          ]
+        ],
+        "clipped_fraction": 0.09551851482183851,
+        "ndvi_domain": [
+          0.325332373380661,
+          0.8242020606994629
+        ],
+        "note": "Per-scene 5th/95th percentile linear edges; requires independent scientific validation."
+      }
+    },
+    {
+      "id": "LC08_L2SP_125052_20250204_02_T1",
+      "datetime": "2025-02-04T03:13:55.195580Z",
+      "cloud_cover": 2.21,
+      "platform": "landsat-8",
+      "pixels_used": 178917,
+      "assets": {
+        "red": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/125/052/LC08_L2SP_125052_20250204_20250208_02_T1/LC08_L2SP_125052_20250204_20250208_02_T1_SR_B4.TIF",
+        "nir08": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/125/052/LC08_L2SP_125052_20250204_20250208_02_T1/LC08_L2SP_125052_20250204_20250208_02_T1_SR_B5.TIF",
+        "lwir11": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/125/052/LC08_L2SP_125052_20250204_20250208_02_T1/LC08_L2SP_125052_20250204_20250208_02_T1_ST_B10.TIF",
+        "qa_pixel": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/125/052/LC08_L2SP_125052_20250204_20250208_02_T1/LC08_L2SP_125052_20250204_20250208_02_T1_QA_PIXEL.TIF",
+        "qa_radsat": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/125/052/LC08_L2SP_125052_20250204_20250208_02_T1/LC08_L2SP_125052_20250204_20250208_02_T1_QA_RADSAT.TIF"
+      },
+      "tvdi_fit": {
+        "status": "experimental",
+        "wet_slope_intercept": [
+          -16.40273886790559,
+          37.03721939568875
+        ],
+        "dry_slope_intercept": [
+          -14.942048277473459,
+          47.11263598559554
+        ],
+        "bins": [
+          [
+            0.12807874381542206,
+            32.19877243041992,
+            41.59767532348633,
+            748
+          ],
+          [
+            0.17837108671665192,
+            33.0611457824707,
+            42.41901397705078,
+            1437
+          ],
+          [
+            0.22703592479228973,
+            33.76801300048828,
+            47.25891876220703,
+            2905
+          ],
+          [
+            0.27660828828811646,
+            33.14129638671875,
+            44.8770751953125,
+            4086
+          ],
+          [
+            0.32621997594833374,
+            32.3339729309082,
+            43.39432907104492,
+            5602
+          ],
+          [
+            0.37598931789398193,
+            31.6223201751709,
+            42.12010955810547,
+            6778
+          ],
+          [
+            0.4259578585624695,
+            31.098175048828125,
+            41.01727294921875,
+            8651
+          ],
+          [
+            0.4762621223926544,
+            30.2320613861084,
+            39.949127197265625,
+            11363
+          ],
+          [
+            0.5265478491783142,
+            29.517364501953125,
+            39.039947509765625,
+            15772
+          ],
+          [
+            0.5761674642562866,
+            28.800586700439453,
+            38.226470947265625,
+            21284
+          ],
+          [
+            0.6257626414299011,
+            28.079395294189453,
+            37.42222213745117,
+            27267
+          ],
+          [
+            0.6748477816581726,
+            27.264862060546875,
+            36.750389099121094,
+            29878
+          ],
+          [
+            0.7247541546821594,
+            21.64275550842285,
+            36.004730224609375,
+            28704
+          ],
+          [
+            0.7717354893684387,
+            20.3809814453125,
+            35.290374755859375,
+            22446
+          ],
+          [
+            0.8209602236747742,
+            25.378143310546875,
+            34.705902099609375,
+            9361
+          ]
+        ],
+        "clipped_fraction": 0.09076481336465675,
+        "ndvi_domain": [
+          0.12807874381542206,
+          0.8209602236747742
+        ],
+        "note": "Per-scene 5th/95th percentile linear edges; requires independent scientific validation."
+      }
+    },
+    {
+      "id": "LC09_L2SP_124053_20250205_02_T1",
+      "datetime": "2025-02-05T03:08:10.662354Z",
+      "cloud_cover": 5.12,
+      "platform": "landsat-9",
+      "pixels_used": 130939,
+      "assets": {
+        "red": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/124/053/LC09_L2SP_124053_20250205_20250206_02_T1/LC09_L2SP_124053_20250205_20250206_02_T1_SR_B4.TIF",
+        "nir08": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/124/053/LC09_L2SP_124053_20250205_20250206_02_T1/LC09_L2SP_124053_20250205_20250206_02_T1_SR_B5.TIF",
+        "lwir11": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/124/053/LC09_L2SP_124053_20250205_20250206_02_T1/LC09_L2SP_124053_20250205_20250206_02_T1_ST_B10.TIF",
+        "qa_pixel": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/124/053/LC09_L2SP_124053_20250205_20250206_02_T1/LC09_L2SP_124053_20250205_20250206_02_T1_QA_PIXEL.TIF",
+        "qa_radsat": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/124/053/LC09_L2SP_124053_20250205_20250206_02_T1/LC09_L2SP_124053_20250205_20250206_02_T1_QA_RADSAT.TIF"
+      },
+      "tvdi_fit": {
+        "status": "experimental",
+        "wet_slope_intercept": [
+          -0.3638638971439117,
+          28.698929879182757
+        ],
+        "dry_slope_intercept": [
+          -18.158809779494145,
+          47.92105045958526
+        ],
+        "bins": [
+          [
+            0.12633831799030304,
+            27.325531005859375,
+            44.835205078125,
+            1336
+          ],
+          [
+            0.17578749358654022,
+            27.391155242919922,
+            43.68622589111328,
+            1834
+          ],
+          [
+            0.2257031947374344,
+            27.7840518951416,
+            43.48371124267578,
+            2330
+          ],
+          [
+            0.2761803865432739,
+            28.4603271484375,
+            42.97101593017578,
+            3060
+          ],
+          [
+            0.32623928785324097,
+            29.014892578125,
+            42.478485107421875,
+            4077
+          ],
+          [
+            0.37587425112724304,
+            28.899707794189453,
+            41.887176513671875,
+            5372
+          ],
+          [
+            0.426165372133255,
+            29.70501136779785,
+            41.056922912597656,
+            6499
+          ],
+          [
+            0.47586822509765625,
+            29.85027503967285,
+            39.85649871826172,
+            8143
+          ],
+          [
+            0.5261545181274414,
+            30.056549072265625,
+            38.862213134765625,
+            10866
+          ],
+          [
+            0.5762779116630554,
+            29.951446533203125,
+            37.850494384765625,
+            14462
+          ],
+          [
+            0.6256359219551086,
+            29.726543426513672,
+            36.6986083984375,
+            18909
+          ],
+          [
+            0.6747419834136963,
+            29.014892578125,
+            35.78034210205078,
+            19874
+          ],
+          [
+            0.7237699031829834,
+            27.825408935546875,
+            34.630706787109375,
+            16421
+          ],
+          [
+            0.7740050554275513,
+            26.755584716796875,
+            33.386566162109375,
+            12464
+          ],
+          [
+            0.8254982233047485,
+            26.126678466796875,
+            31.802276611328125,
+            12331
+          ]
+        ],
+        "clipped_fraction": 0.13278182303381494,
+        "ndvi_domain": [
+          0.12633831799030304,
+          0.8254982233047485
+        ],
+        "note": "Per-scene 5th/95th percentile linear edges; requires independent scientific validation."
+      }
+    }
+  ],
+  "rows": [
+    {
+      "code": "25747",
+      "name": "Phường Thủ Dầu Một",
+      "year": 2025,
+      "sampled_pixels": 1076,
+      "lst_pixels": 846,
+      "lst_coverage": 0.7862,
+      "lst": 32.9853,
+      "ndvi_pixels": 846,
+      "ndvi_coverage": 0.7862,
+      "ndvi": 0.4308,
+      "tvdi_pixels": 830,
+      "tvdi_coverage": 0.7714,
+      "tvdi": 0.294,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25750",
+      "name": "Phường Phú Lợi",
+      "year": 2025,
+      "sampled_pixels": 1249,
+      "lst_pixels": 155,
+      "lst_coverage": 0.1241,
+      "lst": 32.9169,
+      "ndvi_pixels": 155,
+      "ndvi_coverage": 0.1241,
+      "ndvi": 0.4024,
+      "tvdi_pixels": 155,
+      "tvdi_coverage": 0.1241,
+      "tvdi": 0.2334,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25760",
+      "name": "Phường Bình Dương",
+      "year": 2025,
+      "sampled_pixels": 4045,
+      "lst_pixels": 933,
+      "lst_coverage": 0.2307,
+      "lst": 31.5286,
+      "ndvi_pixels": 933,
+      "ndvi_coverage": 0.2307,
+      "ndvi": 0.4351,
+      "tvdi_pixels": 930,
+      "tvdi_coverage": 0.2299,
+      "tvdi": 0.1579,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25768",
+      "name": "Phường Phú An",
+      "year": 2025,
+      "sampled_pixels": 2418,
+      "lst_pixels": 2240,
+      "lst_coverage": 0.9264,
+      "lst": 30.9238,
+      "ndvi_pixels": 2240,
+      "ndvi_coverage": 0.9264,
+      "ndvi": 0.5657,
+      "tvdi_pixels": 2208,
+      "tvdi_coverage": 0.9132,
+      "tvdi": 0.3006,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25771",
+      "name": "Phường Chánh Hiệp",
+      "year": 2025,
+      "sampled_pixels": 1403,
+      "lst_pixels": 832,
+      "lst_coverage": 0.593,
+      "lst": 31.7955,
+      "ndvi_pixels": 832,
+      "ndvi_coverage": 0.593,
+      "ndvi": 0.5199,
+      "tvdi_pixels": 807,
+      "tvdi_coverage": 0.5752,
+      "tvdi": 0.3258,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25777",
+      "name": "Xã Dầu Tiếng",
+      "year": 2025,
+      "sampled_pixels": 12929,
+      "lst_pixels": 12787,
+      "lst_coverage": 0.989,
+      "lst": 34.1221,
+      "ndvi_pixels": 12787,
+      "ndvi_coverage": 0.989,
+      "ndvi": 0.4557,
+      "tvdi_pixels": 10834,
+      "tvdi_coverage": 0.838,
+      "tvdi": 0.7379,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25780",
+      "name": "Xã Minh Thạnh",
+      "year": 2025,
+      "sampled_pixels": 11548,
+      "lst_pixels": 11548,
+      "lst_coverage": 1.0,
+      "lst": 36.1873,
+      "ndvi_pixels": 11548,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.5549,
+      "tvdi_pixels": 10341,
+      "tvdi_coverage": 0.8955,
+      "tvdi": 0.881,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25792",
+      "name": "Xã Long Hoà",
+      "year": 2025,
+      "sampled_pixels": 11176,
+      "lst_pixels": 11059,
+      "lst_coverage": 0.9895,
+      "lst": 34.845,
+      "ndvi_pixels": 11059,
+      "ndvi_coverage": 0.9895,
+      "ndvi": 0.6095,
+      "tvdi_pixels": 10768,
+      "tvdi_coverage": 0.9635,
+      "tvdi": 0.6947,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25807",
+      "name": "Xã Thanh An",
+      "year": 2025,
+      "sampled_pixels": 9722,
+      "lst_pixels": 9697,
+      "lst_coverage": 0.9974,
+      "lst": 33.5267,
+      "ndvi_pixels": 9697,
+      "ndvi_coverage": 0.9974,
+      "ndvi": 0.6217,
+      "tvdi_pixels": 9488,
+      "tvdi_coverage": 0.9759,
+      "tvdi": 0.6198,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25813",
+      "name": "Phường Bến Cát",
+      "year": 2025,
+      "sampled_pixels": 6993,
+      "lst_pixels": 5380,
+      "lst_coverage": 0.7693,
+      "lst": 31.0178,
+      "ndvi_pixels": 5380,
+      "ndvi_coverage": 0.7693,
+      "ndvi": 0.6217,
+      "tvdi_pixels": 5219,
+      "tvdi_coverage": 0.7463,
+      "tvdi": 0.378,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25819",
+      "name": "Xã Trừ Văn Thố",
+      "year": 2025,
+      "sampled_pixels": 5292,
+      "lst_pixels": 5279,
+      "lst_coverage": 0.9975,
+      "lst": 36.0437,
+      "ndvi_pixels": 5279,
+      "ndvi_coverage": 0.9975,
+      "ndvi": 0.5983,
+      "tvdi_pixels": 4808,
+      "tvdi_coverage": 0.9085,
+      "tvdi": 0.7952,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25822",
+      "name": "Xã Bàu Bàng",
+      "year": 2025,
+      "sampled_pixels": 5851,
+      "lst_pixels": 5732,
+      "lst_coverage": 0.9797,
+      "lst": 35.8515,
+      "ndvi_pixels": 5732,
+      "ndvi_coverage": 0.9797,
+      "ndvi": 0.5195,
+      "tvdi_pixels": 5570,
+      "tvdi_coverage": 0.952,
+      "tvdi": 0.6714,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25837",
+      "name": "Phường Chánh Phú Hoà",
+      "year": 2025,
+      "sampled_pixels": 4828,
+      "lst_pixels": 3701,
+      "lst_coverage": 0.7666,
+      "lst": 30.3328,
+      "ndvi_pixels": 3701,
+      "ndvi_coverage": 0.7666,
+      "ndvi": 0.6579,
+      "tvdi_pixels": 3568,
+      "tvdi_coverage": 0.739,
+      "tvdi": 0.3689,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25840",
+      "name": "Phường Long Nguyên",
+      "year": 2025,
+      "sampled_pixels": 7495,
+      "lst_pixels": 6920,
+      "lst_coverage": 0.9233,
+      "lst": 30.1579,
+      "ndvi_pixels": 6920,
+      "ndvi_coverage": 0.9233,
+      "ndvi": 0.6259,
+      "tvdi_pixels": 6844,
+      "tvdi_coverage": 0.9131,
+      "tvdi": 0.3075,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25843",
+      "name": "Phường Tây Nam",
+      "year": 2025,
+      "sampled_pixels": 8012,
+      "lst_pixels": 7679,
+      "lst_coverage": 0.9584,
+      "lst": 31.363,
+      "ndvi_pixels": 7679,
+      "ndvi_coverage": 0.9584,
+      "ndvi": 0.6144,
+      "tvdi_pixels": 7445,
+      "tvdi_coverage": 0.9292,
+      "tvdi": 0.4084,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25846",
+      "name": "Phường Thới Hoà",
+      "year": 2025,
+      "sampled_pixels": 2624,
+      "lst_pixels": 1077,
+      "lst_coverage": 0.4104,
+      "lst": 32.1627,
+      "ndvi_pixels": 1077,
+      "ndvi_coverage": 0.4104,
+      "ndvi": 0.4588,
+      "tvdi_pixels": 1045,
+      "tvdi_coverage": 0.3982,
+      "tvdi": 0.2492,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25849",
+      "name": "Phường Hoà Lợi",
+      "year": 2025,
+      "sampled_pixels": 2385,
+      "lst_pixels": 762,
+      "lst_coverage": 0.3195,
+      "lst": 29.2047,
+      "ndvi_pixels": 762,
+      "ndvi_coverage": 0.3195,
+      "ndvi": 0.5804,
+      "tvdi_pixels": 758,
+      "tvdi_coverage": 0.3178,
+      "tvdi": 0.1596,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25858",
+      "name": "Xã Phú Giáo",
+      "year": 2025,
+      "sampled_pixels": 13741,
+      "lst_pixels": 13723,
+      "lst_coverage": 0.9987,
+      "lst": 35.3759,
+      "ndvi_pixels": 13723,
+      "ndvi_coverage": 0.9987,
+      "ndvi": 0.6559,
+      "tvdi_pixels": 12415,
+      "tvdi_coverage": 0.9035,
+      "tvdi": 0.8032,
+      "scene_ids": [
+        "LC08_L2SP_124052_20250301_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-03-01",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25864",
+      "name": "Xã Phước Thành",
+      "year": 2025,
+      "sampled_pixels": 8594,
+      "lst_pixels": 8578,
+      "lst_coverage": 0.9981,
+      "lst": 36.61,
+      "ndvi_pixels": 8578,
+      "ndvi_coverage": 0.9981,
+      "ndvi": 0.6337,
+      "tvdi_pixels": 7974,
+      "tvdi_coverage": 0.9279,
+      "tvdi": 0.8947,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25867",
+      "name": "Xã An Long",
+      "year": 2025,
+      "sampled_pixels": 6902,
+      "lst_pixels": 6880,
+      "lst_coverage": 0.9968,
+      "lst": 35.5379,
+      "ndvi_pixels": 6880,
+      "ndvi_coverage": 0.9968,
+      "ndvi": 0.6489,
+      "tvdi_pixels": 6571,
+      "tvdi_coverage": 0.952,
+      "tvdi": 0.8201,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25882",
+      "name": "Xã Phước Hoà",
+      "year": 2025,
+      "sampled_pixels": 8531,
+      "lst_pixels": 8528,
+      "lst_coverage": 0.9996,
+      "lst": 34.3554,
+      "ndvi_pixels": 8528,
+      "ndvi_coverage": 0.9996,
+      "ndvi": 0.6594,
+      "tvdi_pixels": 7749,
+      "tvdi_coverage": 0.9083,
+      "tvdi": 0.7362,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25888",
+      "name": "Phường Tân Uyên",
+      "year": 2025,
+      "sampled_pixels": 6522,
+      "lst_pixels": 6454,
+      "lst_coverage": 0.9896,
+      "lst": 34.6625,
+      "ndvi_pixels": 6454,
+      "ndvi_coverage": 0.9896,
+      "ndvi": 0.5301,
+      "tvdi_pixels": 6194,
+      "tvdi_coverage": 0.9497,
+      "tvdi": 0.5978,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25891",
+      "name": "Phường Tân Khánh",
+      "year": 2025,
+      "sampled_pixels": 2664,
+      "lst_pixels": 455,
+      "lst_coverage": 0.1708,
+      "lst": 30.6845,
+      "ndvi_pixels": 455,
+      "ndvi_coverage": 0.1708,
+      "ndvi": 0.4838,
+      "tvdi_pixels": 454,
+      "tvdi_coverage": 0.1704,
+      "tvdi": 0.1584,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25906",
+      "name": "Xã Bắc Tân Uyên",
+      "year": 2025,
+      "sampled_pixels": 9985,
+      "lst_pixels": 9985,
+      "lst_coverage": 1.0,
+      "lst": 35.1868,
+      "ndvi_pixels": 9985,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.6214,
+      "tvdi_pixels": 9476,
+      "tvdi_coverage": 0.949,
+      "tvdi": 0.7369,
+      "scene_ids": [
+        "LC08_L2SP_124052_20250301_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-03-01",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25909",
+      "name": "Xã Thường Tân",
+      "year": 2025,
+      "sampled_pixels": 8526,
+      "lst_pixels": 8526,
+      "lst_coverage": 1.0,
+      "lst": 34.948,
+      "ndvi_pixels": 8526,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.6816,
+      "tvdi_pixels": 7174,
+      "tvdi_coverage": 0.8414,
+      "tvdi": 0.6136,
+      "scene_ids": [
+        "LC08_L2SP_124052_20250301_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-03-01",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25912",
+      "name": "Phường Vĩnh Tân",
+      "year": 2025,
+      "sampled_pixels": 4239,
+      "lst_pixels": 3702,
+      "lst_coverage": 0.8733,
+      "lst": 32.7938,
+      "ndvi_pixels": 3702,
+      "ndvi_coverage": 0.8733,
+      "ndvi": 0.5352,
+      "tvdi_pixels": 3649,
+      "tvdi_coverage": 0.8608,
+      "tvdi": 0.4184,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25915",
+      "name": "Phường Bình Cơ",
+      "year": 2025,
+      "sampled_pixels": 5058,
+      "lst_pixels": 5054,
+      "lst_coverage": 0.9992,
+      "lst": 33.8392,
+      "ndvi_pixels": 5054,
+      "ndvi_coverage": 0.9992,
+      "ndvi": 0.5961,
+      "tvdi_pixels": 4883,
+      "tvdi_coverage": 0.9654,
+      "tvdi": 0.5976,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25920",
+      "name": "Phường Tân Hiệp",
+      "year": 2025,
+      "sampled_pixels": 3271,
+      "lst_pixels": 2017,
+      "lst_coverage": 0.6166,
+      "lst": 33.8189,
+      "ndvi_pixels": 2017,
+      "ndvi_coverage": 0.6166,
+      "ndvi": 0.4349,
+      "tvdi_pixels": 2002,
+      "tvdi_coverage": 0.612,
+      "tvdi": 0.3689,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25942",
+      "name": "Phường Dĩ An",
+      "year": 2025,
+      "sampled_pixels": 1485,
+      "lst_pixels": 75,
+      "lst_coverage": 0.0505,
+      "lst": null,
+      "ndvi_pixels": 75,
+      "ndvi_coverage": 0.0505,
+      "ndvi": null,
+      "tvdi_pixels": 72,
+      "tvdi_coverage": 0.0485,
+      "tvdi": null,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25945",
+      "name": "Phường Tân Đông Hiệp",
+      "year": 2025,
+      "sampled_pixels": 1483,
+      "lst_pixels": 107,
+      "lst_coverage": 0.0722,
+      "lst": null,
+      "ndvi_pixels": 107,
+      "ndvi_coverage": 0.0722,
+      "ndvi": null,
+      "tvdi_pixels": 107,
+      "tvdi_coverage": 0.0722,
+      "tvdi": null,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25951",
+      "name": "Phường Đông Hoà",
+      "year": 2025,
+      "sampled_pixels": 1456,
+      "lst_pixels": 108,
+      "lst_coverage": 0.0742,
+      "lst": null,
+      "ndvi_pixels": 108,
+      "ndvi_coverage": 0.0742,
+      "ndvi": null,
+      "tvdi_pixels": 104,
+      "tvdi_coverage": 0.0714,
+      "tvdi": null,
+      "scene_ids": [
+        "LC08_L2SP_124052_20250301_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1",
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-03-01",
+        "2025-02-04",
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "25966",
+      "name": "Phường Lái Thiêu",
+      "year": 2025,
+      "sampled_pixels": 1061,
+      "lst_pixels": 364,
+      "lst_coverage": 0.3431,
+      "lst": 33.4057,
+      "ndvi_pixels": 364,
+      "ndvi_coverage": 0.3431,
+      "ndvi": 0.3635,
+      "tvdi_pixels": 358,
+      "tvdi_coverage": 0.3374,
+      "tvdi": 0.227,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25969",
+      "name": "Phường Thuận Giao",
+      "year": 2025,
+      "sampled_pixels": 1182,
+      "lst_pixels": 10,
+      "lst_coverage": 0.0085,
+      "lst": null,
+      "ndvi_pixels": 10,
+      "ndvi_coverage": 0.0085,
+      "ndvi": null,
+      "tvdi_pixels": 10,
+      "tvdi_coverage": 0.0085,
+      "tvdi": null,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25975",
+      "name": "Phường An Phú",
+      "year": 2025,
+      "sampled_pixels": 1158,
+      "lst_pixels": 40,
+      "lst_coverage": 0.0345,
+      "lst": null,
+      "ndvi_pixels": 40,
+      "ndvi_coverage": 0.0345,
+      "ndvi": null,
+      "tvdi_pixels": 40,
+      "tvdi_coverage": 0.0345,
+      "tvdi": null,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25978",
+      "name": "Phường Thuận An",
+      "year": 2025,
+      "sampled_pixels": 1126,
+      "lst_pixels": 591,
+      "lst_coverage": 0.5249,
+      "lst": 30.4304,
+      "ndvi_pixels": 591,
+      "ndvi_coverage": 0.5249,
+      "ndvi": 0.5512,
+      "tvdi_pixels": 583,
+      "tvdi_coverage": 0.5178,
+      "tvdi": 0.2482,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "25987",
+      "name": "Phường Bình Hoà",
+      "year": 2025,
+      "sampled_pixels": 1291,
+      "lst_pixels": 381,
+      "lst_coverage": 0.2951,
+      "lst": 35.3522,
+      "ndvi_pixels": 381,
+      "ndvi_coverage": 0.2951,
+      "ndvi": 0.3565,
+      "tvdi_pixels": 357,
+      "tvdi_coverage": 0.2765,
+      "tvdi": 0.3767,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "26506",
+      "name": "Phường Vũng Tàu",
+      "year": 2025,
+      "sampled_pixels": 1024,
+      "lst_pixels": 510,
+      "lst_coverage": 0.498,
+      "lst": 31.7933,
+      "ndvi_pixels": 510,
+      "ndvi_coverage": 0.498,
+      "ndvi": 0.4498,
+      "tvdi_pixels": 494,
+      "tvdi_coverage": 0.4824,
+      "tvdi": 0.2625,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26526",
+      "name": "Phường Tam Thắng",
+      "year": 2025,
+      "sampled_pixels": 794,
+      "lst_pixels": 643,
+      "lst_coverage": 0.8098,
+      "lst": 34.1855,
+      "ndvi_pixels": 643,
+      "ndvi_coverage": 0.8098,
+      "ndvi": 0.3584,
+      "tvdi_pixels": 625,
+      "tvdi_coverage": 0.7872,
+      "tvdi": 0.4246,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26536",
+      "name": "Phường Rạch Dừa",
+      "year": 2025,
+      "sampled_pixels": 834,
+      "lst_pixels": 750,
+      "lst_coverage": 0.8993,
+      "lst": 35.5881,
+      "ndvi_pixels": 750,
+      "ndvi_coverage": 0.8993,
+      "ndvi": 0.2562,
+      "tvdi_pixels": 642,
+      "tvdi_coverage": 0.7698,
+      "tvdi": 0.4861,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26542",
+      "name": "Phường Phước Thắng",
+      "year": 2025,
+      "sampled_pixels": 3225,
+      "lst_pixels": 2790,
+      "lst_coverage": 0.8651,
+      "lst": 31.2017,
+      "ndvi_pixels": 2790,
+      "ndvi_coverage": 0.8651,
+      "ndvi": 0.2653,
+      "tvdi_pixels": 1918,
+      "tvdi_coverage": 0.5947,
+      "tvdi": 0.3722,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26545",
+      "name": "Xã Long Sơn",
+      "year": 2025,
+      "sampled_pixels": 3592,
+      "lst_pixels": 3402,
+      "lst_coverage": 0.9471,
+      "lst": 30.4057,
+      "ndvi_pixels": 3402,
+      "ndvi_coverage": 0.9471,
+      "ndvi": 0.2868,
+      "tvdi_pixels": 2177,
+      "tvdi_coverage": 0.6061,
+      "tvdi": 0.2824,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26560",
+      "name": "Phường Bà Rịa",
+      "year": 2025,
+      "sampled_pixels": 1080,
+      "lst_pixels": 1068,
+      "lst_coverage": 0.9889,
+      "lst": 34.1811,
+      "ndvi_pixels": 1068,
+      "ndvi_coverage": 0.9889,
+      "ndvi": 0.3697,
+      "tvdi_pixels": 924,
+      "tvdi_coverage": 0.8556,
+      "tvdi": 0.5584,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26566",
+      "name": "Phường Long Hương",
+      "year": 2025,
+      "sampled_pixels": 2829,
+      "lst_pixels": 2819,
+      "lst_coverage": 0.9965,
+      "lst": 31.7923,
+      "ndvi_pixels": 2819,
+      "ndvi_coverage": 0.9965,
+      "ndvi": 0.3651,
+      "tvdi_pixels": 2037,
+      "tvdi_coverage": 0.72,
+      "tvdi": 0.4808,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26572",
+      "name": "Phường Tam Long",
+      "year": 2025,
+      "sampled_pixels": 2413,
+      "lst_pixels": 2413,
+      "lst_coverage": 1.0,
+      "lst": 33.9049,
+      "ndvi_pixels": 2413,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.5976,
+      "tvdi_pixels": 2374,
+      "tvdi_coverage": 0.9838,
+      "tvdi": 0.6229,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26575",
+      "name": "Xã Ngãi Giao",
+      "year": 2025,
+      "sampled_pixels": 4812,
+      "lst_pixels": 4800,
+      "lst_coverage": 0.9975,
+      "lst": 35.5685,
+      "ndvi_pixels": 4800,
+      "ndvi_coverage": 0.9975,
+      "ndvi": 0.5995,
+      "tvdi_pixels": 4548,
+      "tvdi_coverage": 0.9451,
+      "tvdi": 0.803,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26584",
+      "name": "Xã Xuân Sơn",
+      "year": 2025,
+      "sampled_pixels": 5131,
+      "lst_pixels": 5124,
+      "lst_coverage": 0.9986,
+      "lst": 32.5344,
+      "ndvi_pixels": 5124,
+      "ndvi_coverage": 0.9986,
+      "ndvi": 0.6045,
+      "tvdi_pixels": 4720,
+      "tvdi_coverage": 0.9199,
+      "tvdi": 0.5338,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26590",
+      "name": "Xã Bình Giã",
+      "year": 2025,
+      "sampled_pixels": 4655,
+      "lst_pixels": 4631,
+      "lst_coverage": 0.9948,
+      "lst": 33.6952,
+      "ndvi_pixels": 4631,
+      "ndvi_coverage": 0.9948,
+      "ndvi": 0.6163,
+      "tvdi_pixels": 4559,
+      "tvdi_coverage": 0.9794,
+      "tvdi": 0.5988,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26596",
+      "name": "Xã Châu Đức",
+      "year": 2025,
+      "sampled_pixels": 5884,
+      "lst_pixels": 4267,
+      "lst_coverage": 0.7252,
+      "lst": 32.022,
+      "ndvi_pixels": 4267,
+      "ndvi_coverage": 0.7252,
+      "ndvi": 0.6709,
+      "tvdi_pixels": 4058,
+      "tvdi_coverage": 0.6897,
+      "tvdi": 0.4823,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26608",
+      "name": "Xã Kim Long",
+      "year": 2025,
+      "sampled_pixels": 4448,
+      "lst_pixels": 4431,
+      "lst_coverage": 0.9962,
+      "lst": 33.2388,
+      "ndvi_pixels": 4431,
+      "ndvi_coverage": 0.9962,
+      "ndvi": 0.657,
+      "tvdi_pixels": 4284,
+      "tvdi_coverage": 0.9631,
+      "tvdi": 0.6654,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26617",
+      "name": "Xã Nghĩa Thành",
+      "year": 2025,
+      "sampled_pixels": 4556,
+      "lst_pixels": 4548,
+      "lst_coverage": 0.9982,
+      "lst": 35.4174,
+      "ndvi_pixels": 4548,
+      "ndvi_coverage": 0.9982,
+      "ndvi": 0.5572,
+      "tvdi_pixels": 4385,
+      "tvdi_coverage": 0.9625,
+      "tvdi": 0.7501,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26620",
+      "name": "Xã Hồ Tràm",
+      "year": 2025,
+      "sampled_pixels": 6598,
+      "lst_pixels": 6428,
+      "lst_coverage": 0.9742,
+      "lst": 31.5714,
+      "ndvi_pixels": 6428,
+      "ndvi_coverage": 0.9742,
+      "ndvi": 0.6303,
+      "tvdi_pixels": 5499,
+      "tvdi_coverage": 0.8334,
+      "tvdi": 0.4276,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26632",
+      "name": "Xã Xuyên Mộc",
+      "year": 2025,
+      "sampled_pixels": 7072,
+      "lst_pixels": 7063,
+      "lst_coverage": 0.9987,
+      "lst": 31.3032,
+      "ndvi_pixels": 7063,
+      "ndvi_coverage": 0.9987,
+      "ndvi": 0.7017,
+      "tvdi_pixels": 4694,
+      "tvdi_coverage": 0.6637,
+      "tvdi": 0.5754,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26638",
+      "name": "Xã Bàu Lâm",
+      "year": 2025,
+      "sampled_pixels": 8553,
+      "lst_pixels": 8357,
+      "lst_coverage": 0.9771,
+      "lst": 34.3744,
+      "ndvi_pixels": 8357,
+      "ndvi_coverage": 0.9771,
+      "ndvi": 0.6195,
+      "tvdi_pixels": 7680,
+      "tvdi_coverage": 0.8979,
+      "tvdi": 0.6934,
+      "scene_ids": [
+        "LC08_L2SP_124052_20250301_02_T1",
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-03-01",
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26641",
+      "name": "Xã Hoà Hội",
+      "year": 2025,
+      "sampled_pixels": 9391,
+      "lst_pixels": 9347,
+      "lst_coverage": 0.9953,
+      "lst": 33.6783,
+      "ndvi_pixels": 9347,
+      "ndvi_coverage": 0.9953,
+      "ndvi": 0.6406,
+      "tvdi_pixels": 8522,
+      "tvdi_coverage": 0.9075,
+      "tvdi": 0.7172,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26647",
+      "name": "Xã Hoà Hiệp",
+      "year": 2025,
+      "sampled_pixels": 6991,
+      "lst_pixels": 6476,
+      "lst_coverage": 0.9263,
+      "lst": 34.7307,
+      "ndvi_pixels": 6476,
+      "ndvi_coverage": 0.9263,
+      "ndvi": 0.6382,
+      "tvdi_pixels": 6286,
+      "tvdi_coverage": 0.8992,
+      "tvdi": 0.7785,
+      "scene_ids": [
+        "LC08_L2SP_124052_20250301_02_T1",
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-03-01",
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26656",
+      "name": "Xã Bình Châu",
+      "year": 2025,
+      "sampled_pixels": 5984,
+      "lst_pixels": 5973,
+      "lst_coverage": 0.9982,
+      "lst": 32.9537,
+      "ndvi_pixels": 5973,
+      "ndvi_coverage": 0.9982,
+      "ndvi": 0.6388,
+      "tvdi_pixels": 5064,
+      "tvdi_coverage": 0.8463,
+      "tvdi": 0.6209,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26659",
+      "name": "Xã Long Điền",
+      "year": 2025,
+      "sampled_pixels": 3582,
+      "lst_pixels": 3459,
+      "lst_coverage": 0.9657,
+      "lst": 32.1497,
+      "ndvi_pixels": 3459,
+      "ndvi_coverage": 0.9657,
+      "ndvi": 0.4603,
+      "tvdi_pixels": 2851,
+      "tvdi_coverage": 0.7959,
+      "tvdi": 0.4484,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26662",
+      "name": "Xã Long Hải",
+      "year": 2025,
+      "sampled_pixels": 1824,
+      "lst_pixels": 1533,
+      "lst_coverage": 0.8405,
+      "lst": 32.1837,
+      "ndvi_pixels": 1533,
+      "ndvi_coverage": 0.8405,
+      "ndvi": 0.4176,
+      "tvdi_pixels": 1421,
+      "tvdi_coverage": 0.7791,
+      "tvdi": 0.3459,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26680",
+      "name": "Xã Đất Đỏ",
+      "year": 2025,
+      "sampled_pixels": 8324,
+      "lst_pixels": 8281,
+      "lst_coverage": 0.9948,
+      "lst": 32.3646,
+      "ndvi_pixels": 8281,
+      "ndvi_coverage": 0.9948,
+      "ndvi": 0.6258,
+      "tvdi_pixels": 8005,
+      "tvdi_coverage": 0.9617,
+      "tvdi": 0.4726,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26686",
+      "name": "Xã Phước Hải",
+      "year": 2025,
+      "sampled_pixels": 4742,
+      "lst_pixels": 4330,
+      "lst_coverage": 0.9131,
+      "lst": 31.1907,
+      "ndvi_pixels": 4330,
+      "ndvi_coverage": 0.9131,
+      "ndvi": 0.559,
+      "tvdi_pixels": 4135,
+      "tvdi_coverage": 0.872,
+      "tvdi": 0.2957,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26704",
+      "name": "Phường Phú Mỹ",
+      "year": 2025,
+      "sampled_pixels": 4916,
+      "lst_pixels": 4706,
+      "lst_coverage": 0.9573,
+      "lst": 36.7756,
+      "ndvi_pixels": 4706,
+      "ndvi_coverage": 0.9573,
+      "ndvi": 0.3225,
+      "tvdi_pixels": 3793,
+      "tvdi_coverage": 0.7716,
+      "tvdi": 0.7517,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26710",
+      "name": "Phường Tân Hải",
+      "year": 2025,
+      "sampled_pixels": 3604,
+      "lst_pixels": 3474,
+      "lst_coverage": 0.9639,
+      "lst": 31.6429,
+      "ndvi_pixels": 3474,
+      "ndvi_coverage": 0.9639,
+      "ndvi": 0.4736,
+      "tvdi_pixels": 2547,
+      "tvdi_coverage": 0.7067,
+      "tvdi": 0.4479,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26713",
+      "name": "Phường Tân Phước",
+      "year": 2025,
+      "sampled_pixels": 5687,
+      "lst_pixels": 5404,
+      "lst_coverage": 0.9502,
+      "lst": 35.1975,
+      "ndvi_pixels": 5404,
+      "ndvi_coverage": 0.9502,
+      "ndvi": 0.3499,
+      "tvdi_pixels": 4197,
+      "tvdi_coverage": 0.738,
+      "tvdi": 0.6121,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26725",
+      "name": "Phường Tân Thành",
+      "year": 2025,
+      "sampled_pixels": 4285,
+      "lst_pixels": 4277,
+      "lst_coverage": 0.9981,
+      "lst": 34.7175,
+      "ndvi_pixels": 4277,
+      "ndvi_coverage": 0.9981,
+      "ndvi": 0.6283,
+      "tvdi_pixels": 4115,
+      "tvdi_coverage": 0.9603,
+      "tvdi": 0.7827,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26728",
+      "name": "Xã Châu Pha",
+      "year": 2025,
+      "sampled_pixels": 4564,
+      "lst_pixels": 4562,
+      "lst_coverage": 0.9996,
+      "lst": 34.6544,
+      "ndvi_pixels": 4562,
+      "ndvi_coverage": 0.9996,
+      "ndvi": 0.586,
+      "tvdi_pixels": 4169,
+      "tvdi_coverage": 0.9135,
+      "tvdi": 0.6905,
+      "scene_ids": [
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26737",
+      "name": "Phường Tân Định",
+      "year": 2025,
+      "sampled_pixels": 84,
+      "lst_pixels": 84,
+      "lst_coverage": 1.0,
+      "lst": 40.1985,
+      "ndvi_pixels": 84,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2157,
+      "tvdi_pixels": 80,
+      "tvdi_coverage": 0.9524,
+      "tvdi": 0.5593,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26740",
+      "name": "Phường Sài Gòn",
+      "year": 2025,
+      "sampled_pixels": 211,
+      "lst_pixels": 211,
+      "lst_coverage": 1.0,
+      "lst": 39.1419,
+      "ndvi_pixels": 211,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2742,
+      "tvdi_pixels": 203,
+      "tvdi_coverage": 0.9621,
+      "tvdi": 0.5377,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26743",
+      "name": "Phường Bến Thành",
+      "year": 2025,
+      "sampled_pixels": 128,
+      "lst_pixels": 128,
+      "lst_coverage": 1.0,
+      "lst": 40.1734,
+      "ndvi_pixels": 128,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2605,
+      "tvdi_pixels": 116,
+      "tvdi_coverage": 0.9062,
+      "tvdi": 0.6038,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26758",
+      "name": "Phường Cầu Ông Lãnh",
+      "year": 2025,
+      "sampled_pixels": 111,
+      "lst_pixels": 111,
+      "lst_coverage": 1.0,
+      "lst": 40.9543,
+      "ndvi_pixels": 111,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1987,
+      "tvdi_pixels": 98,
+      "tvdi_coverage": 0.8829,
+      "tvdi": 0.6122,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26767",
+      "name": "Phường An Phú Đông",
+      "year": 2025,
+      "sampled_pixels": 1026,
+      "lst_pixels": 927,
+      "lst_coverage": 0.9035,
+      "lst": 39.8257,
+      "ndvi_pixels": 927,
+      "ndvi_coverage": 0.9035,
+      "ndvi": 0.3485,
+      "tvdi_pixels": 907,
+      "tvdi_coverage": 0.884,
+      "tvdi": 0.667,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "26773",
+      "name": "Phường Thới An",
+      "year": 2025,
+      "sampled_pixels": 1031,
+      "lst_pixels": 823,
+      "lst_coverage": 0.7983,
+      "lst": 38.1012,
+      "ndvi_pixels": 823,
+      "ndvi_coverage": 0.7983,
+      "ndvi": 0.4241,
+      "tvdi_pixels": 820,
+      "tvdi_coverage": 0.7953,
+      "tvdi": 0.6327,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "26782",
+      "name": "Phường Tân Thới Hiệp",
+      "year": 2025,
+      "sampled_pixels": 557,
+      "lst_pixels": 549,
+      "lst_coverage": 0.9856,
+      "lst": 41.8511,
+      "ndvi_pixels": 549,
+      "ndvi_coverage": 0.9856,
+      "ndvi": 0.2667,
+      "tvdi_pixels": 548,
+      "tvdi_coverage": 0.9838,
+      "tvdi": 0.7539,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "26785",
+      "name": "Phường Trung Mỹ Tây",
+      "year": 2025,
+      "sampled_pixels": 476,
+      "lst_pixels": 476,
+      "lst_coverage": 1.0,
+      "lst": 40.7072,
+      "ndvi_pixels": 476,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.3044,
+      "tvdi_pixels": 472,
+      "tvdi_coverage": 0.9916,
+      "tvdi": 0.6932,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26791",
+      "name": "Phường Đông Hưng Thuận",
+      "year": 2025,
+      "sampled_pixels": 578,
+      "lst_pixels": 578,
+      "lst_coverage": 1.0,
+      "lst": 42.2823,
+      "ndvi_pixels": 578,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2644,
+      "tvdi_pixels": 576,
+      "tvdi_coverage": 0.9965,
+      "tvdi": 0.7872,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26800",
+      "name": "Phường Linh Xuân",
+      "year": 2025,
+      "sampled_pixels": 866,
+      "lst_pixels": 233,
+      "lst_coverage": 0.2691,
+      "lst": 43.0562,
+      "ndvi_pixels": 233,
+      "ndvi_coverage": 0.2691,
+      "ndvi": 0.2851,
+      "tvdi_pixels": 229,
+      "tvdi_coverage": 0.2644,
+      "tvdi": 0.844,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "26803",
+      "name": "Phường Tam Bình",
+      "year": 2025,
+      "sampled_pixels": 687,
+      "lst_pixels": 386,
+      "lst_coverage": 0.5619,
+      "lst": 38.7051,
+      "ndvi_pixels": 386,
+      "ndvi_coverage": 0.5619,
+      "ndvi": 0.3725,
+      "tvdi_pixels": 386,
+      "tvdi_coverage": 0.5619,
+      "tvdi": 0.6153,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "26809",
+      "name": "Phường Hiệp Bình",
+      "year": 2025,
+      "sampled_pixels": 1134,
+      "lst_pixels": 1134,
+      "lst_coverage": 1.0,
+      "lst": 39.9592,
+      "ndvi_pixels": 1134,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.3036,
+      "tvdi_pixels": 1025,
+      "tvdi_coverage": 0.9039,
+      "tvdi": 0.7044,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26824",
+      "name": "Phường Thủ Đức",
+      "year": 2025,
+      "sampled_pixels": 615,
+      "lst_pixels": 614,
+      "lst_coverage": 0.9984,
+      "lst": 42.5777,
+      "ndvi_pixels": 614,
+      "ndvi_coverage": 0.9984,
+      "ndvi": 0.2892,
+      "tvdi_pixels": 561,
+      "tvdi_coverage": 0.9122,
+      "tvdi": 0.8231,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26833",
+      "name": "Phường Long Bình",
+      "year": 2025,
+      "sampled_pixels": 1888,
+      "lst_pixels": 1523,
+      "lst_coverage": 0.8067,
+      "lst": 36.0053,
+      "ndvi_pixels": 1523,
+      "ndvi_coverage": 0.8067,
+      "ndvi": 0.3634,
+      "tvdi_pixels": 1246,
+      "tvdi_coverage": 0.66,
+      "tvdi": 0.589,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC08_L2SP_124052_20250301_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1",
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-03-01",
+        "2025-02-04",
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "26842",
+      "name": "Phường Tăng Nhơn Phú",
+      "year": 2025,
+      "sampled_pixels": 1364,
+      "lst_pixels": 1122,
+      "lst_coverage": 0.8226,
+      "lst": 43.5213,
+      "ndvi_pixels": 1122,
+      "ndvi_coverage": 0.8226,
+      "ndvi": 0.3949,
+      "tvdi_pixels": 1092,
+      "tvdi_coverage": 0.8006,
+      "tvdi": 0.8692,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "26848",
+      "name": "Phường Phước Long",
+      "year": 2025,
+      "sampled_pixels": 638,
+      "lst_pixels": 638,
+      "lst_coverage": 1.0,
+      "lst": 43.5552,
+      "ndvi_pixels": 638,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.3786,
+      "tvdi_pixels": 638,
+      "tvdi_coverage": 1.0,
+      "tvdi": 0.8956,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26857",
+      "name": "Phường Long Phước",
+      "year": 2025,
+      "sampled_pixels": 2367,
+      "lst_pixels": 2366,
+      "lst_coverage": 0.9996,
+      "lst": 35.3388,
+      "ndvi_pixels": 2366,
+      "ndvi_coverage": 0.9996,
+      "ndvi": 0.4135,
+      "tvdi_pixels": 1898,
+      "tvdi_coverage": 0.8019,
+      "tvdi": 0.5048,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26860",
+      "name": "Phường Long Trường",
+      "year": 2025,
+      "sampled_pixels": 1690,
+      "lst_pixels": 1688,
+      "lst_coverage": 0.9988,
+      "lst": 38.1199,
+      "ndvi_pixels": 1688,
+      "ndvi_coverage": 0.9988,
+      "ndvi": 0.4103,
+      "tvdi_pixels": 1521,
+      "tvdi_coverage": 0.9,
+      "tvdi": 0.6371,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26876",
+      "name": "Phường An Nhơn",
+      "year": 2025,
+      "sampled_pixels": 218,
+      "lst_pixels": 218,
+      "lst_coverage": 1.0,
+      "lst": 40.3514,
+      "ndvi_pixels": 218,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2852,
+      "tvdi_pixels": 217,
+      "tvdi_coverage": 0.9954,
+      "tvdi": 0.6425,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26878",
+      "name": "Phường An Hội Đông",
+      "year": 2025,
+      "sampled_pixels": 228,
+      "lst_pixels": 228,
+      "lst_coverage": 1.0,
+      "lst": 41.3022,
+      "ndvi_pixels": 228,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2311,
+      "tvdi_pixels": 228,
+      "tvdi_coverage": 1.0,
+      "tvdi": 0.6651,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26882",
+      "name": "Phường An Hội Tây",
+      "year": 2025,
+      "sampled_pixels": 263,
+      "lst_pixels": 263,
+      "lst_coverage": 1.0,
+      "lst": 41.545,
+      "ndvi_pixels": 263,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.23,
+      "tvdi_pixels": 262,
+      "tvdi_coverage": 0.9962,
+      "tvdi": 0.6838,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26884",
+      "name": "Phường Gò Vấp",
+      "year": 2025,
+      "sampled_pixels": 199,
+      "lst_pixels": 199,
+      "lst_coverage": 1.0,
+      "lst": 41.8279,
+      "ndvi_pixels": 199,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2302,
+      "tvdi_pixels": 199,
+      "tvdi_coverage": 1.0,
+      "tvdi": 0.7105,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26890",
+      "name": "Phường Hạnh Thông",
+      "year": 2025,
+      "sampled_pixels": 239,
+      "lst_pixels": 239,
+      "lst_coverage": 1.0,
+      "lst": 41.55,
+      "ndvi_pixels": 239,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2448,
+      "tvdi_pixels": 239,
+      "tvdi_coverage": 1.0,
+      "tvdi": 0.7039,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26898",
+      "name": "Phường Thông Tây Hội",
+      "year": 2025,
+      "sampled_pixels": 225,
+      "lst_pixels": 224,
+      "lst_coverage": 0.9956,
+      "lst": 41.5288,
+      "ndvi_pixels": 224,
+      "ndvi_coverage": 0.9956,
+      "ndvi": 0.2073,
+      "tvdi_pixels": 224,
+      "tvdi_coverage": 0.9956,
+      "tvdi": 0.6585,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26905",
+      "name": "Phường Bình Lợi Trung",
+      "year": 2025,
+      "sampled_pixels": 270,
+      "lst_pixels": 270,
+      "lst_coverage": 1.0,
+      "lst": 40.572,
+      "ndvi_pixels": 270,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2644,
+      "tvdi_pixels": 265,
+      "tvdi_coverage": 0.9815,
+      "tvdi": 0.6407,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26911",
+      "name": "Phường Bình Quới",
+      "year": 2025,
+      "sampled_pixels": 441,
+      "lst_pixels": 441,
+      "lst_coverage": 1.0,
+      "lst": 35.9143,
+      "ndvi_pixels": 441,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.4245,
+      "tvdi_pixels": 353,
+      "tvdi_coverage": 0.8005,
+      "tvdi": 0.5183,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26929",
+      "name": "Phường Bình Thạnh",
+      "year": 2025,
+      "sampled_pixels": 229,
+      "lst_pixels": 229,
+      "lst_coverage": 1.0,
+      "lst": 41.8055,
+      "ndvi_pixels": 229,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2097,
+      "tvdi_pixels": 211,
+      "tvdi_coverage": 0.9214,
+      "tvdi": 0.6902,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26944",
+      "name": "Phường Gia Định",
+      "year": 2025,
+      "sampled_pixels": 196,
+      "lst_pixels": 196,
+      "lst_coverage": 1.0,
+      "lst": 41.2337,
+      "ndvi_pixels": 196,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1883,
+      "tvdi_pixels": 169,
+      "tvdi_coverage": 0.8622,
+      "tvdi": 0.616,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26956",
+      "name": "Phường Thạnh Mỹ Tây",
+      "year": 2025,
+      "sampled_pixels": 312,
+      "lst_pixels": 312,
+      "lst_coverage": 1.0,
+      "lst": 40.0356,
+      "ndvi_pixels": 312,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2289,
+      "tvdi_pixels": 274,
+      "tvdi_coverage": 0.8782,
+      "tvdi": 0.582,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26968",
+      "name": "Phường Tân Sơn Nhất",
+      "year": 2025,
+      "sampled_pixels": 133,
+      "lst_pixels": 133,
+      "lst_coverage": 1.0,
+      "lst": 42.4585,
+      "ndvi_pixels": 133,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1789,
+      "tvdi_pixels": 112,
+      "tvdi_coverage": 0.8421,
+      "tvdi": 0.7166,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26977",
+      "name": "Phường Tân Sơn Hoà",
+      "year": 2025,
+      "sampled_pixels": 183,
+      "lst_pixels": 183,
+      "lst_coverage": 1.0,
+      "lst": 42.0946,
+      "ndvi_pixels": 183,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2225,
+      "tvdi_pixels": 160,
+      "tvdi_coverage": 0.8743,
+      "tvdi": 0.7033,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26983",
+      "name": "Phường Bảy Hiền",
+      "year": 2025,
+      "sampled_pixels": 187,
+      "lst_pixels": 187,
+      "lst_coverage": 1.0,
+      "lst": 42.2565,
+      "ndvi_pixels": 187,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1812,
+      "tvdi_pixels": 149,
+      "tvdi_coverage": 0.7968,
+      "tvdi": 0.7048,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "26995",
+      "name": "Phường Tân Hoà",
+      "year": 2025,
+      "sampled_pixels": 100,
+      "lst_pixels": 100,
+      "lst_coverage": 1.0,
+      "lst": 42.2941,
+      "ndvi_pixels": 100,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1592,
+      "tvdi_pixels": 60,
+      "tvdi_coverage": 0.6,
+      "tvdi": 0.7031,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27004",
+      "name": "Phường Tân Bình",
+      "year": 2025,
+      "sampled_pixels": 155,
+      "lst_pixels": 155,
+      "lst_coverage": 1.0,
+      "lst": 42.0724,
+      "ndvi_pixels": 155,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1861,
+      "tvdi_pixels": 147,
+      "tvdi_coverage": 0.9484,
+      "tvdi": 0.6802,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27007",
+      "name": "Phường Tân Sơn",
+      "year": 2025,
+      "sampled_pixels": 800,
+      "lst_pixels": 800,
+      "lst_coverage": 1.0,
+      "lst": 41.7291,
+      "ndvi_pixels": 800,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.373,
+      "tvdi_pixels": 737,
+      "tvdi_coverage": 0.9213,
+      "tvdi": 0.8694,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27013",
+      "name": "Phường Tây Thạnh",
+      "year": 2025,
+      "sampled_pixels": 272,
+      "lst_pixels": 272,
+      "lst_coverage": 1.0,
+      "lst": 42.9556,
+      "ndvi_pixels": 272,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2551,
+      "tvdi_pixels": 270,
+      "tvdi_coverage": 0.9926,
+      "tvdi": 0.82,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27019",
+      "name": "Phường Tân Sơn Nhì",
+      "year": 2025,
+      "sampled_pixels": 240,
+      "lst_pixels": 240,
+      "lst_coverage": 1.0,
+      "lst": 41.5152,
+      "ndvi_pixels": 240,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2655,
+      "tvdi_pixels": 237,
+      "tvdi_coverage": 0.9875,
+      "tvdi": 0.7249,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27022",
+      "name": "Phường Phú Thọ Hoà",
+      "year": 2025,
+      "sampled_pixels": 212,
+      "lst_pixels": 212,
+      "lst_coverage": 1.0,
+      "lst": 41.9012,
+      "ndvi_pixels": 212,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1971,
+      "tvdi_pixels": 205,
+      "tvdi_coverage": 0.967,
+      "tvdi": 0.6816,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27028",
+      "name": "Phường Phú Thạnh",
+      "year": 2025,
+      "sampled_pixels": 210,
+      "lst_pixels": 210,
+      "lst_coverage": 1.0,
+      "lst": 43.0924,
+      "ndvi_pixels": 210,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1761,
+      "tvdi_pixels": 187,
+      "tvdi_coverage": 0.8905,
+      "tvdi": 0.7573,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27031",
+      "name": "Phường Tân Phú",
+      "year": 2025,
+      "sampled_pixels": 168,
+      "lst_pixels": 168,
+      "lst_coverage": 1.0,
+      "lst": 43.0038,
+      "ndvi_pixels": 168,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1743,
+      "tvdi_pixels": 149,
+      "tvdi_coverage": 0.8869,
+      "tvdi": 0.7555,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27043",
+      "name": "Phường Đức Nhuận",
+      "year": 2025,
+      "sampled_pixels": 146,
+      "lst_pixels": 146,
+      "lst_coverage": 1.0,
+      "lst": 41.2421,
+      "ndvi_pixels": 146,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2649,
+      "tvdi_pixels": 142,
+      "tvdi_coverage": 0.9726,
+      "tvdi": 0.7073,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27058",
+      "name": "Phường Cầu Kiệu",
+      "year": 2025,
+      "sampled_pixels": 85,
+      "lst_pixels": 85,
+      "lst_coverage": 1.0,
+      "lst": 41.1155,
+      "ndvi_pixels": 85,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1688,
+      "tvdi_pixels": 73,
+      "tvdi_coverage": 0.8588,
+      "tvdi": 0.5821,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27073",
+      "name": "Phường Phú Nhuận",
+      "year": 2025,
+      "sampled_pixels": 92,
+      "lst_pixels": 92,
+      "lst_coverage": 1.0,
+      "lst": 41.5796,
+      "ndvi_pixels": 92,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1686,
+      "tvdi_pixels": 86,
+      "tvdi_coverage": 0.9348,
+      "tvdi": 0.6261,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27094",
+      "name": "Phường An Khánh",
+      "year": 2025,
+      "sampled_pixels": 1125,
+      "lst_pixels": 1125,
+      "lst_coverage": 1.0,
+      "lst": 37.5379,
+      "ndvi_pixels": 1125,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.3785,
+      "tvdi_pixels": 912,
+      "tvdi_coverage": 0.8107,
+      "tvdi": 0.674,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27097",
+      "name": "Phường Bình Trưng",
+      "year": 2025,
+      "sampled_pixels": 956,
+      "lst_pixels": 956,
+      "lst_coverage": 1.0,
+      "lst": 39.8993,
+      "ndvi_pixels": 956,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.4118,
+      "tvdi_pixels": 937,
+      "tvdi_coverage": 0.9801,
+      "tvdi": 0.7537,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27112",
+      "name": "Phường Cát Lái",
+      "year": 2025,
+      "sampled_pixels": 1366,
+      "lst_pixels": 1366,
+      "lst_coverage": 1.0,
+      "lst": 38.0896,
+      "ndvi_pixels": 1366,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2471,
+      "tvdi_pixels": 991,
+      "tvdi_coverage": 0.7255,
+      "tvdi": 0.7034,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27139",
+      "name": "Phường Xuân Hoà",
+      "year": 2025,
+      "sampled_pixels": 162,
+      "lst_pixels": 162,
+      "lst_coverage": 1.0,
+      "lst": 40.3862,
+      "ndvi_pixels": 162,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2505,
+      "tvdi_pixels": 160,
+      "tvdi_coverage": 0.9877,
+      "tvdi": 0.6049,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27142",
+      "name": "Phường Nhiêu Lộc",
+      "year": 2025,
+      "sampled_pixels": 119,
+      "lst_pixels": 119,
+      "lst_coverage": 1.0,
+      "lst": 41.7401,
+      "ndvi_pixels": 119,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1698,
+      "tvdi_pixels": 104,
+      "tvdi_coverage": 0.8739,
+      "tvdi": 0.6406,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27154",
+      "name": "Phường Bàn Cờ",
+      "year": 2025,
+      "sampled_pixels": 69,
+      "lst_pixels": 69,
+      "lst_coverage": 1.0,
+      "lst": 40.4301,
+      "ndvi_pixels": 69,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1616,
+      "tvdi_pixels": 51,
+      "tvdi_coverage": 0.7391,
+      "tvdi": 0.5324,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27163",
+      "name": "Phường Hoà Hưng",
+      "year": 2025,
+      "sampled_pixels": 181,
+      "lst_pixels": 181,
+      "lst_coverage": 1.0,
+      "lst": 41.4525,
+      "ndvi_pixels": 181,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2276,
+      "tvdi_pixels": 170,
+      "tvdi_coverage": 0.9392,
+      "tvdi": 0.6858,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27169",
+      "name": "Phường Diên Hồng",
+      "year": 2025,
+      "sampled_pixels": 129,
+      "lst_pixels": 129,
+      "lst_coverage": 1.0,
+      "lst": 41.5276,
+      "ndvi_pixels": 129,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2305,
+      "tvdi_pixels": 123,
+      "tvdi_coverage": 0.9535,
+      "tvdi": 0.6948,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27190",
+      "name": "Phường Vườn Lài",
+      "year": 2025,
+      "sampled_pixels": 89,
+      "lst_pixels": 89,
+      "lst_coverage": 1.0,
+      "lst": 40.8451,
+      "ndvi_pixels": 89,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2043,
+      "tvdi_pixels": 80,
+      "tvdi_coverage": 0.8989,
+      "tvdi": 0.6096,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27211",
+      "name": "Phường Hoà Bình",
+      "year": 2025,
+      "sampled_pixels": 70,
+      "lst_pixels": 70,
+      "lst_coverage": 1.0,
+      "lst": 43.1721,
+      "ndvi_pixels": 70,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1728,
+      "tvdi_pixels": 50,
+      "tvdi_coverage": 0.7143,
+      "tvdi": 0.773,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27226",
+      "name": "Phường Phú Thọ",
+      "year": 2025,
+      "sampled_pixels": 94,
+      "lst_pixels": 94,
+      "lst_coverage": 1.0,
+      "lst": 42.1436,
+      "ndvi_pixels": 94,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.233,
+      "tvdi_pixels": 80,
+      "tvdi_coverage": 0.8511,
+      "tvdi": 0.7401,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27232",
+      "name": "Phường Bình Thới",
+      "year": 2025,
+      "sampled_pixels": 106,
+      "lst_pixels": 106,
+      "lst_coverage": 1.0,
+      "lst": 41.3011,
+      "ndvi_pixels": 106,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2137,
+      "tvdi_pixels": 86,
+      "tvdi_coverage": 0.8113,
+      "tvdi": 0.6765,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27238",
+      "name": "Phường Minh Phụng",
+      "year": 2025,
+      "sampled_pixels": 88,
+      "lst_pixels": 88,
+      "lst_coverage": 1.0,
+      "lst": 41.5886,
+      "ndvi_pixels": 88,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1626,
+      "tvdi_pixels": 71,
+      "tvdi_coverage": 0.8068,
+      "tvdi": 0.6237,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27259",
+      "name": "Phường Xóm Chiếu",
+      "year": 2025,
+      "sampled_pixels": 136,
+      "lst_pixels": 136,
+      "lst_coverage": 1.0,
+      "lst": 40.7381,
+      "ndvi_pixels": 136,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.179,
+      "tvdi_pixels": 95,
+      "tvdi_coverage": 0.6985,
+      "tvdi": 0.6318,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27265",
+      "name": "Phường Khánh Hội",
+      "year": 2025,
+      "sampled_pixels": 75,
+      "lst_pixels": 75,
+      "lst_coverage": 1.0,
+      "lst": 40.5804,
+      "ndvi_pixels": 75,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1677,
+      "tvdi_pixels": 45,
+      "tvdi_coverage": 0.6,
+      "tvdi": 0.5387,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27286",
+      "name": "Phường Vĩnh Hội",
+      "year": 2025,
+      "sampled_pixels": 85,
+      "lst_pixels": 85,
+      "lst_coverage": 1.0,
+      "lst": 39.3943,
+      "ndvi_pixels": 85,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2191,
+      "tvdi_pixels": 68,
+      "tvdi_coverage": 0.8,
+      "tvdi": 0.5119,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27301",
+      "name": "Phường Chợ Quán",
+      "year": 2025,
+      "sampled_pixels": 88,
+      "lst_pixels": 88,
+      "lst_coverage": 1.0,
+      "lst": 40.6738,
+      "ndvi_pixels": 88,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2102,
+      "tvdi_pixels": 79,
+      "tvdi_coverage": 0.8977,
+      "tvdi": 0.5957,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27316",
+      "name": "Phường An Đông",
+      "year": 2025,
+      "sampled_pixels": 91,
+      "lst_pixels": 91,
+      "lst_coverage": 1.0,
+      "lst": 40.7224,
+      "ndvi_pixels": 91,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.223,
+      "tvdi_pixels": 83,
+      "tvdi_coverage": 0.9121,
+      "tvdi": 0.6113,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27343",
+      "name": "Phường Chợ Lớn",
+      "year": 2025,
+      "sampled_pixels": 116,
+      "lst_pixels": 116,
+      "lst_coverage": 1.0,
+      "lst": 41.46,
+      "ndvi_pixels": 116,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1954,
+      "tvdi_pixels": 101,
+      "tvdi_coverage": 0.8707,
+      "tvdi": 0.6481,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27349",
+      "name": "Phường Phú Lâm",
+      "year": 2025,
+      "sampled_pixels": 139,
+      "lst_pixels": 139,
+      "lst_coverage": 1.0,
+      "lst": 42.4543,
+      "ndvi_pixels": 139,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1925,
+      "tvdi_pixels": 119,
+      "tvdi_coverage": 0.8561,
+      "tvdi": 0.7332,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27364",
+      "name": "Phường Bình Phú",
+      "year": 2025,
+      "sampled_pixels": 196,
+      "lst_pixels": 196,
+      "lst_coverage": 1.0,
+      "lst": 41.6464,
+      "ndvi_pixels": 196,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.24,
+      "tvdi_pixels": 193,
+      "tvdi_coverage": 0.9847,
+      "tvdi": 0.7053,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27367",
+      "name": "Phường Bình Tây",
+      "year": 2025,
+      "sampled_pixels": 74,
+      "lst_pixels": 74,
+      "lst_coverage": 1.0,
+      "lst": 42.1399,
+      "ndvi_pixels": 74,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1476,
+      "tvdi_pixels": 46,
+      "tvdi_coverage": 0.6216,
+      "tvdi": 0.6678,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27373",
+      "name": "Phường Bình Tiên",
+      "year": 2025,
+      "sampled_pixels": 111,
+      "lst_pixels": 111,
+      "lst_coverage": 1.0,
+      "lst": 41.8563,
+      "ndvi_pixels": 111,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1788,
+      "tvdi_pixels": 82,
+      "tvdi_coverage": 0.7387,
+      "tvdi": 0.6711,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27418",
+      "name": "Phường Chánh Hưng",
+      "year": 2025,
+      "sampled_pixels": 326,
+      "lst_pixels": 326,
+      "lst_coverage": 1.0,
+      "lst": 40.7571,
+      "ndvi_pixels": 326,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1806,
+      "tvdi_pixels": 220,
+      "tvdi_coverage": 0.6748,
+      "tvdi": 0.6038,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27424",
+      "name": "Phường Bình Đông",
+      "year": 2025,
+      "sampled_pixels": 611,
+      "lst_pixels": 611,
+      "lst_coverage": 1.0,
+      "lst": 39.0699,
+      "ndvi_pixels": 611,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.3831,
+      "tvdi_pixels": 541,
+      "tvdi_coverage": 0.8854,
+      "tvdi": 0.653,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27427",
+      "name": "Phường Phú Định",
+      "year": 2025,
+      "sampled_pixels": 402,
+      "lst_pixels": 402,
+      "lst_coverage": 1.0,
+      "lst": 40.7264,
+      "ndvi_pixels": 402,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2753,
+      "tvdi_pixels": 351,
+      "tvdi_coverage": 0.8731,
+      "tvdi": 0.6832,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27439",
+      "name": "Phường Bình Hưng Hoà",
+      "year": 2025,
+      "sampled_pixels": 586,
+      "lst_pixels": 586,
+      "lst_coverage": 1.0,
+      "lst": 42.9048,
+      "ndvi_pixels": 586,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2362,
+      "tvdi_pixels": 556,
+      "tvdi_coverage": 0.9488,
+      "tvdi": 0.8171,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27442",
+      "name": "Phường Bình Tân",
+      "year": 2025,
+      "sampled_pixels": 774,
+      "lst_pixels": 774,
+      "lst_coverage": 1.0,
+      "lst": 42.7229,
+      "ndvi_pixels": 774,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.3014,
+      "tvdi_pixels": 768,
+      "tvdi_coverage": 0.9922,
+      "tvdi": 0.8602,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27448",
+      "name": "Phường Bình Trị Đông",
+      "year": 2025,
+      "sampled_pixels": 502,
+      "lst_pixels": 502,
+      "lst_coverage": 1.0,
+      "lst": 43.3351,
+      "ndvi_pixels": 502,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1893,
+      "tvdi_pixels": 439,
+      "tvdi_coverage": 0.8745,
+      "tvdi": 0.7979,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27457",
+      "name": "Phường Tân Tạo",
+      "year": 2025,
+      "sampled_pixels": 1026,
+      "lst_pixels": 1026,
+      "lst_coverage": 1.0,
+      "lst": 40.8167,
+      "ndvi_pixels": 1026,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.4321,
+      "tvdi_pixels": 1014,
+      "tvdi_coverage": 0.9883,
+      "tvdi": 0.8281,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27460",
+      "name": "Phường An Lạc",
+      "year": 2025,
+      "sampled_pixels": 723,
+      "lst_pixels": 723,
+      "lst_coverage": 1.0,
+      "lst": 41.9039,
+      "ndvi_pixels": 723,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2871,
+      "tvdi_pixels": 698,
+      "tvdi_coverage": 0.9654,
+      "tvdi": 0.7782,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27475",
+      "name": "Phường Tân Hưng",
+      "year": 2025,
+      "sampled_pixels": 583,
+      "lst_pixels": 583,
+      "lst_coverage": 1.0,
+      "lst": 39.5974,
+      "ndvi_pixels": 583,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.3069,
+      "tvdi_pixels": 543,
+      "tvdi_coverage": 0.9314,
+      "tvdi": 0.613,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27478",
+      "name": "Phường Tân Thuận",
+      "year": 2025,
+      "sampled_pixels": 723,
+      "lst_pixels": 723,
+      "lst_coverage": 1.0,
+      "lst": 40.6169,
+      "ndvi_pixels": 723,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.2148,
+      "tvdi_pixels": 544,
+      "tvdi_coverage": 0.7524,
+      "tvdi": 0.7806,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27484",
+      "name": "Phường Phú Thuận",
+      "year": 2025,
+      "sampled_pixels": 729,
+      "lst_pixels": 729,
+      "lst_coverage": 1.0,
+      "lst": 35.7114,
+      "ndvi_pixels": 729,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.1231,
+      "tvdi_pixels": 432,
+      "tvdi_coverage": 0.5926,
+      "tvdi": 0.6459,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27487",
+      "name": "Phường Tân Mỹ",
+      "year": 2025,
+      "sampled_pixels": 453,
+      "lst_pixels": 453,
+      "lst_coverage": 1.0,
+      "lst": 38.6847,
+      "ndvi_pixels": 453,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.3759,
+      "tvdi_pixels": 429,
+      "tvdi_coverage": 0.947,
+      "tvdi": 0.6105,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27496",
+      "name": "Xã Tân An Hội",
+      "year": 2025,
+      "sampled_pixels": 3715,
+      "lst_pixels": 3183,
+      "lst_coverage": 0.8568,
+      "lst": 30.3732,
+      "ndvi_pixels": 3183,
+      "ndvi_coverage": 0.8568,
+      "ndvi": 0.5825,
+      "tvdi_pixels": 3139,
+      "tvdi_coverage": 0.845,
+      "tvdi": 0.2675,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "27508",
+      "name": "Xã An Nhơn Tây",
+      "year": 2025,
+      "sampled_pixels": 5394,
+      "lst_pixels": 5263,
+      "lst_coverage": 0.9757,
+      "lst": 31.0722,
+      "ndvi_pixels": 5263,
+      "ndvi_coverage": 0.9757,
+      "ndvi": 0.6038,
+      "tvdi_pixels": 5122,
+      "tvdi_coverage": 0.9496,
+      "tvdi": 0.3749,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "27511",
+      "name": "Xã Nhuận Đức",
+      "year": 2025,
+      "sampled_pixels": 4312,
+      "lst_pixels": 3995,
+      "lst_coverage": 0.9265,
+      "lst": 30.9414,
+      "ndvi_pixels": 3995,
+      "ndvi_coverage": 0.9265,
+      "ndvi": 0.5816,
+      "tvdi_pixels": 3957,
+      "tvdi_coverage": 0.9177,
+      "tvdi": 0.3196,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "27526",
+      "name": "Xã Thái Mỹ",
+      "year": 2025,
+      "sampled_pixels": 4326,
+      "lst_pixels": 3881,
+      "lst_coverage": 0.8971,
+      "lst": 28.977,
+      "ndvi_pixels": 3881,
+      "ndvi_coverage": 0.8971,
+      "ndvi": 0.6596,
+      "tvdi_pixels": 3666,
+      "tvdi_coverage": 0.8474,
+      "tvdi": 0.2516,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "27541",
+      "name": "Xã Phú Hoà Đông",
+      "year": 2025,
+      "sampled_pixels": 4142,
+      "lst_pixels": 3144,
+      "lst_coverage": 0.7591,
+      "lst": 29.4884,
+      "ndvi_pixels": 3144,
+      "ndvi_coverage": 0.7591,
+      "ndvi": 0.6096,
+      "tvdi_pixels": 3000,
+      "tvdi_coverage": 0.7243,
+      "tvdi": 0.2376,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "27544",
+      "name": "Xã Bình Mỹ",
+      "year": 2025,
+      "sampled_pixels": 3789,
+      "lst_pixels": 3098,
+      "lst_coverage": 0.8176,
+      "lst": 30.8764,
+      "ndvi_pixels": 3098,
+      "ndvi_coverage": 0.8176,
+      "ndvi": 0.5618,
+      "tvdi_pixels": 2988,
+      "tvdi_coverage": 0.7886,
+      "tvdi": 0.3114,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "27553",
+      "name": "Xã Củ Chi",
+      "year": 2025,
+      "sampled_pixels": 4524,
+      "lst_pixels": 2630,
+      "lst_coverage": 0.5813,
+      "lst": 29.5697,
+      "ndvi_pixels": 2630,
+      "ndvi_coverage": 0.5813,
+      "ndvi": 0.5901,
+      "tvdi_pixels": 2585,
+      "tvdi_coverage": 0.5714,
+      "tvdi": 0.2089,
+      "scene_ids": [
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "27559",
+      "name": "Xã Hóc Môn",
+      "year": 2025,
+      "sampled_pixels": 1116,
+      "lst_pixels": 614,
+      "lst_coverage": 0.5502,
+      "lst": 36.6689,
+      "ndvi_pixels": 614,
+      "ndvi_coverage": 0.5502,
+      "ndvi": 0.4411,
+      "tvdi_pixels": 614,
+      "tvdi_coverage": 0.5502,
+      "tvdi": 0.5436,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "27568",
+      "name": "Xã Đông Thạnh",
+      "year": 2025,
+      "sampled_pixels": 2108,
+      "lst_pixels": 1248,
+      "lst_coverage": 0.592,
+      "lst": 34.1811,
+      "ndvi_pixels": 1248,
+      "ndvi_coverage": 0.592,
+      "ndvi": 0.4866,
+      "tvdi_pixels": 1242,
+      "tvdi_coverage": 0.5892,
+      "tvdi": 0.4325,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "27577",
+      "name": "Xã Xuân Thới Sơn",
+      "year": 2025,
+      "sampled_pixels": 2437,
+      "lst_pixels": 2335,
+      "lst_coverage": 0.9581,
+      "lst": 35.5854,
+      "ndvi_pixels": 2335,
+      "ndvi_coverage": 0.9581,
+      "ndvi": 0.5935,
+      "tvdi_pixels": 2307,
+      "tvdi_coverage": 0.9467,
+      "tvdi": 0.509,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "27592",
+      "name": "Xã Bà Điểm",
+      "year": 2025,
+      "sampled_pixels": 1896,
+      "lst_pixels": 1896,
+      "lst_coverage": 1.0,
+      "lst": 38.7203,
+      "ndvi_pixels": 1896,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.491,
+      "tvdi_pixels": 1887,
+      "tvdi_coverage": 0.9953,
+      "tvdi": 0.7088,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27595",
+      "name": "Xã Tân Nhựt",
+      "year": 2025,
+      "sampled_pixels": 3036,
+      "lst_pixels": 3035,
+      "lst_coverage": 0.9997,
+      "lst": 39.3316,
+      "ndvi_pixels": 3035,
+      "ndvi_coverage": 0.9997,
+      "ndvi": 0.48,
+      "tvdi_pixels": 3029,
+      "tvdi_coverage": 0.9977,
+      "tvdi": 0.7709,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27601",
+      "name": "Xã Vĩnh Lộc",
+      "year": 2025,
+      "sampled_pixels": 2126,
+      "lst_pixels": 2126,
+      "lst_coverage": 1.0,
+      "lst": 38.2695,
+      "ndvi_pixels": 2126,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.5365,
+      "tvdi_pixels": 2115,
+      "tvdi_coverage": 0.9948,
+      "tvdi": 0.7034,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27604",
+      "name": "Xã Tân Vĩnh Lộc",
+      "year": 2025,
+      "sampled_pixels": 2364,
+      "lst_pixels": 2364,
+      "lst_coverage": 1.0,
+      "lst": 39.6453,
+      "ndvi_pixels": 2364,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.5097,
+      "tvdi_pixels": 2353,
+      "tvdi_coverage": 0.9953,
+      "tvdi": 0.8235,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27610",
+      "name": "Xã Bình Lợi",
+      "year": 2025,
+      "sampled_pixels": 3760,
+      "lst_pixels": 3759,
+      "lst_coverage": 0.9997,
+      "lst": 37.348,
+      "ndvi_pixels": 3759,
+      "ndvi_coverage": 0.9997,
+      "ndvi": 0.6044,
+      "tvdi_pixels": 3738,
+      "tvdi_coverage": 0.9941,
+      "tvdi": 0.7204,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27619",
+      "name": "Xã Bình Hưng",
+      "year": 2025,
+      "sampled_pixels": 2274,
+      "lst_pixels": 2274,
+      "lst_coverage": 1.0,
+      "lst": 37.0592,
+      "ndvi_pixels": 2274,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.4949,
+      "tvdi_pixels": 2191,
+      "tvdi_coverage": 0.9635,
+      "tvdi": 0.5593,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27628",
+      "name": "Xã Hưng Long",
+      "year": 2025,
+      "sampled_pixels": 2471,
+      "lst_pixels": 2471,
+      "lst_coverage": 1.0,
+      "lst": 38.207,
+      "ndvi_pixels": 2471,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.4937,
+      "tvdi_pixels": 2410,
+      "tvdi_coverage": 0.9753,
+      "tvdi": 0.643,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27637",
+      "name": "Xã Bình Chánh",
+      "year": 2025,
+      "sampled_pixels": 1481,
+      "lst_pixels": 1481,
+      "lst_coverage": 1.0,
+      "lst": 38.4903,
+      "ndvi_pixels": 1481,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.4914,
+      "tvdi_pixels": 1480,
+      "tvdi_coverage": 0.9993,
+      "tvdi": 0.705,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27655",
+      "name": "Xã Nhà Bè",
+      "year": 2025,
+      "sampled_pixels": 2567,
+      "lst_pixels": 2567,
+      "lst_coverage": 1.0,
+      "lst": 35.7594,
+      "ndvi_pixels": 2567,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.3672,
+      "tvdi_pixels": 2098,
+      "tvdi_coverage": 0.8173,
+      "tvdi": 0.4895,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27658",
+      "name": "Xã Hiệp Phước",
+      "year": 2025,
+      "sampled_pixels": 4417,
+      "lst_pixels": 4417,
+      "lst_coverage": 1.0,
+      "lst": 35.2244,
+      "ndvi_pixels": 4417,
+      "ndvi_coverage": 1.0,
+      "ndvi": 0.3961,
+      "tvdi_pixels": 3591,
+      "tvdi_coverage": 0.813,
+      "tvdi": 0.4599,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27664",
+      "name": "Xã Cần Giờ",
+      "year": 2025,
+      "sampled_pixels": 9268,
+      "lst_pixels": 8931,
+      "lst_coverage": 0.9636,
+      "lst": 31.0039,
+      "ndvi_pixels": 8931,
+      "ndvi_coverage": 0.9636,
+      "ndvi": 0.654,
+      "tvdi_pixels": 3956,
+      "tvdi_coverage": 0.4268,
+      "tvdi": 0.1629,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-05"
+      ]
+    },
+    {
+      "code": "27667",
+      "name": "Xã Bình Khánh",
+      "year": 2025,
+      "sampled_pixels": 11033,
+      "lst_pixels": 11031,
+      "lst_coverage": 0.9998,
+      "lst": 32.1866,
+      "ndvi_pixels": 11031,
+      "ndvi_coverage": 0.9998,
+      "ndvi": 0.5579,
+      "tvdi_pixels": 4745,
+      "tvdi_coverage": 0.4301,
+      "tvdi": 0.2733,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC08_L2SP_125052_20250204_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-04"
+      ]
+    },
+    {
+      "code": "27673",
+      "name": "Xã An Thới Đông",
+      "year": 2025,
+      "sampled_pixels": 16495,
+      "lst_pixels": 16493,
+      "lst_coverage": 0.9999,
+      "lst": 31.8773,
+      "ndvi_pixels": 16493,
+      "ndvi_coverage": 0.9999,
+      "ndvi": 0.4565,
+      "tvdi_pixels": 6543,
+      "tvdi_coverage": 0.3967,
+      "tvdi": 0.1944,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1"
+      ],
+      "dates": [
+        "2025-02-28"
+      ]
+    },
+    {
+      "code": "27676",
+      "name": "Xã Thạnh An",
+      "year": 2025,
+      "sampled_pixels": 7606,
+      "lst_pixels": 7305,
+      "lst_coverage": 0.9604,
+      "lst": 28.8838,
+      "ndvi_pixels": 7305,
+      "ndvi_coverage": 0.9604,
+      "ndvi": 0.5241,
+      "tvdi_pixels": 3085,
+      "tvdi_coverage": 0.4056,
+      "tvdi": 0.1033,
+      "scene_ids": [
+        "LC09_L2SP_125053_20250228_02_T1",
+        "LC09_L2SP_124053_20250205_02_T1"
+      ],
+      "dates": [
+        "2025-02-28",
+        "2025-02-05"
+      ]
+    }
+  ]
+}
