@@ -122,9 +122,11 @@ with sync_playwright() as p:
     pg.screenshot(path=S+'/e_m_map.png')
     pg.tap('button.metric[data-index=ndvi]');pg.wait_for_timeout(700)
     ok('mobile: tapping a value tile switches the map layer','chi-so=ndvi' in pg.url,pg.url)
-    ok('mobile: duplicate index cards are hidden in the Layers tab',not pg.is_visible('.idx-grid'))
+    ok('mobile: no tabs and no duplicate index cards',not pg.is_visible('.sheet-tab') and not pg.is_visible('.idx-grid'))
     pg.click('.sheet-handle');pg.wait_for_timeout(800);ok('sheet opens',pg.get_attribute('.map-shell','data-snap')=='open');pg.screenshot(path=S+'/e_m_sheet.png')
-    pg.click('.sheet-tab[data-tab=dock]');pg.wait_for_timeout(500);ok('sheet shows controls',pg.is_visible('.dock-inner'));pg.screenshot(path=S+'/e_m_dock.png')
+    ok('mobile: one panel shows year slider and search',pg.is_visible('.g-year') and pg.is_visible('.g-search'))
+    ok('mobile: map options are collapsed by default',not pg.locator('.dock-more').evaluate('e=>e.open'))
+    pg.click('.dock-more > summary');pg.wait_for_timeout(500);ok('mobile: options expand on tap',pg.is_visible('.dock-more .seg') and pg.locator('.dock-more').evaluate('e=>e.open'));pg.screenshot(path=S+'/e_m_dock.png')
     pg.click('.sheet-handle');pg.wait_for_timeout(700)
     for route in ['bang-so-lieu','thong-ke','gia-lap','du-lieu']:
         pg.click(f'#nav a[data-route={route}]');pg.wait_for_timeout(2200)

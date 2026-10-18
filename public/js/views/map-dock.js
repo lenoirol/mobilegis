@@ -68,12 +68,23 @@ export function createDock({onIndex, onYear, onDisplay, onToggle, onPick, onPlay
   const el = h('div', {class: 'dock-inner'},
     h('div', {class: 'dock-head'}, h('span', {class: 'eyebrow'}, 'Không gian và thời gian'), h('h1', null, 'Bản đồ môi trường')),
     group('Tìm khu vực', h('div', {class: 'search-wrap'}, icon('search', 18), searchInput), results),
-    group('Chỉ số', h('div', {class: 'idx-grid'}, ...indexButtons), h('p', {class: 'dock-help idx-mobile-hint'}, 'Chạm vào ô LST, NDVI hoặc TVDI ở tab “Khu vực” để đổi lớp trên bản đồ.'), indexHelp),
+    group('Chỉ số', h('div', {class: 'idx-grid'}, ...indexButtons), indexHelp),
     group('Mốc quan sát', h('div', {class: 'year-row'}, yearNum, yearTag, playBtn), slider, ticks),
     group('Cách hiển thị', displaySeg.el, displayHint),
     group('Lớp phủ', check('boundaries', 'Ranh giới xã/phường'), check('labels', 'Tên khu vực (tự tránh chồng)'), check('landcover', 'Lớp phủ đất ESA 2021'), check('compare', 'So sánh kéo màn hình 2020 | năm chọn'),
       h('div', {class: 'opacity-row'}, h('span', {class: 'field'}, h('span', null, 'Độ đậm của lớp')), opacityVal), opacity),
     group('Bản đồ nền', basemapSeg.el, baseNote), advanced);
+
+  // Search, year and the (desktop) index cards stay on top; display/overlay/basemap/source options live in one collapsible block.
+  const groups = [...el.querySelectorAll(':scope > .dock-group')];   // search, index, year, display, layers, basemap
+  ['g-search', 'g-index', 'g-year'].forEach((name, i) => groups[i].classList.add(name));
+  const more = h('details', {class: 'dock-more'}, h('summary', null, 'Tùy chọn bản đồ · hiển thị, lớp phủ, nền'));
+  more.append(groups[3], groups[4], groups[5], advanced);
+  el.append(more);
+  const phone = matchMedia('(max-width:860px)');
+  const fitMore = () => { more.open = !phone.matches; };   // always open on desktop, collapsed on phones
+  fitMore(); phone.addEventListener('change', fitMore);
+  more.addEventListener('toggle', () => requestAnimationFrame(() => { displaySeg.place(); basemapSeg.place(); sourceSeg.place(); modeSeg.place(); }));
 
   function renderResults() {
     const q = normalize(searchInput.value.trim());

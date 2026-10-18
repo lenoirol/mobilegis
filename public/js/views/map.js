@@ -18,7 +18,7 @@ let shell, engine, dock, detail, store, nav;
 let D = {source: CANONICAL_SOURCE, geo: null, rows: null, layers: null, cover: null, points: [], years: YEARS};
 let engineData = null, probe = null, playTimer = null, probeToken = 0, shown = false, fitted = false, urlTimer = null;
 const ms = createStore({display: 'raster', landcover: false, compare: false, swipe: 50, opacity: 1, boundaries: true, labels: true, basemap: 'plain', visible: true,
-  mode: 'real', legendOpen: true, sheetTab: 'detail', snap: 'peek', detailOpen: true, dockOpen: true});
+  mode: 'real', legendOpen: true, snap: 'peek', detailOpen: true, dockOpen: true});
 const merged = () => ({...store.get(), ...ms.get()});
 
 // ---- elements --------------------------------------------------------------------------------------------
@@ -56,11 +56,10 @@ function build(section) {
   });
 
   el.handle = h('button', {class: 'sheet-handle', type: 'button', 'aria-label': 'Kéo để mở hoặc đóng bảng thông tin', on: {click: () => ms.set({snap: ms.get().snap === 'open' ? 'peek' : 'open'})}}, h('i'));
-  const tab = (value, label) => h('button', {class: 'sheet-tab', type: 'button', dataset: {tab: value}, on: {click: () => ms.set({sheetTab: value, snap: 'open'})}}, label);
-  el.tabs = h('div', {class: 'sheet-tabs', role: 'tablist'}, tab('detail', 'Khu vực'), tab('dock', 'Lớp & hiển thị'));
   el.dockWrap = h('aside', {class: 'dock', 'aria-label': 'Công cụ bản đồ'}, dock.el);
   el.detailWrap = h('aside', {class: 'detail', 'aria-label': 'Thông tin khu vực'}, detail.el);
-  el.panels = h('div', {class: 'panels'}, el.handle, el.tabs, el.dockWrap, el.detailWrap);
+  el.body = h('div', {class: 'panels-body'}, el.dockWrap, el.detailWrap);
+  el.panels = h('div', {class: 'panels'}, el.handle, el.body);
   el.dockToggle = h('button', {class: 'btn sm dock-toggle', type: 'button', 'aria-label': 'Ẩn hoặc hiện công cụ', on: {click: () => ms.set({dockOpen: !ms.get().dockOpen})}}, icon('sliders', 16), 'Công cụ');
   el.detailOpen = h('button', {class: 'btn sm detail-open', type: 'button', on: {click: () => ms.set({detailOpen: true})}}, icon('chevron', 16), 'Khu vực');
 
@@ -114,7 +113,7 @@ function select(id, fly = true) {
   probe = null; engine.clearProbe();
   store.set({selected: id});
   if (ms.get().mode === 'real') { if (fly) engine.focus(id); } else { const p = D.points.find(r => r.name === id); if (p && fly) engine.focusPoint(p.lat, p.lon); }
-  ms.set({sheetTab: 'detail', detailOpen: true, snap: mobile() ? (ms.get().snap === 'open' ? 'open' : 'peek') : ms.get().snap});
+  ms.set({detailOpen: true, snap: mobile() ? (ms.get().snap === 'open' ? 'open' : 'peek') : ms.get().snap});
 }
 function togglePlay() {
   if (playTimer) return stopPlay();
@@ -138,7 +137,6 @@ async function probeAt(latlng) {
     engine.ripple(latlng, valid(r.value));
   } catch (_) { if (token !== probeToken) return; probe = {lat: latlng.lat, lng: latlng.lng, error: 'Tra cứu ô mẫu cần máy chủ đang chạy.'}; }
   sync();
-  if (mobile() && ms.get().snap === 'peek') ms.set({sheetTab: 'detail'});
 }
 function locate() {
   if (!window.isSecureContext) return toast('GPS cần HTTPS hoặc localhost. Kết nối HTTP qua địa chỉ mạng LAN không hỗ trợ GPS.', {error: true});
@@ -229,9 +227,8 @@ function sync() {
   el.swipe.style.setProperty('--x', s.swipe + '%'); el.swipe.querySelector('.swipe-r').textContent = s.year;
   el.swipe.querySelector('.swipe-line').setAttribute('aria-valuenow', Math.round(s.swipe));
   const text = statusText(s, tileState); el.status.hidden = !text; el.status.textContent = text; el.status.classList.toggle('err', !!store.get().error);
-  shell.dataset.tab = s.sheetTab; shell.dataset.snap = s.snap;
+  shell.dataset.snap = s.snap;
   shell.classList.toggle('dock-collapsed', !s.dockOpen); shell.classList.toggle('detail-collapsed', !s.detailOpen);
-  el.tabs.querySelectorAll('.sheet-tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === s.sheetTab)));
   clearTimeout(urlTimer); urlTimer = setTimeout(() => { if (shown) history.replaceState(null, '', shareUrl().slice(shareUrl().indexOf('#'))); }, 400);
 }
 function insets() {
