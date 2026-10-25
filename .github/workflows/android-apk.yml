@@ -33,7 +33,7 @@ jobs:
           java-version: 17
       - name: Chấp nhận giấy phép Android SDK
         run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
-      - run: npm ci
+      - run: npm install --no-audit --no-fund   # tệp khóa lệch package.json nên không dùng npm ci
       - run: npx expo prebuild --platform android
       - name: Build bản release (chip arm64)
         working-directory: mobile/android
