@@ -1,4 +1,5 @@
 import {Linking, View} from 'react-native';
+import {useRouter} from 'expo-router';
 import {Block, Button, Card, Eyebrow, Page, PageHead, Reveal, T, Table, C, type Col} from '@/ds';
 import {Ramp} from '@/components/Legend';
 import {useData} from '@/components/DataProvider';
@@ -27,6 +28,7 @@ const READING: [string, string][] = [
 
 export default function About() {
   const {rows} = useData();
+  const router = useRouter();
   const coverage = YEARS.map(y => ({year: y, ...Object.fromEntries(INDICES.map(k => [k, rows ? `${rows.year(y).filter(r => eligible(r, k)).length} / 167` : '—']))}));
   const colsCov: Col<any>[] = [{key: 'year', label: 'Năm', width: 70}, ...INDICES.map(k => ({key: k, label: INDEX[k].label, width: 100, num: true}))];
   const colsTvdi: Col<any>[] = [{key: 'range', label: 'Khoảng giá trị', width: 150, mono: true}, {key: 'name', label: 'Mức', width: 150}];
@@ -72,6 +74,9 @@ export default function About() {
       </Block>
       <Block title="Dùng trên điện thoại">
         <T s={15} lh={1.55} color={C.ink3}>Số liệu và những mảnh bản đồ bạn đã xem được lưu trên máy, nên mở lại được khi mạng yếu. “Vị trí của tôi” cần quyền vị trí và không lưu tọa độ của bạn.</T>
+      </Block>
+      <Block title="Góp ý hoặc báo lỗi" sub="Thấy số liệu chưa hợp lý hoặc app gặp lỗi? Cho nhóm biết để sửa.">
+        <Button icon="user" label="Gửi góp ý" onPress={() => router.navigate('/gop-y' as any)} />
       </Block>
       <Block>
         <Card flat pad={14}><View style={{gap: 10}}>

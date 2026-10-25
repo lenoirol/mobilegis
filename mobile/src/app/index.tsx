@@ -1,5 +1,7 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Pressable, Share, View} from 'react-native';
+import {captureRef} from 'react-native-view-shot';
+import * as Sharing from 'expo-sharing';
 import {useLocalSearchParams, useRouter} from 'expo-router';
 import * as Location from 'expo-location';
 import {Button, Icon, IconButton, Skeleton, T, ViewIn, C, BW, PressBox, useToast} from '@/ds';
@@ -15,6 +17,7 @@ import {BottomSheet, PEEK} from '@/map/BottomSheet';
 import {SheetContent, type Probe} from '@/map/SheetContent';
 import {BarLoader, Fabs, Kpis, MapLegend, StatusCallout} from '@/map/MapOverlays';
 import {Locator, type ViewBounds} from '@/map/Locator';
+import {ExportFrame} from '@/map/ExportFrame';
 
 export default function MapScreen() {
   const {status, data, rows, error, reload} = useData();
@@ -37,6 +40,9 @@ export default function MapScreen() {
   const [size, setSize] = useState({w: 0, h: 0});
   const [playing, setPlaying] = useState(false);
   const [bounds, setBounds] = useState<ViewBounds | null>(null);
+  const [frame, setFrame] = useState<{uri: string} | null>(null);   // the map picture being turned into a PNG with title, legend and scale
+  const shotRef = useRef<any>(null);
+  const frameRef = useRef<any>(null);
   const probeToken = useRef(0);
   const fitted = useRef(false);
   const full: MapView = {...view, index: shared.index, year: shared.year, selected: shared.selected};
@@ -100,6 +106,23 @@ export default function MapScreen() {
     Share.share({message: `${name} · ${spec.name} ${shared.year}: ${valid(row?.[shared.index]) ? (row![shared.index] as number).toLocaleString('vi-VN', {maximumFractionDigits: spec.digits}) + ' ' + spec.unit : 'chưa đủ dữ liệu'}\nMobileGIS TP.HCM`}).catch(() => {});
   }, [feature, rows, shared]);
 
+  /** "Lưu ảnh bản đồ": snapshot the map, add title/legend/scale/credits around it, then open the share sheet so it can be saved to Photos, Drive or sent. */
+  const exportImage = useCallback(async () => {
+    if (frame || !data) return;
+    toast('Đang tạo ảnh bản đồ…');
+    try { setFrame({uri: await captureRef(shotRef, {format: 'png', quality: 1, result: 'tmpfile'})}); }
+    catch { toast('Không tạo được ảnh bản đồ. Thử lại sau khi bản đồ tải xong.', {error: true}); }
+  }, [frame, data, toast]);
+  const finishExport = useCallback(async () => {
+    try {
+      await new Promise(r => setTimeout(r, 350));   // let the picture and legend finish drawing
+      const out = await captureRef(frameRef, {format: 'png', quality: 1, result: 'tmpfile'});
+      if (!(await Sharing.isAvailableAsync())) throw new Error('Máy này không có hộp thoại chia sẻ.');
+      await Sharing.shareAsync(out, {mimeType: 'image/png', dialogTitle: 'Lưu ảnh bản đồ'});
+    } catch (e: any) { toast(e?.message || 'Không lưu được ảnh bản đồ.', {error: true}); }
+    setFrame(null);
+  }, [toast]);
+
   const patch = useCallback((p: any) => {
     if ('compare' in p) { setCompare(!!p.compare); const {compare: _c, ...rest} = p; p = rest; if (p.compare) p.landcover = false; }
     setPlaying(false);
@@ -120,14 +143,18 @@ export default function MapScreen() {
   return (
     <ViewIn>
       <View style={{flex: 1}} onLayout={e => setSize({w: e.nativeEvent.layout.width, h: e.nativeEvent.layout.height})}>
+        <View ref={shotRef} collapsable={false} style={{flex: 1}}>
         <MapCanvas ref={handle} data={data} rows={rows} extras={extras} view={full} me={me} probe={probe} onTap={onTap} onIdle={() => { setLoading(false); if (!fitted.current) { fitted.current = true; handle.current?.fitAll(); } }} onRegion={setBounds} />
+        </View>
         <BarLoader on={loading} />
+        {frame && <View pointerEvents="none" style={{position: 'absolute', left: -5000, top: 0}}><ExportFrame ref={frameRef} uri={frame.uri} w={size.w} h={size.h} view={full} data={data} extras={extras} bounds={bounds} onLoad={finishExport} /></View>}
         <View pointerEvents="box-none" style={{position: 'absolute', left: 10, right: 10, top: notice ? 52 : 10, flexDirection: 'row', justifyContent: 'space-between'}}>
           <Kpis items={[{value: view.landcover ? '2021' : view.display === 'change' ? '2020→2025' : String(shared.year), label: 'Mốc ảnh'}, {value: `${adequate}/${data.geo.features.length}`, label: 'Khu vực phủ ≥50%'}]} />
           <Fabs>
             <IconButton icon="locate" label="Vị trí của tôi" onPress={locate} />
             <IconButton icon="extent" label="Xem toàn vùng" onPress={() => handle.current?.fitAll()} />
             <IconButton icon="share" label="Chia sẻ" onPress={share} />
+            <IconButton icon="download" label="Lưu ảnh bản đồ (PNG)" onPress={exportImage} active={!!frame} />
             <IconButton icon="globe" label="Bản đồ định vị" active={locatorOpen} onPress={() => setLocatorOpen(o => !o)} />
           </Fabs>
         </View>

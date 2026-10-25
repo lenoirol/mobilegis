@@ -63,7 +63,7 @@ export const MapCanvas = memo(forwardRef<MapHandle, Props>(function MapCanvas({d
 
   const abs = useMemo(() => Object.entries(products.absolute).flatMap(([y, byIdx]) => INDICES.filter(k => byIdx[k]).map(k => ({y: +y, k, meta: byIdx[k]!}))), [products]);
   return (
-    <Map style={{flex: 1}} mapStyle={transparent ? CLEAR_STYLE : STYLE} logo={false} compass={false} attributionPosition={{bottom: 6, left: 6}} onPress={(e: any) => { const [lng, lat] = e.nativeEvent.lngLat; onTap(lng, lat); }}
+    <Map style={{flex: 1}} androidView="texture" mapStyle={transparent ? CLEAR_STYLE : STYLE} logo={false} compass={false} attributionPosition={{bottom: 6, left: 6}} onPress={(e: any) => { const [lng, lat] = e.nativeEvent.lngLat; onTap(lng, lat); }}
       onDidFinishRenderingMapFully={() => onIdle?.()} onRegionDidChange={(e: any) => { const b = e.nativeEvent?.bounds; if (Array.isArray(b) && b.length === 4) onRegion?.({west: b[0], south: b[1], east: b[2], north: b[3]}); }}>
       <Camera ref={camera} initialViewState={{center: START_CENTER, zoom: START_ZOOM}} />
       {!transparent && <>

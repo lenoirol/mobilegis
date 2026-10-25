@@ -18,7 +18,7 @@ import {useSession} from '@/lib/session';
 
 const ITEMS: NavItem[] = [{key: 'index', label: 'Bản đồ', icon: 'map'}, {key: 'chuyen-gia', label: 'Chuyên gia', icon: 'chart'}, {key: 'du-lieu', label: 'Giới thiệu', icon: 'info'}];
 /** Sub-screens of "Chuyên gia" keep that tab lit, like the web app. */
-const TAB_OF: Record<string, string> = {'bang-so-lieu': 'chuyen-gia', 'thong-ke': 'chuyen-gia', 'gia-lap': 'chuyen-gia'};
+const TAB_OF: Record<string, string> = {'bang-so-lieu': 'chuyen-gia', 'thong-ke': 'chuyen-gia', 'gia-lap': 'chuyen-gia', 'gop-y': 'du-lieu'};
 
 function Shell() {
   const {status, step, text} = useData();
