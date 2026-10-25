@@ -114,3 +114,62 @@ async def hit(request: Request):
 @router.get('/api/admin/usage')
 async def usage(admin=Depends(require_admin)):
     return await _call(engagement.usage)
+
+
+# ---- field tests (public, anonymous, rate-limited per client) ------------------------------------------
+import csv, io, json
+from fastapi.responses import Response
+
+_field = defaultdict(deque)
+
+
+def _limit_field(request: Request, kind: str):
+    """A class often shares one Wi-Fi address, so the cap is generous: 60 sends an hour per client and kind."""
+    client = request.headers.get('x-forwarded-for', '').split(',')[0].strip() or (request.client.host if request.client else '?')
+    window, now = _field[(client, kind)], time.monotonic()
+    while window and now - window[0] > 3600:
+        window.popleft()
+    if len(window) >= 60:
+        raise HTTPException(429, 'Gửi hơi nhiều trong một giờ. Vui lòng thử lại sau.')
+    window.append(now)
+    if len(_field) > 5000:
+        for key in [k for k, v in _field.items() if not v or now - v[-1] > 3600]:
+            _field.pop(key, None)
+
+
+@router.post('/api/field/perf')
+async def field_perf(request: Request):
+    _limit_field(request, 'perf')
+    data = await read_json(request, 4000)
+    return {'ok': True, 'id': await _call(engagement.add_perf, data)}
+
+
+@router.post('/api/field/survey')
+async def field_survey(request: Request):
+    _limit_field(request, 'survey')
+    data = await read_json(request, 6000)
+    return {'ok': True, 'id': await _call(engagement.add_survey, data)}
+
+
+@router.get('/api/admin/field')
+async def field_summary(admin=Depends(require_admin)):
+    return await _call(engagement.field_summary)
+
+
+@router.get('/api/admin/field.csv')
+async def field_csv(kind: str, admin=Depends(require_admin)):
+    if kind not in ('perf', 'survey'):
+        raise HTTPException(400, 'kind phải là perf hoặc survey.')
+    data = await _call(engagement.field_summary)
+    out = io.StringIO()
+    out.write('\ufeff')
+    w = csv.writer(out)
+    if kind == 'perf':
+        w.writerow(['id', 'thoi_gian', 'thiet_bi', 'man_hinh', 'mang', 'thong_tin_mang', 'mo_ban_do_ms', 'mo_lan_dau', 'doi_lop_ms', 'doi_lop_trung_vi_ms', 'ghi_chu'])
+        for r in data['perf']:
+            w.writerow([r['id'], r['created_at'].isoformat(timespec='seconds'), r['device'], r['screen'], r['connection'], r['net_info'], r['first_map_ms'], r['first_open'], ' '.join(map(str, r['layer_ms'])), r['layer_median_ms'], r['note']])
+    else:
+        w.writerow(['id', 'thoi_gian', 'nguoi_lam', 'thiet_bi'] + [f'{t}_lam_duoc' for t in engagement.TASKS] + [f'{t}_cham_sai' for t in engagement.TASKS] + list(engagement.RATINGS) + ['gop_y'])
+        for r in data['survey']:
+            w.writerow([r['id'], r['created_at'].isoformat(timespec='seconds'), r['participant'], r['device']] + [int(r['tasks'][t]['done']) for t in engagement.TASKS] + [r['tasks'][t]['taps'] for t in engagement.TASKS] + [r['ratings'][k] for k in engagement.RATINGS] + [r['comment']])
+    return Response(out.getvalue(), media_type='text/csv; charset=utf-8', headers={'Content-Disposition': f'attachment; filename="mobilegis_{kind}.csv"'})

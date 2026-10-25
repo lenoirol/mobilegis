@@ -1,4 +1,4 @@
-"""Apply migrations 005 (saved areas, feedback, site notice) and 006 (area notes, highlights, usage counters) and grant the app role access.
+"""Apply migrations 005 (saved areas, feedback, site notice), 006 (area notes, highlights, usage counters) and 007 (speed runs, usability survey) and grant the app role access.
 
 Run once per database; safe to repeat. Research tables are not modified.
   Local:    MOBILEGIS_ADMIN_PASSWORD=... python scripts/migrate_engagement.py --user <owner>
@@ -13,8 +13,8 @@ import psycopg
 from psycopg import sql
 from psycopg.conninfo import conninfo_to_dict
 
-MIGRATIONS = ('005_engagement.sql', '006_content.sql')   # applied in order; each is idempotent
-RW = ('user_favorites', 'feedback', 'site_settings', 'area_notes', 'highlights', 'usage_counts')
+MIGRATIONS = ('005_engagement.sql', '006_content.sql', '007_field_tests.sql')   # applied in order; each is idempotent
+RW = ('user_favorites', 'feedback', 'site_settings', 'area_notes', 'highlights', 'usage_counts', 'perf_runs', 'survey_responses')
 
 
 def apply(conn, role):
@@ -45,7 +45,7 @@ def main():
         role = cfg['user']; conn = psycopg.connect(**{**cfg, 'user': args.user, 'password': password})
     with conn, conn.transaction():
         apply(conn, role)
-        print('Đã áp dụng migration 005 và 006 (schema 6).')
+        print('Đã áp dụng migration 005, 006 và 007 (schema 7).')
 
 
 if __name__ == '__main__':

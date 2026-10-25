@@ -62,6 +62,21 @@ function eventsTable(events) {
   mount($('#eventRows'), ...events.map(e => h('tr', null, h('td', {class: 'mono small'}, when(e.created_at)), h('td', null, EVENTS[e.event] || e.event), h('td', {class: 'mono small'}, e.email || '—'), h('td', {class: 'small'}, e.detail || ''))),
     events.length ? null : h('tr', null, h('td', {colSpan: 4, class: 'empty'}, 'Chưa có sự kiện.')));
 }
+const CONN = {wifi: 'Wi-Fi', mobile: 'Mạng di động', other: 'Khác'}, TASK_TEXT = {T1: 'T1 · Tìm xã/phường, xem nhiệt độ 2025', T2: 'T2 · So độ xanh 2020 và 2025', T3: 'T3 · Bật lớp độ khô, nói mức', T4: 'T4 · Dùng vị trí hiện tại', T5: 'T5 · Tìm khu vực có cảnh báo'};
+const RATE_TEXT = {easy: 'Giao diện dễ dùng', legend: 'Chú giải dễ hiểu', trust: 'Biết khu vực “tin cậy thấp” và vì sao', useful: 'Hữu ích khi xem nhanh trên điện thoại'};
+const sec = ms => ms == null ? '—' : (ms / 1000).toLocaleString('vi-VN', {minimumFractionDigits: 1, maximumFractionDigits: 1}) + ' s';
+async function loadField() {
+  const f = await get('/api/admin/field'), stat = (value, label) => h('div', {class: 'stat'}, h('b', {class: 'mono'}, String(value)), h('span', null, label));
+  mount($('#fieldCards'), stat(f.perf.length, 'Lượt đo tốc độ'), stat(f.devices, 'Thiết bị khác nhau'), stat(f.survey_n, 'Phiếu khảo sát'));
+  mount($('#fieldConn'), ...Object.entries(f.perf_by_connection).map(([k, v]) => h('tr', null, h('th', {scope: 'row', class: 'name'}, CONN[k]), h('td', {class: 'num mono'}, String(v.runs)), h('td', {class: 'num mono'}, sec(v.first_map_ms)), h('td', {class: 'num mono'}, sec(v.layer_median_ms)))));
+  mount($('#fieldPerf'), ...(f.perf.length ? f.perf.slice(0, 50).map(r => h('tr', null, h('td', {class: 'mono small'}, when(r.created_at)), h('td', null, r.device, r.screen ? h('small', {class: 'mono'}, r.screen) : null), h('td', null, CONN[r.connection], r.net_info ? h('small', {class: 'mono'}, r.net_info) : null),
+    h('td', {class: 'num mono'}, sec(r.first_map_ms)), h('td', {class: 'num mono'}, sec(r.layer_median_ms)), h('td', {class: 'small'}, r.note || ''))) : [h('tr', null, h('td', {colSpan: 6, class: 'empty'}, 'Chưa có lượt đo nào.'))]));
+  mount($('#fieldTasks'), ...Object.entries(f.survey_tasks).map(([k, v]) => h('tr', null, h('th', {scope: 'row', class: 'name'}, TASK_TEXT[k]), h('td', {class: 'num mono'}, f.survey_n ? `${v.done} / ${f.survey_n}` : '—'), h('td', {class: 'num mono'}, v.taps == null ? '—' : String(v.taps).replace('.', ',')))));
+  mount($('#fieldRatings'), ...Object.entries(f.survey_ratings).map(([k, v]) => h('tr', null, h('th', {scope: 'row', class: 'name'}, RATE_TEXT[k]), h('td', {class: 'num mono'}, v == null ? '—' : String(v).replace('.', ',')))));
+  const notes = f.survey.filter(r => r.comment);
+  mount($('#fieldComments'), ...(notes.length ? notes.slice(0, 30).map(r => h('p', null, h('b', null, r.participant || 'Ẩn danh'), ' · ', h('span', {class: 'small muted'}, when(r.created_at)), h('br'), r.comment)) : [h('p', {class: 'muted'}, 'Chưa có góp ý.')]));
+  $('#csvPerf').href = url('/api/admin/field.csv?kind=perf'); $('#csvSurvey').href = url('/api/admin/field.csv?kind=survey');
+}
 async function refresh() {
   const [list, resets, events, info] = await Promise.all([api('/api/admin/users'), api('/api/admin/resets'), api('/api/admin/events'), api('/api/info')]);
   users = list; overview(info, resets); usersTable(); resetsTable(resets); eventsTable(events);
@@ -100,7 +115,7 @@ async function loadData() {
   } catch (error) { toast('Không tải được dữ liệu: ' + error.message, {error: true}); }
 }
 function selectTab(name) {
-  for (const id of ['overview', 'users', 'data', 'content', 'events']) $('#tab-' + id).hidden = id !== name;
+  for (const id of ['overview', 'users', 'data', 'content', 'field', 'events']) $('#tab-' + id).hidden = id !== name;
 }
 
 (async () => {
@@ -109,7 +124,7 @@ function selectTab(name) {
   if (session.user.role !== 'admin') { $('#denied').hidden = false; $('#logout').hidden = true; return; }
   me = session.user; $('#who').textContent = me.display_name; $('#app').hidden = false;
   const resetCount = h('span', {class: 'count', hidden: true}, '0');
-  tabs = segmented([{value: 'overview', label: 'Tổng quan'}, {value: 'users', label: ['Tài khoản', resetCount]}, {value: 'data', label: 'Dữ liệu'}, {value: 'content', label: 'Nội dung'}, {value: 'events', label: 'Nhật ký'}], 'overview', selectTab, {label: 'Mục quản trị'});
+  tabs = segmented([{value: 'overview', label: 'Tổng quan'}, {value: 'users', label: ['Tài khoản', resetCount]}, {value: 'data', label: 'Dữ liệu'}, {value: 'content', label: 'Nội dung'}, {value: 'field', label: 'Thử nghiệm'}, {value: 'events', label: 'Nhật ký'}], 'overview', selectTab, {label: 'Mục quản trị'});
   tabs.counts = {reset: resetCount}; tabs.el.classList.add('admin-tabs');
   $('#tabsHost').append(tabs.el); tabs.place();
   $('#logout').onclick = async () => { await fetch(url('api/auth/logout'), {method: 'POST', credentials: 'same-origin'}); location.href = url('login.html'); };
@@ -121,5 +136,6 @@ function selectTab(name) {
   noteForm.code.addEventListener('change', () => { noteForm.text.value = (window.__notes || {})[noteForm.code.value] || ''; });
   noteForm.addEventListener('submit', e => { e.preventDefault(); act(async () => { await api('/api/admin/notes', 'POST', {code: noteForm.code.value, text: noteForm.text.value}); await loadContent(); }, 'Đã lưu ghi chú.'); });
   await loadAreas(); loadContent().catch(() => {});
+  loadField().catch(() => {});
   audits(); loadData(); try { await refresh(); } catch (error) { toast(error.message, {error: true}); }
 })();

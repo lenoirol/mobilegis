@@ -84,7 +84,7 @@ class PostgreSQLTests(unittest.TestCase):
         self.assertNotIn('password',self.client.get('/api/info').text.lower())
         self.assertNotIn('sqlite3',(ROOT/'server.py').read_text(encoding='utf8').lower())
     def test_asset_registry_and_health(self):
-        self.assertEqual(self.client.get('/api/health').json()['schema_version'],6)
+        self.assertEqual(self.client.get('/api/health').json()['schema_version'],7)
         with db.connect() as c:
             assets=c.execute('SELECT relative_path,size_bytes,sha256 FROM mobilegis.asset_catalog').fetchall()
             self.assertGreater(len(assets),40)

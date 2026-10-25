@@ -6,8 +6,8 @@ import {url, get} from '../core/api.js';
 
 const L = window.L;
 const policy = window.ViewerPolicy;
-const COVERAGE_RAMP = ['#ecbca3', '#f4d373', '#0d8165'];
-const CHANGE_RAMP = ['#2171b5', '#f7f7f7', '#c53a32'];
+export const COVERAGE_RAMP = ['#ecbca3', '#f4d373', '#0d8165'];
+export const CHANGE_RAMP = ['#2171b5', '#f7f7f7', '#c53a32'];
 const lerpHex = (a, b, t) => '#' + [1, 3, 5].map(p => Math.round(parseInt(a.slice(p, p + 2), 16) + (parseInt(b.slice(p, p + 2), 16) - parseInt(a.slice(p, p + 2), 16)) * t).toString(16).padStart(2, '0')).join('');
 export const coverageColor = v => !valid(v) ? '#c9c4b0' : v < .5 ? lerpHex(COVERAGE_RAMP[0], COVERAGE_RAMP[1], v / .5) : lerpHex(COVERAGE_RAMP[1], COVERAGE_RAMP[2], (v - .5) / .5);
 export const COVERAGE_GRADIENT = `linear-gradient(90deg,${COVERAGE_RAMP.join(',')})`;
@@ -47,7 +47,7 @@ export function createEngine(container, handlers) {
 
   // ---- loading indicator ------------------------------------------------------------
   const watch = layer => {
-    layer.on('loading', () => handlers.loading?.(true)).on('load', () => handlers.loading?.(false))
+    layer.on('loading', () => handlers.loading?.(true)).on('load', () => { handlers.loading?.(false); handlers.tilesLoaded?.(); })
       .on('tileerror', () => handlers.loading?.(false, 'Một số mảnh bản đồ chưa tải được. Kiểm tra máy chủ hoặc bộ nhớ đệm.'));
     return layer;
   };
@@ -228,6 +228,17 @@ export function createEngine(container, handlers) {
     relabel() { clearTimeout(api._labelTimer); api._labelTimer = setTimeout(syncLabels, 30); },
     applySwipe() { if (ctx) applySwipe(); },
     invalidate() { map.invalidateSize({animate: false}); },
+    /** Resolves true when the current raster layer has drawn all its tiles, false on timeout or when there is no raster layer. Used by the speed test. */
+    whenLoaded(ms = 20000) {
+      return new Promise(resolve => {
+        const layer = layers.raster;
+        if (!layer) return resolve(false);
+        if (!layer._loading) return resolve(true);
+        const done = () => { clearTimeout(timer); resolve(true); };
+        const timer = setTimeout(() => { layer.off('load', done); resolve(false); }, ms);
+        layer.once('load', done);
+      });
+    },
     zoomBy: delta => map.zoomIn(delta),
     zoomOut: delta => map.zoomOut(delta),
   };

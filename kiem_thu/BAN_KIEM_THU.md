@@ -23,8 +23,11 @@ Cột "Tự động" là kết quả của bộ kiểm tra trình duyệt `tests
 | F11 | Ngoài đề cương | Mở `#/gia-lap` khi chưa đăng nhập quản trị | Bị đưa về bản đồ | Đạt | |
 | F12 | Bắt buộc | Chạm một điểm trên bản đồ (chế độ Chi tiết) để xem giá trị ô 120 m, kể cả bản tĩnh không có máy chủ | Hiện tọa độ và giá trị ô gần nhất; ô thiếu dữ liệu ghi rõ "thiếu dữ liệu" | Đạt (thử thủ công; 60/60 điểm khớp cách tính của máy chủ) | |
 | F13 | Bắt buộc | Bản đồ nền toàn cầu: thu nhỏ ra thế giới, đổi nền Bản đồ (OpenStreetMap) / Vệ tinh (Esri) / Nhẹ (Natural Earth, không cần mạng); ô bản đồ định vị Thế giới – Việt Nam – TP.HCM | Nền hiện đúng; nhãn QĐ. Hoàng Sa, QĐ. Trường Sa, Biển Đông; mất mạng thì tự về nền Nhẹ | Đạt với nền Nhẹ và ô định vị (thủ công). Nền trực tuyến cần nhóm kiểm tra bằng mắt | |
+| F14 | Dự kiến | Bấm nút ảnh (biểu tượng tranh) trên bản đồ | Tải về tệp PNG có tên, chú giải, thước tỉ lệ, hướng bắc, ngày ảnh, nguồn; không có nút hay bảng điều khiển | Đạt (thử trên trình duyệt giả lập máy tính và điện thoại; nền trực tuyến cần thử có mạng) | |
+| F15 | Dự kiến | Giới thiệu → Tham gia thử nghiệm → Đo thời gian mở / Đo đổi lớp (5 lần) | Có số giây hiển thị; đổi lớp tự chạy, quay lại trang thử nghiệm; gửi được số đo | Đạt (localhost); số đo mạng thật do nhóm thu bằng điện thoại | |
+| F16 | Dự kiến | Làm phiếu khảo sát (5 nhiệm vụ, 4 câu chấm điểm) và gửi | Thiếu câu trả lời bị nhắc; gửi xong quản trị viên thấy ở tab Thử nghiệm và tải được CSV | Đạt (3 kiểm tra tự động mới) | |
 
-Ghi chú: F12, F13 và phần tắt lớp chỉ số ở F4 được thêm sau lần chạy 81 kiểm tra tự động; cần chạy lại `tests/e2e_ui.py` để cập nhật cột "Tự động".
+Ghi chú: F12–F16 và phần tắt lớp chỉ số ở F4 được thêm sau lần chạy 81 kiểm tra tự động; cần chạy lại `tests/e2e_ui.py` để cập nhật cột "Tự động".
 
 Ghi chú: F10 là mức "chỉ mô phỏng, không cam kết" trong đề cương; nhóm cần tự thử bằng chế độ máy bay trên điện thoại.
 

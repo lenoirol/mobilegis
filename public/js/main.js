@@ -7,6 +7,7 @@ import {CANONICAL_SOURCE, SOURCES} from './core/format.js';
 import {transition, reduced} from './core/motion.js';
 import {mountAccount} from './ui/account.js';
 import {toast} from './ui/toast.js';
+import {perf} from './core/perf.js';
 
 export const store = createStore({source: CANONICAL_SOURCE, index: 'lst', year: 2025, selected: '26743', pinned: ['26743', '27664', '25747'], error: null});
 
@@ -17,6 +18,7 @@ const ROUTES = [
   {id: 'bang-so-lieu', nav: 'chuyen-gia', hidden: true, title: 'Bảng số liệu', load: () => import('./views/table.js')},
   {id: 'thong-ke', nav: 'chuyen-gia', hidden: true, title: 'Thống kê', load: () => import('./views/stats.js')},
   {id: 'gia-lap', nav: 'chuyen-gia', hidden: true, adminOnly: true, title: 'Kịch bản giả lập (ngoài đề cương)', load: () => import('./views/scenario.js')},
+  {id: 'thu-nghiem', nav: 'du-lieu', hidden: true, title: 'Thử nghiệm trên điện thoại', load: () => import('./views/field-test.js')},
   {id: 'du-lieu', icon: 'info', long: 'Giới thiệu', short: 'Giới thiệu', title: 'Giới thiệu', load: () => import('./views/about.js')},
 ];
 const views = new Map();   // id → {section, module, ready}
@@ -91,6 +93,8 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 async function boot() {
   buildNav();
   const first = !sessionStorage.getItem('mg-seen');
+  perf.begin(first, parseHash().id === 'ban-do');
+  perf.onReturn(() => navigate('thu-nghiem'));
   const started = performance.now();
   splashStep(0, 'Đang kiểm tra máy chủ…');
   await detectApi();   // false on GitHub Pages: the app then runs as a static demo
@@ -126,6 +130,7 @@ async function boot() {
   document.body.classList.remove('is-booting');
   splash.classList.add('done');
   setTimeout(() => splash.remove(), reduced() ? 20 : 1000);
+  perf.mark('splash');
 
   if (!env.api && !sessionStorage.getItem('mg-static-note')) {
     sessionStorage.setItem('mg-static-note', '1');

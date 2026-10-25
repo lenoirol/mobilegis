@@ -12,6 +12,8 @@ import {createEngine, COVERAGE_GRADIENT, CHANGE_GRADIENT} from './map-engine.js'
 import {createDock} from './map-dock.js';
 import {createDetail} from './map-detail.js';
 import {createLocator} from './map-locator.js';
+import {renderMapPng, saveBlob, datesRange} from './map-export.js';
+import {perf} from '../core/perf.js';
 
 const policy = window.ViewerPolicy;
 const mobile = () => matchMedia('(max-width:860px)').matches;
@@ -74,7 +76,7 @@ function build(section) {
   const fab = (name, label, fn) => h('button', {class: 'icon-btn', type: 'button', title: label, 'aria-label': label, on: {click: fn}}, icon(name, 20));
   el.fabs = h('div', {class: 'fabs'},
     fab('plus', 'Phóng to', () => engine.map.zoomIn(1)), fab('minus', 'Thu nhỏ', () => engine.map.zoomOut(1)),
-    fab('locate', 'Vị trí của tôi', locate), fab('extent', 'Xem toàn vùng', () => engine.fitAll()), fab('share', 'Sao chép liên kết', share));
+    fab('locate', 'Vị trí của tôi', locate), fab('extent', 'Xem toàn vùng', () => engine.fitAll()), fab('share', 'Sao chép liên kết', share), fab('image', 'Lưu ảnh bản đồ (PNG)', exportImage));
   el.globeBtn = fab('globe', 'Bản đồ định vị', () => locator.setOpen(!locator.open));
   el.fabs.append(el.globeBtn);
   locator.onToggle(v => { el.globeBtn.setAttribute('aria-pressed', String(v)); el.globeBtn.classList.toggle('on', v); });
@@ -165,6 +167,18 @@ function shareUrl() {
   const s = merged(), p = new URLSearchParams({'chi-so': s.index, nam: s.year, 'khu-vuc': s.selected, 'che-do': s.display});
   if (s.source !== CANONICAL_SOURCE) p.set('nguon', s.source);
   return `${location.origin}${location.pathname}#/ban-do?${p}`;
+}
+let exporting = false;
+async function exportImage() {
+  if (exporting || !engine) return;
+  exporting = true; el.loader.classList.add('on');
+  try {
+    const s = merged(), rows = D.rows?.year(s.year) || [];
+    const {blob, name, missingBase} = await renderMapPng({map: engine.map, state: s, insets: insets(), mobile: mobile(), datesText: s.mode === 'real' && s.display !== 'change' && !s.landcover ? datesRange(rows) : ''});
+    saveBlob(blob, name);
+    toast(missingBase ? 'Đã lưu ảnh, nhưng nền trực tuyến không chép được nên ảnh chỉ có lớp số liệu và ranh giới.' : 'Đã lưu ảnh bản đồ (PNG) kèm chú giải và thước tỉ lệ.', {error: !!missingBase});
+  } catch (error) { toast('Không lưu được ảnh: ' + error.message, {error: true}); }
+  finally { exporting = false; el.loader.classList.remove('on'); }
 }
 async function share() {
   const url = shareUrl();
@@ -273,6 +287,7 @@ export async function init(section, ctx) {
     select: (id, latlng) => select(id, false), probe: probeAt,
     loading: (on, message) => { el.loader.classList.toggle('on', on); if (message && env.api) toast(message, {error: true}); },   // static hosts 404 on empty edge tiles
     tileState: t => { tileState = t; const missing = t.missing; if (el.status) { const text = statusText(merged(), t); el.status.hidden = !text; el.status.textContent = text; } },
+    tilesLoaded: () => perf.mark('load'),
     baseFailed: () => { ms.set({basemap: 'plain'}); toast('Không tải được bản đồ nền trực tuyến; đã chuyển sang nền nhẹ. Số liệu và ranh giới vẫn dùng được.', {error: true}); },
     occupied: occupiedRects,
   });
@@ -306,3 +321,27 @@ export function show(params = {}) {
 }
 export function hide() { shown = false; stopPlay(); }
 export const selectArea = (code, params) => { store.set({selected: code, ...(params || {})}); };
+
+export const isShown = () => shown;
+/** Speed test used by the field-test page: switch between index/year pairs that have not been loaded yet and time each switch.
+    Returns milliseconds for each switch (null where it timed out). Restores what the person was looking at. */
+export async function speedTest(onStep) {
+  if (!engine || !D.layers?.absolute) throw new Error('Bản đồ chưa sẵn sàng để đo.');
+  const before = {...store.get()}, display = ms.get().display, mode = ms.get().mode;
+  const plan = [['ndvi', 2024], ['tvdi', 2023], ['lst', 2022], ['ndvi', 2021], ['tvdi', 2020]].filter(([index, year]) => D.layers.absolute?.[year]?.[index]);
+  if (!plan.length) throw new Error('Không có lớp ảnh nào để đo trên bản đồ này.');
+  stopPlay(); probe = null;
+  ms.set({display: 'raster', visible: true, landcover: false, compare: false});
+  await new Promise(r => setTimeout(r, 400));
+  const out = [];
+  for (let i = 0; i < plan.length; i++) {
+    onStep?.(i + 1, plan.length);
+    const t0 = performance.now();
+    store.set({index: plan[i][0], year: plan[i][1]});
+    const ok = await engine.whenLoaded(20000);
+    out.push(ok ? Math.round(performance.now() - t0) : null);
+    await new Promise(r => setTimeout(r, 150));
+  }
+  store.set({index: before.index, year: before.year}); ms.set({display, mode});
+  return out;
+}

@@ -79,6 +79,39 @@ class Engagement(unittest.TestCase):
         self.assertEqual(TestClient(server.app).post('/api/auth/login', json={'email': email, 'password': 'Mat-khau-12345'}).status_code, 200)
 
 
+
+class FieldTests(unittest.TestCase):
+    """Speed runs and the survey are anonymous; bad input is refused; only admins read results."""
+    @classmethod
+    def setUpClass(cls):
+        cls.guest, cls.admin = TestClient(server.app), TestClient(server.app)
+        email, cls.aid = auth_support.create_user('admin'); cls.ah = auth_support.sign_in(cls.admin, email)
+
+    @classmethod
+    def tearDownClass(cls):
+        auth_support.delete_user(cls.aid)
+        with db.connect() as c:
+            c.execute("DELETE FROM mobilegis.perf_runs WHERE device LIKE 'TESTDEV%'"); c.execute("DELETE FROM mobilegis.survey_responses WHERE participant LIKE 'TESTER%'")
+
+    def test_perf_roundtrip_and_validation(self):
+        ok = {'device': 'TESTDEV A54', 'connection': 'mobile', 'first_map_ms': 2100, 'layer_ms': [400, 600, 500]}
+        self.assertEqual(self.guest.post('/api/field/perf', json=ok).status_code, 200)
+        for bad in ({**ok, 'device': ''}, {**ok, 'connection': 'x'}, {**ok, 'layer_ms': [1, 'a']}, {**ok, 'first_map_ms': -5}, {'device': 'TESTDEV', 'connection': 'wifi'}):
+            self.assertEqual(self.guest.post('/api/field/perf', json=bad).status_code, 400)
+        self.assertEqual(self.guest.get('/api/admin/field').status_code, 401)
+        rows = [r for r in self.admin.get('/api/admin/field').json()['perf'] if r['device'] == 'TESTDEV A54']
+        self.assertEqual(rows[0]['layer_median_ms'], 500)
+
+    def test_survey_roundtrip_and_validation(self):
+        tasks = {k: {'done': True, 'taps': 0} for k in ('T1', 'T2', 'T3', 'T4', 'T5')}
+        ratings = {'easy': 4, 'legend': 5, 'trust': 3, 'useful': 4}
+        self.assertEqual(self.guest.post('/api/field/survey', json={'tasks': tasks, 'ratings': ratings, 'participant': 'TESTER 1', 'comment': 'ok'}).status_code, 200)
+        self.assertEqual(self.guest.post('/api/field/survey', json={'tasks': {**tasks, 'T9': tasks['T1']}, 'ratings': ratings}).status_code, 400)
+        self.assertEqual(self.guest.post('/api/field/survey', json={'tasks': tasks, 'ratings': {**ratings, 'easy': 6}}).status_code, 400)
+        self.assertEqual(self.guest.post('/api/field/survey', json={'tasks': {**tasks, 'T1': {'done': 'yes', 'taps': 0}}, 'ratings': ratings}).status_code, 400)
+        csv = self.admin.get('/api/admin/field.csv?kind=survey'); self.assertEqual(csv.status_code, 200); self.assertIn('TESTER 1', csv.text)
+        self.assertEqual(self.guest.get('/api/admin/field.csv?kind=survey').status_code, 401)
+
 if __name__ == '__main__':
     unittest.main()
 

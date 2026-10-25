@@ -192,3 +192,26 @@ body.has-notice .map-shell{margin-top:40px}
 .back-link:hover{background:var(--signal)}
 .back-link+.page{padding-top:16px}
 @media (max-width:860px){.back-link{margin-left:16px}}
+
+/* ---- field tests: speed check + survey ------------------------------------------------------------ */
+.ft-page .block{display:grid;gap:16px;margin-bottom:34px}
+.ft-card{display:grid;gap:16px}
+.ft-grid{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+.ft-actions{display:flex;flex-wrap:wrap;gap:10px}
+.ft-result{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ft-result .stat b{font-size:30px}
+.ft-tasks{display:grid;gap:14px}
+.ft-task{display:grid;gap:10px;grid-template-columns:44px 1fr;align-items:start;background:var(--card);border:var(--bw) solid var(--ink);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:16px}
+.ft-task>b{font-size:20px;grid-row:span 3}
+.ft-task>p{font-weight:600}
+.ft-task>.seg,.ft-task>.field{grid-column:2}
+.ft-rate{display:grid;gap:8px}
+.ft-rate>p{font-weight:600}
+.ft-scale{display:flex;justify-content:space-between}
+.ft-page textarea.input{resize:vertical;min-height:84px}
+.speed-overlay{position:fixed;inset:0;z-index:9000;display:grid;place-items:center;background:rgba(14,14,12,.55);padding:24px;touch-action:none}
+.speed-overlay .card{max-width:360px;text-align:center;display:grid;gap:8px}
+.speed-overlay b{font-size:22px}
+@media (max-width:640px){.ft-grid{grid-template-columns:1fr}.ft-result .stat b{font-size:24px}.ft-task{grid-template-columns:1fr}.ft-task>b,.ft-task>.seg,.ft-task>.field{grid-column:auto;grid-row:auto}}
+.admin-field .bar{height:10px;border:1.5px solid var(--ink);border-radius:6px;background:#fff;overflow:hidden}
+.admin-field .bar i{display:block;height:100%;background:var(--signal)}

@@ -143,3 +143,88 @@ def usage(days=30):
         per_day = c.execute("SELECT day,sum(n)::int AS n FROM mobilegis.usage_counts WHERE kind='page' AND day > current_date - %s GROUP BY day ORDER BY day", (days,)).fetchall()
     pick = lambda kind, limit=10: [r for r in rows if r['kind'] == kind][:limit]
     return {'days': days, 'areas': pick('area'), 'layers': pick('layer'), 'pages': pick('page'), 'per_day': per_day}
+
+
+# ---- field tests: speed runs and the usability survey (anonymous) ---------------------------------------
+import statistics
+TASKS = ('T1', 'T2', 'T3', 'T4', 'T5')
+RATINGS = ('easy', 'legend', 'trust', 'useful')
+CONNECTIONS = ('wifi', 'mobile', 'other')
+
+
+def _text(value, limit, required=False, label='Nội dung'):
+    value = str(value or '').strip()
+    if required and not value:
+        raise AuthError(f'{label} không được để trống.')
+    if len(value) > limit:
+        raise AuthError(f'{label} tối đa {limit} ký tự.')
+    return value or None
+
+
+def _ms(value, label):
+    if value in (None, ''):
+        return None
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not 0 <= value <= 120000:
+        raise AuthError(f'{label} không hợp lệ.')
+    return int(round(value))
+
+
+def add_perf(data):
+    device = _text(data.get('device'), 120, True, 'Tên thiết bị')
+    connection = data.get('connection')
+    if connection not in CONNECTIONS:
+        raise AuthError('Chọn loại mạng: Wi-Fi hoặc mạng di động.')
+    layers = data.get('layer_ms') or []
+    if not isinstance(layers, list) or len(layers) > 12:
+        raise AuthError('Danh sách thời gian đổi lớp không hợp lệ.')
+    layers = [_ms(v, 'Thời gian đổi lớp') for v in layers]
+    if any(v is None for v in layers):
+        raise AuthError('Thời gian đổi lớp không hợp lệ.')
+    first = _ms(data.get('first_map_ms'), 'Thời gian mở bản đồ')
+    if first is None and not layers:
+        raise AuthError('Chưa có số đo nào để gửi.')
+    median = int(round(statistics.median(layers))) if layers else None
+    with db.connect() as c:
+        return c.execute('INSERT INTO mobilegis.perf_runs(device,screen,connection,net_info,first_map_ms,first_open,layer_ms,layer_median_ms,note) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING id',
+                         (device, _text(data.get('screen'), 60), connection, _text(data.get('net_info'), 60), first, bool(data.get('first_open')), layers, median, _text(data.get('note'), 200))).fetchone()['id']
+
+
+def add_survey(data):
+    tasks, ratings = data.get('tasks'), data.get('ratings')
+    if not isinstance(tasks, dict) or set(tasks) != set(TASKS):
+        raise AuthError('Cần trả lời đủ 5 nhiệm vụ.')
+    clean_tasks = {}
+    for key in TASKS:
+        t = tasks[key]
+        if not isinstance(t, dict) or not isinstance(t.get('done'), bool):
+            raise AuthError(f'Nhiệm vụ {key}: chọn Làm được hoặc Chưa làm được.')
+        taps = t.get('taps', 0)
+        if isinstance(taps, bool) or not isinstance(taps, int) or not 0 <= taps <= 9:
+            raise AuthError(f'Nhiệm vụ {key}: số lần chạm sai từ 0 đến 9.')
+        clean_tasks[key] = {'done': t['done'], 'taps': taps}
+    if not isinstance(ratings, dict) or set(ratings) != set(RATINGS):
+        raise AuthError('Cần chấm đủ 4 câu.')
+    for key in RATINGS:
+        v = ratings[key]
+        if isinstance(v, bool) or not isinstance(v, int) or not 1 <= v <= 5:
+            raise AuthError('Điểm chấm từ 1 đến 5.')
+    from psycopg.types.json import Jsonb
+    with db.connect() as c:
+        return c.execute('INSERT INTO mobilegis.survey_responses(participant,device,tasks,ratings,comment) VALUES(%s,%s,%s,%s,%s) RETURNING id',
+                         (_text(data.get('participant'), 40), _text(data.get('device'), 120), Jsonb(clean_tasks), Jsonb({k: ratings[k] for k in RATINGS}), _text(data.get('comment'), 500))).fetchone()['id']
+
+
+def field_summary():
+    with db.connect() as c:
+        perf = c.execute('SELECT id,created_at,device,screen,connection,net_info,first_map_ms,first_open,layer_ms,layer_median_ms,note FROM mobilegis.perf_runs ORDER BY id DESC LIMIT 500').fetchall()
+        survey = c.execute('SELECT id,created_at,participant,device,tasks,ratings,comment FROM mobilegis.survey_responses ORDER BY id DESC LIMIT 500').fetchall()
+    med = lambda values: int(round(statistics.median(values))) if values else None
+    by_conn = {}
+    for conn in CONNECTIONS:
+        rows = [r for r in perf if r['connection'] == conn]
+        by_conn[conn] = {'runs': len(rows), 'first_map_ms': med([r['first_map_ms'] for r in rows if r['first_map_ms'] is not None]), 'layer_median_ms': med([r['layer_median_ms'] for r in rows if r['layer_median_ms'] is not None])}
+    n = len(survey)
+    tasks = {k: {'done': sum(1 for r in survey if r['tasks'][k]['done']), 'taps': round(sum(r['tasks'][k]['taps'] for r in survey) / n, 2) if n else None} for k in TASKS}
+    ratings = {k: round(sum(r['ratings'][k] for r in survey) / n, 2) if n else None for k in RATINGS}
+    return {'perf': perf, 'survey': survey, 'perf_by_connection': by_conn, 'survey_n': n, 'survey_tasks': tasks, 'survey_ratings': ratings,
+            'devices': len({r['device'] for r in perf})}
