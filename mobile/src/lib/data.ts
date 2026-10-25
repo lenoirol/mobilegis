@@ -17,8 +17,8 @@ export interface Products {absolute: Record<string, Partial<Record<IndexKey, Til
 export interface Dataset {geo: Geo; rows: Row[]; products: Products; fromCache: boolean; rowsFrom: 'api' | 'file' | 'cache'}
 
 const KEY = (path: string) => 'mobilegis:' + path;
-async function getJson<T>(path: string): Promise<{data: T; cached: boolean}> {
-  const controller = new AbortController(), timer = setTimeout(() => controller.abort(), 25000);
+async function getJson<T>(path: string, timeoutMs = 60000): Promise<{data: T; cached: boolean}> {   // 60 s: a sleeping free Render server needs about a minute to wake up
+  const controller = new AbortController(), timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const response = await fetch(API_BASE + path, {signal: controller.signal});
     if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
@@ -35,21 +35,37 @@ async function getJson<T>(path: string): Promise<{data: T; cached: boolean}> {
 
 /** Research rows come from the PostgreSQL database through the API; the exported static file is only a fallback when the API is down. */
 async function loadRows(): Promise<{data: Row[]; cached: boolean; from: 'api' | 'file' | 'cache'}> {
-  try { const data = await get<Row[]>(`/api/research/observations?source=${CANONICAL_SOURCE}`, 30000); if (Array.isArray(data) && data.length > 900) { AsyncStorage.setItem(KEY('rows-api'), JSON.stringify(data)).catch(() => {}); return {data, cached: false, from: 'api'}; } }
+  try { const data = await get<Row[]>(`/api/research/observations?source=${CANONICAL_SOURCE}`, 20000); if (Array.isArray(data) && data.length > 900) { AsyncStorage.setItem(KEY('rows-api'), JSON.stringify(data)).catch(() => {}); return {data, cached: false, from: 'api'}; } }
   catch { /* fall through */ }
-  try { const r = await getJson<Row[]>(`/data/${CANONICAL_SOURCE}/observations.json`); return {data: r.data, cached: r.cached, from: r.cached ? 'cache' : 'file'}; }
+  try { const r = await getJson<Row[]>(`/data/${CANONICAL_SOURCE}/observations.json`); if (!r.cached) AsyncStorage.setItem(KEY('rows-api'), JSON.stringify(r.data)).catch(() => {}); return {data: r.data, cached: r.cached, from: r.cached ? 'cache' : 'file'}; }
   catch (error) { const saved = await AsyncStorage.getItem(KEY('rows-api')).catch(() => null); if (saved) return {data: JSON.parse(saved), cached: true, from: 'cache'}; throw error; }
 }
 
+/** The three files are independent, so they download at the same time (they used to go one after another). */
 export async function loadDataset(onStep?: (step: number, text: string) => void): Promise<Dataset> {
-  onStep?.(1, 'Đang tải ranh giới 167 xã/phường…');
-  const geo = await getJson<Geo>('/data/hcm_167.geojson');
-  onStep?.(2, 'Đang tải số liệu nhiệt độ · độ xanh · độ khô…');
-  const rows = await loadRows();
-  onStep?.(3, 'Đang tải lớp bản đồ…');
-  const products = await getJson<Products>(`/data/${CANONICAL_SOURCE}/products.json`);
+  let done = 0;
+  const tick = (text: string) => <T,>(value: T) => { done += 1; onStep?.(done, text); return value; };
+  onStep?.(1, 'Đang tải số liệu và bản đồ…');
+  const [geo, rows, products] = await Promise.all([
+    getJson<Geo>('/data/hcm_167.geojson').then(tick('Đã có ranh giới 167 xã/phường')),
+    loadRows().then(tick('Đã có số liệu nhiệt độ · độ xanh · độ khô')),
+    getJson<Products>(`/data/${CANONICAL_SOURCE}/products.json`).then(tick('Đã có lớp bản đồ')),
+  ]);
   onStep?.(4, 'Sẵn sàng');
   return {geo: geo.data, rows: rows.data, products: products.data, fromCache: geo.cached || rows.cached || products.cached, rowsFrom: rows.from};
+}
+
+/** Copy saved on the phone by an earlier run. Lets the app open at once; the fresh copy is fetched behind the scenes. */
+export async function loadSaved(): Promise<Dataset | null> {
+  try {
+    const [geo, rows, products] = await Promise.all([
+      AsyncStorage.getItem(KEY('/data/hcm_167.geojson')),
+      AsyncStorage.getItem(KEY('rows-api')),
+      AsyncStorage.getItem(KEY(`/data/${CANONICAL_SOURCE}/products.json`)),
+    ]);
+    if (!geo || !rows || !products) return null;
+    return {geo: JSON.parse(geo) as Geo, rows: JSON.parse(rows) as Row[], products: JSON.parse(products) as Products, fromCache: true, rowsFrom: 'cache'};
+  } catch { return null; }
 }
 
 /** Fast lookup by commune and year. */
