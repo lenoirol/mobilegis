@@ -1,8 +1,21 @@
-# Giao diện v3 · Bản đồ Nhiệt - Xanh - Khô TP.HCM
+# Giao diện v3.1 · Bản đồ Nhiệt - Xanh - Khô TP.HCM
 
 Xây lại toàn bộ giao diện web (01/11/2026) theo góp ý của cô: bản đồ là thành phần chính, có 2D/3D, chạy diễn biến theo
 khoảng năm, xếp hạng 167 xã/phường, lọc theo ngưỡng, nền màu nhẹ, người dùng tự xóa được tài khoản.
 Máy chủ, API, cơ sở dữ liệu và số liệu không đổi. Giao diện UI2 cũ được lưu ở `luu_tru/giao_dien_v2/` (không xóa).
+
+## Bổ sung v3.1 (02/11/2026)
+- **Logo mới** (`public/logo.svg`, `icon.svg`, các biểu tượng PNG 192/512/maskable): ô vuông xanh bo góc, hình TP.HCM màu vàng có mặt cười, giọt nước; bộ nhớ đệm `sw.js` = `mobilegis-v31`.
+- **Tìm kiếm** xã/phường (gõ không dấu), **Chia sẻ** liên kết (trạng thái nằm trong phần `#` của địa chỉ: chỉ số, năm, khu vực, chế độ, kiểu, nền, màu, khoảng năm, năm so sánh), **Hướng dẫn nhanh** 5 bước lần đầu vào (nút `?` mở lại; ghi nhớ trong `localStorage` khóa `mg-tour`).
+- **So sánh hai năm**: bản đồ thứ hai không tương tác, cắt bằng thanh kéo, camera đồng bộ (`public/js/map/compare.js`).
+- **Màu dễ phân biệt** (viridis/inferno) cho người khó nhìn đỏ–xanh; chỉ áp dụng cho tô màu xã/phường, biểu đồ, chú giải; ảnh ô 120 m giữ thang gốc.
+- **Lưu ý khi đọc** trong chú giải + mục "Vì sao TVDI chỉ để tham khảo" ở trang Giới thiệu (mỗi năm một cảnh ≠ xu thế khí hậu; TVDI thử nghiệm; LST ≠ nhiệt độ không khí).
+- **Thống kê sử dụng ẩn danh** (`POST /api/hit`: loại area/layer/page/feature/error; không lưu danh tính) và khối "Mức độ sử dụng" ở tổng quan quản trị.
+- **Nhập số liệu (quản trị viên)**: tab "Nhập số liệu" trong `admin.html`. CSV `code,year,sampled_pixels,lst,lst_pixels,ndvi,ndvi_pixels,tvdi,tvdi_pixels,dates`;
+  xem trước thay đổi → áp dụng → hoàn tác / áp dụng lại. Là lớp phủ (`mobilegis.observation_imports`, migration 008, schema 8): số liệu đã công bố không bị sửa;
+  độ phủ = số ô / số ô lấy mẫu, quy tắc ≥ 50% vẫn áp dụng. Ô ảnh 120 m và bản tĩnh GitHub Pages không đổi theo lần nhập. Mã: `observation_imports.py`, `engagement_api.py`, `public/js/admin-import.js`.
+- **Đợt 2 GEE (2025)**: `data/gee_recovery/batch2_20261101_review/nhap_so_lieu_dot2.csv` (27 dòng) lấy từ bản rà soát; đã áp dụng ở DB local, còn 4 xã dưới 50% (Phú Lợi, Bình Dương, Hòa Lợi, Tân Khánh).
+  Máy chủ thật (Supabase) cần chạy `python scripts/migrate_engagement.py --supabase` rồi quản trị viên tải tệp lên.
 
 ## Màn hình chính (bản đồ toàn màn hình)
 - **Thanh trên:** tên ứng dụng, chọn chỉ số (Nhiệt độ LST · Độ xanh NDVI · Độ khô TVDI), menu Xếp hạng / Thống kê / Bảng số liệu / Giới thiệu / Tài khoản.
@@ -46,7 +59,7 @@ Nền xanh xám rất nhạt `#f3f6f8`, thẻ trắng trong mờ, viền mảnh,
 - `public/js/views/` – Thống kê, Bảng số liệu, Giới thiệu, Tài khoản, Thử nghiệm. `public/styles/base.css` + `app.css`.
 
 ## Kiểm thử
-- `.venv/bin/python -m unittest discover -s tests` (96 kiểm thử, có tự xóa tài khoản) và `node --test tests/viewer-policy.test.cjs`.
-- `MOBILEGIS_URL=http://127.0.0.1:5379 .venv/bin/python tests/e2e_ui.py` – 36 kiểm tra trình duyệt (Chrome thật, WebGL bằng SwiftShader):
-  xếp hạng, lọc, 3D, thanh thời gian, lưu ảnh, CSV, các trang phụ, đăng ký → xóa tài khoản, quản trị, điện thoại, bản tĩnh.
+- `.venv/bin/python -m unittest discover -s tests` (106 kiểm thử, có tự xóa tài khoản và nhập số liệu) và `node --test tests/viewer-policy.test.cjs`.
+- `MOBILEGIS_URL=http://127.0.0.1:5379 .venv/bin/python tests/e2e_ui.py` – 47 kiểm tra trình duyệt (Chrome thật, WebGL bằng SwiftShader):
+  xếp hạng, lọc, 3D, tìm kiếm, chia sẻ, so sánh năm, màu dễ phân biệt, hướng dẫn nhanh, thanh thời gian, lưu ảnh, CSV, các trang phụ, đăng ký → xóa tài khoản, quản trị, điện thoại, bản tĩnh.
 - Máy chủ trả `204` cho ô bản đồ nằm ngoài dữ liệu (trước đây là ảnh PNG 1×1 trong suốt).

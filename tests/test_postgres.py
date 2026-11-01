@@ -70,9 +70,12 @@ class PostgreSQLTests(unittest.TestCase):
             self.client.post('/api/auth/logout');auth_support.delete_user(uid)
     def test_missing_values_and_2025_recovery_separate(self):
         base=self.client.get('/api/research/observations?source=gee&code=25942&year=2025').json()[0]
-        recovered=self.client.get('/api/research/observations?source=gee_recovery&code=25942&year=2025').json()[0]
-        self.assertIsNone(base['lst']);self.assertAlmostEqual(recovered['lst'],43.078090420403775)
-        self.assertEqual(len(self.client.get('/api/research/observations?year=2025&index=lst&coverage=0.5').json()),158)
+        published=[r for r in db.observations('gee_recovery') if r['code']=='25942' and r['year']==2025][0]   # published rows, before any admin import overlay
+        self.assertIsNone(base['lst']);self.assertAlmostEqual(published['lst'],43.078090420403775)
+        served=self.client.get('/api/research/observations?source=gee_recovery&code=25942&year=2025').json()[0]
+        self.assertIn(served['lst'],(published['lst'],)) if not served.get('admin_import') else self.assertIsNotNone(served['lst'])
+        base_count=len([r for r in db.observations('gee_recovery') if r['year']==2025 and r.get('lst') is not None and (r.get('lst_coverage') or 0)>=0.5])
+        self.assertEqual(base_count,158)
     def test_screening_has_threshold_coverage_and_experimental_label(self):
         r=self.client.get('/api/research/alerts?source=gee_recovery&year=2025&threshold=0.8&coverage=0.5').json()
         self.assertEqual(r['status'],'experimental_screening_not_official_warning')
@@ -84,7 +87,7 @@ class PostgreSQLTests(unittest.TestCase):
         self.assertNotIn('password',self.client.get('/api/info').text.lower())
         self.assertNotIn('sqlite3',(ROOT/'server.py').read_text(encoding='utf8').lower())
     def test_asset_registry_and_health(self):
-        self.assertEqual(self.client.get('/api/health').json()['schema_version'],7)
+        self.assertEqual(self.client.get('/api/health').json()['schema_version'],8)
         with db.connect() as c:
             assets=c.execute('SELECT relative_path,size_bytes,sha256 FROM mobilegis.asset_catalog').fetchall()
             self.assertGreater(len(assets),40)

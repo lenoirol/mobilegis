@@ -5,12 +5,17 @@ import {$, h, mount, icon} from './core/dom.js';
 import {loadSession, session, onSession, detectApi, env, url} from './core/api.js';
 import {data, indexRows} from './core/data.js';
 import {createStore} from './core/store.js';
-import {INDEX, INDICES, YEARS, CANONICAL_SOURCE} from './core/format.js';
+import {INDEX, INDICES, YEARS, CANONICAL_SOURCE, setPalette} from './core/format.js';
 import {toast} from './ui/toast.js';
 import {perf} from './core/perf.js';
 import {createMap} from './map/engine.js';
 import {createPanel, matching, FILTER_DEFAULTS} from './map/panel.js';
 import {renderInfo, renderLegend, createTimeline} from './map/widgets.js';
+import {createSearch} from './map/search.js';
+import {createCompare} from './map/compare.js';
+import {stateFromParams, syncAddress, shareUrl} from './map/share.js';
+import {showTour, tourSeen} from './map/tour.js';
+import {hit, watchErrors} from './core/track.js';
 
 const policy = window.ViewerPolicy;
 const APP = 'Bản đồ Nhiệt - Xanh - Khô TP.HCM';
@@ -19,7 +24,9 @@ const narrow = () => matchMedia('(max-width: 900px)').matches;
 export const store = createStore({
   index: 'lst', year: 2025, range: [2020, 2025], selected: '26743', mode: 'zones', dims: '2d', basemap: 'osm', height: 1,
   filters: FILTER_DEFAULTS, panel: !narrow(), playing: false, animate: false, pinned: ['26743', '27664', '25747'],
+  palette: 'standard', compare: {on: false, year: 2020},
 });
+const savedPalette = () => { try { return localStorage.getItem('mg-palette') === 'cb' ? 'cb' : 'standard'; } catch (_) { return 'standard'; } };
 
 // ---------------------------------------------------------------- pages
 const PAGES = {
@@ -65,14 +72,12 @@ async function showRoute({id, params}) {
   if (openPage && openPage !== entry) openPage.module.hide?.();
   openPage = entry;
   entry.module.show?.(params);
+  hit('page', id, true);
 }
 
 function applyMapParams(params) {
-  const patch = {};
-  if (params['khu-vuc']) patch.selected = params['khu-vuc'];
-  if (params['nam'] && YEARS.includes(+params.nam)) patch.year = +params.nam;
-  if (params['chi-so'] && INDICES.includes(params['chi-so'])) patch.index = params['chi-so'];
-  if (Object.keys(patch).length) { store.set(patch); if (patch.selected) engine?.select(patch.selected, true); history.replaceState(null, '', '#/'); }
+  const patch = stateFromParams(params);
+  if (Object.keys(patch).length) { store.set(patch); if (patch.selected) engine?.select(patch.selected, true); }
 }
 
 // ---------------------------------------------------------------- top bar
@@ -80,7 +85,7 @@ function buildIndexSwitch() {
   const host = $('#indexSwitch');
   const render = s => mount(host, ...INDICES.map(k => h('button', {type: 'button', 'aria-pressed': String(k === s.index), title: INDEX[k].help, on: {click: () => store.set({index: k})}},
     h('i', {style: {background: INDEX[k].colors[k === 'ndvi' ? 5 : 6]}}), INDEX[k].label, h('small', null, INDEX[k].code))));
-  let last; store.subscribe(s => { if (s.index !== last) { last = s.index; render(s); } }); render(store.get()); last = store.get().index;
+  let last; store.subscribe(s => { const key = s.index + s.palette; if (key !== last) { last = key; render(s); } }); render(store.get()); last = store.get().index + store.get().palette;
 }
 function buildMenu() {
   const host = $('#menu');
@@ -99,6 +104,7 @@ function buildMenu() {
 }
 
 // ---------------------------------------------------------------- tools
+let currentGeo = null;
 function buildTools(engine) {
   const host = $('#mapTools');
   const group = (label, options, key, extra = {}) => h('div', {class: 'tool-group', role: 'group', 'aria-label': label},
@@ -110,19 +116,39 @@ function buildTools(engine) {
   const heightBox = h('label', {class: 'height-ctl'}, 'Độ cao khối', height);
   const actions = h('div', {class: 'tool-group'},
     h('button', {type: 'button', title: 'Xem toàn bộ 167 xã/phường', on: {click: () => engine.fitAll()}}, icon('extent', 16), h('span', null, 'Toàn vùng')),
-    h('button', {type: 'button', title: 'Lưu bản đồ thành ảnh PNG có tiêu đề, tọa độ, la bàn, thước tỷ lệ và thang màu', on: {click: saveImage}}, icon('image', 16), h('span', null, 'Lưu ảnh')));
-  mount(host, dims, mode, base, heightBox, actions);
+    h('button', {type: 'button', dataset: {act: 'compare'}, title: 'So sánh hai năm bằng thanh kéo', on: {click: toggleCompare}}, icon('compare', 16), h('span', null, 'So sánh năm')),
+    h('button', {type: 'button', dataset: {act: 'palette'}, title: 'Bảng màu dễ phân biệt cho người khó nhìn màu (chỉ áp dụng cho tô màu xã/phường)', on: {click: () => { const next = store.get().palette === 'cb' ? 'standard' : 'cb'; setPalette(next); store.set({palette: next}); }}}, icon('eye', 16), h('span', null, 'Màu dễ phân biệt')),
+    h('button', {type: 'button', title: 'Lưu bản đồ thành ảnh PNG có tiêu đề, tọa độ, la bàn, thước tỷ lệ và thang màu', on: {click: saveImage}}, icon('image', 16), h('span', null, 'Lưu ảnh')),
+    h('button', {type: 'button', title: 'Sao chép liên kết đúng khung nhìn đang xem', on: {click: copyLink}}, icon('share', 16), h('span', null, 'Chia sẻ')),
+    h('button', {type: 'button', title: 'Hướng dẫn nhanh', 'aria-label': 'Hướng dẫn nhanh', on: {click: () => { hit('feature', 'huong-dan'); showTour(); }}}, icon('info', 16)));
+  const search = h('div', {class: 'search'});
+  createSearch(search, {geo: currentGeo, onPick: code => { hit('feature', 'tim-kiem'); store.set({selected: code}); engine.select(code, true); if (narrow()) store.set({panel: false}); }});
+  mount(host, search, dims, mode, base, heightBox, actions);
   const sync = s => {
     host.querySelectorAll('button[data-key]').forEach(b => b.setAttribute('aria-pressed', String(String(s[b.dataset.key]) === b.dataset.value)));
     host.querySelector('button[data-key=dims][data-value="3d"]').disabled = s.mode === 'pixel';
     heightBox.hidden = s.dims !== '3d';
+    host.querySelector('[data-act=compare]').setAttribute('aria-pressed', String(!!s.compare.on));
+    host.querySelector('[data-act=palette]').setAttribute('aria-pressed', String(s.palette === 'cb'));
   };
+  function toggleCompare() {
+    const s = store.get();
+    if (s.compare.on) { store.set({compare: {...s.compare, on: false}}); return; }
+    hit('feature', 'so-sanh');
+    store.set({compare: {on: true, year: s.year === 2020 ? 2025 : 2020}, playing: false});
+  }
+  async function copyLink() {
+    hit('feature', 'chia-se'); syncAddress(store.get());
+    const link = shareUrl(store.get());
+    try { await navigator.clipboard.writeText(link); toast('Đã sao chép liên kết. Dán vào tin nhắn để chia sẻ đúng khung nhìn này.'); }
+    catch (_) { window.prompt('Sao chép liên kết này:', link); }
+  }
   store.subscribe(sync); sync(store.get());
 
   async function saveImage() {
     const {exportMap} = await import('./map/export.js');
     const s = store.get();
-    toast('Đang tạo ảnh bản đồ…', {ms: 1800});
+    hit('feature', 'luu-anh'); toast('Đang tạo ảnh bản đồ…', {ms: 1800});
     try {
       const blob = await exportMap(engine.map, s, {title: `Bản đồ ${INDEX[s.index].name.toLowerCase()} TP.HCM năm ${s.year}`});
       const a = Object.assign(document.createElement('a'), {href: URL.createObjectURL(blob), download: `ban-do-${INDEX[s.index].code}-${s.year}.png`});
@@ -150,11 +176,13 @@ export async function speedTest(progress, n = 5) {
 }
 
 // ---------------------------------------------------------------- boot
-let engine = null;
+let engine = null, addrTimer = 0;
 function step(n, text) { $('#splashBar').style.width = (n * 25) + '%'; $('#splashStatus').textContent = text; }
 
 async function boot() {
   perf.begin(!sessionStorage.getItem('mg-seen'), !parseHash().id);
+  const openedWithLink = location.hash.includes('?');
+  watchErrors();
   perf.onReturn(() => navigate('thu-nghiem'));
   step(0, 'Đang kiểm tra máy chủ…');
   await detectApi();
@@ -169,6 +197,10 @@ async function boot() {
   }
   step(3, 'Đang dựng bản đồ…');
   const rows = indexRows(rowsList);
+  currentGeo = geo;
+  const startPatch = {palette: savedPalette(), ...(parseHash().id ? {} : stateFromParams(parseHash().params))};
+  if (startPatch.palette === 'cb' && !parseHash().params.mau) startPatch.palette = 'cb';
+  setPalette(startPatch.palette); store.set(startPatch);
   const ranges = Object.fromEntries(INDICES.map(k => { const v = rowsList.filter(r => policy.eligible(r, k)).map(r => r[k]); return [k, {min: Math.min(...v), max: Math.max(...v)}]; }));
   const padding = () => {
     const s = store.get(), top = $('#topbar').getBoundingClientRect().bottom + 12, bottom = innerHeight - $('#timeline').getBoundingClientRect().top + 12;
@@ -185,17 +217,25 @@ async function boot() {
   createPanel($('#panel'), {geo, rows, ranges, store, onPick: code => { store.set({selected: code}); engine.select(code, true); if (narrow()) store.set({panel: false}); }});
   createTimeline($('#timeline'), store);
   const codes = geo.features.map(f => f.properties.code);
+  const compare = createCompare({host: $('#map2'), handleHost: $('#cmp'), geo, rows, products, ranges, padding, main: engine, store, codes});
 
   const draw = (s, p = {}) => {
     if (s.index !== p.index || s.year !== p.year || s.mode !== p.mode || s.dims !== p.dims || s.basemap !== p.basemap)
       engine.update({index: s.index, year: s.year, mode: s.mode, dims: s.dims, basemap: s.basemap}, {animate: s.animate || (s.year !== p.year && s.index === p.index)});
+    if (s.palette !== p.palette) { setPalette(s.palette); engine.repaint(); compare.repaint(); try { localStorage.setItem('mg-palette', s.palette); } catch (_) { /* ignore */ } if (s.palette !== 'standard') hit('feature', 'mau-cb'); }
     if (s.height !== p.height) engine.setHeight(s.height);
     let m = null;
     if (s.filters !== p.filters || s.year !== p.year) { m = matching(s.filters, rows, codes, s.year); engine.setDim(m); }
     if (s.selected !== p.selected) engine.select(s.selected);
     if (s.panel !== p.panel) { document.body.classList.toggle('panel-closed', !s.panel); }
-    if (['index', 'year', 'selected'].some(k => s[k] !== p[k])) renderInfo($('#info'), {code: s.selected, geo, rows, store});
-    if (['index', 'year', 'mode', 'dims', 'filters'].some(k => s[k] !== p[k])) renderLegend($('#legend'), s, {matchCount: (m || matching(s.filters, rows, codes, s.year))?.size ?? null});
+    if (['index', 'year', 'selected', 'palette'].some(k => s[k] !== p[k])) renderInfo($('#info'), {code: s.selected, geo, rows, store});
+    if (['index', 'year', 'mode', 'dims', 'filters', 'palette'].some(k => s[k] !== p[k])) renderLegend($('#legend'), s, {matchCount: (m || matching(s.filters, rows, codes, s.year))?.size ?? null});
+    if (['index', 'year', 'mode', 'dims', 'basemap', 'height', 'filters', 'selected', 'compare', 'palette'].some(k => s[k] !== p[k])) compare.sync(s, p);
+    if (s.index !== p.index && p.index) hit('layer', s.index, true);
+    if (s.selected !== p.selected && s.selected && p.selected !== undefined) hit('area', s.selected);
+    if (s.dims === '3d' && p.dims !== '3d') hit('feature', '3d', true);
+    if (s.playing && !p.playing) hit('feature', 'phat', true);
+    if (['index', 'year', 'selected', 'mode', 'dims', 'basemap', 'palette', 'range', 'compare'].some(k => s[k] !== p[k]) && $('#pages').hidden) { clearTimeout(addrTimer); addrTimer = setTimeout(() => syncAddress(store.get()), 300); }
     if (s.animate) queueMicrotask(() => store.set({animate: false}));
   };
   store.subscribe(draw);
@@ -211,6 +251,8 @@ async function boot() {
   document.body.classList.remove('is-booting');
   $('#splash').classList.add('done'); setTimeout(() => $('#splash')?.remove(), 600);
   perf.mark('splash');
+  hit('page', parseHash().id || 'ban-do', true);
+  if (!tourSeen() && !openedWithLink) setTimeout(showTour, 900);
   if (!env.api && !sessionStorage.getItem('mg-static-note')) {
     sessionStorage.setItem('mg-static-note', '1');
     setTimeout(() => toast('Đây là bản xem thử: xem được bản đồ, xếp hạng, lọc ngưỡng và thống kê. Tài khoản và quản trị chỉ có ở bản đầy đủ.', {ms: 8000}), 1200);

@@ -53,7 +53,12 @@ export function renderLegend(host, s, {matchCount}) {
       !pixel && h('span', null, h('i', {style: {background: '#c3ccd5'}}), 'Chưa đủ dữ liệu (độ phủ < 50%)'),
       pixel && h('span', null, h('i', {style: {background: 'transparent', border: '1px dashed #8a98a8'}}), 'Trống: không có ảnh dùng được'),
       matchCount != null && !pixel && h('span', null, h('i', {style: {background: '#e3e8ec'}}), `Mờ: không thỏa điều kiện lọc (${matchCount} thỏa)`),
-      s.dims === '3d' && !pixel && h('span', null, '▮ Chiều cao khối theo giá trị (phóng đại)')));
+      s.dims === '3d' && !pixel && h('span', null, '▮ Chiều cao khối theo giá trị (phóng đại)')),
+    pixel && s.palette === 'cb' ? h('p', {class: 'legend-note'}, 'Ô ảnh 120 m luôn dùng thang màu gốc của tài liệu.') : null,
+    h('details', {class: 'legend-more'}, h('summary', null, 'Lưu ý khi đọc'),
+      h('p', null, 'Mỗi năm là một lần chụp trong mùa khô, các cảnh có thể khác ngày. Chênh lệch giữa các năm không phải xu thế khí hậu.'),
+      s.index === 'tvdi' ? h('p', null, 'TVDI là chỉ số thử nghiệm: chưa kiểm định bằng độ ẩm đất và có thể đổi theo cảnh ảnh được chọn. Chỉ dùng để mô tả, không kết luận hạn hán.') : null,
+      s.index === 'lst' ? h('p', null, 'LST là nhiệt độ bề mặt lúc vệ tinh chụp, không phải nhiệt độ không khí.') : null));
 }
 
 // ---------- timeline ----------

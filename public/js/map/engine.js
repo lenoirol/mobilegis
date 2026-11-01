@@ -24,10 +24,10 @@ export function bboxOf(geo) {
   return [[w, s], [e, n]];
 }
 
-export function createMap(container, {geo, rows, products, ranges, onSelect, padding}) {
+export function createMap(container, {geo, rows, products, ranges, onSelect, padding, controls = true, interactive = true}) {
   const box = bboxOf(geo);
   const map = new maplibregl.Map({
-    container, maxPitch: 70, attributionControl: false, canvasContextAttributes: {preserveDrawingBuffer: true},
+    container, maxPitch: 70, attributionControl: false, interactive, canvasContextAttributes: {preserveDrawingBuffer: true},
     bounds: box, fitBoundsOptions: {padding: padding()},
     style: {version: 8, sources: {
       osm: {type: 'raster', tiles: [OSM], tileSize: 256, maxzoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'},
@@ -41,11 +41,13 @@ export function createMap(container, {geo, rows, products, ranges, onSelect, pad
       {id: 'esri', type: 'raster', source: 'esri', layout: {visibility: 'none'}, paint: {'raster-saturation': -0.25}},
     ]},
   });
+  if (controls) {
   map.addControl(new maplibregl.AttributionControl({compact: true}), 'bottom-right');
   map.addControl(new maplibregl.NavigationControl({visualizePitch: true}), 'bottom-right');
   map.addControl(new maplibregl.GeolocateControl({positionOptions: {enableHighAccuracy: true}, trackUserLocation: false, showAccuracyCircle: false}), 'bottom-right');
   map.addControl(new maplibregl.ScaleControl({maxWidth: 120, unit: 'metric'}), 'bottom-left');
-  map.touchZoomRotate.enableRotation();
+  }
+  if (interactive) map.touchZoomRotate.enableRotation();
   // A missing tile outside the data extent is normal (404 on static hosting); do not report it as an app error.
   map.on('error', e => { const m = String(e?.error?.message || ''); if (e?.tile || /404|decode|Failed to fetch/i.test(m)) return; console.error(e?.error || e); });
 
@@ -164,6 +166,12 @@ export function createMap(container, {geo, rows, products, ranges, onSelect, pad
       if (next.basemap) { vis('osm', next.basemap === 'osm'); vis('esri', next.basemap === 'sat'); vis('world', next.basemap === 'plain'); }
       if (changed) apply(animate);
       layout();
+    },
+    /** Re-read INDEX[*].colors (after setPalette) and repaint. */
+    async repaint() {
+      await ready;
+      map.setPaintProperty('c-fill', 'fill-color', colorExpr(index));
+      map.setPaintProperty('c-3d', 'fill-extrusion-color', ['case', dimmed, '#e3e8ec', colorExpr(index)]);
     },
     async setHeight(scale) {
       await ready; heightScale = scale;

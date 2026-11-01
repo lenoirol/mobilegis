@@ -1,0 +1,992 @@
+{
+  "status": "review_only_not_published",
+  "year": 2025,
+  "batch": 2,
+  "method": "Batch 2: preserve every finite value of the published batch-1 recovery; fill only entirely missing triplets in 31 target wards with same-scene Jan–Apr 2025 pixels from scenes not used before.",
+  "scene_index_offset": 10,
+  "target_codes": [
+    "25747",
+    "25750",
+    "25760",
+    "25771",
+    "25813",
+    "25837",
+    "25846",
+    "25849",
+    "25891",
+    "25912",
+    "25920",
+    "25966",
+    "25978",
+    "25987",
+    "26506",
+    "26526",
+    "26542",
+    "26596",
+    "26662",
+    "26773",
+    "26800",
+    "26803",
+    "26833",
+    "26842",
+    "27496",
+    "27526",
+    "27541",
+    "27544",
+    "27553",
+    "27559",
+    "27568"
+  ],
+  "filled_pixels": 6378,
+  "discarded_outside_target_pixels": 1137,
+  "baseline_sha256": "dff58c3b170ffe2a76613a7ad6efb71bf3093f454682268a2df1e0a180cc6a4c",
+  "input_files": [
+    {
+      "file": "MobileGIS_recovery_2025_batch2_120m.tif",
+      "sha256": "99bfd7aeada81ef79fd7154d428241620ce1a67bc4f934af3a9aef9e55a71c15"
+    },
+    {
+      "file": "MobileGIS_recovery_2025_batch2_scenes.csv",
+      "sha256": "f930a397b7693945a170ab2cf74946f0aed287c0ba9bdc87fc928429207deec6"
+    },
+    {
+      "file": "MobileGIS_recovery_2025_batch2_diagnostics.csv",
+      "sha256": "2aacf1187aabe3ce7aa24871eb60283fc103e1e3057a32d98cf3294ed11e923b"
+    }
+  ],
+  "scenes": [
+    {
+      "scene_index": "2",
+      "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20250418_20250425_02_T1",
+      "acquisition_date": "2025-04-18",
+      "day_of_year": "108",
+      "CLOUD_COVER": "19.99",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "53.0",
+      "target_joint_pixels": "22.0",
+      "year": "2025",
+      "recovery_batch": "2",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-0.48068350114512504",
+      "wet_intercept": "30.336433033465816",
+      "dry_slope": "-15.885091174439031",
+      "dry_intercept": "49.46313828271099"
+    },
+    {
+      "scene_index": "3",
+      "LANDSAT_PRODUCT_ID": "LC08_L2SP_125052_20250220_20250226_02_T1",
+      "acquisition_date": "2025-02-20",
+      "day_of_year": "51",
+      "CLOUD_COVER": "19.69",
+      "WRS_PATH": "125.0",
+      "WRS_ROW": "52.0",
+      "target_joint_pixels": "123.0",
+      "year": "2025",
+      "recovery_batch": "2",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-11.718060967832969",
+      "wet_intercept": "24.2607393356294",
+      "dry_slope": "-9.976362268925712",
+      "dry_intercept": "35.804033504638504"
+    },
+    {
+      "scene_index": "4",
+      "LANDSAT_PRODUCT_ID": "LC08_L2SP_125053_20250119_20250128_02_T1",
+      "acquisition_date": "2025-01-19",
+      "day_of_year": "19",
+      "CLOUD_COVER": "13.32",
+      "WRS_PATH": "125.0",
+      "WRS_ROW": "53.0",
+      "target_joint_pixels": "6.0",
+      "year": "2025",
+      "recovery_batch": "2",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-3.9991486320965324",
+      "wet_intercept": "26.20645916857317",
+      "dry_slope": "-12.29095005855423",
+      "dry_intercept": "37.61633627140239"
+    }
+  ],
+  "per_scene_filled_pixels": {
+    "2": 1081,
+    "3": 5291,
+    "4": 6
+  },
+  "wards": [
+    {
+      "code": "25747",
+      "name": "Phường Thủ Dầu Một",
+      "before": {
+        "ndvi": 0.4350925801994548,
+        "ndvi_pixels": 839,
+        "ndvi_coverage": 0.7797397769516728,
+        "lst": 32.96982854313447,
+        "lst_pixels": 839,
+        "lst_coverage": 0.7797397769516728,
+        "tvdi": 0.32246691695325946,
+        "tvdi_pixels": 831,
+        "tvdi_coverage": 0.7723048327137546
+      },
+      "after": {
+        "ndvi": 0.4350925801994548,
+        "ndvi_pixels": 839,
+        "ndvi_coverage": 0.7797397769516728,
+        "lst": 32.96982854313447,
+        "lst_pixels": 839,
+        "lst_coverage": 0.7797397769516728,
+        "tvdi": 0.32246691695325946,
+        "tvdi_pixels": 831,
+        "tvdi_coverage": 0.7723048327137546
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25750",
+      "name": "Phường Phú Lợi",
+      "before": {
+        "ndvi": 0.40064717373069453,
+        "ndvi_pixels": 147,
+        "ndvi_coverage": 0.1176941553242594,
+        "lst": 33.036555089107175,
+        "lst_pixels": 147,
+        "lst_coverage": 0.1176941553242594,
+        "tvdi": 0.2768728520949276,
+        "tvdi_pixels": 147,
+        "tvdi_coverage": 0.1176941553242594
+      },
+      "after": {
+        "ndvi": 0.40064717373069453,
+        "ndvi_pixels": 147,
+        "ndvi_coverage": 0.1176941553242594,
+        "lst": 33.036555089107175,
+        "lst_pixels": 147,
+        "lst_coverage": 0.1176941553242594,
+        "tvdi": 0.2768728520949276,
+        "tvdi_pixels": 147,
+        "tvdi_coverage": 0.1176941553242594
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": false
+    },
+    {
+      "code": "25760",
+      "name": "Phường Bình Dương",
+      "before": {
+        "ndvi": 0.4374318231938317,
+        "ndvi_pixels": 916,
+        "ndvi_coverage": 0.2264524103831891,
+        "lst": 31.48021576810612,
+        "lst_pixels": 916,
+        "lst_coverage": 0.2264524103831891,
+        "tvdi": 0.18726328567880374,
+        "tvdi_pixels": 915,
+        "tvdi_coverage": 0.22620519159456118
+      },
+      "after": {
+        "ndvi": 0.43787033316781654,
+        "ndvi_pixels": 919,
+        "ndvi_coverage": 0.22719406674907294,
+        "lst": 31.433569222202237,
+        "lst_pixels": 919,
+        "lst_coverage": 0.22719406674907294,
+        "tvdi": 0.18665131415697758,
+        "tvdi_pixels": 918,
+        "tvdi_coverage": 0.22694684796044498
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": false
+    },
+    {
+      "code": "25771",
+      "name": "Phường Chánh Hiệp",
+      "before": {
+        "ndvi": 0.5193067700974643,
+        "ndvi_pixels": 850,
+        "ndvi_coverage": 0.6058446186742694,
+        "lst": 31.79158508749569,
+        "lst_pixels": 850,
+        "lst_coverage": 0.6058446186742694,
+        "tvdi": 0.33580121022297477,
+        "tvdi_pixels": 829,
+        "tvdi_coverage": 0.5908766928011404
+      },
+      "after": {
+        "ndvi": 0.5194639123956531,
+        "ndvi_pixels": 851,
+        "ndvi_coverage": 0.6065573770491803,
+        "lst": 31.777003804889326,
+        "lst_pixels": 851,
+        "lst_coverage": 0.6065573770491803,
+        "tvdi": 0.33566023953348756,
+        "tvdi_pixels": 830,
+        "tvdi_coverage": 0.5915894511760513
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25813",
+      "name": "Phường Bến Cát",
+      "before": {
+        "ndvi": 0.6216883799547885,
+        "ndvi_pixels": 5377,
+        "ndvi_coverage": 0.7689117689117689,
+        "lst": 31.022429524244863,
+        "lst_pixels": 5377,
+        "lst_coverage": 0.7689117689117689,
+        "tvdi": 0.3806242689173568,
+        "tvdi_pixels": 5320,
+        "tvdi_coverage": 0.7607607607607607
+      },
+      "after": {
+        "ndvi": 0.6090449501150423,
+        "ndvi_pixels": 6293,
+        "ndvi_coverage": 0.8998998998998999,
+        "lst": 29.948176080881648,
+        "lst_pixels": 6293,
+        "lst_coverage": 0.8998998998998999,
+        "tvdi": 0.3914261654607425,
+        "tvdi_pixels": 6236,
+        "tvdi_coverage": 0.8917488917488917
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25837",
+      "name": "Phường Chánh Phú Hoà",
+      "before": {
+        "ndvi": 0.6576174056303092,
+        "ndvi_pixels": 3671,
+        "ndvi_coverage": 0.7603562551781275,
+        "lst": 30.376195399451404,
+        "lst_pixels": 3671,
+        "lst_coverage": 0.7603562551781275,
+        "tvdi": 0.3702234825617414,
+        "tvdi_pixels": 3646,
+        "tvdi_coverage": 0.7551781275890638
+      },
+      "after": {
+        "ndvi": 0.6566148039744976,
+        "ndvi_pixels": 3888,
+        "ndvi_coverage": 0.8053024026512013,
+        "lst": 29.84231087749387,
+        "lst_pixels": 3888,
+        "lst_coverage": 0.8053024026512013,
+        "tvdi": 0.3689083041311448,
+        "tvdi_pixels": 3863,
+        "tvdi_coverage": 0.8001242750621376
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25846",
+      "name": "Phường Thới Hoà",
+      "before": {
+        "ndvi": 0.46323024516646083,
+        "ndvi_pixels": 1061,
+        "ndvi_coverage": 0.40434451219512196,
+        "lst": 32.117006702764655,
+        "lst_pixels": 1061,
+        "lst_coverage": 0.40434451219512196,
+        "tvdi": 0.2746643209457752,
+        "tvdi_pixels": 1051,
+        "tvdi_coverage": 0.40053353658536583
+      },
+      "after": {
+        "ndvi": 0.4480575751252812,
+        "ndvi_pixels": 1645,
+        "ndvi_coverage": 0.6269054878048781,
+        "lst": 29.651591352561326,
+        "lst_pixels": 1645,
+        "lst_coverage": 0.6269054878048781,
+        "tvdi": 0.34682296092097936,
+        "tvdi_pixels": 1635,
+        "tvdi_coverage": 0.6230945121951219
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25849",
+      "name": "Phường Hoà Lợi",
+      "before": {
+        "ndvi": 0.5774101333248258,
+        "ndvi_pixels": 767,
+        "ndvi_coverage": 0.3215932914046122,
+        "lst": 29.212978915098905,
+        "lst_pixels": 767,
+        "lst_coverage": 0.3215932914046122,
+        "tvdi": 0.16232425062864808,
+        "tvdi_pixels": 767,
+        "tvdi_coverage": 0.3215932914046122
+      },
+      "after": {
+        "ndvi": 0.5731701772388215,
+        "ndvi_pixels": 932,
+        "ndvi_coverage": 0.3907756813417191,
+        "lst": 27.50079567442636,
+        "lst_pixels": 932,
+        "lst_coverage": 0.3907756813417191,
+        "tvdi": 0.17241454274163662,
+        "tvdi_pixels": 932,
+        "tvdi_coverage": 0.3907756813417191
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": false
+    },
+    {
+      "code": "25891",
+      "name": "Phường Tân Khánh",
+      "before": {
+        "ndvi": 0.48708138926967715,
+        "ndvi_pixels": 456,
+        "ndvi_coverage": 0.17117117117117117,
+        "lst": 30.6132458218357,
+        "lst_pixels": 456,
+        "lst_coverage": 0.17117117117117117,
+        "tvdi": 0.17974477497712577,
+        "tvdi_pixels": 454,
+        "tvdi_coverage": 0.1704204204204204
+      },
+      "after": {
+        "ndvi": 0.48708138926967715,
+        "ndvi_pixels": 456,
+        "ndvi_coverage": 0.17117117117117117,
+        "lst": 30.6132458218357,
+        "lst_pixels": 456,
+        "lst_coverage": 0.17117117117117117,
+        "tvdi": 0.17974477497712577,
+        "tvdi_pixels": 454,
+        "tvdi_coverage": 0.1704204204204204
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": false
+    },
+    {
+      "code": "25912",
+      "name": "Phường Vĩnh Tân",
+      "before": {
+        "ndvi": 0.5342525435139776,
+        "ndvi_pixels": 3699,
+        "ndvi_coverage": 0.8726114649681529,
+        "lst": 32.81783645827888,
+        "lst_pixels": 3699,
+        "lst_coverage": 0.8726114649681529,
+        "tvdi": 0.4307374887253119,
+        "tvdi_pixels": 3672,
+        "tvdi_coverage": 0.8662420382165605
+      },
+      "after": {
+        "ndvi": 0.5330382787246338,
+        "ndvi_pixels": 3731,
+        "ndvi_coverage": 0.8801604151922623,
+        "lst": 32.74796841196322,
+        "lst_pixels": 3731,
+        "lst_coverage": 0.8801604151922623,
+        "tvdi": 0.4305578554217597,
+        "tvdi_pixels": 3704,
+        "tvdi_coverage": 0.8737909884406699
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25920",
+      "name": "Phường Tân Hiệp",
+      "before": {
+        "ndvi": 0.4315753852162076,
+        "ndvi_pixels": 2006,
+        "ndvi_coverage": 0.6132681137266891,
+        "lst": 33.84470809753966,
+        "lst_pixels": 2006,
+        "lst_coverage": 0.6132681137266891,
+        "tvdi": 0.39427453406758756,
+        "tvdi_pixels": 1981,
+        "tvdi_coverage": 0.6056251910730663
+      },
+      "after": {
+        "ndvi": 0.4318140524572162,
+        "ndvi_pixels": 2008,
+        "ndvi_coverage": 0.6138795475389789,
+        "lst": 33.830152424208194,
+        "lst_pixels": 2008,
+        "lst_coverage": 0.6138795475389789,
+        "tvdi": 0.3941014104743971,
+        "tvdi_pixels": 1983,
+        "tvdi_coverage": 0.6062366248853561
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25966",
+      "name": "Phường Lái Thiêu",
+      "before": {
+        "ndvi": 0.3613660955136738,
+        "ndvi_pixels": 367,
+        "ndvi_coverage": 0.3459000942507069,
+        "lst": 33.565908738637816,
+        "lst_pixels": 367,
+        "lst_coverage": 0.3459000942507069,
+        "tvdi": 0.2704169754153834,
+        "tvdi_pixels": 364,
+        "tvdi_coverage": 0.34307257304429783
+      },
+      "after": {
+        "ndvi": 0.39088661046874923,
+        "ndvi_pixels": 687,
+        "ndvi_coverage": 0.647502356267672,
+        "lst": 29.19466618644792,
+        "lst_pixels": 687,
+        "lst_coverage": 0.647502356267672,
+        "tvdi": 0.33048961162621604,
+        "tvdi_pixels": 684,
+        "tvdi_coverage": 0.644674835061263
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25978",
+      "name": "Phường Thuận An",
+      "before": {
+        "ndvi": 0.5609897852562703,
+        "ndvi_pixels": 578,
+        "ndvi_coverage": 0.5133214920071048,
+        "lst": 30.455885336060838,
+        "lst_pixels": 578,
+        "lst_coverage": 0.5133214920071048,
+        "tvdi": 0.26141976465326433,
+        "tvdi_pixels": 573,
+        "tvdi_coverage": 0.5088809946714032
+      },
+      "after": {
+        "ndvi": 0.561199160321499,
+        "ndvi_pixels": 583,
+        "ndvi_coverage": 0.5177619893428064,
+        "lst": 30.365821197143344,
+        "lst_pixels": 583,
+        "lst_coverage": 0.5177619893428064,
+        "tvdi": 0.2609143919862523,
+        "tvdi_pixels": 578,
+        "tvdi_coverage": 0.5133214920071048
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25987",
+      "name": "Phường Bình Hoà",
+      "before": {
+        "ndvi": 0.3669418362801692,
+        "ndvi_pixels": 386,
+        "ndvi_coverage": 0.29899302865995353,
+        "lst": 35.27490040181215,
+        "lst_pixels": 386,
+        "lst_coverage": 0.29899302865995353,
+        "tvdi": 0.39534428111578107,
+        "tvdi_pixels": 378,
+        "tvdi_coverage": 0.2927962819519752
+      },
+      "after": {
+        "ndvi": 0.35921134609540745,
+        "ndvi_pixels": 821,
+        "ndvi_coverage": 0.6359411309062742,
+        "lst": 31.41067641254755,
+        "lst_pixels": 821,
+        "lst_coverage": 0.6359411309062742,
+        "tvdi": 0.5295413352530748,
+        "tvdi_pixels": 813,
+        "tvdi_coverage": 0.6297443841982959
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26506",
+      "name": "Phường Vũng Tàu",
+      "before": {
+        "ndvi": 0.4457319333105764,
+        "ndvi_pixels": 506,
+        "ndvi_coverage": 0.494140625,
+        "lst": 31.899750407976594,
+        "lst_pixels": 506,
+        "lst_coverage": 0.494140625,
+        "tvdi": 0.2680625449920368,
+        "tvdi_pixels": 493,
+        "tvdi_coverage": 0.4814453125
+      },
+      "after": {
+        "ndvi": 0.3699738144109434,
+        "ndvi_pixels": 807,
+        "ndvi_coverage": 0.7880859375,
+        "lst": 34.60087494217921,
+        "lst_pixels": 807,
+        "lst_coverage": 0.7880859375,
+        "tvdi": 0.3856474426948883,
+        "tvdi_pixels": 794,
+        "tvdi_coverage": 0.775390625
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26526",
+      "name": "Phường Tam Thắng",
+      "before": {
+        "ndvi": 0.3565325666583679,
+        "ndvi_pixels": 641,
+        "ndvi_coverage": 0.8073047858942065,
+        "lst": 34.140452511411006,
+        "lst_pixels": 641,
+        "lst_coverage": 0.8073047858942065,
+        "tvdi": 0.4244690471334765,
+        "tvdi_pixels": 624,
+        "tvdi_coverage": 0.7858942065491183
+      },
+      "after": {
+        "ndvi": 0.339910828024028,
+        "ndvi_pixels": 770,
+        "ndvi_coverage": 0.9697732997481109,
+        "lst": 35.147541234400364,
+        "lst_pixels": 770,
+        "lst_coverage": 0.9697732997481109,
+        "tvdi": 0.46447522699051247,
+        "tvdi_pixels": 753,
+        "tvdi_coverage": 0.9483627204030227
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26542",
+      "name": "Phường Phước Thắng",
+      "before": {
+        "ndvi": 0.26086534354281926,
+        "ndvi_pixels": 2802,
+        "ndvi_coverage": 0.8688372093023256,
+        "lst": 31.197509803064033,
+        "lst_pixels": 2802,
+        "lst_coverage": 0.8688372093023256,
+        "tvdi": 0.36990078827494377,
+        "tvdi_pixels": 1926,
+        "tvdi_coverage": 0.5972093023255814
+      },
+      "after": {
+        "ndvi": 0.26077960541100154,
+        "ndvi_pixels": 2812,
+        "ndvi_coverage": 0.871937984496124,
+        "lst": 31.228380633960576,
+        "lst_pixels": 2812,
+        "lst_coverage": 0.871937984496124,
+        "tvdi": 0.37126181430382027,
+        "tvdi_pixels": 1936,
+        "tvdi_coverage": 0.6003100775193798
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26596",
+      "name": "Xã Châu Đức",
+      "before": {
+        "ndvi": 0.6711364460370203,
+        "ndvi_pixels": 4253,
+        "ndvi_coverage": 0.722807613868117,
+        "lst": 32.02115813631353,
+        "lst_pixels": 4253,
+        "lst_coverage": 0.722807613868117,
+        "tvdi": 0.4679974504812536,
+        "tvdi_pixels": 4125,
+        "tvdi_coverage": 0.7010537049626104
+      },
+      "after": {
+        "ndvi": 0.6826537218379948,
+        "ndvi_pixels": 4889,
+        "ndvi_coverage": 0.8308973487423521,
+        "lst": 32.080214966048146,
+        "lst_pixels": 4889,
+        "lst_coverage": 0.8308973487423521,
+        "tvdi": 0.451286836451585,
+        "tvdi_pixels": 4761,
+        "tvdi_coverage": 0.8091434398368457
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26662",
+      "name": "Xã Long Hải",
+      "before": {
+        "ndvi": 0.4166356826839912,
+        "ndvi_pixels": 1522,
+        "ndvi_coverage": 0.8344298245614035,
+        "lst": 32.189255594110676,
+        "lst_pixels": 1522,
+        "lst_coverage": 0.8344298245614035,
+        "tvdi": 0.3423225463145556,
+        "tvdi_pixels": 1412,
+        "tvdi_coverage": 0.7741228070175439
+      },
+      "after": {
+        "ndvi": 0.4166356826839912,
+        "ndvi_pixels": 1522,
+        "ndvi_coverage": 0.8344298245614035,
+        "lst": 32.189255594110676,
+        "lst_pixels": 1522,
+        "lst_coverage": 0.8344298245614035,
+        "tvdi": 0.3423225463145556,
+        "tvdi_pixels": 1412,
+        "tvdi_coverage": 0.7741228070175439
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26773",
+      "name": "Phường Thới An",
+      "before": {
+        "ndvi": 0.4284750999694051,
+        "ndvi_pixels": 819,
+        "ndvi_coverage": 0.7943743937924346,
+        "lst": 37.977748104649734,
+        "lst_pixels": 819,
+        "lst_coverage": 0.7943743937924346,
+        "tvdi": 0.6249203277772322,
+        "tvdi_pixels": 817,
+        "tvdi_coverage": 0.7924345295829291
+      },
+      "after": {
+        "ndvi": 0.43301258684454225,
+        "ndvi_pixels": 954,
+        "ndvi_coverage": 0.9253152279340446,
+        "lst": 36.092983039919936,
+        "lst_pixels": 954,
+        "lst_coverage": 0.9253152279340446,
+        "tvdi": 0.6022130242791497,
+        "tvdi_pixels": 952,
+        "tvdi_coverage": 0.9233753637245393
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26800",
+      "name": "Phường Linh Xuân",
+      "before": {
+        "ndvi": 0.28548655442861254,
+        "ndvi_pixels": 231,
+        "ndvi_coverage": 0.26674364896073904,
+        "lst": 43.0355975411155,
+        "lst_pixels": 231,
+        "lst_coverage": 0.26674364896073904,
+        "tvdi": 0.8424122345137905,
+        "tvdi_pixels": 231,
+        "tvdi_coverage": 0.26674364896073904
+      },
+      "after": {
+        "ndvi": 0.30182846606871405,
+        "ndvi_pixels": 545,
+        "ndvi_coverage": 0.6293302540415704,
+        "lst": 34.25109394318467,
+        "lst_pixels": 545,
+        "lst_coverage": 0.6293302540415704,
+        "tvdi": 0.7009872330438106,
+        "tvdi_pixels": 545,
+        "tvdi_coverage": 0.6293302540415704
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26803",
+      "name": "Phường Tam Bình",
+      "before": {
+        "ndvi": 0.36410340748688313,
+        "ndvi_pixels": 382,
+        "ndvi_coverage": 0.5560407569141194,
+        "lst": 38.87342116970042,
+        "lst_pixels": 382,
+        "lst_coverage": 0.5560407569141194,
+        "tvdi": 0.6268457168839989,
+        "tvdi_pixels": 382,
+        "tvdi_coverage": 0.5560407569141194
+      },
+      "after": {
+        "ndvi": 0.3461253923204171,
+        "ndvi_pixels": 676,
+        "ndvi_coverage": 0.9839883551673945,
+        "lst": 34.53569926876994,
+        "lst_pixels": 676,
+        "lst_coverage": 0.9839883551673945,
+        "tvdi": 0.6565788625877285,
+        "tvdi_pixels": 676,
+        "tvdi_coverage": 0.9839883551673945
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26833",
+      "name": "Phường Long Bình",
+      "before": {
+        "ndvi": 0.3540161034612734,
+        "ndvi_pixels": 1522,
+        "ndvi_coverage": 0.8061440677966102,
+        "lst": 35.778569637554234,
+        "lst_pixels": 1522,
+        "lst_coverage": 0.8061440677966102,
+        "tvdi": 0.5803548846389438,
+        "tvdi_pixels": 1274,
+        "tvdi_coverage": 0.6747881355932204
+      },
+      "after": {
+        "ndvi": 0.35734180207192573,
+        "ndvi_pixels": 1546,
+        "ndvi_coverage": 0.8188559322033898,
+        "lst": 35.58402353671667,
+        "lst_pixels": 1546,
+        "lst_coverage": 0.8188559322033898,
+        "tvdi": 0.5745542151587965,
+        "tvdi_pixels": 1298,
+        "tvdi_coverage": 0.6875
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26842",
+      "name": "Phường Tăng Nhơn Phú",
+      "before": {
+        "ndvi": 0.3959564256627998,
+        "ndvi_pixels": 1115,
+        "ndvi_coverage": 0.8174486803519062,
+        "lst": 43.538165382419464,
+        "lst_pixels": 1115,
+        "lst_coverage": 0.8174486803519062,
+        "tvdi": 0.8605348346389851,
+        "tvdi_pixels": 1097,
+        "tvdi_coverage": 0.8042521994134897
+      },
+      "after": {
+        "ndvi": 0.39568962495374893,
+        "ndvi_pixels": 1120,
+        "ndvi_coverage": 0.8211143695014663,
+        "lst": 43.50722267798015,
+        "lst_pixels": 1120,
+        "lst_coverage": 0.8211143695014663,
+        "tvdi": 0.8593010928502101,
+        "tvdi_pixels": 1102,
+        "tvdi_coverage": 0.8079178885630498
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "27496",
+      "name": "Xã Tân An Hội",
+      "before": {
+        "ndvi": 0.5828969478513812,
+        "ndvi_pixels": 3192,
+        "ndvi_coverage": 0.8592193808882908,
+        "lst": 30.346355426879157,
+        "lst_pixels": 3192,
+        "lst_coverage": 0.8592193808882908,
+        "tvdi": 0.27052638863791456,
+        "tvdi_pixels": 3189,
+        "tvdi_coverage": 0.8584118438761776
+      },
+      "after": {
+        "ndvi": 0.5777507726106107,
+        "ndvi_pixels": 3677,
+        "ndvi_coverage": 0.989771197846568,
+        "lst": 29.840053699442574,
+        "lst_pixels": 3677,
+        "lst_coverage": 0.989771197846568,
+        "tvdi": 0.32543956157163917,
+        "tvdi_pixels": 3674,
+        "tvdi_coverage": 0.9889636608344549
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "27526",
+      "name": "Xã Thái Mỹ",
+      "before": {
+        "ndvi": 0.6585019868488916,
+        "ndvi_pixels": 3865,
+        "ndvi_coverage": 0.8934350439204808,
+        "lst": 28.964351744361867,
+        "lst_pixels": 3865,
+        "lst_coverage": 0.8934350439204808,
+        "tvdi": 0.24352086864825037,
+        "tvdi_pixels": 3795,
+        "tvdi_coverage": 0.8772538141470181
+      },
+      "after": {
+        "ndvi": 0.6450682042947644,
+        "ndvi_pixels": 4326,
+        "ndvi_coverage": 1.0,
+        "lst": 28.98832673845719,
+        "lst_pixels": 4326,
+        "lst_coverage": 1.0,
+        "tvdi": 0.3126136977147722,
+        "tvdi_pixels": 4256,
+        "tvdi_coverage": 0.9838187702265372
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "27541",
+      "name": "Xã Phú Hoà Đông",
+      "before": {
+        "ndvi": 0.6132787463607166,
+        "ndvi_pixels": 3112,
+        "ndvi_coverage": 0.7513278609367455,
+        "lst": 29.421683632009746,
+        "lst_pixels": 3112,
+        "lst_coverage": 0.7513278609367455,
+        "tvdi": 0.2322462111105696,
+        "tvdi_pixels": 3076,
+        "tvdi_coverage": 0.742636407532593
+      },
+      "after": {
+        "ndvi": 0.6120623988077507,
+        "ndvi_pixels": 3191,
+        "ndvi_coverage": 0.7704007725736359,
+        "lst": 29.18843987398258,
+        "lst_pixels": 3191,
+        "lst_coverage": 0.7704007725736359,
+        "tvdi": 0.23117574458477264,
+        "tvdi_pixels": 3155,
+        "tvdi_coverage": 0.7617093191694834
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "27544",
+      "name": "Xã Bình Mỹ",
+      "before": {
+        "ndvi": 0.557651754718334,
+        "ndvi_pixels": 3100,
+        "ndvi_coverage": 0.8181578252837161,
+        "lst": 30.906560996886224,
+        "lst_pixels": 3100,
+        "lst_coverage": 0.8181578252837161,
+        "tvdi": 0.3204282779586363,
+        "tvdi_pixels": 2993,
+        "tvdi_coverage": 0.7899181842174716
+      },
+      "after": {
+        "ndvi": 0.5583340000565061,
+        "ndvi_pixels": 3134,
+        "ndvi_coverage": 0.8271311691739245,
+        "lst": 30.77665122055901,
+        "lst_pixels": 3134,
+        "lst_coverage": 0.8271311691739245,
+        "tvdi": 0.3187649430830781,
+        "tvdi_pixels": 3027,
+        "tvdi_coverage": 0.7988915281076802
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "27553",
+      "name": "Xã Củ Chi",
+      "before": {
+        "ndvi": 0.5918762471155261,
+        "ndvi_pixels": 2557,
+        "ndvi_coverage": 0.5652077807250221,
+        "lst": 29.55580223450495,
+        "lst_pixels": 2557,
+        "lst_coverage": 0.5652077807250221,
+        "tvdi": 0.2132965267541406,
+        "tvdi_pixels": 2547,
+        "tvdi_coverage": 0.5629973474801061
+      },
+      "after": {
+        "ndvi": 0.5796986632592002,
+        "ndvi_pixels": 2854,
+        "ndvi_coverage": 0.6308576480990274,
+        "lst": 28.95665613854775,
+        "lst_pixels": 2854,
+        "lst_coverage": 0.6308576480990274,
+        "tvdi": 0.23422406960618744,
+        "tvdi_pixels": 2844,
+        "tvdi_coverage": 0.6286472148541115
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "27559",
+      "name": "Xã Hóc Môn",
+      "before": {
+        "ndvi": 0.44701450451272695,
+        "ndvi_pixels": 621,
+        "ndvi_coverage": 0.5564516129032258,
+        "lst": 36.43712194875818,
+        "lst_pixels": 621,
+        "lst_coverage": 0.5564516129032258,
+        "tvdi": 0.5311168945751014,
+        "tvdi_pixels": 621,
+        "tvdi_coverage": 0.5564516129032258
+      },
+      "after": {
+        "ndvi": 0.45802037757547465,
+        "ndvi_pixels": 680,
+        "ndvi_coverage": 0.6093189964157706,
+        "lst": 35.025899631836836,
+        "lst_pixels": 680,
+        "lst_coverage": 0.6093189964157706,
+        "tvdi": 0.5038091540471856,
+        "tvdi_pixels": 680,
+        "tvdi_coverage": 0.6093189964157706
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "27568",
+      "name": "Xã Đông Thạnh",
+      "before": {
+        "ndvi": 0.4831536145289931,
+        "ndvi_pixels": 1242,
+        "ndvi_coverage": 0.5891840607210627,
+        "lst": 34.143003012247135,
+        "lst_pixels": 1242,
+        "lst_coverage": 0.5891840607210627,
+        "tvdi": 0.435447580472431,
+        "tvdi_pixels": 1233,
+        "tvdi_coverage": 0.5849146110056926
+      },
+      "after": {
+        "ndvi": 0.484339273626348,
+        "ndvi_pixels": 1677,
+        "ndvi_coverage": 0.7955407969639469,
+        "lst": 31.49649494605613,
+        "lst_pixels": 1677,
+        "lst_coverage": 0.7955407969639469,
+        "tvdi": 0.43563144409633187,
+        "tvdi_pixels": 1668,
+        "tvdi_coverage": 0.7912713472485768
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    }
+  ],
+  "limitations": "Different dates and per-scene TVDI fits. Review coverage and scientific comparability before adoption. Do not replace active GEE files with this candidate directly."
+}

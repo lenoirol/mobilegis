@@ -1,0 +1,377 @@
+==============================================================================
+ HƯỚNG DẪN SỬ DỤNG WEB TỪ A ĐẾN Z
+ BẢN ĐỒ NHIỆT - XANH - KHÔ TP.HCM  (MobileGIS · Nhóm 13 · Đề tài 6)
+ Phiên bản web v3.1 · cập nhật 02/11/2026
+==============================================================================
+
+Web hiển thị 3 chỉ số vệ tinh cho 167 xã/phường của TP.HCM sau sáp nhập
+(không gồm đặc khu Côn Đảo), mùa khô 2020–2025, tính từ ảnh Landsat 8/9:
+
+  - Nhiệt độ (LST)   : nhiệt độ BỀ MẶT đất lúc vệ tinh chụp, đơn vị °C.
+                       Không phải nhiệt độ không khí (thường cao hơn).
+  - Độ xanh (NDVI)   : mức xanh của thảm thực vật, từ -1 đến 1.
+  - Độ khô (TVDI)    : mức khô TƯƠNG ĐỐI, từ 0 (ẩm) đến 1 (khô).
+                       Chỉ số THỬ NGHIỆM, chỉ để tham khảo.
+
+Web phục vụ học tập và tham khảo; không phải hệ thống cảnh báo chính thức.
+
+
+==============================================================================
+ PHẦN 1. MỞ WEB
+==============================================================================
+1. Mở địa chỉ web của nhóm bằng Chrome / Safari / Edge / Brave
+   (máy tính hoặc điện thoại đều được; không cần cài đặt gì).
+2. Chờ vài giây để bản đồ và số liệu tải. Lần đầu vào sẽ hiện hộp
+   "Hướng dẫn nhanh" gồm 5 bước:
+      - Chạm vào bản đồ
+      - Chọn chỉ số và năm
+      - 2D và 3D
+      - Xếp hạng, tìm kiếm, lọc
+      - So sánh, lưu ảnh, chia sẻ
+   Bấm "Đã hiểu" để đóng. Tích "Không hiện lại" nếu không muốn thấy nữa.
+   Muốn xem lại: bấm nút "?" ở thanh công cụ.
+3. Không cần đăng nhập để xem bản đồ, xếp hạng, thống kê.
+
+
+==============================================================================
+ PHẦN 2. NGƯỜI XEM (KHÔNG CẦN TÀI KHOẢN)
+==============================================================================
+
+2.1  Màn hình chính = bản đồ toàn màn hình
+--------------------------------------------
+- Thanh trên cùng: tên ứng dụng, 3 nút chọn chỉ số
+  (Nhiệt độ · Độ xanh · Độ khô) và các biểu tượng menu:
+  Xếp hạng, Thống kê, Bảng số liệu, Giới thiệu, Tài khoản.
+- Bản đồ tô màu từng xã/phường theo giá trị trung bình của chỉ số đang chọn.
+- Dưới cùng là thanh thời gian (2020 → 2025).
+- Không cần cuộn trang: mọi thứ nằm gọn trong một màn hình.
+
+2.2  Xem một xã/phường
+----------------------
+- Chạm (hoặc bấm) vào một xã/phường trên bản đồ.
+- Thẻ thông tin hiện ra với: tên, ngày ảnh chụp, giá trị LST – NDVI – TVDI
+  kèm mức tin cậy ("Tin cậy cao" / "Tin cậy thấp"), và đường diễn biến
+  2020–2025 của khu vực đó.
+- Bấm dấu X để đóng thẻ.
+- Nếu TVDI ≥ 0,8 sẽ có nhắc: đây là chỉ số thử nghiệm.
+
+2.3  Chọn chỉ số và năm
+-----------------------
+- Chọn chỉ số: bấm "Nhiệt độ", "Độ xanh" hoặc "Độ khô" ở thanh trên.
+- Chọn năm: bấm vào năm trên thanh thời gian (2020 … 2025).
+- Nút ▶ để bản đồ tự chạy qua các năm. Chỉ chạy qua các năm CÓ ẢNH THẬT;
+  không có số liệu cho năm "ở giữa", hiệu ứng chuyển chỉ là chuyển cảnh.
+- Có thể chọn khoảng năm "Từ … đến …" và tốc độ phát.
+
+2.4  Màu xám trên bản đồ nghĩa là gì?
+-------------------------------------
+- Xã/phường có DƯỚI 50% diện tích ảnh dùng được (bị mây che) thì để màu xám,
+  không xếp hạng và không tính khi lọc. Màu xám KHÔNG có nghĩa là "bằng 0".
+- Thiếu dữ liệu ≠ bằng 0; độ phủ ≠ độ chính xác.
+
+2.5  2D và 3D
+-------------
+- Bấm "2D" hoặc "3D". Ở 3D mỗi xã/phường là một khối, chiều cao theo giá trị
+  (đã phóng đại để dễ nhìn). Có thanh "Độ cao khối 3D" để chỉnh.
+- Xoay/nghiêng: máy tính kéo chuột phải; điện thoại dùng hai ngón tay.
+- Khu vực thiếu dữ liệu hoặc không thỏa bộ lọc nằm phẳng, màu xám nhạt.
+
+2.4b Kiểu hiển thị và nền
+-------------------------
+- "Xã/phường": tô màu theo trung bình từng xã/phường (mặc định).
+- "Ô ảnh 120 m": hiện từng ô ảnh vệ tinh 120 m (chỉ có ở 2D).
+- Nền bản đồ: Bản đồ / Vệ tinh / Nhẹ.
+
+2.6  Xếp hạng 167 xã/phường
+---------------------------
+- Mở bảng "Xếp hạng" (biểu tượng bảng ở thanh trên). Trên điện thoại bảng
+  trượt lên từ dưới, chiếm khoảng nửa màn hình.
+- Cách xếp:
+    LST  : cao → thấp (nóng nhất lên đầu)
+    NDVI : thấp → cao (ít cây xanh nhất lên đầu)
+    TVDI : cao → thấp (khô nhất lên đầu)
+- Xã/phường chưa đủ dữ liệu nằm cuối, ghi "chưa đủ dữ liệu".
+- Bấm một dòng để bản đồ bay tới và mở thẻ thông tin khu vực đó.
+- Nút "CSV" trong bảng: tải danh sách đang xem.
+
+2.7  Lọc theo ngưỡng
+--------------------
+- Trong bảng Xếp hạng, bật bộ lọc rồi nhập ngưỡng, ví dụ:  LST > 40.
+- Các khu vực thỏa điều kiện nổi bật trên bản đồ, khu vực không thỏa bị làm mờ.
+- Có thể kết hợp nhiều chỉ số (ví dụ LST > 40 và NDVI < 0,2).
+
+2.8  Tìm kiếm xã/phường
+-----------------------
+- Gõ tên vào ô "Tìm" (không cần gõ dấu: "ben thanh" vẫn ra "Phường Bến Thành").
+- Chọn kết quả: bản đồ bay tới và mở thẻ thông tin.
+
+2.9  So sánh hai năm
+--------------------
+1. Bấm "So sánh năm".
+2. Bản đồ chia làm hai nửa bằng một thanh kéo: bên trái là năm đang chọn
+   ở thanh thời gian, bên phải là năm bạn chọn để so (ô "năm B").
+3. Kéo núm ở giữa thanh để xem phần nào của hai năm.
+4. Zoom/kéo bản đồ: hai nửa luôn đồng bộ vị trí.
+5. Bấm "So sánh năm" lần nữa để tắt.
+
+2.10 Màu dễ phân biệt (cho người khó nhìn đỏ – xanh)
+----------------------------------------------------
+- Bấm "Màu dễ phân biệt" để đổi sang bảng màu thay thế (kiểu viridis/inferno).
+- Chỉ áp dụng cho tô màu xã/phường, biểu đồ, chú giải; ảnh ô 120 m luôn dùng
+  thang màu gốc theo tài liệu của đề tài.
+- Bấm lần nữa để quay về màu chuẩn.
+
+2.11 Chú giải và "Lưu ý khi đọc"
+--------------------------------
+- Khung chú giải cho biết thang màu và đơn vị.
+- Bấm "Lưu ý khi đọc" để xem các giới hạn:
+    * Mỗi năm chỉ là MỘT lần chụp trong mùa khô; chênh lệch giữa các năm
+      không phải xu thế khí hậu.
+    * TVDI là chỉ số thử nghiệm.
+    * LST là nhiệt độ bề mặt, không phải nhiệt độ không khí.
+
+2.12 Lưu ảnh bản đồ (để đưa vào báo cáo)
+----------------------------------------
+- Bấm "Lưu ảnh". Web tạo tệp PNG có: tiêu đề, phụ đề (chỉ số, năm, cách tính),
+  khung tọa độ, la bàn, thước tỷ lệ, thang màu, nguồn dữ liệu.
+- Khung tọa độ và thước tỷ lệ chỉ có khi bản đồ phẳng, hướng Bắc lên.
+
+2.13 Chia sẻ đúng góc nhìn
+--------------------------
+- Bấm "Chia sẻ": web sao chép liên kết chứa đúng chỉ số, năm, khu vực,
+  chế độ 2D/3D, nền, màu, khoảng năm và năm so sánh đang xem.
+- Gửi liên kết cho người khác: họ mở ra sẽ thấy đúng như bạn đang thấy
+  (và không bị hiện hộp hướng dẫn).
+
+2.14 "Toàn vùng"
+----------------
+- Bấm "Toàn vùng" để đưa bản đồ về khung nhìn toàn TP.HCM.
+
+2.15 Các trang phụ (menu trên cùng; nút "Về bản đồ" để quay lại)
+----------------------------------------------------------------
+- THỐNG KÊ : phân bố, so sánh chuỗi các khu vực, khu vực giá trị cao,
+             tương quan nhiệt độ – độ xanh, khu vực độ khô cao.
+- BẢNG SỐ LIỆU : xu hướng toàn vùng, tổng hợp theo năm, bảng xếp hạng,
+             nút "Xuất bảng đang xem (CSV)".
+- GIỚI THIỆU : ý nghĩa 3 chỉ số, cách dùng, bảng mức độ khô TVDI, số khu vực
+             đủ dữ liệu mỗi năm, mục "Vì sao TVDI chỉ để tham khảo",
+             nguồn dữ liệu, giới hạn; tải CSV số liệu theo xã/phường và
+             GeoJSON ranh giới.
+- THỬ NGHIỆM ("Giúp nhóm thử trên điện thoại") : đo tốc độ mở bản đồ trên máy
+             bạn và điền khảo sát ngắn, rồi bấm "Gửi" để gửi cho nhóm.
+
+
+==============================================================================
+ PHẦN 3. NGƯỜI DÙNG CÓ TÀI KHOẢN
+==============================================================================
+Người dùng thường chỉ XEM (giống khách); tài khoản chỉ để nhóm quản lý và để
+người dùng tự quản lý thông tin của mình. Không có chức năng sửa số liệu.
+
+3.1  Đăng ký
+------------
+1. Menu → "Tài khoản" → tab "Đăng ký".
+2. Nhập email, tên hiển thị, mật khẩu (ít nhất 12 ký tự), nhập lại mật khẩu
+   → bấm "Tạo tài khoản".
+3. Tạo xong tự đăng nhập.
+
+3.2  Đăng nhập / đăng xuất
+--------------------------
+- Menu → "Tài khoản" → nhập email + mật khẩu → Đăng nhập.
+- Đăng xuất ở cùng trang.
+
+3.3  Quên mật khẩu
+------------------
+1. Ở trang Tài khoản chọn "Quên mật khẩu", nhập email
+   → bấm "Gửi yêu cầu".
+2. Quản trị viên sẽ cấp mã đặt lại cho bạn (xem Phần 4, mục 4.3).
+3. Chọn "Đặt lại bằng mã từ quản trị viên", nhập mã + mật khẩu mới →
+   "Đặt lại mật khẩu", rồi đăng nhập lại.
+
+3.4  Đổi mật khẩu
+-----------------
+- Trang Tài khoản → "Đổi mật khẩu": nhập mật khẩu cũ và mật khẩu mới.
+
+3.5  Tự xóa tài khoản của tôi (MỚI)
+-----------------------------------
+1. Trang Tài khoản → "Xóa tài khoản của tôi".
+2. Nhập mật khẩu hiện tại, tích "Tôi hiểu việc xóa không thể hoàn tác",
+   bấm "Xóa vĩnh viễn".
+3. Tài khoản bị xóa, bạn tự đăng xuất; không đăng nhập lại được.
+   (Quản trị viên cuối cùng không tự xóa được, để web luôn còn người quản trị.)
+
+
+==============================================================================
+ PHẦN 4. QUẢN TRỊ VIÊN (admin) — TOÀN QUYỀN
+==============================================================================
+Vào trang quản trị: đăng nhập bằng tài khoản admin rồi bấm liên kết
+"Quản trị" trên menu (hoặc mở  admin.html). Tài khoản không phải admin sẽ
+thấy "Bạn không có quyền quản trị".
+
+Thanh tab của trang quản trị:
+  Tổng quan · Tài khoản · Dữ liệu · Nội dung · Nhập số liệu · Thử nghiệm · Nhật ký
+
+4.1  Tổng quan
+--------------
+- Các số tổng: số tài khoản, số khu vực...
+- "Mức độ sử dụng" (MỚI): lượt xem trang, khu vực được xem nhiều, lớp/tính năng
+  được dùng (3D, so sánh, chia sẻ...), và số lỗi giao diện. Hoàn toàn ẩn danh,
+  không ghi lại ai đã làm gì.
+- "Mỗi năm có bao nhiêu khu vực đủ dữ liệu?" và "Khu vực còn ít dữ liệu".
+
+4.2  Tài khoản
+--------------
+- "Tạo tài khoản mới": nhập email, tên, mật khẩu tạm (≥ 12 ký tự), vai trò
+  (Khách hàng / Quản trị viên). Gửi mật khẩu tạm cho người dùng qua kênh riêng.
+- Bảng người dùng: "Vô hiệu hóa" / "Kích hoạt", "Đổi vai trò", "Xóa tài khoản".
+  Phải còn ít nhất một quản trị viên đang hoạt động.
+  Vô hiệu hóa sẽ đăng xuất người đó ngay.
+
+4.3  Cấp mã đặt lại mật khẩu
+----------------------------
+- "Yêu cầu quên mật khẩu": thấy người đang "Chờ cấp mã" → bấm "Cấp mã" → mã hiện ra
+  một lần. Gửi mã cho người dùng qua kênh riêng (hệ thống không tự gửi email).
+
+4.4  Dữ liệu
+------------
+- Xem tình trạng bộ số liệu, bộ xuất GEE đã kiểm tra, tài liệu kỹ thuật.
+
+4.5  Nội dung
+-------------
+- "Thông báo đầu trang": nhập nội dung rồi "Lưu thông báo".
+- "Ghi chú theo khu vực": chọn khu vực, viết ghi chú (ví dụ "có công viên lớn"),
+  bấm "Lưu ghi chú". Ghi chú hiện trong thẻ khu vực trên bản đồ; đây là mô tả
+  của người quản trị, không phải số liệu vệ tinh.
+
+4.6  NHẬP SỐ LIỆU (MỚI) — thêm hoặc chỉnh số liệu theo xã/phường
+----------------------------------------------------------------
+Dùng khi có số trung bình mới (ví dụ kết quả bổ sung từ Google Earth Engine).
+Nguyên tắc: số liệu đã công bố KHÔNG bị sửa. Bản nhập được chồng lên và có
+thể hoàn tác bất cứ lúc nào.
+
+Các bước:
+ 1. Tab "Nhập số liệu" → bấm "Tải tệp CSV mẫu".
+ 2. Điền CSV (mở bằng Excel/Google Sheets, lưu dạng CSV UTF-8), các cột:
+      code            mã xã/phường 5 chữ số (thuộc 167 khu vực)
+      year            năm 2020–2025
+      sampled_pixels  tổng số ô lấy mẫu của khu vực
+      lst, lst_pixels     giá trị LST và số ô hợp lệ
+      ndvi, ndvi_pixels   giá trị NDVI và số ô hợp lệ
+      tvdi, tvdi_pixels   giá trị TVDI và số ô hợp lệ
+      dates           ngày chụp, cách nhau dấu ; (YYYY-MM-DD)
+    Quy tắc:
+      - Độ phủ = số ô hợp lệ / sampled_pixels. Quy tắc "≥ 50% mới tô màu"
+        vẫn áp dụng cho dữ liệu nhập.
+      - Để trống cả giá trị lẫn số ô = giữ nguyên chỉ số đó.
+      - Số ô = 0 và để trống giá trị = "không có dữ liệu" (khác với bằng 0).
+      - Giá trị phải trong khoảng hợp lý (LST -10…70, NDVI -1…1, TVDI 0…1).
+      - Tối đa 2000 dòng và 1 MB mỗi lần.
+ 3. Bấm "Chọn tệp CSV…" và chọn tệp. Web kiểm tra ngay và hiện bảng
+    XEM TRƯỚC: dòng nào đổi, giá trị trước/sau, độ phủ trước/sau.
+    Nếu có lỗi, web liệt kê rõ dòng nào sai; sửa tệp rồi chọn lại.
+ 4. (Tùy chọn) ghi chú cho lần nhập, ví dụ "GEE đợt 2 năm 2025".
+ 5. Bấm "Nhập số liệu". Bản đồ, xếp hạng, thống kê dùng số mới ngay.
+ 6. Mục "Các lần nhập" liệt kê lịch sử: nút "Hoàn tác" trả về số liệu cũ,
+    "Áp dụng lại" nhập lại. Mọi thao tác ghi vào Nhật ký.
+
+Đợt 2 GEE (năm 2025) đã chuẩn bị sẵn:
+   data/gee_recovery/batch2_20261101_review/nhap_so_lieu_dot2.csv  (27 dòng)
+ → tải tệp này lên theo các bước trên là xong.
+
+Giới hạn cần biết:
+ - Lần nhập chỉ đổi SỐ TRUNG BÌNH theo xã/phường. Ảnh "Ô 120 m" không đổi.
+ - Bản web tĩnh trên GitHub Pages (không có cơ sở dữ liệu) không hiển thị
+   phần nhập; chỉ bản chạy bằng máy chủ mới thấy.
+
+4.7  Thử nghiệm
+---------------
+- Tốc độ theo loại mạng, các lượt đo gần đây, kết quả khảo sát người dùng,
+  Góp ý; nút tải CSV số đo tốc độ và CSV khảo sát.
+
+4.8  Nhật ký
+------------
+- Ghi lại đăng ký, đăng nhập (kể cả sai), đổi mật khẩu, cấp mã, nhập/hoàn tác
+  số liệu... để truy vết.
+
+
+==============================================================================
+ PHẦN 5. CHẠY WEB TRÊN MÁY (dành cho nhóm phát triển)
+==============================================================================
+ 1. Bật Postgres.app (cổng 5433).
+ 2. Trong thư mục dự án:
+      .venv/bin/python server.py            (mở http://127.0.0.1:5379)
+    Nếu cổng bận: thêm --auto-port, hoặc tắt tiến trình cũ.
+ 3. Cập nhật cơ sở dữ liệu cho tính năng mới (nhập số liệu, thống kê):
+      .venv/bin/python scripts/migrate_engagement.py            (máy local)
+      .venv/bin/python scripts/migrate_engagement.py --supabase (máy chủ thật)
+ 4. Kiểm thử:
+      .venv/bin/python -m unittest discover -s tests          (106 kiểm thử)
+      node --test tests/viewer-policy.test.cjs                 (6 kiểm thử)
+      MOBILEGIS_URL=http://127.0.0.1:5379 .venv/bin/python tests/e2e_ui.py  (47)
+
+
+==============================================================================
+ PHẦN 6. THAY ĐỔI SO VỚI PHIÊN BẢN TRƯỚC
+==============================================================================
+
+A. Từ giao diện cũ (UI2) lên v3 — theo góp ý của cô (01/11/2026)
+------------------------------------------------------------------
+ 1. Tên mới: "Bản đồ Nhiệt - Xanh - Khô TP.HCM".
+ 2. Bản đồ là màn hình chính, toàn màn hình, không cần cuộn.
+ 3. Thay Leaflet bằng MapLibre GL JS: có 2D và 3D (khối nổi theo giá trị).
+ 4. Diễn biến theo thời gian: chọn khoảng năm, bấm phát; chỉ qua năm thật.
+ 5. XẾP HẠNG 167 xã/phường: LST cao→thấp, NDVI thấp→cao, TVDI cao→thấp.
+ 6. LỌC THEO NGƯỠNG (ví dụ LST > 40), kết hợp được nhiều chỉ số.
+ 7. Màu nhẹ, nền sáng, một màu nhấn xanh ngọc; thang màu theo tài liệu của cô.
+ 8. Lưu ảnh bản đồ dạng chính thức (tiêu đề, tọa độ, la bàn, thước, thang màu).
+ 9. Người dùng tự XÓA tài khoản của mình; quản trị viên xóa được tài khoản
+    người khác.
+10. Quản trị viên toàn quyền; người dùng thường chỉ xem.
+11. Bỏ trang "Giả lập" khỏi giao diện (ngoài đề cương).
+12. Ô bản đồ ngoài vùng dữ liệu trả mã 204 thay vì ảnh 1×1.
+
+B. Từ v3 lên v3.1 (bản này)
+---------------------------
+ 1. LOGO MỚI: ô vuông xanh bo góc, hình TP.HCM màu vàng có mặt cười, giọt nước
+    (đã thay trên web, biểu tượng ứng dụng 192/512 và logo trang quản trị).
+ 2. TÌM KIẾM xã/phường (gõ không dấu).
+ 3. CHIA SẺ liên kết đúng góc nhìn (trạng thái nằm trong địa chỉ).
+ 4. HƯỚNG DẪN NHANH 5 bước cho người mới (nút "?" mở lại).
+ 5. SO SÁNH HAI NĂM bằng thanh kéo, hai bản đồ đồng bộ vị trí.
+ 6. MÀU DỄ PHÂN BIỆT cho người khó nhìn đỏ – xanh.
+ 7. "LƯU Ý KHI ĐỌC" trong chú giải và mục "Vì sao TVDI chỉ để tham khảo"
+    ở trang Giới thiệu (giải thích giới hạn trung thực của số liệu).
+ 8. THỐNG KÊ SỬ DỤNG ẨN DANH + khối "Mức độ sử dụng" cho quản trị viên.
+ 9. ADMIN NHẬP SỐ LIỆU bằng CSV: kiểm tra, xem trước, áp dụng, hoàn tác,
+    có nhật ký. Số liệu gốc không bị sửa.
+10. Chuẩn bị sẵn tệp nhập cho đợt 2 GEE năm 2025 (27 dòng).
+11. Cập nhật cơ sở dữ liệu lên schema 8 (migration 008).
+12. Trình duyệt có bộ nhớ đệm mới (mobilegis-v31) để chạy nhanh và dùng lại
+    được khi mạng yếu.
+13. Kiểm thử tăng: 106 kiểm thử Python, 6 kiểm thử Node, 47 kiểm tra trình duyệt.
+
+C. Tình trạng đợt 2 GEE (số liệu 2025)
+--------------------------------------
+ - Ở máy local đã nhập đợt 2: còn 4 phường dưới 50% độ phủ vẫn để xám
+   (Phú Lợi, Bình Dương, Hòa Lợi, Tân Khánh).
+ - Máy chủ thật (Supabase/Render) CHƯA nhập: cần chạy migrate --supabase rồi
+   quản trị viên tải tệp CSV đợt 2 lên (Phần 4.6).
+
+
+==============================================================================
+ PHẦN 7. NHỮNG ĐIỀU CHƯA LÀM / GIỚI HẠN (nói thẳng)
+==============================================================================
+ - Chưa thử trên điện thoại thật (mới thử bằng trình duyệt giả lập cỡ điện
+   thoại, không bị tràn ngang). Cần nhóm thử thật và gửi số đo ở trang
+   "Thử nghiệm".
+ - Lần nhập số liệu chỉ đổi số trung bình theo xã/phường; ảnh ô 120 m của
+   đợt 2 chưa được dựng lại; GitHub Pages không thấy phần nhập.
+ - TVDI chỉ là chỉ số thử nghiệm (tương quan với NDVI đổi dấu theo năm).
+ - Mỗi năm là một cảnh ảnh trong mùa khô; không dùng để kết luận xu thế
+   khí hậu. LST là nhiệt độ bề mặt, không phải nhiệt độ không khí.
+ - Không phải hệ thống cảnh báo chính thức.
+ - Chưa làm (theo yêu cầu bỏ qua): máy chủ miễn phí/độ ổn định vận hành,
+   bảo mật vận hành, và ứng dụng Android phiên bản mới.
+
+==============================================================================
+ HẾT
+==============================================================================

@@ -1,6 +1,6 @@
 """REST routes: saved areas (signed-in users), feedback (signed-in users send, admins triage) and the public site notice (admins edit)."""
 from fastapi import APIRouter, Depends, Request
-import auth, engagement
+import auth, engagement, observation_imports
 from auth_api import _call, require_admin, require_admin_write, require_csrf, require_user
 from http_utils import read_json
 
@@ -173,3 +173,39 @@ async def field_csv(kind: str, admin=Depends(require_admin)):
         for r in data['survey']:
             w.writerow([r['id'], r['created_at'].isoformat(timespec='seconds'), r['participant'], r['device']] + [int(r['tasks'][t]['done']) for t in engagement.TASKS] + [r['tasks'][t]['taps'] for t in engagement.TASKS] + [r['ratings'][k] for k in engagement.RATINGS] + [r['comment']])
     return Response(out.getvalue(), media_type='text/csv; charset=utf-8', headers={'Content-Disposition': f'attachment; filename="mobilegis_{kind}.csv"'})
+
+
+# ---- admin data import (overlay on the published per-commune observations) ---------------------------
+from fastapi import HTTPException
+from fastapi.responses import Response as _Response
+
+
+@router.get('/api/admin/imports/template.csv')
+async def import_template(admin=Depends(require_admin)):
+    return _Response(observation_imports.template_csv(), media_type='text/csv; charset=utf-8', headers={'Content-Disposition': 'attachment; filename=mau_nhap_so_lieu.csv'})
+
+
+@router.get('/api/admin/imports')
+async def import_list(admin=Depends(require_admin)):
+    return await _call(observation_imports.listing)
+
+
+@router.post('/api/admin/imports/preview')
+async def import_preview(request: Request, admin=Depends(require_admin_write)):
+    data = await read_json(request, 1_100_000)
+    return await _call(observation_imports.preview, str(data.get('csv') or ''))
+
+
+@router.post('/api/admin/imports')
+async def import_apply(request: Request, admin=Depends(require_admin_write)):
+    data = await read_json(request, 1_100_000)
+    new_id = await _call(observation_imports.create, admin['id'], str(data.get('filename') or ''), str(data.get('csv') or ''), str(data.get('note') or ''))
+    return {'ok': True, 'id': new_id}
+
+
+@router.post('/api/admin/imports/{import_id}/{action}')
+async def import_status(import_id: int, action: str, admin=Depends(require_admin_write)):
+    if action not in ('revert', 'reapply'):
+        raise HTTPException(404, 'Không có thao tác này.')
+    await _call(observation_imports.set_status, admin['id'], import_id, 'reverted' if action == 'revert' else 'applied')
+    return {'ok': True}

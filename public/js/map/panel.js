@@ -116,7 +116,7 @@ export function createPanel(host, {geo, rows, ranges, store, onPick}) {
   store.subscribe(s => {
     if (s.index !== last.index) renderTabs();
     if (s.filters !== last.filters || s.year !== last.year) renderFilters();
-    if (s.index !== last.index || s.year !== last.year || s.filters !== last.filters || s.selected !== last.selected) renderList();
+    if (s.index !== last.index || s.year !== last.year || s.filters !== last.filters || s.selected !== last.selected || s.palette !== last.palette) renderList();
     last = s;
   });
   renderTabs(); renderFilters(); renderList(); last = store.get();

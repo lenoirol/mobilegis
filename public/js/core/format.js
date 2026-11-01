@@ -27,6 +27,18 @@ export const TVDI_CLASSES = [
 /** A selected area is flagged when its TVDI reaches this value (the "Rất khô" class). Experimental, not an official drought warning. */
 export const TVDI_ALERT = 0.8;
 export const tvdiClass = v => valid(v) ? TVDI_CLASSES.find(c => v < c.max) || TVDI_CLASSES.at(-1) : null;
+
+/** Palettes. "standard" is the teacher's colour-scale document (default). "cb" is a colour-blind-safe alternative (viridis / inferno, perceptually uniform).
+    It only recolours commune fills, legends and charts; the pre-rendered 120 m image tiles keep the standard scale. */
+export const PALETTES = {
+  standard: {lst: INDEX.lst.colors.slice(), ndvi: INDEX.ndvi.colors.slice(), tvdi: INDEX.tvdi.colors.slice()},
+  cb: {
+    lst: ['#000004', '#2b0b57', '#6a176e', '#a32c61', '#d44842', '#f57d15', '#fac127', '#fcffa4'],
+    ndvi: ['#440154', '#46327e', '#365c8d', '#277f8e', '#1fa187', '#4ac16d', '#9fda3a', '#fde725'],
+    tvdi: ['#000004', '#2b0b57', '#6a176e', '#a32c61', '#d44842', '#f57d15', '#fac127', '#fcffa4'],
+  },
+};
+export function setPalette(name) { const p = PALETTES[name] || PALETTES.standard; for (const k of ['lst', 'ndvi', 'tvdi']) INDEX[k].colors = p[k].slice(); }
 export const INDICES = ['lst', 'ndvi', 'tvdi'];
 export const YEARS = [2020, 2021, 2022, 2023, 2024, 2025];
 

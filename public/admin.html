@@ -8,7 +8,7 @@
 </head>
 <body class="admin-page">
 <header class="admin-top">
-  <a class="brand" href="admin.html"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#23756a"/><rect x="13" y="30" width="10" height="21" rx="3" fill="#ff8a5c"/><rect x="27" y="18" width="10" height="33" rx="3" fill="#7fd99a"/><rect x="41" y="25" width="10" height="26" rx="3" fill="#f6cf5a"/></svg><span class="brand-name"><strong>Quản trị</strong><small>Bản đồ Nhiệt - Xanh - Khô TP.HCM</small></span></a>
+  <a class="brand" href="admin.html"><img src="logo.svg" alt="" width="36" height="36"><span class="brand-name"><strong>Quản trị</strong><small>Bản đồ Nhiệt - Xanh - Khô TP.HCM</small></span></a>
   <span class="admin-spacer"></span><span class="admin-who" id="who"></span>
   <a class="btn sm" href="./">Mở bản đồ</a><button class="btn sm dark" id="logout" type="button">Đăng xuất</button>
 </header>
@@ -16,7 +16,7 @@
   <span class="eyebrow">Khu vực dành cho quản trị viên</span>
   <h1>Trang quản trị</h1>
   <div id="tabsHost"></div>
-  <section class="panel" id="tab-overview"><div class="stat-row" id="cards"></div><h2>Việc quản trị viên làm được</h2>
+  <section class="panel" id="tab-overview"><div class="stat-row" id="cards"></div><h2>Mức độ sử dụng</h2><div id="usageBox"><p class="muted small">Đang tải…</p></div><h2>Việc quản trị viên làm được</h2>
     <ul class="admin-todo"><li><b>Tài khoản:</b> tạo, đổi vai trò, khóa/mở, xóa; cấp mã khi người dùng quên mật khẩu.</li><li><b>Dữ liệu:</b> xem năm nào đã nạp, khu vực nào còn ít dữ liệu. Số liệu vệ tinh 2020–2025 chỉ đọc, không sửa qua web; năm mới được nạp bằng script.</li><li><b>Nội dung:</b> thông báo đầu trang và ghi chú theo khu vực (hiện trong thẻ khu vực trên bản đồ). Đây là mô tả của quản trị viên, không phải số liệu vệ tinh.</li></ul></section>
   <section class="panel" id="tab-data" hidden><div class="stat-row" id="dataCards"></div>
     <h2>Mỗi năm có bao nhiêu khu vực đủ dữ liệu?</h2><p class="small muted">“Đủ dữ liệu” là từ 50% diện tích ảnh dùng được, trên tổng 167 khu vực.</p>
@@ -43,6 +43,19 @@
       <label class="field"><span>Ghi chú (tối đa 500 ký tự, để trống để xóa)</span><textarea class="input" name="text" rows="3" maxlength="500"></textarea></label>
       <button class="btn primary" type="submit">Lưu ghi chú</button></form>
     <p class="small muted">Ghi chú hiện trong thẻ khu vực trên bản đồ, ví dụ “có công viên lớn”, “khu công nghiệp”. Đây là mô tả của người quản trị, không phải số liệu vệ tinh.</p></section>
+  <section class="panel" id="tab-imports" hidden>
+    <h2>Nhập số liệu bổ sung hoặc chỉnh sửa</h2>
+    <p class="small muted">Dùng khi có số liệu trung bình theo xã/phường mới (ví dụ kết quả bổ sung từ Google Earth Engine). Số liệu gốc <b>không bị sửa</b>: bản nhập được chồng lên và có thể hoàn tác bất cứ lúc nào. Ô ảnh 120 m và biểu đồ theo ô ảnh vẫn là bộ gốc. Chỉ nhận năm 2020–2025 và 167 xã/phường.</p>
+    <div class="card" style="display:grid;gap:12px">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><a class="btn sm" id="importTemplate" href="#">Tải tệp CSV mẫu</a>
+        <label class="btn sm primary" for="importFile">Chọn tệp CSV…</label><input id="importFile" type="file" accept=".csv,text/csv" hidden></div>
+      <label class="field"><span>Ghi chú cho lần nhập (không bắt buộc)</span><input class="input" id="importNote" maxlength="300" placeholder="Ví dụ: GEE đợt 2 năm 2025, 5 phường"></label>
+      <div id="importPreview"></div>
+      <div><button class="btn primary" id="importApply" type="button" disabled>Nhập số liệu</button></div>
+    </div>
+    <h2>Các lần nhập</h2>
+    <div class="scroll card flat"><table class="tbl"><thead><tr><th>Lần</th><th>Thời gian</th><th>Tệp</th><th class="num">Dòng</th><th>Trạng thái</th><th>Người nhập</th><th>Ghi chú</th><th></th></tr></thead><tbody id="importRows"></tbody></table></div>
+  </section>
   <section class="panel admin-field" id="tab-field" hidden><div class="stat-row" id="fieldCards"></div>
     <h2>Tốc độ theo loại mạng</h2><p class="small muted">Số trung vị các lượt đo gửi về từ điện thoại. “Mở bản đồ” gồm cả màn hình khởi động. Đây là số đo thật trên máy người dùng, khác với số đo localhost trong hồ sơ kiểm thử.</p>
     <div class="scroll card flat"><table class="tbl"><thead><tr><th>Mạng</th><th class="num">Số lượt đo</th><th class="num">Mở bản đồ</th><th class="num">Đổi lớp</th></tr></thead><tbody id="fieldConn"></tbody></table></div>

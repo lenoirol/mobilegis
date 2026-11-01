@@ -3,10 +3,11 @@ import {$, h, mount, icon} from './core/dom.js';
 import {session, loadSession, get, post, url} from './core/api.js';
 import {segmented} from './ui/seg.js';
 import {toast} from './ui/toast.js';
+import {initImports, loadUsage} from './admin-import.js';
 
 let users = [], me = null, tabs;
 const when = iso => iso ? new Date(iso).toLocaleString('vi-VN', {dateStyle: 'short', timeStyle: 'short'}) : '—';
-const EVENTS = {register: 'Đăng ký', login: 'Đăng nhập', login_failed: 'Đăng nhập sai', password_changed: 'Đổi mật khẩu', reset_requested: 'Yêu cầu đặt lại', reset_issued: 'Cấp mã đặt lại',
+const EVENTS = {data_import: 'Nhập số liệu', data_import_reverted: 'Hoàn tác nhập số liệu', data_import_applied: 'Áp dụng lại nhập số liệu', register: 'Đăng ký', login: 'Đăng nhập', login_failed: 'Đăng nhập sai', password_changed: 'Đổi mật khẩu', reset_requested: 'Yêu cầu đặt lại', reset_issued: 'Cấp mã đặt lại',
   user_created: 'Admin tạo tài khoản', reset_cancelled: 'Hủy yêu cầu', password_reset: 'Đã đặt lại mật khẩu', role_changed: 'Đổi vai trò', activated: 'Kích hoạt', deactivated: 'Vô hiệu hóa', user_deleted: 'Xóa tài khoản', admin_created: 'Tạo quản trị viên'};
 
 async function api(target, method = 'GET', body) {
@@ -115,7 +116,7 @@ async function loadData() {
   } catch (error) { toast('Không tải được dữ liệu: ' + error.message, {error: true}); }
 }
 function selectTab(name) {
-  for (const id of ['overview', 'users', 'data', 'content', 'field', 'events']) $('#tab-' + id).hidden = id !== name;
+  for (const id of ['overview', 'users', 'data', 'content', 'imports', 'field', 'events']) $('#tab-' + id).hidden = id !== name;
 }
 
 (async () => {
@@ -124,7 +125,7 @@ function selectTab(name) {
   if (session.user.role !== 'admin') { $('#denied').hidden = false; $('#logout').hidden = true; return; }
   me = session.user; $('#who').textContent = me.display_name; $('#app').hidden = false;
   const resetCount = h('span', {class: 'count', hidden: true}, '0');
-  tabs = segmented([{value: 'overview', label: 'Tổng quan'}, {value: 'users', label: ['Tài khoản', resetCount]}, {value: 'data', label: 'Dữ liệu'}, {value: 'content', label: 'Nội dung'}, {value: 'field', label: 'Thử nghiệm'}, {value: 'events', label: 'Nhật ký'}], 'overview', selectTab, {label: 'Mục quản trị'});
+  tabs = segmented([{value: 'overview', label: 'Tổng quan'}, {value: 'users', label: ['Tài khoản', resetCount]}, {value: 'data', label: 'Dữ liệu'}, {value: 'content', label: 'Nội dung'}, {value: 'imports', label: 'Nhập số liệu'}, {value: 'field', label: 'Thử nghiệm'}, {value: 'events', label: 'Nhật ký'}], 'overview', selectTab, {label: 'Mục quản trị'});
   tabs.counts = {reset: resetCount}; tabs.el.classList.add('admin-tabs');
   $('#tabsHost').append(tabs.el); tabs.place();
   $('#logout').onclick = async () => { await fetch(url('api/auth/logout'), {method: 'POST', credentials: 'same-origin'}); location.href = url('') + '#/'; };
@@ -137,5 +138,6 @@ function selectTab(name) {
   noteForm.addEventListener('submit', e => { e.preventDefault(); act(async () => { await api('/api/admin/notes', 'POST', {code: noteForm.code.value, text: noteForm.text.value}); await loadContent(); }, 'Đã lưu ghi chú.'); });
   await loadAreas(); loadContent().catch(() => {});
   loadField().catch(() => {});
+  initImports(); loadUsage();
   audits(); loadData(); try { await refresh(); } catch (error) { toast(error.message, {error: true}); }
 })();

@@ -19,6 +19,9 @@ const HOWTO = [
   ['Xếp hạng và lọc ngưỡng', 'Bảng Xếp hạng liệt kê 167 xã/phường: LST cao → thấp, NDVI thấp → cao, TVDI cao → thấp. Bật lọc (ví dụ LST > 40) để làm nổi các khu vực thỏa.'],
   ['Vùng màu xám', 'Khu vực có dưới 50% diện tích ảnh dùng được (do mây) không được tô màu, không xếp hạng và không tính khi lọc.'],
   ['Lưu ảnh bản đồ', 'Nút Lưu ảnh tạo tệp PNG có tiêu đề, tọa độ, la bàn, thước tỷ lệ và thang màu để dùng trong báo cáo.'],
+  ['Tìm kiếm và chia sẻ', 'Gõ tên xã/phường vào ô Tìm (không cần dấu). Nút Chia sẻ sao chép liên kết đúng chỉ số, năm, khu vực và kiểu hiển thị đang xem.'],
+  ['So sánh hai năm', 'Nút So sánh năm chia bản đồ làm hai nửa bằng thanh kéo: bên trái là năm trên thanh thời gian, bên phải là năm bạn chọn để so.'],
+  ['Màu dễ phân biệt', 'Bảng màu thay thế cho người khó nhìn màu đỏ – xanh. Chỉ áp dụng cho tô màu xã/phường; ảnh ô 120 m luôn dùng thang màu gốc.'],
 ];
 
 async function build() {
@@ -39,6 +42,8 @@ async function build() {
       h('div', {class: 'scroll card flat', style: {padding: 0}}, h('table', {class: 'tbl'}, h('thead', null, h('tr', null, h('th', null, 'Khoảng giá trị'), h('th', null, 'Mức'))),
         h('tbody', null, ...TVDI_CLASSES.map((c, i) => h('tr', null, h('td', {class: 'num', style: {textAlign: 'left'}}, `${i ? String(TVDI_CLASSES[i - 1].max).replace('.', ',') : '0'} – ${String(Math.min(c.max, 1)).replace('.', ',')}`), h('td', null, c.name))))))),
     h('section', {class: 'about-sec'}, h('h2', null, 'Mỗi năm có bao nhiêu khu vực đủ dữ liệu?'), h('p', {class: 'muted small'}, 'Số xã/phường có từ 50% diện tích ảnh dùng được. Mỗi năm là một lần chụp trong mùa khô (các cảnh có thể khác ngày), nên chênh lệch giữa các năm không phải xu thế khí hậu.'), coverage),
+    h('section', {class: 'about-sec'}, h('h2', null, 'Vì sao TVDI chỉ để tham khảo'),
+      h('div', {class: 'card'}, h('p', {class: 'small', style: {margin: 0}}, 'TVDI được ước lượng riêng cho từng cảnh ảnh, chưa kiểm định bằng số đo độ ẩm đất. Trong dữ liệu này, quan hệ giữa TVDI và NDVI của các xã/phường đổi dấu theo năm (khoảng từ −0,33 đến +0,50), trong khi TVDI luôn đi cùng chiều với LST (khoảng 0,28–0,75). Điều đó cho thấy TVDI phụ thuộc nhiều vào cảnh ảnh được chọn, vì vậy nó chỉ dùng để mô tả mức khô tương đối, không dùng để kết luận hạn hán.'))),
     h('section', {class: 'about-sec'}, h('h2', null, 'Dữ liệu và giới hạn'),
       h('div', {class: 'about-grid'},
         h('article', {class: 'card'}, h('h3', null, 'Ảnh vệ tinh'), h('p', {class: 'small muted', style: {margin: 0}}, 'Landsat 8/9 Collection 2 Level-2 (USGS), xử lý trên Google Earth Engine, đã lọc mây và bóng mây. Ô ảnh 120 m. Đây là kết quả xử lý ảnh, không phải số đo tại mặt đất.')),

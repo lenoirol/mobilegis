@@ -90,7 +90,8 @@ def set_notice(admin_id, text):
 
 # ---- editorial content: area notes and highlights ------------------------------------
 MAX_HIGHLIGHTS = 6
-PAGES = ('trang-chu', 'ban-do', 'bang-so-lieu', 'thong-ke', 'gia-lap', 'du-lieu')
+PAGES = ('trang-chu', 'ban-do', 'bang-so-lieu', 'thong-ke', 'gia-lap', 'du-lieu', 'gioi-thieu', 'tai-khoan', 'thu-nghiem')
+FEATURES = ('3d', 'phat', 'so-sanh', 'tim-kiem', 'chia-se', 'luu-anh', 'mau-cb', 'huong-dan', 'loc-nguong')
 LAYERS = ('lst', 'ndvi', 'tvdi')
 
 
@@ -130,7 +131,7 @@ def delete_highlight(highlight_id):
 
 # ---- anonymous usage counters --------------------------------------------------------
 def record_hit(kind, key):
-    ok = (kind == 'area' and isinstance(key, str) and CODE_RE.match(key)) or (kind == 'layer' and key in LAYERS) or (kind == 'page' and key in PAGES)
+    ok = (kind == 'area' and isinstance(key, str) and CODE_RE.match(key)) or (kind == 'layer' and key in LAYERS) or (kind == 'page' and key in PAGES) or (kind == 'feature' and key in FEATURES) or (kind == 'error' and key == 'js')
     if not ok:
         raise AuthError('Không hợp lệ.')
     with db.connect() as c:
@@ -142,7 +143,7 @@ def usage(days=30):
         rows = c.execute("SELECT kind,key,sum(n)::int AS n FROM mobilegis.usage_counts WHERE day > current_date - %s GROUP BY kind,key ORDER BY n DESC", (days,)).fetchall()
         per_day = c.execute("SELECT day,sum(n)::int AS n FROM mobilegis.usage_counts WHERE kind='page' AND day > current_date - %s GROUP BY day ORDER BY day", (days,)).fetchall()
     pick = lambda kind, limit=10: [r for r in rows if r['kind'] == kind][:limit]
-    return {'days': days, 'areas': pick('area'), 'layers': pick('layer'), 'pages': pick('page'), 'per_day': per_day}
+    return {'days': days, 'areas': pick('area'), 'layers': pick('layer'), 'pages': pick('page'), 'features': pick('feature', 20), 'errors': pick('error'), 'per_day': per_day}
 
 
 # ---- field tests: speed runs and the usability survey (anonymous) ---------------------------------------

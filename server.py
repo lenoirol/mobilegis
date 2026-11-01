@@ -8,6 +8,7 @@ ROOT=Path(__file__).resolve().parent
 sys.path.insert(0,str(ROOT))
 if (ROOT.parent/'.pg-libs').is_dir():sys.path.insert(0,str(ROOT.parent/'.pg-libs'))
 import database as db
+import observation_imports
 import analysis
 from auth_api import router as auth_router,require_admin_write
 from engagement_api import router as engagement_router
@@ -69,7 +70,9 @@ def demo():return db.demo()
 def demo_export():return Response(db.csv_text(db.demo()),media_type='text/csv',headers={'Content-Disposition':'attachment; filename=mobilegis_demo_postgres.csv'})
 @app.get('/api/research/observations')
 def research(source:str='gee_recovery',year:int|None=Query(None,ge=1900,le=2200),code:str|None=None,index:str|None=None,coverage:float=Query(0,ge=0,le=1)):
-    try:return db.observations(source,year,code,index,coverage)
+    try:
+        rows=db.observations(source,year,code,index,coverage)
+        return observation_imports.overlay(rows,source) if index is None else rows
     except ValueError as e:raise HTTPException(400,str(e))
 @app.get('/api/units')
 def units(lat:float|None=Query(None,ge=-90,le=90),lon:float|None=Query(None,ge=-180,le=180),detail:str='display'):
@@ -174,7 +177,7 @@ def data_compatibility(name:str):
     if name=='observations_user.json':return db.points()
     if name in ('observations_real.json','observations_real.csv'):rows=db.observations('legacy')
     elif name in ('gee/observations.json','gee/observations.csv'):rows=db.observations('gee')
-    elif name in ('gee_recovery/observations.json','gee_recovery/observations.csv'):rows=db.observations('gee_recovery')
+    elif name in ('gee_recovery/observations.json','gee_recovery/observations.csv'):rows=observation_imports.overlay(db.observations('gee_recovery'))
     else:rows=None
     if rows is not None:return Response(db.csv_text(rows),media_type='text/csv',headers={'Content-Disposition':'attachment; filename='+name.split('/')[-1]}) if name.endswith('.csv') else rows
     if name in ('landcover_stats.json','gee/landcover_stats.json'):return db.cover('legacy' if name=='landcover_stats.json' else 'gee')

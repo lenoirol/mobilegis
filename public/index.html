@@ -16,7 +16,7 @@
 <body class="is-booting">
 <div id="splash" role="status" aria-live="polite">
   <div class="splash-card">
-    <svg class="splash-mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#23756a"/><rect x="13" y="30" width="10" height="21" rx="3" fill="#ff8a5c"/><rect x="27" y="18" width="10" height="33" rx="3" fill="#7fd99a"/><rect x="41" y="25" width="10" height="26" rx="3" fill="#f6cf5a"/></svg>
+    <img class="splash-mark" src="logo.svg" alt="" width="84" height="84">
     <div><strong>Bản đồ Nhiệt - Xanh - Khô</strong><small>TP.HCM · mùa khô 2020–2025</small></div>
     <div class="splash-bar"><i id="splashBar"></i></div>
     <p id="splashStatus">Đang khởi động…</p>
@@ -26,10 +26,12 @@
 
 <div id="app">
   <div id="map" role="region" aria-label="Bản đồ 167 xã/phường"></div>
+  <div id="map2" class="map2" hidden aria-hidden="true"></div>
+  <div id="cmp" class="cmp" hidden></div>
 
   <header id="topbar">
     <a class="brand" href="#/" aria-label="Bản đồ Nhiệt - Xanh - Khô TP.HCM · về bản đồ">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#23756a"/><rect x="13" y="30" width="10" height="21" rx="3" fill="#ff8a5c"/><rect x="27" y="18" width="10" height="33" rx="3" fill="#7fd99a"/><rect x="41" y="25" width="10" height="26" rx="3" fill="#f6cf5a"/></svg>
+      <img src="logo.svg" alt="" width="40" height="40">
       <span class="brand-name"><strong><span class="bd">Bản đồ </span>Nhiệt - Xanh - Khô</strong><small>TP.HCM · 167 xã/phường · Landsat 8/9</small></span>
     </a>
     <div id="indexSwitch" class="index-switch" role="group" aria-label="Chọn chỉ số"></div>
