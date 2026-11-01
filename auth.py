@@ -258,6 +258,17 @@ def delete_user(admin_id, user_id):
         log_event(c, 'user_deleted', None, None, f'{user_id} by {admin_id}')
 
 
+def delete_self(user_id, password):
+    """A user removes their own account after confirming the password. Sessions and personal rows go with it."""
+    with db.connect() as c:
+        row = c.execute('SELECT email,password_hash FROM mobilegis.app_users WHERE id=%s', (user_id,)).fetchone()
+        if not row or not verify_secret(str(password or ''), row['password_hash']):
+            raise AuthError('Mật khẩu không đúng.', 403)
+        _guard_last_admin(c, user_id)
+        c.execute('DELETE FROM mobilegis.app_users WHERE id=%s', (user_id,))
+        log_event(c, 'user_deleted', None, None, f'{user_id} by self')
+
+
 def list_resets():
     with db.connect() as c:
         return c.execute("SELECT r.id,r.status,r.requested_at,r.issued_at,r.expires_at,u.email,u.display_name "

@@ -1,49 +1,52 @@
-# Giao diện mới (UI2) · MobileGIS TP.HCM
+# Giao diện v3 · Bản đồ Nhiệt - Xanh - Khô TP.HCM
 
-Giao diện được xây lại hoàn toàn: tối giản hiện đại pha brutalism nhẹ. Máy chủ, API và cơ sở dữ liệu không đổi.
-Bản giao diện cũ được lưu ở `luu_tru/giao_dien_cu/` (không xóa).
+Xây lại toàn bộ giao diện web (01/11/2026) theo góp ý của cô: bản đồ là thành phần chính, có 2D/3D, chạy diễn biến theo
+khoảng năm, xếp hạng 167 xã/phường, lọc theo ngưỡng, nền màu nhẹ, người dùng tự xóa được tài khoản.
+Máy chủ, API, cơ sở dữ liệu và số liệu không đổi. Giao diện UI2 cũ được lưu ở `luu_tru/giao_dien_v2/` (không xóa).
+
+## Màn hình chính (bản đồ toàn màn hình)
+- **Thanh trên:** tên ứng dụng, chọn chỉ số (Nhiệt độ LST · Độ xanh NDVI · Độ khô TVDI), menu Xếp hạng / Thống kê / Bảng số liệu / Giới thiệu / Tài khoản.
+- **Bảng Xếp hạng (bên trái; trên điện thoại là tấm trượt từ dưới lên, tối đa khoảng nửa màn hình):** 167 xã/phường,
+  LST cao → thấp, NDVI thấp → cao, TVDI cao → thấp. Khu vực có độ phủ mẫu < 50% xếp cuối, ghi "chưa đủ dữ liệu", không xếp hạng.
+  **Lọc theo ngưỡng** (ví dụ LST > 40) cho từng chỉ số, kết hợp được; khu vực không thỏa bị làm mờ trên bản đồ. Tải CSV danh sách.
+- **Công cụ (bên phải):** 2D / 3D, Xã/phường / Ô ảnh 120 m, nền Bản đồ / Vệ tinh / Nhẹ, độ cao khối 3D, Toàn vùng, **Lưu ảnh**.
+- **Thẻ khu vực đang chọn:** tên, ngày chụp, ba giá trị kèm mức tin cậy, cảnh báo thử nghiệm khi TVDI ≥ 0,8, đường diễn biến 2020–2025.
+  Đọc được ngay, không cần cuộn.
+- **Thanh thời gian (dưới cùng):** năm hiện tại, chọn khoảng năm (từ – đến), tốc độ, nút phát. Chỉ chạy qua các năm thật;
+  hiệu ứng chuyển giữa hai năm chỉ là chuyển cảnh, nhãn luôn là năm thật.
+- **Chú giải:** thang màu đúng tài liệu của cô, vùng xám = chưa đủ dữ liệu, ghi chú lọc và chiều cao 3D.
+
+## 3D
+MapLibre GL JS 6.13 (`public/vendor/maplibre/`, giấy phép BSD-3) thay cho Leaflet. 3D dựng mỗi xã/phường thành khối
+(`fill-extrusion`), chiều cao theo giá trị trong khoảng min–max của 6 năm (đã phóng đại, có thanh chỉnh độ cao), màu theo thang màu.
+Khu vực chưa đủ dữ liệu hoặc không thỏa lọc nằm phẳng, màu xám nhạt. Chế độ Ô ảnh 120 m chỉ có 2D.
+
+## Lưu ảnh bản đồ
+PNG có tiêu đề, phụ đề (chỉ số, năm, cách tính), khung tọa độ (chỉ khi bản đồ phẳng, hướng Bắc lên), la bàn (xoay theo bản đồ),
+thước tỷ lệ (chỉ khi phẳng), thang màu, nguồn dữ liệu và nền.
+
+## Trang phụ (mở đè lên bản đồ, nút "Về bản đồ")
+`#/thong-ke`, `#/bang-so-lieu`, `#/gioi-thieu`, `#/tai-khoan`, `#/thu-nghiem`. Liên kết cũ `#/ban-do?khu-vuc=…&nam=…` vẫn mở đúng khu vực.
+Trang Giả lập (ngoài đề cương) không còn trên giao diện; API phía máy chủ giữ nguyên, chỉ quản trị viên gọi được.
+
+## Tài khoản
+- Ai cũng xem bản đồ, xếp hạng, thống kê mà không cần tài khoản. Người dùng thường chỉ xem; quản trị viên có toàn quyền (trang `admin.html`).
+- Trang Tài khoản: đăng nhập, đăng ký, quên/đặt lại mật khẩu, đổi mật khẩu, **xóa tài khoản của tôi** (nhập mật khẩu + xác nhận).
+  API mới `POST /api/auth/delete-account` (cần CSRF); quản trị viên cuối cùng không tự xóa được. Quản trị viên xóa tài khoản người khác ở `admin.html` như trước.
+- `login.html` chỉ còn chuyển hướng về `#/tai-khoan`.
 
 ## Phong cách
-- **Màu:** giấy kem `#f7f3e8`, mực đen `#0e0e0c`, vàng tín hiệu `#ffd60a` (theo yêu cầu "sáng, tươi, vàng hơn, tương phản cao").
-  Màu dữ liệu LST/NDVI/TVDI trên bản đồ giữ đúng bảng màu trong tài liệu của cô (`public/js/core/format.js`).
-- **Chữ:** Bricolage Grotesque (tiêu đề, giao diện) và JetBrains Mono (số liệu, nhãn nhỏ), tự lưu trong `public/fonts/`
-  (giấy phép OFL, có tiếng Việt, dùng được khi ngoại tuyến).
-- **Brutalism nhẹ:** viền mực 2 px, bóng đổ cứng, nhãn mono viết hoa, nút "ấn xuống" khi bấm.
-- **Chuyển động:** màn hình khởi động có thanh tiến trình, chuyển cảnh View Transitions giữa các màn hình,
-  tab trượt, số đếm chạy lên, biểu đồ vẽ dần, bảng kéo trên điện thoại, skeleton khi tải.
-  Tôn trọng `prefers-reduced-motion`.
-- **Bố cục:** máy tính có thanh điều hướng trên cùng; điện thoại có thanh tab dưới đáy và bảng thông tin kéo lên từ đáy.
+Nền xanh xám rất nhạt `#f3f6f8`, thẻ trắng trong mờ, viền mảnh, bóng nhẹ, một màu nhấn xanh ngọc `#23756a`, chữ hệ thống
+(hiển thị tiếng Việt tốt, không cần tải phông). Màu dữ liệu LST/NDVI/TVDI không đổi (`public/js/core/format.js`).
 
-## Cấu trúc (không cần công cụ build, ES modules thuần)
-```
-public/
-  index.html            vỏ ứng dụng + màn hình khởi động
-  login.html, admin.html   đăng nhập / quản trị (cùng hệ thiết kế)
-  styles/               base.css (hệ thiết kế) · map.css · views.css · charts.css · auth.css
-  fonts/                font tự lưu
-  js/main.js            khởi động, router (#/ban-do, #/bang-so-lieu, #/thong-ke, #/gia-lap, #/du-lieu)
-  js/core/              dom, format (bảng màu), store, api (phiên + CSRF), data (tải/đệm), motion
-  js/ui/                charts (thư viện biểu đồ SVG), seg (nút chọn trượt), toast, account
-  js/views/             map (+ map-engine, map-dock, map-detail), table, stats, scenario, about
-  viewer-policy.js      quy tắc hiển thị (độ phủ ≥ 50%, không nối qua mốc thiếu); có test Node
-  sw.js                 bộ nhớ đệm ngoại tuyến (PWA)
-```
-Mỗi màn hình là một module `init(section, ctx)` / `show(params)` / `hide()`; thêm màn hình mới chỉ cần thêm một dòng vào `ROUTES` trong `main.js`.
-Liên kết chia sẻ: `#/ban-do?chi-so=tvdi&nam=2023&khu-vuc=27664&che-do=zones` (nút chia sẻ trên bản đồ tạo sẵn).
-
-## Quy tắc khoa học vẫn giữ nguyên
-Ô thiếu là "—" chứ không phải 0; vùng độ phủ < 50% tô xám nét đứt; biểu đồ không nối qua mốc thiếu; nguồn mặc định
-`gee_recovery`, nếu không tải được thì báo lỗi rõ ràng chứ không âm thầm dùng nguồn cũ; TVDI luôn ghi "thử nghiệm";
-giả lập tách khỏi hiện trạng và chỉ quản trị viên được tạo.
+## Cấu trúc mã
+- `public/js/app.js` – khung ứng dụng, trạng thái, định tuyến trang phụ.
+- `public/js/map/engine.js` – bản đồ MapLibre (lớp, 2D/3D, chuyển năm, chọn, làm mờ theo lọc).
+- `public/js/map/panel.js` – xếp hạng + lọc ngưỡng. `widgets.js` – thẻ khu vực, chú giải, thanh thời gian. `export.js` – lưu ảnh.
+- `public/js/views/` – Thống kê, Bảng số liệu, Giới thiệu, Tài khoản, Thử nghiệm. `public/styles/base.css` + `app.css`.
 
 ## Kiểm thử
-- `python -m unittest discover -s tests` và `node --test tests/viewer-policy.test.cjs` (API, DB, quy tắc hiển thị).
-- `tests/e2e_ui.py`: chạy Chrome thật bằng Playwright qua toàn bộ màn hình (khách, quản trị, điện thoại 390 px).
-  Cần máy chủ đang chạy và `.venv/bin/pip install playwright`. Xem đầu tệp để biết cách chạy.
-
-## Demo tĩnh trên GitHub Pages
-Mọi đường dẫn trong giao diện là **tương đối** (hàm `url()` trong `js/core/api.js`), nên cùng một mã chạy ở `/` (máy chủ thật) và ở
-`/mobilegis/` (GitHub Pages). Khi không có `api/health`, ứng dụng tự vào chế độ tĩnh (`body.is-static`):
-ẩn đăng nhập và điểm thực hành, tắt giả lập và thống kê theo pixel; tra cứu ô vẫn chạy nhờ các khối lưới trong `data/query/` (hiện thông báo), còn tương quan và sàng lọc TVDI tính ngay
-trong trình duyệt từ số liệu khu vực. Quy trình xuất bản: `.github/workflows/pages.yml` (bật Pages với nguồn "GitHub Actions").
-Kiểm thử tĩnh cục bộ: phục vụ `public/` bằng `python -m http.server` ở một thư mục cha tên `mobilegis`.
+- `.venv/bin/python -m unittest discover -s tests` (96 kiểm thử, có tự xóa tài khoản) và `node --test tests/viewer-policy.test.cjs`.
+- `MOBILEGIS_URL=http://127.0.0.1:5379 .venv/bin/python tests/e2e_ui.py` – 36 kiểm tra trình duyệt (Chrome thật, WebGL bằng SwiftShader):
+  xếp hạng, lọc, 3D, thanh thời gian, lưu ảnh, CSV, các trang phụ, đăng ký → xóa tài khoản, quản trị, điện thoại, bản tĩnh.
+- Máy chủ trả `204` cho ô bản đồ nằm ngoài dữ liệu (trước đây là ảnh PNG 1×1 trong suốt).

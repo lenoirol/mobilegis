@@ -5,7 +5,7 @@ import {fmt, valid} from '../core/format.js';
 import {drawPath} from '../core/motion.js';
 
 export const SERIES_COLORS = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100'];   // blue, orange, aqua, yellow (fixed order)
-export const INK = '#0e0e0c';
+export const INK = '#435162';
 
 // ---- helpers --------------------------------------------------------------------------------
 export function niceTicks(lo, hi, count = 5) {

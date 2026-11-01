@@ -160,6 +160,27 @@ class AuthTests(unittest.TestCase):
         self.assertEqual(self.client.get('/api/auth/me').status_code, 200)
         self.assertEqual(self.client.post('/api/auth/login', json={'email': email, 'password': NEW_PASSWORD}).status_code, 200)
 
+    def test_user_can_delete_own_account(self):
+        email, user_id = self.user()
+        headers = support.sign_in(self.client, email)
+        delete = lambda password, h=headers: self.client.post('/api/auth/delete-account', headers=h, json={'password': password})
+        self.assertEqual(self.client.post('/api/auth/delete-account', json={'password': PASSWORD}).status_code, 403)   # no CSRF header
+        self.assertEqual(delete('wrong-password').status_code, 403)
+        self.assertEqual(delete(PASSWORD).status_code, 200)
+        self.assertEqual(self.client.get('/api/auth/me').status_code, 401)
+        with db.connect() as c:
+            self.assertIsNone(c.execute('SELECT id FROM mobilegis.app_users WHERE id=%s', (user_id,)).fetchone())
+        self.assertEqual(self.client.post('/api/auth/login', json={'email': email, 'password': PASSWORD}).status_code, 401)
+
+    def test_last_admin_cannot_delete_own_account(self):
+        with db.connect() as c:
+            admins = c.execute("SELECT count(*) AS n FROM mobilegis.app_users WHERE role='admin' AND is_active").fetchone()['n']
+        if admins:
+            self.skipTest('Database already has an active admin; the last-admin guard is covered by role tests.')
+        email, _ = self.user('admin')
+        headers = support.sign_in(self.client, email)
+        self.assertEqual(self.client.post('/api/auth/delete-account', headers=headers, json={'password': PASSWORD}).status_code, 409)
+
     def test_forgot_password_flow_with_admin_issued_code(self):
         member_email, member_id = self.user()
         admin_email, _ = self.user('admin')

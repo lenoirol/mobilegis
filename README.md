@@ -1,4 +1,4 @@
-# MobileGIS TP.HCM với dữ liệu Landsat
+# Bản đồ Nhiệt - Xanh - Khô TP.HCM (MobileGIS, dữ liệu Landsat)
 
 ## Demo trực tuyến
 
@@ -11,11 +11,11 @@ Xem được bản đồ, bảng số liệu, bảng tổng, so sánh khu vực,
 `render.yaml` và **[RENDER_HUONG_DAN.md](RENDER_HUONG_DAN.md)** hướng dẫn từng bước đưa bản đầy đủ (có đăng nhập, thống kê, giả lập) lên Render với cơ sở dữ liệu trên Supabase
 (xem thêm [SUPABASE_HUONG_DAN.md](SUPABASE_HUONG_DAN.md)).
 
-## Giao diện mới · UI2
+## Giao diện v3 · Bản đồ Nhiệt - Xanh - Khô TP.HCM
 
-Giao diện đã được xây lại (tối giản hiện đại pha brutalism, màn hình khởi động, chuyển cảnh mượt, thanh tab dưới đáy trên điện thoại,
-chạy ngoại tuyến). Đọc **[GIAO_DIEN_MOI.md](GIAO_DIEN_MOI.md)** để biết phong cách, cấu trúc thư mục và cách kiểm thử.
-Bản giao diện cũ nằm trong `luu_tru/giao_dien_cu/`.
+Giao diện web được xây lại theo góp ý của cô (01/11/2026): bản đồ toàn màn hình, 2D/3D, chạy diễn biến theo khoảng năm,
+xếp hạng 167 xã/phường, lọc theo ngưỡng, lưu ảnh bản đồ có tọa độ – la bàn – thang màu, nền màu nhẹ, người dùng tự xóa được tài khoản.
+Đọc **[GIAO_DIEN_MOI.md](GIAO_DIEN_MOI.md)**. Giao diện cũ nằm trong `luu_tru/giao_dien_v2/` và `luu_tru/giao_dien_cu/`.
 
 ## Tài khoản và phân quyền · PG4
 

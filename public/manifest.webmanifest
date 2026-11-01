@@ -1,12 +1,12 @@
 {
-  "name": "MobileGIS TP.HCM",
-  "short_name": "MobileGIS",
+  "name": "Bản đồ Nhiệt - Xanh - Khô TP.HCM",
+  "short_name": "Nhiệt-Xanh-Khô",
   "lang": "vi",
-  "start_url": "./#/ban-do",
+  "start_url": "./#/",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f7f3e8",
-  "theme_color": "#ffd60a",
+  "background_color": "#f3f6f8",
+  "theme_color": "#f3f6f8",
   "icons": [
     {
       "src": "./icon-192.png",
@@ -33,19 +33,19 @@
       "purpose": "any"
     }
   ],
-  "description": "Diễn biến LST, NDVI và TVDI tại TP.HCM sau sáp nhập (không gồm Côn Đảo).",
+  "description": "Nhiệt độ bề mặt (LST), độ xanh (NDVI) và độ khô (TVDI) của 167 xã/phường TP.HCM sau sáp nhập (không gồm Côn Đảo), mùa khô 2020–2025.",
   "shortcuts": [
     {
       "name": "Bản đồ",
-      "url": "./#/ban-do"
-    },
-    {
-      "name": "Bảng số liệu",
-      "url": "./#/bang-so-lieu"
+      "url": "./#/"
     },
     {
       "name": "Thống kê",
       "url": "./#/thong-ke"
+    },
+    {
+      "name": "Bảng số liệu",
+      "url": "./#/bang-so-lieu"
     }
   ]
 }

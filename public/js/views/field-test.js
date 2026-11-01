@@ -29,10 +29,10 @@ function overlay(text) {
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function runSwitchTest() {
-  const map = await import('./map.js');
+  const map = await import('../app.js');
   const o = overlay('Mở bản đồ…');
   try {
-    nav('ban-do');
+    location.hash = '#/';
     for (let i = 0; i < 40 && !map.isShown(); i++) await sleep(150);
     if (!map.isShown()) throw new Error('Không mở được màn hình bản đồ.');
     await sleep(900);   // let the map finish fitting the city

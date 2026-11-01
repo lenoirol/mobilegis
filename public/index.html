@@ -3,43 +3,50 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#ffd60a">
-  <meta name="description" content="Xem nhiệt độ bề mặt và độ xanh của từng xã/phường TP.HCM qua các năm 2020–2025, từ ảnh vệ tinh Landsat.">
-  <title>MobileGIS TP.HCM</title>
+  <meta name="theme-color" content="#f3f6f8">
+  <meta name="description" content="Bản đồ nhiệt độ bề mặt (LST), độ xanh thực vật (NDVI) và độ khô (TVDI) của 167 xã/phường TP.HCM sau sáp nhập (không gồm Côn Đảo), mùa khô 2020–2025, từ ảnh Landsat 8/9.">
+  <title>Bản đồ Nhiệt - Xanh - Khô TP.HCM</title>
   <link rel="icon" href="icon.svg"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="preload" href="fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/bricolage-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="fonts/fonts.css">
-  <link rel="stylesheet" href="vendor/leaflet.css">
-  <link rel="stylesheet" href="styles/base.css?v=ui4">
-  <link rel="stylesheet" href="styles/map.css?v=ui4">
-  <link rel="stylesheet" href="styles/views.css?v=ui4">
-  <link rel="stylesheet" href="styles/charts.css?v=ui4">
+  <link rel="stylesheet" href="vendor/maplibre/maplibre-gl.css">
+  <link rel="stylesheet" href="styles/base.css?v=v3">
+  <link rel="stylesheet" href="styles/app.css?v=v3">
+  <link rel="stylesheet" href="styles/views.css?v=v3">
+  <link rel="stylesheet" href="styles/charts.css?v=v3">
 </head>
 <body class="is-booting">
 <div id="splash" role="status" aria-live="polite">
-  <div class="splash-inner">
-    <svg class="splash-mark" viewBox="0 0 120 120" aria-hidden="true"><g class="t"><rect x="10" y="10" width="104" height="104" rx="26" fill="#ffd60a"/><rect x="4" y="4" width="104" height="104" rx="26" fill="#3b5bff" stroke="#0e0e0c" stroke-width="4"/></g><g class="s"><path d="M98 30l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z" fill="#ffffff" stroke="#0e0e0c" stroke-width="2" stroke-linejoin="round"/><path d="M20 84l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z" fill="#ffffff" stroke="#0e0e0c" stroke-width="2" stroke-linejoin="round"/></g><g class="c"><path transform="translate(3 3)" fill="#0e0e0c" d="M17.0 28.1 L18.4 34.4 L24.2 42.1 L21.8 49.7 L18.7 50.8 L29.6 56.9 L25.5 65.8 L31.4 72.7 L41.7 73.1 L43.0 83.1 L47.0 88.9 L57.3 88.2 L55.2 85.3 L59.2 82.5 L65.8 87.2 L62.6 89.8 L64.4 93.7 L69.6 88.7 L75.1 89.9 L79.4 85.6 L91.3 82.2 L94.9 77.9 L93.3 69.1 L87.3 62.8 L79.8 70.9 L78.0 66.0 L71.0 64.9 L67.8 66.6 L66.5 71.2 L60.0 73.1 L57.5 76.5 L51.7 72.8 L48.0 73.6 L43.9 69.9 L44.8 66.5 L50.9 65.3 L51.7 62.6 L45.2 53.9 L45.3 49.8 L48.3 47.6 L53.3 48.9 L57.0 43.3 L53.8 37.1 L55.7 27.7 L51.2 28.6 L46.3 25.6 L46.4 18.9 L36.1 27.3 L30.8 25.7 L31.3 19.3 L23.6 18.3Z"/><path class="o" fill="#ffd60a" stroke="#0e0e0c" stroke-width="3.5" stroke-linejoin="round" d="M17.0 28.1 L18.4 34.4 L24.2 42.1 L21.8 49.7 L18.7 50.8 L29.6 56.9 L25.5 65.8 L31.4 72.7 L41.7 73.1 L43.0 83.1 L47.0 88.9 L57.3 88.2 L55.2 85.3 L59.2 82.5 L65.8 87.2 L62.6 89.8 L64.4 93.7 L69.6 88.7 L75.1 89.9 L79.4 85.6 L91.3 82.2 L94.9 77.9 L93.3 69.1 L87.3 62.8 L79.8 70.9 L78.0 66.0 L71.0 64.9 L67.8 66.6 L66.5 71.2 L60.0 73.1 L57.5 76.5 L51.7 72.8 L48.0 73.6 L43.9 69.9 L44.8 66.5 L50.9 65.3 L51.7 62.6 L45.2 53.9 L45.3 49.8 L48.3 47.6 L53.3 48.9 L57.0 43.3 L53.8 37.1 L55.7 27.7 L51.2 28.6 L46.3 25.6 L46.4 18.9 L36.1 27.3 L30.8 25.7 L31.3 19.3 L23.6 18.3Z"/></g><g class="f"><circle cx="33" cy="40" r="3" fill="#0e0e0c"/><circle cx="43" cy="39" r="3" fill="#0e0e0c"/><circle cx="34" cy="39" r="1" fill="#ffffff"/><circle cx="44" cy="38" r="1" fill="#ffffff"/><circle cx="29" cy="45" r="2.2" fill="#ff8fab"/><circle cx="47.5" cy="44" r="2.2" fill="#ff8fab"/><path d="M34 46Q38.5 50 43 45.5" fill="none" stroke="#0e0e0c" stroke-width="2.5" stroke-linecap="round"/><path d="M62 17C65 22 66 24 64 26.5A3 3 0 0 1 59.5 25C59.5 22.5 60.5 20 62 17Z" fill="#ffffff" stroke="#0e0e0c" stroke-width="2"/></g></svg>
-    <div class="splash-title">MobileGIS<small>TP.HCM · nhiệt độ · độ xanh</small></div>
-    <div class="splash-steps" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-    <div class="splash-status" id="splashStatus">Đang khởi động…</div>
+  <div class="splash-card">
+    <svg class="splash-mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#23756a"/><rect x="13" y="30" width="10" height="21" rx="3" fill="#ff8a5c"/><rect x="27" y="18" width="10" height="33" rx="3" fill="#7fd99a"/><rect x="41" y="25" width="10" height="26" rx="3" fill="#f6cf5a"/></svg>
+    <div><strong>Bản đồ Nhiệt - Xanh - Khô</strong><small>TP.HCM · mùa khô 2020–2025</small></div>
+    <div class="splash-bar"><i id="splashBar"></i></div>
+    <p id="splashStatus">Đang khởi động…</p>
   </div>
 </div>
-<a class="skip" href="#main">Bỏ qua điều hướng</a>
-<header id="top">
-  <a class="brand" href="#/ban-do" aria-label="MobileGIS TP.HCM · trang chủ">
-    <svg viewBox="0 0 120 120" aria-hidden="true"><rect x="10" y="10" width="104" height="104" rx="26" fill="#0e0e0c"/><rect x="4" y="4" width="104" height="104" rx="26" fill="#3b5bff" stroke="#0e0e0c" stroke-width="4"/><path fill="#ffd60a" stroke="#0e0e0c" stroke-width="4" stroke-linejoin="round" d="M17.0 28.1 L18.4 34.4 L24.2 42.1 L21.8 49.7 L18.7 50.8 L29.6 56.9 L25.5 65.8 L31.4 72.7 L41.7 73.1 L43.0 83.1 L47.0 88.9 L57.3 88.2 L55.2 85.3 L59.2 82.5 L65.8 87.2 L62.6 89.8 L64.4 93.7 L69.6 88.7 L75.1 89.9 L79.4 85.6 L91.3 82.2 L94.9 77.9 L93.3 69.1 L87.3 62.8 L79.8 70.9 L78.0 66.0 L71.0 64.9 L67.8 66.6 L66.5 71.2 L60.0 73.1 L57.5 76.5 L51.7 72.8 L48.0 73.6 L43.9 69.9 L44.8 66.5 L50.9 65.3 L51.7 62.6 L45.2 53.9 L45.3 49.8 L48.3 47.6 L53.3 48.9 L57.0 43.3 L53.8 37.1 L55.7 27.7 L51.2 28.6 L46.3 25.6 L46.4 18.9 L36.1 27.3 L30.8 25.7 L31.3 19.3 L23.6 18.3Z"/><circle cx="33" cy="40" r="3.5" fill="#0e0e0c"/><circle cx="43" cy="39" r="3.5" fill="#0e0e0c"/><path d="M34 46Q38.5 50 43 45.5" fill="none" stroke="#0e0e0c" stroke-width="3" stroke-linecap="round"/></svg>
-    <span class="brand-name">MobileGIS<b>TP.HCM</b></span>
-  </a>
-  <nav id="nav" aria-label="Điều hướng chính"><span class="nav-ink" aria-hidden="true"></span></nav>
-  <div class="top-right"><span id="sourceChip" class="chip" title="Nguồn dữ liệu đang xem"><i class="dot"></i><span>Đang tải…</span></span><div id="account"></div></div>
-</header>
-<div id="notice" class="notice" role="status" hidden></div>
-<main id="main" tabindex="-1"></main>
+<a class="skip" href="#map">Bỏ qua điều hướng</a>
+
+<div id="app">
+  <div id="map" role="region" aria-label="Bản đồ 167 xã/phường"></div>
+
+  <header id="topbar">
+    <a class="brand" href="#/" aria-label="Bản đồ Nhiệt - Xanh - Khô TP.HCM · về bản đồ">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#23756a"/><rect x="13" y="30" width="10" height="21" rx="3" fill="#ff8a5c"/><rect x="27" y="18" width="10" height="33" rx="3" fill="#7fd99a"/><rect x="41" y="25" width="10" height="26" rx="3" fill="#f6cf5a"/></svg>
+      <span class="brand-name"><strong><span class="bd">Bản đồ </span>Nhiệt - Xanh - Khô</strong><small>TP.HCM · 167 xã/phường · Landsat 8/9</small></span>
+    </a>
+    <div id="indexSwitch" class="index-switch" role="group" aria-label="Chọn chỉ số"></div>
+    <nav id="menu" class="menu" aria-label="Điều hướng"></nav>
+  </header>
+
+  <aside id="panel" class="panel" aria-label="Xếp hạng và lọc theo ngưỡng"></aside>
+  <div id="mapTools" class="map-tools"></div>
+  <div id="legend" class="legend" aria-live="polite"></div>
+  <section id="info" class="info" aria-live="polite" aria-label="Khu vực đang chọn"></section>
+  <div id="timeline" class="timeline" aria-label="Thời gian"></div>
+</div>
+
+<div id="pages" class="pages" hidden></div>
 <div id="toasts" aria-live="polite"></div>
-<noscript><p style="padding:90px 20px">MobileGIS cần JavaScript để hiển thị bản đồ.</p></noscript>
-<script src="vendor/leaflet.js"></script>
+<noscript><p style="padding:90px 20px">Trang này cần JavaScript để hiển thị bản đồ.</p></noscript>
 <script src="viewer-policy.js"></script>
-<script type="module" src="js/main.js?v=ui4"></script>
+<script type="module" src="js/app.js?v=v3"></script>
 </body>
 </html>

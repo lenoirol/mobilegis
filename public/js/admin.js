@@ -120,14 +120,14 @@ function selectTab(name) {
 
 (async () => {
   await loadSession();
-  if (!session.user) { location.replace(url('login.html') + '?next=' + encodeURIComponent(location.pathname)); return; }
+  if (!session.user) { location.replace(url('') + '#/tai-khoan'); return; }
   if (session.user.role !== 'admin') { $('#denied').hidden = false; $('#logout').hidden = true; return; }
   me = session.user; $('#who').textContent = me.display_name; $('#app').hidden = false;
   const resetCount = h('span', {class: 'count', hidden: true}, '0');
   tabs = segmented([{value: 'overview', label: 'Tổng quan'}, {value: 'users', label: ['Tài khoản', resetCount]}, {value: 'data', label: 'Dữ liệu'}, {value: 'content', label: 'Nội dung'}, {value: 'field', label: 'Thử nghiệm'}, {value: 'events', label: 'Nhật ký'}], 'overview', selectTab, {label: 'Mục quản trị'});
   tabs.counts = {reset: resetCount}; tabs.el.classList.add('admin-tabs');
   $('#tabsHost').append(tabs.el); tabs.place();
-  $('#logout').onclick = async () => { await fetch(url('api/auth/logout'), {method: 'POST', credentials: 'same-origin'}); location.href = url('login.html'); };
+  $('#logout').onclick = async () => { await fetch(url('api/auth/logout'), {method: 'POST', credentials: 'same-origin'}); location.href = url('') + '#/'; };
   $('#createUser').addEventListener('submit', e => { e.preventDefault(); const form = e.target, body = Object.fromEntries(new FormData(form));
     act(async () => { await api('/api/admin/users', 'POST', body); form.reset(); }, 'Đã tạo tài khoản.'); });
   get('/api/notice').then(n => { $('#noticeForm [name=text]').value = n.text || ''; }).catch(() => {});

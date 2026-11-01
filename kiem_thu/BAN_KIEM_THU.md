@@ -6,7 +6,7 @@ Phạm vi: TP.HCM sau sáp nhập, 167 xã/phường, không gồm Côn Đảo (
 
 ## 1. Kiểm thử chức năng (Bảng 6.2, nhóm "Chức năng")
 
-Cột "Tự động" là kết quả của bộ kiểm tra trình duyệt `tests/e2e_ui.py` (Chrome thật, 81 kiểm tra đạt ngày 18/10/2026). Cột "Thiết bị thật" để nhóm điền khi thử trên điện thoại.
+Cột "Tự động" là kết quả của bộ kiểm tra trình duyệt giao diện cũ (Chrome thật, 81 kiểm tra đạt ngày 18/10/2026). Từ 01/11/2026 giao diện được xây lại (v3, xem `GIAO_DIEN_MOI.md`); bộ kiểm tra mới `tests/e2e_ui.py` có 36 kiểm tra, đạt 36/36 ngày 01/11/2026. Cột "Thiết bị thật" để nhóm điền khi thử trên điện thoại.
 
 | STT | Mức ưu tiên (Bảng 5.1) | Thao tác | Kết quả mong đợi | Tự động | Thiết bị thật (Android/iOS, ghi máy) |
 |---|---|---|---|---|---|

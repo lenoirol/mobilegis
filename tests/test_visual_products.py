@@ -78,9 +78,9 @@ class VisualProducts(unittest.TestCase):
         self.assertEqual(error.exception.code,400)
         self.assertIn('2026.10',self.get('/api/info')['version'])
     def test_sparse_tile_is_transparent_not_zero_value(self):
+        # A tile outside the data is "no content" (204): nothing is drawn, so it can never read as a zero value.
         with urllib.request.urlopen(self.base+'/data/tiles/lst_2025/12/0/0.png') as r:
-            self.assertEqual(r.status,200)
-            with Image.open(io.BytesIO(r.read())) as image:self.assertEqual(image.convert('RGBA').getpixel((0,0))[3],0)
+            self.assertEqual(r.status,204);self.assertEqual(r.read(),b'')
     def test_context_and_change_geotiff_downloads(self):
         names=['worldcover_2021_120m.tif','rgb_2025_120m.tif']+[f'change_{k}_2020_2025_120m.tif' for k in ('lst','ndvi','tvdi')]
         for name in names:

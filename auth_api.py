@@ -102,6 +102,14 @@ async def change_password(request: Request, user=Depends(require_csrf)):
     return {'ok': True}
 
 
+@router.post('/api/auth/delete-account')
+async def delete_account(request: Request, response: Response, user=Depends(require_csrf)):
+    data = await read_json(request, 2000)
+    await _call(auth.delete_self, user['id'], data.get('password'))
+    response.delete_cookie(COOKIE, path='/')
+    return {'ok': True}
+
+
 @router.post('/api/auth/forgot')
 async def forgot(request: Request):
     data = await read_json(request, 2000)

@@ -167,7 +167,7 @@ def tile(layer:str,z:int,x:int,y:int):
     if layer not in TILE_KEYS or not (0<=z<=18 and 0<=x<2**z and 0<=y<2**z):raise HTTPException(404,'Tile không hợp lệ.')
     target=ROOT/f'public/data/tiles/{layer}/{z}/{x}/{y}.png'
     if target.exists():return FileResponse(target,media_type='image/png')
-    return Response(base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4//8/AwAI/AL+XwV7AAAAAElFTkSuQmCC'),media_type='image/png')
+    return Response(status_code=204)   # no tile here (outside the data): map clients treat 204 as an empty tile
 @app.get('/data/{name:path}')
 def data_compatibility(name:str):
     if name=='hcm_167.geojson':return db.boundaries()
