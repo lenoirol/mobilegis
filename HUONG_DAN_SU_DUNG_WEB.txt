@@ -343,19 +343,21 @@ B. Từ v3 lên v3.1 (bản này)
  8. THỐNG KÊ SỬ DỤNG ẨN DANH + khối "Mức độ sử dụng" cho quản trị viên.
  9. ADMIN NHẬP SỐ LIỆU bằng CSV: kiểm tra, xem trước, áp dụng, hoàn tác,
     có nhật ký. Số liệu gốc không bị sửa.
-10. Chuẩn bị sẵn tệp nhập cho đợt 2 GEE năm 2025 (27 dòng).
+10. Bổ sung số liệu GEE 2025: đợt 2 (27 dòng) và đợt 3 (4 phường) đã nhập.
 11. Cập nhật cơ sở dữ liệu lên schema 8 (migration 008).
 12. Trình duyệt có bộ nhớ đệm mới (mobilegis-v31) để chạy nhanh và dùng lại
     được khi mạng yếu.
 13. Kiểm thử tăng: 106 kiểm thử Python, 6 kiểm thử Node, 47 kiểm tra trình duyệt.
 
-C. Tình trạng đợt 2 GEE (số liệu 2025)
---------------------------------------
- - Ở máy local đã nhập đợt 2: còn 4 phường dưới 50% độ phủ vẫn để xám
-   (Phú Lợi, Bình Dương, Hòa Lợi, Tân Khánh).
- - Máy chủ thật (Supabase/Render) CHƯA nhập: cần chạy migrate --supabase rồi
-   quản trị viên tải tệp CSV đợt 2 lên (Phần 4.6).
-
+C. Tình trạng bổ sung số liệu GEE năm 2025
+------------------------------------------
+ - Đợt 2 (27 xã/phường) và đợt 3 (4 phường: Phú Lợi, Bình Dương, Hòa Lợi, Tân Khánh)
+   đã nhập vào máy chủ thật (Render/Supabase) và máy local. Năm 2025 hiện
+   không còn phường nào bị xám.
+ - Đợt 3 dùng lại cảnh 28/02/2025 (mây 3,3%) đã dùng ở đợt 1 cho phường khác;
+   độ phủ của 4 phường từ 12–39% lên 95–100%. Số cũ dựa trên ít ô nên lệch về
+   phía các ô mát (LST tăng khoảng 6–7 °C sau khi bổ sung).
+ - Có thể hoàn tác từng lần nhập ở admin → Nhập số liệu → Các lần nhập.
 
 ==============================================================================
  PHẦN 7. NHỮNG ĐIỀU CHƯA LÀM / GIỚI HẠN (nói thẳng)
@@ -364,7 +366,7 @@ C. Tình trạng đợt 2 GEE (số liệu 2025)
    thoại, không bị tràn ngang). Cần nhóm thử thật và gửi số đo ở trang
    "Thử nghiệm".
  - Lần nhập số liệu chỉ đổi số trung bình theo xã/phường; ảnh ô 120 m của
-   đợt 2 chưa được dựng lại; GitHub Pages không thấy phần nhập.
+   đợt 2 và đợt 3 chưa được dựng lại; GitHub Pages không thấy phần nhập.
  - TVDI chỉ là chỉ số thử nghiệm (tương quan với NDVI đổi dấu theo năm).
  - Mỗi năm là một cảnh ảnh trong mùa khô; không dùng để kết luận xu thế
    khí hậu. LST là nhiệt độ bề mặt, không phải nhiệt độ không khí.

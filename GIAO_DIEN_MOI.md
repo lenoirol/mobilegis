@@ -14,8 +14,8 @@ Máy chủ, API, cơ sở dữ liệu và số liệu không đổi. Giao diện
 - **Nhập số liệu (quản trị viên)**: tab "Nhập số liệu" trong `admin.html`. CSV `code,year,sampled_pixels,lst,lst_pixels,ndvi,ndvi_pixels,tvdi,tvdi_pixels,dates`;
   xem trước thay đổi → áp dụng → hoàn tác / áp dụng lại. Là lớp phủ (`mobilegis.observation_imports`, migration 008, schema 8): số liệu đã công bố không bị sửa;
   độ phủ = số ô / số ô lấy mẫu, quy tắc ≥ 50% vẫn áp dụng. Ô ảnh 120 m và bản tĩnh GitHub Pages không đổi theo lần nhập. Mã: `observation_imports.py`, `engagement_api.py`, `public/js/admin-import.js`.
-- **Đợt 2 GEE (2025)**: `data/gee_recovery/batch2_20261101_review/nhap_so_lieu_dot2.csv` (27 dòng) lấy từ bản rà soát; đã áp dụng ở DB local, còn 4 xã dưới 50% (Phú Lợi, Bình Dương, Hòa Lợi, Tân Khánh).
-  Máy chủ thật (Supabase) cần chạy `python scripts/migrate_engagement.py --supabase` rồi quản trị viên tải tệp lên.
+- **Đợt 2 và 3 GEE (2025)**: `nhap_so_lieu_dot2.csv` (27 dòng) và `nhap_so_lieu_dot3.csv` (4 phường Phú Lợi, Bình Dương, Hòa Lợi, Tân Khánh) trong `data/gee_recovery/batch2_20261101_review/` và `batch3_20261102_review/`.
+  Đợt 3 dùng lại cảnh 28/02/2025 đã dùng ở đợt 1 (đợt 2 đã loại nhầm cảnh này); độ phủ 4 phường từ 12–39% lên 95–100%. Đã nhập ở máy local và Supabase; năm 2025 không còn phường xám.
 
 ## Màn hình chính (bản đồ toàn màn hình)
 - **Thanh trên:** tên ứng dụng, chọn chỉ số (Nhiệt độ LST · Độ xanh NDVI · Độ khô TVDI), menu Xếp hạng / Thống kê / Bảng số liệu / Giới thiệu / Tài khoản.
