@@ -100,6 +100,8 @@ body.panel-closed .map-tools{left:var(--gap)}
 .val b{font-size:18px;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:6px}
 .val b em{width:9px;height:9px;border-radius:3px;flex:none}
 .val .q{font-size:11px;font-weight:600}
+/* Bảng số liệu dùng lại tên lớp .val: trả ô về dạng ô bảng bình thường (không phải thẻ của thẻ khu vực) */
+.tbl td.val{display:table-cell;border:0;border-bottom:1.5px solid var(--hair);border-radius:0;background:none;padding:12px 14px;cursor:auto;box-shadow:none}
 .q.high{color:#1d6b43}.q.mid{color:#8a5a00}.q.low{color:#b0461a}.q.none{color:var(--ink-3)}
 .info-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;font-size:12px;color:var(--ink-3)}
 .info-alert{margin-top:8px;padding:6px 8px;border-radius:8px;background:var(--warn-bg);color:var(--warn-ink);font-size:12px;font-weight:600}
@@ -175,7 +177,10 @@ body.panel-closed .maplibregl-ctrl-bottom-left{left:calc(var(--gap) - 10px)!impo
   .menu .acct-btn>span:last-child{display:none}
   .panel{top:auto;left:0;right:0;bottom:0;width:auto;height:min(56vh,480px);border-radius:16px 16px 0 0;z-index:30}
   body.panel-closed .panel{transform:translateY(105%)}
-  .map-tools{left:0;right:0;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;padding:0 var(--gap) 4px;scrollbar-width:none}
+  /* Dải công cụ vuốt ngang được: iOS Safari không cuộn vùng có pointer-events:none nên ở đây phải bật lại */
+  .map-tools{left:0;right:0;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;padding:0 var(--gap) 4px;scrollbar-width:none;pointer-events:auto;touch-action:pan-x;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+  .map-tools>*{touch-action:pan-x}
+  .search{flex:none}
   .map-tools::-webkit-scrollbar{display:none}
   .tool-group{flex:none}
   .tool-group button{padding:5px 8px;font-size:12px}
