@@ -1,0 +1,169 @@
+{
+  "status": "review_only_not_published",
+  "year": 2025,
+  "batch": 3,
+  "method": "Batch 3: preserve every finite value of the batch-2 review raster; fill only entirely missing triplets in 4 target wards with same-scene Jan–Apr 2025 pixels from a scene already used for other wards (it was never applied to these wards).",
+  "scene_index_offset": 20,
+  "target_codes": [
+    "25750",
+    "25760",
+    "25849",
+    "25891"
+  ],
+  "filled_pixels": 7733,
+  "discarded_outside_target_pixels": 400,
+  "baseline_sha256": "bf4dd2ae15e044f231e0d8daf20c849359681925bc3826f8373946204305f4ca",
+  "input_files": [
+    {
+      "file": "MobileGIS_recovery_2025_batch3_120m.tif",
+      "sha256": "b459d8c7fe8ea0c576e6526b7cf982ca1d6ab3daaa17cb4a2e4bc8b075bd8c90"
+    },
+    {
+      "file": "MobileGIS_recovery_2025_batch3_scenes.csv",
+      "sha256": "fcdd9cd81201439f3d58d956a906172eed938a238563c6438fafd2fd77cb07dc"
+    },
+    {
+      "file": "MobileGIS_recovery_2025_batch3_diagnostics.csv",
+      "sha256": "64a9f15663a5f7c5719be606dbcb429642a7a92d03780a94c3ea41722283bd8c"
+    }
+  ],
+  "scenes": [
+    {
+      "scene_index": "1",
+      "LANDSAT_PRODUCT_ID": "LC09_L2SP_125052_20250228_20250301_02_T1",
+      "acquisition_date": "2025-02-28",
+      "day_of_year": "59",
+      "CLOUD_COVER": "3.29",
+      "WRS_PATH": "125.0",
+      "WRS_ROW": "52.0",
+      "target_joint_pixels": "10783.0",
+      "year": "2025",
+      "recovery_batch": "3",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-10.206806430495782",
+      "wet_intercept": "38.77130018232891",
+      "dry_slope": "-17.02689527390128",
+      "dry_intercept": "50.1743214856999"
+    }
+  ],
+  "per_scene_filled_pixels": {
+    "1": 7733
+  },
+  "wards": [
+    {
+      "code": "25750",
+      "name": "Phường Phú Lợi",
+      "before": {
+        "ndvi": 0.40064717373069453,
+        "ndvi_pixels": 147,
+        "ndvi_coverage": 0.1176941553242594,
+        "lst": 33.036555089107175,
+        "lst_pixels": 147,
+        "lst_coverage": 0.1176941553242594,
+        "tvdi": 0.2768728520949276,
+        "tvdi_pixels": 147,
+        "tvdi_coverage": 0.1176941553242594
+      },
+      "after": {
+        "ndvi": 0.4168180014388875,
+        "ndvi_pixels": 1248,
+        "ndvi_coverage": 0.9991993594875901,
+        "lst": 39.13647580910952,
+        "lst_pixels": 1248,
+        "lst_coverage": 0.9991993594875901,
+        "tvdi": 0.6003977516875005,
+        "tvdi_pixels": 1248,
+        "tvdi_coverage": 0.9991993594875901
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25760",
+      "name": "Phường Bình Dương",
+      "before": {
+        "ndvi": 0.43787033316781654,
+        "ndvi_pixels": 919,
+        "ndvi_coverage": 0.22719406674907294,
+        "lst": 31.433569222202237,
+        "lst_pixels": 919,
+        "lst_coverage": 0.22719406674907294,
+        "tvdi": 0.18665131415697758,
+        "tvdi_pixels": 918,
+        "tvdi_coverage": 0.22694684796044498
+      },
+      "after": {
+        "ndvi": 0.4228685070994249,
+        "ndvi_pixels": 4013,
+        "ndvi_coverage": 0.9920889987639061,
+        "lst": 38.700161783468864,
+        "lst_pixels": 4013,
+        "lst_coverage": 0.9920889987639061,
+        "tvdi": 0.612418495336476,
+        "tvdi_pixels": 4012,
+        "tvdi_coverage": 0.9918417799752781
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25849",
+      "name": "Phường Hoà Lợi",
+      "before": {
+        "ndvi": 0.5731701772388215,
+        "ndvi_pixels": 932,
+        "ndvi_coverage": 0.3907756813417191,
+        "lst": 27.50079567442636,
+        "lst_pixels": 932,
+        "lst_coverage": 0.3907756813417191,
+        "tvdi": 0.17241454274163662,
+        "tvdi_pixels": 932,
+        "tvdi_coverage": 0.3907756813417191
+      },
+      "after": {
+        "ndvi": 0.5316751113773992,
+        "ndvi_pixels": 2384,
+        "ndvi_coverage": 0.99958071278826,
+        "lst": 34.70564802661038,
+        "lst_pixels": 2384,
+        "lst_coverage": 0.99958071278826,
+        "tvdi": 0.5056694594371972,
+        "tvdi_pixels": 2384,
+        "tvdi_coverage": 0.99958071278826
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "25891",
+      "name": "Phường Tân Khánh",
+      "before": {
+        "ndvi": 0.48708138926967715,
+        "ndvi_pixels": 456,
+        "ndvi_coverage": 0.17117117117117117,
+        "lst": 30.6132458218357,
+        "lst_pixels": 456,
+        "lst_coverage": 0.17117117117117117,
+        "tvdi": 0.17974477497712577,
+        "tvdi_pixels": 454,
+        "tvdi_coverage": 0.1704204204204204
+      },
+      "after": {
+        "ndvi": 0.4575063786509701,
+        "ndvi_pixels": 2542,
+        "ndvi_coverage": 0.9542042042042042,
+        "lst": 37.92841405966074,
+        "lst_pixels": 2542,
+        "lst_coverage": 0.9542042042042042,
+        "tvdi": 0.5607385328231795,
+        "tvdi_pixels": 2540,
+        "tvdi_coverage": 0.9534534534534534
+      },
+      "enough_at_10_percent": true,
+      "enough_at_50_percent": true
+    }
+  ],
+  "limitations": "Different dates and per-scene TVDI fits. Review coverage and scientific comparability before adoption. Do not replace active GEE files with this candidate directly."
+}

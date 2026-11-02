@@ -2,6 +2,8 @@
 
 Batch 1 fills five wards from the original GEE export. Batch 2 (--batch 2 --targets <json>) fills more wards starting from the
 PUBLISHED batch-1 recovery raster; scene indexes of batch 2 are stored in the provenance with an offset of 10.
+Batch 3 (--batch 3 --targets <json>) starts from the batch-2 REVIEW raster and may REUSE a scene already used for other wards
+(offset 20); it still only fills entirely missing triplets, never changes a finite value.
 Never modifies the active source, original exports, or units outside the targets.
 Requires the same GIS processing dependencies as import_gee.py.
 """
@@ -22,7 +24,8 @@ from import_gee import NODATA, features, preserve, read_csv, sha, zonal
 
 TARGETS = {'25942', '25945', '25951', '25969', '25975'}   # batch 1
 BATCH1_DIR = ROOT / 'data/gee_recovery/batch1_20261004'
-SCENE_OFFSET = {1: 0, 2: 10}   # provenance scene_index = candidate index + offset, so batches never collide
+BATCH2_DIR = ROOT / 'data/gee_recovery/batch2_20261101_review'
+SCENE_OFFSET = {1: 0, 2: 10, 3: 20}   # provenance scene_index = candidate index + offset, so batches never collide
 KEYS = ('ndvi', 'lst', 'tvdi')
 DESCRIPTIONS = ('NDVI', 'LST', 'TVDI', 'scene_index', 'day_of_year')
 
@@ -124,10 +127,12 @@ def validate_diagnostics(rows, baseline_ids, scenes, batch, targets=TARGETS):
 
 
 def review(folder, output, batch=1, targets=None, base_raster=None, base_provenance=None, product_path=None, before_path=None):
-    if batch not in (1, 2):
-        raise ValueError('Batch must be 1 or 2')
-    if batch == 2 and not targets:
-        raise ValueError('Batch 2 needs an explicit target list (--targets verification/GEE_2025_batch2_targets.json)')
+    if batch not in (1, 2, 3):
+        raise ValueError('Batch must be 1, 2 or 3')
+    if batch >= 2 and not targets:
+        raise ValueError('Batch 2/3 needs an explicit target list (--targets <json with target_codes>)')
+    if batch == 3 and set(targets) & TARGETS:
+        raise ValueError('Batch 3 targets must not include the wards already filled by batch 1')
     targets = set(targets) if targets else TARGETS
     if output.exists():
         raise ValueError('Output folder exists. Use a new folder; do not overwrite a review.')
@@ -136,11 +141,14 @@ def review(folder, output, batch=1, targets=None, base_raster=None, base_provena
     if not all(path.is_file() for path in paths):
         raise ValueError('Need the TIFF, scenes CSV, and diagnostics CSV from the same GEE batch')
     # Batch 1 starts from the original GEE export; batch 2 starts from the published batch-1 recovery.
-    baseline_path = Path(base_raster) if base_raster else (ROOT / 'data/gee/rasters/indices_2025_120m.tif' if batch == 1 else BATCH1_DIR / 'indices_2025_recovery_batch1_120m.tif')
-    previous_provenance = Path(base_provenance) if base_provenance else BATCH1_DIR / 'provenance_2025_120m.tif'
+    # Batch 3 starts from the batch-2 review raster (batch 2 is not published as tiles yet).
+    prev_dir = BATCH2_DIR if batch == 3 else BATCH1_DIR
+    baseline_path = Path(base_raster) if base_raster else (ROOT / 'data/gee/rasters/indices_2025_120m.tif' if batch == 1 else prev_dir / f'indices_2025_recovery_batch{batch - 1}_120m.tif')
+    previous_provenance = Path(base_provenance) if base_provenance else prev_dir / 'provenance_2025_120m.tif'
     product = json.loads(Path(product_path or ROOT / ('public/data/gee/products.json' if batch == 1 else 'public/data/gee_recovery/products.json')).read_text(encoding='utf8'))
     scene_rows = read_csv(paths[1])
-    baseline_ids = {row['LANDSAT_PRODUCT_ID'] for row in product['audits']['2025']['scenes']}
+    # Batch 3 may reuse a scene that an earlier batch used for OTHER wards, so no scene is treated as 'already used' here.
+    baseline_ids = set() if batch == 3 else {row['LANDSAT_PRODUCT_ID'] for row in product['audits']['2025']['scenes']}
     scenes = validate_scenes(scene_rows, baseline_ids, batch)
     diagnostics = read_csv(paths[2])
     validate_diagnostics(diagnostics, baseline_ids, scenes, batch, targets)
@@ -188,10 +196,10 @@ def review(folder, output, batch=1, targets=None, base_raster=None, base_provena
         dst.set_band_description(1, 'scene_index')
         dst.set_band_description(2, 'day_of_year')
     with rasterio.open(merged_path) as ds: after = zonal(ds, features())
-    before = {row['code']: row for row in json.loads(Path(before_path or ROOT / ('public/data/gee/observations.json' if batch == 1 else 'public/data/gee_recovery/observations.json')).read_text(encoding='utf8')) if row['year'] == 2025}
+    before = {row['code']: row for row in json.loads(Path(before_path or (BATCH2_DIR / 'observations_2025_review.json' if batch == 3 else ROOT / ('public/data/gee/observations.json' if batch == 1 else 'public/data/gee_recovery/observations.json'))).read_text(encoding='utf8')) if row.get('year', 2025) == 2025}
     report = {'status':'review_only_not_published', 'year':2025, 'batch':batch,
         'method':('Preserve every finite baseline value; fill only entirely missing triplets in five target wards with same-scene Jan–Apr 2025 pixels.' if batch == 1
-                  else f'Batch 2: preserve every finite value of the published batch-1 recovery; fill only entirely missing triplets in {len(targets)} target wards with same-scene Jan–Apr 2025 pixels from scenes not used before.'),
+                  else (f'Batch 3: preserve every finite value of the batch-2 review raster; fill only entirely missing triplets in {len(targets)} target wards with same-scene Jan–Apr 2025 pixels from a scene already used for other wards (it was never applied to these wards).' if batch == 3 else f'Batch 2: preserve every finite value of the published batch-1 recovery; fill only entirely missing triplets in {len(targets)} target wards with same-scene Jan–Apr 2025 pixels from scenes not used before.')),
         'scene_index_offset':SCENE_OFFSET[batch], 'target_codes':sorted(targets),
         'filled_pixels':int(filled.sum()), 'discarded_outside_target_pixels':outside_pixels,
         'baseline_sha256':sha(baseline_path),
@@ -214,7 +222,7 @@ if __name__ == '__main__':
     parser.add_argument('--input', type=Path, required=True)
     parser.add_argument('--batch', type=int, default=1)
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--targets', type=Path, help='JSON with target_codes (required for --batch 2)')
+    parser.add_argument('--targets', type=Path, help='JSON with target_codes (required for --batch 2 and 3)')
     args = parser.parse_args()
     codes = json.loads(args.targets.read_text(encoding='utf8'))['target_codes'] if args.targets else None
     result = review(args.input, args.output, args.batch, targets=codes)

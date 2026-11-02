@@ -1,0 +1,2 @@
+scene_index,LANDSAT_PRODUCT_ID,acquisition_date,day_of_year,CLOUD_COVER,WRS_PATH,WRS_ROW,target_joint_pixels,year,recovery_batch,resolution_m,tvdi_bins,tvdi_status,wet_slope,wet_intercept,dry_slope,dry_intercept
+1,LC09_L2SP_125052_20250228_20250301_02_T1,2025-02-28,59,3.29,125.0,52.0,10783.0,2025,3,120,15,experimental_fit,-10.206806430495782,38.77130018232891,-17.02689527390128,50.1743214856999
