@@ -193,6 +193,7 @@ body.panel-closed .maplibregl-ctrl-bottom-left{left:calc(var(--gap) - 10px)!impo
   .legend{left:var(--gap)!important;top:calc(var(--topb) + var(--gap) + 46px);bottom:auto;width:min(230px,60vw);padding:7px 9px}
   .legend h3{font-size:11.5px}
   .legend .keys{display:none}
+  .legend-what{display:none}
   .timeline{gap:8px;padding:0 10px}
   .tl-year{min-width:52px}.tl-year b{font-size:20px}.tl-year small{display:none}
   .tl-opts{display:none}
@@ -240,4 +241,58 @@ dialog.tour{max-width:min(560px,94vw)}
 @media (max-width:900px){
   .search{width:170px}
   .cmp-chip{top:calc(var(--topb) + 150px);font-size:13px}
+}
+
+/* v3.2 glossary hooks */
+.legend h3 span{display:inline-flex;align-items:center;gap:4px}
+.legend-what{margin:4px 0 6px;font-size:12px;line-height:1.35;color:var(--ink-2)}
+.link-btn{display:inline-flex;align-items:center;gap:5px;border:0;background:transparent;color:var(--accent-2);font-size:12.5px;font-weight:600;padding:6px 0 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+/* v3.2 "Bộ xem dữ liệu" */
+.view-box .v-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.v-field{display:grid;gap:3px;font-size:12px;font-weight:600;color:var(--ink-2)}
+.v-save{display:flex;gap:6px;margin-top:4px}.v-save .input{flex:1;min-width:0}
+.saved-views{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.saved-chip{display:inline-flex;align-items:center;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);overflow:hidden}
+.saved-chip button{border:0;background:transparent;padding:4px 9px;font-size:12.5px;font-weight:600;color:var(--accent-2);cursor:pointer;display:inline-grid;place-items:center}
+.saved-chip button+button{padding:4px 6px;border-left:1px solid var(--accent)}
+
+/* v3.2 phone tab bar: the app area and overlay pages stop above it */
+.tabbar{display:none}
+@media (max-width:900px){
+  :root{--tab-h:58px}
+  #app{bottom:var(--tab-h)}
+  .pages{bottom:var(--tab-h)}
+  .menu{display:none}
+  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;height:var(--tab-h);z-index:3000;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(20,32,46,.08);padding-bottom:env(safe-area-inset-bottom)}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:0;background:transparent;color:var(--ink-3);font:600 11px var(--f-sans);padding:4px 2px;cursor:pointer}
+  .tab[aria-current=true]{color:var(--accent-2)}
+  .tab[aria-current=true] svg{stroke:var(--accent-2)}
+  .tab[aria-current=true]::before{content:"";position:absolute;top:0;width:32px;height:3px;border-radius:0 0 3px 3px;background:var(--accent)}
+  .tab{position:relative}
+  .more-sheet{position:fixed;right:8px;bottom:calc(var(--tab-h) + 8px);z-index:3100;min-width:250px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);padding:6px;display:grid}
+  .more-sheet a,.more-sheet button{display:flex;align-items:center;gap:10px;padding:12px;border:0;background:transparent;border-radius:10px;font:600 14.5px var(--f-sans);color:var(--ink);text-decoration:none;text-align:left;cursor:pointer}
+  .more-sheet a:active,.more-sheet button:active{background:var(--accent-soft)}
+  .forecast-page .rank-row{grid-template-columns:26px 1fr auto}.forecast-page .rank-row .btn{display:inline-flex;grid-column:2/4;justify-self:start}
+}
+
+/* v3.6 menu "Thêm công cụ" của dải công cụ bản đồ */
+.tool-menu{position:fixed;z-index:3200;min-width:230px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);padding:10px;display:grid;gap:8px}
+.tool-menu[hidden]{display:none}
+.tm-title{font-size:12px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em}
+.tool-menu .tool-group{display:flex;background:var(--bg-2);border-radius:10px;padding:3px;box-shadow:none;border:0}
+.tool-menu .tool-group button{flex:1;justify-content:center}
+.tm-list{display:grid;gap:2px;border-top:1px solid var(--line);padding-top:6px}
+.tm-list button{display:flex;align-items:center;gap:10px;border:0;background:transparent;padding:10px 8px;border-radius:9px;font:600 14px var(--f-sans);color:var(--ink);text-align:left;cursor:pointer}
+.tm-list button:hover,.tm-list button[aria-pressed=true]{background:var(--accent-soft);color:var(--accent-2)}
+
+/* v3.6 tên chỉ số thống nhất: mã (LST/NDVI/TVDI) + tên tiếng Việt ở mọi nơi */
+.index-switch button b{font-weight:800}
+.index-switch button small{display:inline;font-weight:600}
+.panel-tabs button{display:flex;flex-direction:column;align-items:center;gap:0;line-height:1.15}
+.panel-tabs button small.lbl{font-size:11px;font-weight:600;opacity:.8}
+@media (max-width:900px){
+  .index-switch button{flex-direction:column;gap:0;line-height:1.1;padding:5px 2px}
+  .index-switch button i{display:none}
+  .index-switch button small{display:block!important;font-size:10.5px}
 }

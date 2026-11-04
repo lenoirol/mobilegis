@@ -1,0 +1,154 @@
+{
+  "status": "review_only_not_published",
+  "year": 2023,
+  "target_codes": [
+    "26596",
+    "26608"
+  ],
+  "method": "Giữ mọi giá trị hữu hạn của ảnh gốc 2023; chỉ lấp ô trống cả ba chỉ số trong các xã/phường mục tiêu bằng bộ ba cùng cảnh, tháng 1–4/2023, không thuộc 4 cảnh gốc.",
+  "filled_pixels": 5097,
+  "baseline_sha256": "443f9a3895c71a87740a4cac06005dd32acd82c8e673c466baa01a44690aad95",
+  "input_files": [
+    {
+      "file": "MobileGIS_fill_2023_120m.tif",
+      "sha256": "5daa7dcb863ab7f989c24c75d02fe191c952d83130a37adcc3299fdcf573f082"
+    },
+    {
+      "file": "MobileGIS_fill_2023_scenes.csv",
+      "sha256": "5fd30b7e2a9a35b11928942580eafa37678a109e80fde23d01a319873e3bcfb7"
+    }
+  ],
+  "scenes": [
+    {
+      "scene_index": "1.0",
+      "LANDSAT_PRODUCT_ID": "LC09_L2SP_124053_20230131_20230311_02_T1",
+      "acquisition_date": "2023-01-31",
+      "day_of_year": "31",
+      "CLOUD_COVER": "6.01",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "53.0",
+      "gap_fill_pixels": "5205.0",
+      "year": "2023",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-0.9920408993052884",
+      "wet_intercept": "22.288241176137223",
+      "dry_slope": "-9.719044896547667",
+      "dry_intercept": "40.755946138375535"
+    },
+    {
+      "scene_index": "2.0",
+      "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20230208_20230217_02_T1",
+      "acquisition_date": "2023-02-08",
+      "day_of_year": "39",
+      "CLOUD_COVER": "4.12",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "53.0",
+      "gap_fill_pixels": "4137.0",
+      "year": "2023",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-0.4785053017882268",
+      "wet_intercept": "32.155712834777574",
+      "dry_slope": "-13.791810234727702",
+      "dry_intercept": "49.91890970518661"
+    },
+    {
+      "scene_index": "3.0",
+      "LANDSAT_PRODUCT_ID": "LC09_L2SP_124053_20230320_20230322_02_T1",
+      "acquisition_date": "2023-03-20",
+      "day_of_year": "79",
+      "CLOUD_COVER": "4.76",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "53.0",
+      "gap_fill_pixels": "3427.0",
+      "year": "2023",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-3.8420179040432645",
+      "wet_intercept": "32.33678065807557",
+      "dry_slope": "-17.011957334845572",
+      "dry_intercept": "50.27173434369276"
+    },
+    {
+      "scene_index": "4.0",
+      "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20230312_20230321_02_T1",
+      "acquisition_date": "2023-03-12",
+      "day_of_year": "71",
+      "CLOUD_COVER": "7.63",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "53.0",
+      "gap_fill_pixels": "1807.0",
+      "year": "2023",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "0.8805379120291649",
+      "wet_intercept": "27.943371071234193",
+      "dry_slope": "-12.05969524701046",
+      "dry_intercept": "45.46706131454915"
+    }
+  ],
+  "wards": [
+    {
+      "code": "26596",
+      "name": "Xã Châu Đức",
+      "filled_pixels": 2445,
+      "before": {
+        "ndvi": 0.7618544790201907,
+        "ndvi_pixels": 3419,
+        "ndvi_coverage": 0.5810673011556764,
+        "lst": 34.61800769171055,
+        "lst_pixels": 3419,
+        "lst_coverage": 0.5810673011556764,
+        "tvdi": 0.36792436420066144,
+        "tvdi_pixels": 2631,
+        "tvdi_coverage": 0.44714479945615226
+      },
+      "after": {
+        "ndvi": 0.7272055791906942,
+        "ndvi_pixels": 5864,
+        "ndvi_coverage": 0.9966009517335146,
+        "lst": 30.342078029702826,
+        "lst_pixels": 5864,
+        "lst_coverage": 0.9966009517335146,
+        "tvdi": 0.29262686555661516,
+        "tvdi_pixels": 5076,
+        "tvdi_coverage": 0.8626784500339905
+      },
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26608",
+      "name": "Xã Kim Long",
+      "filled_pixels": 2652,
+      "before": {
+        "ndvi": 0.6215279753974533,
+        "ndvi_pixels": 1767,
+        "ndvi_coverage": 0.3972571942446043,
+        "lst": 37.26996770469091,
+        "lst_pixels": 1767,
+        "lst_coverage": 0.3972571942446043,
+        "tvdi": 0.5558633509977707,
+        "tvdi_pixels": 1673,
+        "tvdi_coverage": 0.3761241007194245
+      },
+      "after": {
+        "ndvi": 0.6428598046152527,
+        "ndvi_pixels": 4419,
+        "ndvi_coverage": 0.9934802158273381,
+        "lst": 31.321294310622207,
+        "lst_pixels": 4419,
+        "lst_coverage": 0.9934802158273381,
+        "tvdi": 0.488135122648801,
+        "tvdi_pixels": 4325,
+        "tvdi_coverage": 0.9723471223021583
+      },
+      "enough_at_50_percent": true
+    }
+  ],
+  "limitations": "Ngày ảnh khác nhau và TVDI tính riêng từng cảnh. Ô ảnh 120 m không được tạo lại."
+}

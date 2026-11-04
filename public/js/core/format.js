@@ -18,6 +18,22 @@ export const INDEX = {
     colors: ['#066b00', '#0bc400', '#0ce100', '#00ff00', '#ffff00', '#ffcc00', '#ff6600', '#ff0000'],
     help: 'Độ khô tương đối tính từ LST và NDVI. Chỉ số thử nghiệm, chưa dùng để kết luận hạn hán.'},
 };
+/** Glossary: every place that shows LST / NDVI / TVDI must name the index and say what it means. */
+Object.assign(INDEX.lst, {full: 'LST · Nhiệt độ bề mặt đất', english: 'Land Surface Temperature', scaleText: '20–45 °C',
+  what: 'Nhiệt độ của mặt đất, mái nhà, đường nhựa, tán cây… do vệ tinh đo vào lúc ảnh được chụp.',
+  read: 'Càng cao càng nóng. Trên bản đồ: xanh dương là mát, vàng là ấm, đỏ là rất nóng.',
+  limit: 'Không phải nhiệt độ không khí do trạm khí tượng đo; vào buổi trưa nắng thường cao hơn nhiều.'});
+Object.assign(INDEX.ndvi, {full: 'NDVI · Chỉ số thực vật (độ xanh)', english: 'Normalized Difference Vegetation Index', scaleText: '−0,2 đến 1',
+  what: 'Mức độ xanh, tươi của thực vật, tính từ ánh sáng đỏ và cận hồng ngoại mà vệ tinh thu được.',
+  read: 'Gần 0 hoặc âm: đất trống, nước, công trình. Khoảng 0,2–0,5: cỏ, cây thưa. Trên 0,5: cây xanh dày.',
+  limit: 'Không đếm được số cây. Vào mùa khô, cây có thể vàng nên NDVI thấp hơn mùa mưa.'});
+Object.assign(INDEX.tvdi, {full: 'TVDI · Chỉ số khô hạn nhiệt độ – thực vật', english: 'Temperature Vegetation Dryness Index', scaleText: '0 đến 1',
+  what: 'Độ khô tương đối của bề mặt, suy ra từ mối quan hệ giữa LST và NDVI trong cùng một cảnh ảnh.',
+  read: '0 là ẩm, 1 là khô. Chia 5 mức: Rất ẩm, Ẩm, Trung bình, Khô, Rất khô.',
+  limit: 'Chỉ số thử nghiệm, chưa kiểm định bằng độ ẩm đất. Không dùng để kết luận hạn hán.'});
+/** "LST – Nhiệt độ bề mặt đất (°C)": abbreviation + Vietnamese name + unit, as the teacher requires. */
+export const indexTitle = k => `${INDEX[k].code} – ${INDEX[k].full.split(' · ')[1]}${INDEX[k].unit ? ' (' + INDEX[k].unit + ')' : ''}`;
+
 /** Plain-language reliability from the share of valid pixels: Cao ≥ 80 %, Vừa 50–80 %, Thấp < 50 %. Coverage is not accuracy. */
 export const confidence = coverage => !valid(coverage) ? {key: 'none', text: 'Chưa rõ'} : coverage >= .8 ? {key: 'high', text: 'Cao'} : coverage >= .5 ? {key: 'mid', text: 'Vừa'} : {key: 'low', text: 'Thấp'};
 /** TVDI dryness classes (5 equal steps, the usual grading in TVDI studies). Thresholds are a display convention, not a validated drought scale. */

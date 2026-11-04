@@ -5,7 +5,7 @@ import {fmt, valid} from '../core/format.js';
 import {drawPath} from '../core/motion.js';
 
 export const SERIES_COLORS = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100'];   // blue, orange, aqua, yellow (fixed order)
-export const INK = '#435162';
+export const INK = '#6b7a8c';   // neutral blue-grey fallback; real charts pass value colours
 
 // ---- helpers --------------------------------------------------------------------------------
 export function niceTicks(lo, hi, count = 5) {
@@ -167,7 +167,7 @@ export function histogramChart(container, {edges, counts}, opts = {}) {
     const s = root(width, H, label);
     yAxis(s, ticks, y, pad.l, width - pad.r, v => v >= 1000 ? (v / 1000).toLocaleString('vi-VN') + 'k' : String(v));
     sub.forEach((n, i) => {
-      const bar = svg('rect', {class: 'ch-bar v' + (animate ? ' grow-y' : ''), x: pad.l + i * slot + 1, y: y(n), width: Math.max(2, slot - 2), height: Math.max(0, H - pad.b - y(n)), rx: 2, fill: INK, style: `animation-delay:${i * 12}ms`, tabindex: n ? 0 : -1,
+      const bar = svg('rect', {class: 'ch-bar v' + (animate ? ' grow-y' : ''), x: pad.l + i * slot + 1, y: y(n), width: Math.max(2, slot - 2), height: Math.max(0, H - pad.b - y(n)), rx: 2, fill: opts.colorFor ? opts.colorFor((edges[first + i] + edges[first + i + 1]) / 2) : INK, style: `animation-delay:${i * 12}ms`, tabindex: n ? 0 : -1,
         'aria-label': `${fmt(edges[first + i], digits)} đến ${fmt(edges[first + i + 1], digits)}: ${n} pixel`});
       bindTip(bar, [`${fmt(edges[first + i], digits)} – ${fmt(edges[first + i + 1], digits)} ${unit}`.trim(), `${n.toLocaleString('vi-VN')} pixel`]);
       s.append(bar);
@@ -192,7 +192,7 @@ export function boxChart(container, boxes, opts = {}) {
     boxes.forEach((b, i) => {
       const cy = top + i * rowH + rowH / 2, g = svg('g', {class: 'ch-box' + (animate ? ' grow' : ''), style: `animation-delay:${i * 50}ms`, tabindex: 0, 'aria-label': `${b.label}: trung vị ${fmt(b.median, digits)} ${unit}`.trim()});
       g.append(svg('line', {class: 'ch-whisker', x1: x(b.min), x2: x(b.max), y1: cy, y2: cy}), svg('line', {class: 'ch-whisker', x1: x(b.min), x2: x(b.min), y1: cy - 7, y2: cy + 7}), svg('line', {class: 'ch-whisker', x1: x(b.max), x2: x(b.max), y1: cy - 7, y2: cy + 7}),
-        svg('rect', {class: 'ch-iqr', x: x(b.q25), y: cy - 11, width: Math.max(2, x(b.q75) - x(b.q25)), height: 22, rx: 3}), svg('line', {class: 'ch-median', x1: x(b.median), x2: x(b.median), y1: cy - 11, y2: cy + 11}));
+        svg('rect', {class: 'ch-iqr', x: x(b.q25), y: cy - 11, width: Math.max(2, x(b.q75) - x(b.q25)), height: 22, rx: 3, style: b.color ? `fill:${b.color};fill-opacity:.55;stroke:${b.color}` : null}), svg('line', {class: 'ch-median', x1: x(b.median), x2: x(b.median), y1: cy - 11, y2: cy + 11, style: b.color ? `stroke:${b.color}` : null}));
       bindTip(g, [b.label, `Trung vị ${fmt(b.median, digits)} ${unit}`.trim(), `Q25–Q75: ${fmt(b.q25, digits)} – ${fmt(b.q75, digits)}`, `Min–Max: ${fmt(b.min, digits)} – ${fmt(b.max, digits)}`]);
       s.append(svg('text', {class: 'ch-text lbl', x: left - 10, y: cy + 4, 'text-anchor': 'end'}, b.label.length > 22 ? b.label.slice(0, 21) + '…' : b.label), g);
     });

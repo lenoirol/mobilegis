@@ -1,6 +1,7 @@
 /* Floating widgets on the map: selected-area card, legend and the year timeline (with range + playback). */
 import {h, mount, svg, icon} from '../core/dom.js';
-import {INDEX, INDICES, YEARS, fmt, colorOf, rampCss, confidence, tvdiClass, TVDI_ALERT, dmy, valid} from '../core/format.js';
+import {infoButton, showGlossary} from '../ui/glossary.js';
+import {INDEX, INDICES, YEARS, indexTitle, fmt, colorOf, rampCss, confidence, tvdiClass, TVDI_ALERT, dmy, valid} from '../core/format.js';
 
 const policy = window.ViewerPolicy;
 
@@ -27,7 +28,7 @@ export function renderInfo(host, {code, geo, rows, store}) {
   const vals = INDICES.map(k => {
     const spec = INDEX[k], ok = policy.eligible(row, k), conf = confidence(row?.[`${k}_coverage`]);
     return h('button', {class: 'val', type: 'button', 'aria-pressed': String(k === s.index), title: spec.help, on: {click: () => store.set({index: k})}},
-      h('small', null, `${spec.label} · ${spec.code}${spec.experimental ? '*' : ''}`),
+      h('small', null, `${spec.code}${spec.experimental ? '*' : ''} · ${spec.label}`),
       h('b', null, ok ? [h('em', {style: {background: colorOf(row[k], k)}}), fmt(row[k], spec.digits)] : '—'),
       h('span', {class: 'q ' + conf.key}, ok ? `Tin cậy ${conf.text.toLowerCase()}` : (valid(row?.[k]) ? 'Chưa đủ dữ liệu' : 'Không có dữ liệu')));
   });
@@ -39,14 +40,16 @@ export function renderInfo(host, {code, geo, rows, store}) {
       h('button', {class: 'info-x', type: 'button', 'aria-label': 'Bỏ chọn khu vực', on: {click: () => store.set({selected: null})}}, icon('x', 16))),
     h('div', {class: 'vals'}, vals),
     tv != null && tv >= TVDI_ALERT ? h('div', {class: 'info-alert'}, `Độ khô ${fmt(tv, 2)} (${tvdiClass(tv).name.toLowerCase()}) · chỉ số thử nghiệm, không phải cảnh báo hạn chính thức`) : null,
-    h('div', {class: 'info-foot'}, h('span', null, `${INDEX[s.index].code} 2020–2025`), spark(series, s.index)));
+    h('div', {class: 'info-foot'}, h('span', null, `${INDEX[s.index].code} 2020–2025`), spark(series, s.index)),
+    h('a', {class: 'link-btn', href: '#/du-bao'}, icon('trend', 14), 'Xem dự báo tháng của khu vực này'));
 }
 
 // ---------- legend ----------
 export function renderLegend(host, s, {matchCount}) {
   const spec = INDEX[s.index], pixel = s.mode === 'pixel';
   mount(host,
-    h('h3', null, h('span', null, `${spec.name}${spec.unit ? ' (' + spec.unit + ')' : ''}`), h('small', null, pixel ? 'ô ảnh 120 m' : 'trung bình xã/phường')),
+    h('h3', null, h('span', null, indexTitle(s.index), infoButton(s.index)), h('small', null, pixel ? 'ô ảnh 120 m' : 'trung bình xã/phường')),
+    h('p', {class: 'legend-what'}, spec.what),
     h('div', {class: 'ramp', style: {background: rampCss(s.index)}}),
     h('div', {class: 'ends'}, h('span', null, fmt(spec.min, spec.digits === 1 ? 0 : 1)), h('span', null, spec.experimental ? 'thử nghiệm' : ''), h('span', null, fmt(spec.max, spec.digits === 1 ? 0 : 1))),
     h('div', {class: 'keys'},

@@ -1,5 +1,5 @@
 /* Research data access with caching. Sources are never mixed: an unavailable source is an error, never a silent fallback. */
-import {get} from './api.js';
+import {get, env} from './api.js';
 
 const cache = new Map();
 function once(key, load) {
@@ -9,9 +9,20 @@ function once(key, load) {
 const ROWS_URL = {gee_recovery: '/data/gee_recovery/observations.json', gee: '/data/gee/observations.json', legacy: '/data/observations_real.json'};
 const PRODUCT_URL = {gee_recovery: '/data/gee_recovery/products.json', gee: '/data/gee/products.json', legacy: '/data/visual_products.json'};
 
+/** Bản tĩnh không có CSDL: ghép các đợt bổ sung đã kiểm tra (supplements.json) lên số liệu gốc, giống lớp phủ "Nhập số liệu"
+    mà máy chủ ghép khi chạy bản đầy đủ. Số liệu gốc không bị sửa; mỗi dòng bổ sung ghi rõ đợt trong trường `supplement`. */
+async function withSupplements() {
+  const [rows, extra] = await Promise.all([get(ROWS_URL.gee_recovery), get('/data/gee_recovery/supplements.json').catch(() => [])]);
+  if (!extra.length) return rows;
+  const at = new Map(rows.map((r, i) => [r.code + '|' + r.year, i])), out = rows.slice();
+  for (const r of extra) { const i = at.get(r.code + '|' + r.year); if (i == null) out.push(r); else out[i] = r; }
+  return out;
+}
+
 export const data = {
+  forecast: () => once('forecast', () => get('/data/forecast/forecast.json')),
   geo: () => once('geo', () => get('/data/hcm_167.geojson')),
-  rows: source => once('rows:' + source, () => get(ROWS_URL[source])),
+  rows: source => once('rows:' + source, () => source === 'gee_recovery' && !env.api ? withSupplements() : get(ROWS_URL[source])),
   product: source => once('product:' + source, () => get(PRODUCT_URL[source])),
   cover: source => once('cover:' + (source === 'legacy' ? 'legacy' : 'gee'), () => get(source === 'legacy' ? '/data/landcover_stats.json' : '/data/gee/landcover_stats.json')),
   userPoints: () => once('user', () => get('/data/observations_user.json')),

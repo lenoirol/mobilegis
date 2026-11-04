@@ -58,6 +58,8 @@ const ICONS = {
   grid: '<path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/>',
   alert: '<path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v5M12 17.5v.5"/>',
   image: '<rect x="3" y="4" width="18" height="16"/><circle cx="9" cy="10" r="2"/><path d="m3 18 6-5 4 3 3-2 5 4"/>',
+  trend: '<path d="M3 17l6-6 4 4 8-9M15 6h6v6"/>', more: '<circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/>',
+  filter: '<path d="M3 5h18l-7 8v6l-4 2v-8L3 5Z"/>',
   sliders: '<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>',
 };
 /** Inline SVG icon from the static set above (trusted markup, not user data). */

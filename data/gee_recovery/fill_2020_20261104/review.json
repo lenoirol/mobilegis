@@ -1,0 +1,154 @@
+{
+  "status": "review_only_not_published",
+  "year": 2020,
+  "target_codes": [
+    "26545",
+    "27559"
+  ],
+  "method": "Giữ mọi giá trị hữu hạn của ảnh gốc 2020; chỉ lấp ô trống cả ba chỉ số trong các xã/phường mục tiêu bằng bộ ba cùng cảnh, tháng 1–4/2020, không thuộc 4 cảnh gốc.",
+  "filled_pixels": 817,
+  "baseline_sha256": "31f5dfa1bb6b59f36aa612a15b8520559737a9ec6ac0ae30df7b3ea474eb7d37",
+  "input_files": [
+    {
+      "file": "MobileGIS_fill_2020_120m.tif",
+      "sha256": "98469b87ef24b17591f0b1fa092a88abfe9e2690959e9e864272a411da045a97"
+    },
+    {
+      "file": "MobileGIS_fill_2020_scenes.csv",
+      "sha256": "d6a6dea1936f52dd98b126f9a6a50e3d5a709b0133d54074d0d36e8f46ac572a"
+    }
+  ],
+  "scenes": [
+    {
+      "scene_index": "1.0",
+      "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20200404_20200822_02_T1",
+      "acquisition_date": "2020-04-04",
+      "day_of_year": "95",
+      "CLOUD_COVER": "7.51",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "53.0",
+      "gap_fill_pixels": "1434.0",
+      "year": "2020",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-3.401379238463746",
+      "wet_intercept": "34.97708386439417",
+      "dry_slope": "-14.837085345710971",
+      "dry_intercept": "51.809684829705596"
+    },
+    {
+      "scene_index": "2.0",
+      "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20200420_20200822_02_T1",
+      "acquisition_date": "2020-04-20",
+      "day_of_year": "111",
+      "CLOUD_COVER": "14.5",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "53.0",
+      "gap_fill_pixels": "1340.0",
+      "year": "2020",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-5.514333710459015",
+      "wet_intercept": "37.62439794471391",
+      "dry_slope": "-18.467764997970303",
+      "dry_intercept": "56.416480750312935"
+    },
+    {
+      "scene_index": "3.0",
+      "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20200319_20200822_02_T1",
+      "acquisition_date": "2020-03-19",
+      "day_of_year": "79",
+      "CLOUD_COVER": "7.71",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "53.0",
+      "gap_fill_pixels": "1161.0",
+      "year": "2020",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-7.86022538089358",
+      "wet_intercept": "37.0076418141957",
+      "dry_slope": "-17.499819946171915",
+      "dry_intercept": "55.238008907787055"
+    },
+    {
+      "scene_index": "4.0",
+      "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20200131_20200823_02_T1",
+      "acquisition_date": "2020-01-31",
+      "day_of_year": "31",
+      "CLOUD_COVER": "51.4",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "53.0",
+      "gap_fill_pixels": "792.0",
+      "year": "2020",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-4.349682171849923",
+      "wet_intercept": "26.643956418871483",
+      "dry_slope": "-16.521062264441504",
+      "dry_intercept": "44.70014379119925"
+    }
+  ],
+  "wards": [
+    {
+      "code": "26545",
+      "name": "Xã Long Sơn",
+      "filled_pixels": 817,
+      "before": {
+        "ndvi": 0.3601371393812573,
+        "ndvi_pixels": 2015,
+        "ndvi_coverage": 0.5609688195991092,
+        "lst": 33.85895625888266,
+        "lst_pixels": 2015,
+        "lst_coverage": 0.5609688195991092,
+        "tvdi": 0.4179436463787794,
+        "tvdi_pixels": 1639,
+        "tvdi_coverage": 0.45629175946547884
+      },
+      "after": {
+        "ndvi": 0.34255181919506045,
+        "ndvi_pixels": 2832,
+        "ndvi_coverage": 0.7884187082405345,
+        "lst": 33.67040399912387,
+        "lst_pixels": 2832,
+        "lst_coverage": 0.7884187082405345,
+        "tvdi": 0.30705508639402385,
+        "tvdi_pixels": 2456,
+        "tvdi_coverage": 0.6837416481069042
+      },
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "27559",
+      "name": "Xã Hóc Môn",
+      "filled_pixels": 0,
+      "before": {
+        "ndvi": 0.35079398229860664,
+        "ndvi_pixels": 523,
+        "ndvi_coverage": 0.46863799283154123,
+        "lst": 36.17716234181625,
+        "lst_pixels": 523,
+        "lst_coverage": 0.46863799283154123,
+        "tvdi": 0.2572191110388394,
+        "tvdi_pixels": 522,
+        "tvdi_coverage": 0.46774193548387094
+      },
+      "after": {
+        "ndvi": 0.35079398229860664,
+        "ndvi_pixels": 523,
+        "ndvi_coverage": 0.46863799283154123,
+        "lst": 36.17716234181625,
+        "lst_pixels": 523,
+        "lst_coverage": 0.46863799283154123,
+        "tvdi": 0.2572191110388394,
+        "tvdi_pixels": 522,
+        "tvdi_coverage": 0.46774193548387094
+      },
+      "enough_at_50_percent": false
+    }
+  ],
+  "limitations": "Ngày ảnh khác nhau và TVDI tính riêng từng cảnh. Ô ảnh 120 m không được tạo lại."
+}

@@ -3,10 +3,11 @@
 import {h, mount, icon} from '../core/dom.js';
 import {get, url, env} from '../core/api.js';
 import {data, indexRows} from '../core/data.js';
-import {INDEX, INDICES, YEARS, SOURCES, CANONICAL_SOURCE, fmt, fmtInt, pct, valid, shortName, colorOf, rampCss, download, toCsv} from '../core/format.js';
+import {INDEX, INDICES, YEARS, SOURCES, CANONICAL_SOURCE, indexTitle, fmt, fmtInt, pct, valid, shortName, colorOf, rampCss, download, toCsv} from '../core/format.js';
 import {countTo, stagger} from '../core/motion.js';
 import {segmented} from '../ui/seg.js';
 import {toast} from '../ui/toast.js';
+import {infoButton} from '../ui/glossary.js';
 import {lineChart, barChart, histogramChart, boxChart, scatterChart, SERIES_COLORS, chartToSvgText} from '../ui/charts.js';
 
 const policy = window.ViewerPolicy;
@@ -21,14 +22,22 @@ const skeleton = (n = 1, height = 180) => Array.from({length: n}, () => h('div',
 
 // ---- filter bar -------------------------------------------------------------------------------------------------------
 function buildFilters() {
-  seg.index = segmented(INDICES.map(k => ({value: k, label: INDEX[k].label})), S.index, v => { S.index = v; refresh(); }, {label: 'Chỉ số'});
+  seg.index = segmented(INDICES.map(k => ({value: k, label: `${INDEX[k].code} · ${INDEX[k].label}`})), S.index, v => store.set({index: v}), {label: 'Chỉ số'});
   seg.year = segmented(YEARS.map(y => ({value: y, label: String(y)})), S.year, v => { S.year = +v; refresh(); }, {label: 'Mốc ảnh', layout: 'row years'});
   el.coverage = h('select', {class: 'select', 'aria-label': 'Độ phủ tối thiểu', on: {change: () => { S.coverage = +el.coverage.value; refresh(); }}},
     ...[[.5, '≥ 50% · khuyến nghị'], [.1, '≥ 10% · gồm mẫu ít'], [.8, '≥ 80%']].map(([v, l]) => h('option', {value: v}, l)));
   el.unit = h('select', {class: 'select', 'aria-label': 'Khu vực thống kê', on: {change: () => { S.unit = el.unit.value; refresh(); }}}, h('option', {value: ''}, 'Tất cả khu vực đủ độ phủ'));
   seg.source = segmented(Object.values(SOURCES).map(s => ({value: s.id, label: s.label})), S.source, async v => { S.source = v; rows = null; await refresh(); }, {label: 'Nguồn dữ liệu', layout: 'col'});
   return h('div', {class: 'filters card sticky'}, field('Chỉ số', seg.index.el), field('Mốc ảnh', seg.year.el), field('Độ phủ tối thiểu', el.coverage), field('Khu vực', el.unit),
-    h('details', {class: 'adv'}, h('summary', null, 'Nguồn dữ liệu · nâng cao'), seg.source.el));
+    h('details', {class: 'adv admin-only'}, h('summary', null, 'Nguồn dữ liệu · nâng cao'), seg.source.el));
+}
+
+/** Always-visible definition of the index being shown (name, unit, meaning, how to read, limit). */
+function explain() {
+  const k = S.index, s = INDEX[k];
+  mount(el.explain, h('div', {class: 'ix-head'}, h('b', {class: 'ix-code'}, s.code), h('div', null, h('strong', null, indexTitle(k)), h('small', null, `${s.english} · thang ${s.scaleText}`)), infoButton(k, 'Xem cả ba chỉ số')),
+    h('div', {class: 'ix-ramp', style: {background: rampCss(k)}}),
+    h('p', null, h('b', null, 'Ý nghĩa: '), s.what), h('p', null, h('b', null, 'Cách đọc: '), s.read), h('p', {class: 'muted'}, h('b', null, 'Lưu ý: '), s.limit));
 }
 
 // ---- sections ---------------------------------------------------------------------------------------------------------------
@@ -37,7 +46,7 @@ function kpis(list) {
   const mean = count ? valid_.reduce((s, r) => s + r.mean * r.valid_count, 0) / count : null, idx = INDEX[S.index];
   const items = [[count, 'Mẫu hợp lệ trong nhóm', v => Math.round(v).toLocaleString('vi-VN')], [mean, 'Trung bình theo pixel', v => fmt(v, idx.digits)],
     [valid_.length ? Math.min(...valid_.map(r => r.minimum)) : null, 'Giá trị thấp nhất', v => fmt(v, idx.digits)], [valid_.length ? Math.max(...valid_.map(r => r.maximum)) : null, 'Giá trị cao nhất', v => fmt(v, idx.digits)]];
-  mount(el.kpis, ...items.map(([value, label, format], i) => { const b = h('b', {class: 'mono num'}, '—'); requestAnimationFrame(() => countTo(b, value, format, 700)); return h('div', {class: 'kpi-card reveal', style: {'--i': i}}, b, h('span', null, label)); }));
+  mount(el.kpis, ...items.map(([value, label, format], i) => { const b = h('b', {class: 'mono num'}, '—'); requestAnimationFrame(() => countTo(b, value, format, 700)); return h('div', {class: 'kpi-card reveal', style: {'--i': i}}, b, h('span', null, label), h('small', {class: 'kpi-ix'}, indexTitle(S.index))); }));
 }
 function unitPicker(features) {
   if (el.unit.dataset.ready) return;
@@ -50,16 +59,16 @@ function distributions(stats, cover) {
   clearCharts();
   const hosts = {hist: h('div'), box: h('div'), mean: h('div'), lc: h('div')};
   mount(el.dist,
-    card(`Phân bố pixel hợp lệ · ${idx.label}`, hosts.hist, h('p', {class: 'dock-help'}, 'Số pixel hợp lệ theo khoảng giá trị, gộp theo khu vực. Ranh giới có thể có ô trùng ở mép.')),
+    card(`Phân bố pixel hợp lệ · ${indexTitle(S.index)}`, hosts.hist, h('p', {class: 'dock-help'}, 'Số pixel hợp lệ theo khoảng giá trị, gộp theo khu vực. Ranh giới có thể có ô trùng ở mép.')),
     card('Phân bố trong các khu vực', hosts.box, h('p', {class: 'dock-help'}, 'Hộp: Q25–Q75; vạch đậm: trung vị; râu: min–max. Hiển thị các khu vực đã ghim để so sánh. Không phải sai số dự báo.')),
     card('Trung bình cao nhất theo khu vực', hosts.mean), card('Chỉ số theo lớp phủ đất 2021', hosts.lc, h('p', {class: 'dock-help'}, cover?.note || '')));
   requestAnimationFrame(() => {
     const sum = list[0] ? list[0].histogram.counts.map((_, i) => list.reduce((s, r) => s + r.histogram.counts[i], 0)) : [];
-    charts.push(histogramChart(hosts.hist, {edges: list[0]?.histogram.edges || [], counts: sum}, {unit: idx.unit || idx.label, digits: S.index === 'lst' ? 0 : 2, label: `Histogram ${idx.label}`}));
+    charts.push(histogramChart(hosts.hist, {edges: list[0]?.histogram.edges || [], counts: sum}, {unit: idx.unit || idx.label, digits: S.index === 'lst' ? 0 : 2, label: `Histogram ${idx.label}`, colorFor: v => colorOf(v, S.index)}));
     let shown = list.filter(r => pinned.includes(r.code) && valid(r.minimum)).slice(0, 6); if (!shown.length) shown = list.filter(r => valid(r.minimum)).slice(0, 6);
-    charts.push(boxChart(hosts.box, shown.map(r => ({label: shortName(r.name), min: r.minimum, q25: r.q25, median: r.median, q75: r.q75, max: r.maximum})), {unit: idx.unit, digits: idx.digits, label: `Hộp phân vị ${idx.label}`}));
-    charts.push(barChart(hosts.mean, [...list].sort((a, b) => b.mean - a.mean).slice(0, 8).map(r => ({label: shortName(r.name), value: r.mean, note: [`${r.valid_count.toLocaleString('vi-VN')} pixel · độ phủ ${pct(r.coverage, 1)}`]})), {unit: idx.unit, digits: idx.digits, label: 'Trung bình cao nhất'}));
-    charts.push(barChart(hosts.lc, (cover?.classes || []).map(c => ({label: c.class_name, value: c.mean, color: c.color || '#0e0e0c', note: [`${(c.valid_count ?? c.pixels ?? 0).toLocaleString('vi-VN')} pixel`]})), {unit: idx.unit, digits: idx.digits, label: 'Chỉ số theo lớp phủ'}));
+    charts.push(boxChart(hosts.box, shown.map(r => ({label: shortName(r.name), min: r.minimum, q25: r.q25, median: r.median, q75: r.q75, max: r.maximum, color: colorOf(r.median, S.index)})), {unit: idx.unit, digits: idx.digits, label: `Hộp phân vị ${idx.label}`}));
+    charts.push(barChart(hosts.mean, [...list].sort((a, b) => b.mean - a.mean).slice(0, 8).map(r => ({label: shortName(r.name), value: r.mean, color: colorOf(r.mean, S.index), note: [`${r.valid_count.toLocaleString('vi-VN')} pixel · độ phủ ${pct(r.coverage, 1)}`]})), {unit: idx.unit, digits: idx.digits, label: 'Trung bình cao nhất'}));
+    charts.push(barChart(hosts.lc, (cover?.classes || []).map(c => ({label: c.class_name, value: c.mean, color: c.color || colorOf(c.mean, S.index), note: [`${(c.valid_count ?? c.pixels ?? 0).toLocaleString('vi-VN')} pixel`]})), {unit: idx.unit, digits: idx.digits, label: 'Chỉ số theo lớp phủ'}));
   });
 }
 /** Static demo: Pearson r between unit means, same pairs and eligibility rule as the server endpoint. */
@@ -193,8 +202,9 @@ function lightbox(file, title, caption) {
 async function refresh() {
   if (!root || root.closest('[hidden]')) return;
   const mine = ++ticketN;
+  root.dataset.ix = document.documentElement.dataset.ix = S.index; explain();
   seg.index.set(S.index); seg.year.set(S.year); el.coverage.value = String(S.coverage); seg.source.set(S.source);
-  el.status.textContent = env.api ? 'Đang tính thống kê…' : 'Bản demo tĩnh · tính từ số liệu trung bình khu vực đã xuất sẵn.';
+  el.status.textContent = env.api ? 'Đang tính thống kê…' : '';
   mount(el.kpis, ...skeleton(4, 78));
   try {
     if (!geo) geo = await data.geo();
@@ -203,8 +213,8 @@ async function refresh() {
     if (!env.api) {   // no server: pixel statistics are unavailable, everything else is computed from unit means
       if (mine !== ticketN) return;
       current = []; clearCharts();
-      mount(el.kpis, h('div', {class: 'callout'}, 'Thống kê theo pixel (số mẫu, histogram, hộp phân vị, lớp phủ) chỉ có ở bản đầy đủ chạy với máy chủ. Các mục bên dưới tính từ trung bình xã/phường đã xuất sẵn.'));
-      mount(el.dist); correlations(localCorrelations()); renderWards(); ranking(); scatter();
+      mount(el.kpis);
+      mount(el.dist); correlations(localCorrelations()); renderWards(); scatter();
       el.exportCsv.disabled = el.exportSvg.disabled = true; return;
     }
     const q = new URLSearchParams({source: S.source, year: S.year, index: S.index, coverage: S.coverage, ...(S.unit ? {code: S.unit} : {})});
@@ -213,7 +223,7 @@ async function refresh() {
     current = stats.units;
     const used = stats.units.filter(r => r.valid_count > 0);
     el.status.textContent = `${SOURCES[S.source].label} · ${S.year} · ${INDEX[S.index].label} · ${used.length} khu vực · độ phủ ≥ ${Math.round(S.coverage * 100)}%. Không phải trung bình năm.`;
-    kpis(stats.units); distributions(stats, cover); correlations(corr); renderWards(); ranking(); scatter(); fullTable(stats.units);
+    kpis(stats.units); distributions(stats, cover); correlations(corr); renderWards(); scatter(); fullTable(stats.units);
     el.exportCsv.disabled = el.exportSvg.disabled = !current.length;
   } catch (error) {
     if (mine !== ticketN) return;
@@ -224,7 +234,10 @@ async function refresh() {
 
 export function init(section, ctx) {
   store = ctx.store; nav = ctx.navigate;
-  el.status = h('p', {class: 'status mono', role: 'status'});
+  // một lựa chọn chỉ số dùng chung cho Bản đồ, Xếp hạng, Thống kê và Dự báo
+  store.subscribe((s, p) => { if (s.index !== p.index) { S.index = s.index; refresh(); } });
+  S.index = store.get().index;
+  el.status = h('p', {class: 'status mono', role: 'status'}); el.explain = h('div', {class: 'card ix-card'});
   el.kpis = h('div', {class: 'kpi-row'}); el.dist = h('div', {class: 'chart-grid'}); el.corr = h('div'); el.ward = h('div'); el.rank = h('ol', {class: 'rank-list'}); el.scatter = h('div'); el.full = h('div');
   el.exportCsv = h('button', {class: 'btn sm', type: 'button', disabled: true, on: {click: () => {
     if (!current.length) return toast('Chưa có thống kê để xuất.', {error: true});
@@ -237,18 +250,16 @@ export function init(section, ctx) {
   root = h('div', {class: 'page stats-page'},
     h('header', {class: 'page-head'}, h('span', {class: 'eyebrow'}, 'Thống kê và phân tích'), h('h1', null, 'Thống kê môi trường theo xã/phường'),
       h('p', null, 'Tính trực tiếp từ các ô ảnh hợp lệ, không suy ra từ trung bình xã/phường. Mọi kết quả kèm giới hạn của dữ liệu.')),
-    buildFilters(), el.status, el.kpis,
+    buildFilters(), el.explain, el.status, el.kpis,
     h('section', {class: 'block server-only'}, h('h2', null, 'Phân bố'), el.dist, h('div', {class: 'export-row'}, el.exportCsv, el.exportSvg)),
     h('section', {class: 'block'}, h('h2', null, 'So sánh chuỗi các khu vực'), h('div', {class: 'card'}, el.ward)),
-    h('section', {class: 'block two'}, h('div', null, h('h2', null, 'Khu vực giá trị cao'), h('div', {class: 'card'}, el.rank, h('p', {class: 'dock-help'}, 'Xếp theo giá trị chỉ số của năm đang chọn, không phải mức rủi ro đã kiểm định.'))),
-      h('div', null, h('h2', null, 'Nhiệt độ và độ xanh cùng mốc'), h('div', {class: 'card'}, el.scatter))),
-    h('section', {class: 'block'}, h('h2', null, 'Tương quan trung bình xã/phường'), el.corr),
-    h('section', {class: 'block'}, screeningCard()),
+    h('section', {class: 'block'}, h('h2', null, 'Nhiệt độ và độ xanh cùng mốc'), h('div', {class: 'card'}, el.scatter)),
+    h('section', {class: 'block'}, h('details', {class: 'card'}, h('summary', null, 'Nâng cao · tương quan giữa các chỉ số'), el.corr)),
     h('section', {class: 'block server-only'}, h('details', {class: 'card'}, h('summary', null, 'Bảng thống kê đầy đủ theo khu vực'), el.full)),
     h('section', {class: 'block admin-only'}, appendix()));
   section.append(root);
   root.classList.toggle('static', !env.api);
   stagger(root, ':scope > .page-head, :scope > .block');
 }
-export function show() { requestAnimationFrame(() => { Object.values(seg).forEach(s => s.place()); refresh(); }); }
-export function hide() { clearCharts(); }
+export function show() { S.index = store.get().index; requestAnimationFrame(() => { Object.values(seg).forEach(s => s.place()); refresh(); }); }
+export function hide() { clearCharts(); delete document.documentElement.dataset.ix; }

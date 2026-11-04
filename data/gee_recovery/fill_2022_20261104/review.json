@@ -1,0 +1,444 @@
+{
+  "status": "review_only_not_published",
+  "year": 2022,
+  "target_codes": [
+    "26506",
+    "26545",
+    "26566",
+    "26596",
+    "26608",
+    "26632",
+    "26647",
+    "26662",
+    "26704",
+    "26725",
+    "26728",
+    "27676"
+  ],
+  "method": "Giữ mọi giá trị hữu hạn của ảnh gốc 2022; chỉ lấp ô trống cả ba chỉ số trong các xã/phường mục tiêu bằng bộ ba cùng cảnh, tháng 1–4/2022, không thuộc 4 cảnh gốc.",
+  "filled_pixels": 24546,
+  "baseline_sha256": "a30c599622a56231957c3e0c0935f4a77eed9ff4d577676c5a726dd4d21fc58e",
+  "input_files": [
+    {
+      "file": "MobileGIS_fill_2022_120m.tif",
+      "sha256": "64ca2cedd1a6b1dd08851d46e8120b44b90ddf4bb8712b0d18cef9432303f3c6"
+    },
+    {
+      "file": "MobileGIS_fill_2022_scenes.csv",
+      "sha256": "a431e2e2a4764186e918e667634eaee5db887a9901c8d8b8eb916970ae3ac472"
+    }
+  ],
+  "scenes": [
+    {
+      "scene_index": "1.0",
+      "LANDSAT_PRODUCT_ID": "LC09_L2SP_124053_20220301_20230426_02_T1",
+      "acquisition_date": "2022-03-01",
+      "day_of_year": "60",
+      "CLOUD_COVER": "17.39",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "53.0",
+      "gap_fill_pixels": "20968.0",
+      "year": "2022",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-5.19506106337126",
+      "wet_intercept": "34.968304953443536",
+      "dry_slope": "-17.85910995874267",
+      "dry_intercept": "53.54420722612233"
+    },
+    {
+      "scene_index": "2.0",
+      "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20220104_20220113_02_T1",
+      "acquisition_date": "2022-01-04",
+      "day_of_year": "4",
+      "CLOUD_COVER": "39.17",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "53.0",
+      "gap_fill_pixels": "19807.0",
+      "year": "2022",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-26.96024913104535",
+      "wet_intercept": "34.08565650049013",
+      "dry_slope": "-16.07756554869724",
+      "dry_intercept": "47.75452836418458"
+    },
+    {
+      "scene_index": "3.0",
+      "LANDSAT_PRODUCT_ID": "LC09_L2SP_124053_20220112_20230502_02_T1",
+      "acquisition_date": "2022-01-12",
+      "day_of_year": "12",
+      "CLOUD_COVER": "27.92",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "53.0",
+      "gap_fill_pixels": "19546.0",
+      "year": "2022",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-6.465350921126157",
+      "wet_intercept": "23.205153596962315",
+      "dry_slope": "-11.92181426958949",
+      "dry_intercept": "39.800164029490915"
+    },
+    {
+      "scene_index": "4.0",
+      "LANDSAT_PRODUCT_ID": "LC08_L2SP_124053_20220410_20220419_02_T1",
+      "acquisition_date": "2022-04-10",
+      "day_of_year": "100",
+      "CLOUD_COVER": "10.99",
+      "WRS_PATH": "124.0",
+      "WRS_ROW": "53.0",
+      "gap_fill_pixels": "16448.0",
+      "year": "2022",
+      "resolution_m": "120",
+      "tvdi_bins": "15",
+      "tvdi_status": "experimental_fit",
+      "wet_slope": "-1.306948874128207",
+      "wet_intercept": "32.94849390581718",
+      "dry_slope": "-17.60681495841658",
+      "dry_intercept": "52.74169222720614"
+    }
+  ],
+  "wards": [
+    {
+      "code": "26506",
+      "name": "Phường Vũng Tàu",
+      "filled_pixels": 510,
+      "before": {
+        "ndvi": 0.25087781396030706,
+        "ndvi_pixels": 503,
+        "ndvi_coverage": 0.4912109375,
+        "lst": 42.144745821033275,
+        "lst_pixels": 503,
+        "lst_coverage": 0.4912109375,
+        "tvdi": 0.45271450974904925,
+        "tvdi_pixels": 443,
+        "tvdi_coverage": 0.4326171875
+      },
+      "after": {
+        "ndvi": 0.32247325158914736,
+        "ndvi_pixels": 1013,
+        "ndvi_coverage": 0.9892578125,
+        "lst": 39.90787767822627,
+        "lst_pixels": 1013,
+        "lst_coverage": 0.9892578125,
+        "tvdi": 0.43608550238154303,
+        "tvdi_pixels": 953,
+        "tvdi_coverage": 0.9306640625
+      },
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26545",
+      "name": "Xã Long Sơn",
+      "filled_pixels": 1202,
+      "before": {
+        "ndvi": 0.22353056610640415,
+        "ndvi_pixels": 2159,
+        "ndvi_coverage": 0.6010579064587973,
+        "lst": 36.9980512321299,
+        "lst_pixels": 2159,
+        "lst_coverage": 0.6010579064587973,
+        "tvdi": 0.25176685319299863,
+        "tvdi_pixels": 1243,
+        "tvdi_coverage": 0.3460467706013363
+      },
+      "after": {
+        "ndvi": 0.2753386883336244,
+        "ndvi_pixels": 3361,
+        "ndvi_coverage": 0.9356904231625836,
+        "lst": 37.60135204130182,
+        "lst_pixels": 3361,
+        "lst_coverage": 0.9356904231625836,
+        "tvdi": 0.3743917155984381,
+        "tvdi_pixels": 2445,
+        "tvdi_coverage": 0.6806792873051225
+      },
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26566",
+      "name": "Phường Long Hương",
+      "filled_pixels": 887,
+      "before": {
+        "ndvi": 0.2632567118817726,
+        "ndvi_pixels": 1831,
+        "ndvi_coverage": 0.647225167903853,
+        "lst": 39.25985569852353,
+        "lst_pixels": 1831,
+        "lst_coverage": 0.647225167903853,
+        "tvdi": 0.484943523186175,
+        "tvdi_pixels": 1226,
+        "tvdi_coverage": 0.4333686815129021
+      },
+      "after": {
+        "ndvi": 0.32369838900983366,
+        "ndvi_pixels": 2718,
+        "ndvi_coverage": 0.9607635206786851,
+        "lst": 38.9815651631864,
+        "lst_pixels": 2718,
+        "lst_coverage": 0.9607635206786851,
+        "tvdi": 0.49754390731185366,
+        "tvdi_pixels": 2113,
+        "tvdi_coverage": 0.7469070342877342
+      },
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26596",
+      "name": "Xã Châu Đức",
+      "filled_pixels": 3731,
+      "before": {
+        "ndvi": 0.7915675806082916,
+        "ndvi_pixels": 2119,
+        "ndvi_coverage": 0.36012916383412646,
+        "lst": 37.18852528585134,
+        "lst_pixels": 2119,
+        "lst_coverage": 0.36012916383412646,
+        "tvdi": 0.49533493120713834,
+        "tvdi_pixels": 1029,
+        "tvdi_coverage": 0.174881033310673
+      },
+      "after": {
+        "ndvi": 0.7366546931538063,
+        "ndvi_pixels": 5850,
+        "ndvi_coverage": 0.9942216179469748,
+        "lst": 34.03279880677533,
+        "lst_pixels": 5850,
+        "lst_coverage": 0.9942216179469748,
+        "tvdi": 0.4266461976450986,
+        "tvdi_pixels": 4760,
+        "tvdi_coverage": 0.8089734874235214
+      },
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26608",
+      "name": "Xã Kim Long",
+      "filled_pixels": 2587,
+      "before": {
+        "ndvi": 0.6087758488889794,
+        "ndvi_pixels": 1765,
+        "ndvi_coverage": 0.39680755395683454,
+        "lst": 42.92248257320934,
+        "lst_pixels": 1765,
+        "lst_coverage": 0.39680755395683454,
+        "tvdi": 0.7567202768937895,
+        "tvdi_pixels": 1658,
+        "tvdi_coverage": 0.3727517985611511
+      },
+      "after": {
+        "ndvi": 0.6100285198344328,
+        "ndvi_pixels": 4352,
+        "ndvi_coverage": 0.9784172661870504,
+        "lst": 40.613231166978096,
+        "lst_pixels": 4352,
+        "lst_coverage": 0.9784172661870504,
+        "tvdi": 0.7268052369021307,
+        "tvdi_pixels": 4245,
+        "tvdi_coverage": 0.9543615107913669
+      },
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26632",
+      "name": "Xã Xuyên Mộc",
+      "filled_pixels": 3220,
+      "before": {
+        "ndvi": 0.6095821074813602,
+        "ndvi_pixels": 3821,
+        "ndvi_coverage": 0.5402997737556561,
+        "lst": 40.00223889684091,
+        "lst_pixels": 3821,
+        "lst_coverage": 0.5402997737556561,
+        "tvdi": 0.5066432422447102,
+        "tvdi_pixels": 3443,
+        "tvdi_coverage": 0.4868495475113122
+      },
+      "after": {
+        "ndvi": 0.6383171866818794,
+        "ndvi_pixels": 7041,
+        "ndvi_coverage": 0.9956165158371041,
+        "lst": 35.831045990402664,
+        "lst_pixels": 7041,
+        "lst_coverage": 0.9956165158371041,
+        "tvdi": 0.4887930365595835,
+        "tvdi_pixels": 6663,
+        "tvdi_coverage": 0.9421662895927602
+      },
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26647",
+      "name": "Xã Hoà Hiệp",
+      "filled_pixels": 2892,
+      "before": {
+        "ndvi": 0.5703441766804151,
+        "ndvi_pixels": 3531,
+        "ndvi_coverage": 0.5050779573737663,
+        "lst": 43.14766929386629,
+        "lst_pixels": 3531,
+        "lst_coverage": 0.5050779573737663,
+        "tvdi": 0.7374751644630582,
+        "tvdi_pixels": 3418,
+        "tvdi_coverage": 0.4889143184093835
+      },
+      "after": {
+        "ndvi": 0.5834146043465235,
+        "ndvi_pixels": 6423,
+        "ndvi_coverage": 0.9187526820197397,
+        "lst": 38.90624127320443,
+        "lst_pixels": 6423,
+        "lst_coverage": 0.9187526820197397,
+        "tvdi": 0.690120762219129,
+        "tvdi_pixels": 6310,
+        "tvdi_coverage": 0.9025890430553569
+      },
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26662",
+      "name": "Xã Long Hải",
+      "filled_pixels": 864,
+      "before": {
+        "ndvi": 0.3232683878633435,
+        "ndvi_pixels": 864,
+        "ndvi_coverage": 0.47368421052631576,
+        "lst": 42.65337554613749,
+        "lst_pixels": 864,
+        "lst_coverage": 0.47368421052631576,
+        "tvdi": 0.5342601995663978,
+        "tvdi_pixels": 786,
+        "tvdi_coverage": 0.4309210526315789
+      },
+      "after": {
+        "ndvi": 0.34798293086458687,
+        "ndvi_pixels": 1728,
+        "ndvi_coverage": 0.9473684210526315,
+        "lst": 42.17525233714669,
+        "lst_pixels": 1728,
+        "lst_coverage": 0.9473684210526315,
+        "tvdi": 0.6139784065667878,
+        "tvdi_pixels": 1650,
+        "tvdi_coverage": 0.9046052631578947
+      },
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26704",
+      "name": "Phường Phú Mỹ",
+      "filled_pixels": 2416,
+      "before": {
+        "ndvi": 0.3065558910039961,
+        "ndvi_pixels": 1987,
+        "ndvi_coverage": 0.40419039869812856,
+        "lst": 45.52605006079249,
+        "lst_pixels": 1987,
+        "lst_coverage": 0.40419039869812856,
+        "tvdi": 0.6923221246524259,
+        "tvdi_pixels": 1714,
+        "tvdi_coverage": 0.3486574450772986
+      },
+      "after": {
+        "ndvi": 0.3379094259125168,
+        "ndvi_pixels": 4403,
+        "ndvi_coverage": 0.8956468673718471,
+        "lst": 42.48173310164834,
+        "lst_pixels": 4403,
+        "lst_coverage": 0.8956468673718471,
+        "tvdi": 0.671694514131386,
+        "tvdi_pixels": 4130,
+        "tvdi_coverage": 0.8401139137510171
+      },
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26725",
+      "name": "Phường Tân Thành",
+      "filled_pixels": 2680,
+      "before": {
+        "ndvi": 0.5531493537994319,
+        "ndvi_pixels": 1548,
+        "ndvi_coverage": 0.36126021003500586,
+        "lst": 43.30244741636961,
+        "lst_pixels": 1548,
+        "lst_coverage": 0.36126021003500586,
+        "tvdi": 0.7448445087660448,
+        "tvdi_pixels": 1496,
+        "tvdi_coverage": 0.34912485414235706
+      },
+      "after": {
+        "ndvi": 0.5611575166047211,
+        "ndvi_pixels": 4228,
+        "ndvi_coverage": 0.9866977829638273,
+        "lst": 41.51685857727715,
+        "lst_pixels": 4228,
+        "lst_coverage": 0.9866977829638273,
+        "tvdi": 0.7517781637840274,
+        "tvdi_pixels": 4176,
+        "tvdi_coverage": 0.9745624270711786
+      },
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "26728",
+      "name": "Xã Châu Pha",
+      "filled_pixels": 2880,
+      "before": {
+        "ndvi": 0.4397204378347374,
+        "ndvi_pixels": 1641,
+        "ndvi_coverage": 0.3595530236634531,
+        "lst": 44.95401092217798,
+        "lst_pixels": 1641,
+        "lst_coverage": 0.3595530236634531,
+        "tvdi": 0.6959225518630989,
+        "tvdi_pixels": 1602,
+        "tvdi_coverage": 0.35100788781770376
+      },
+      "after": {
+        "ndvi": 0.4831633615867622,
+        "ndvi_pixels": 4521,
+        "ndvi_coverage": 0.990578439964943,
+        "lst": 41.137381100543855,
+        "lst_pixels": 4521,
+        "lst_coverage": 0.990578439964943,
+        "tvdi": 0.6371826576699515,
+        "tvdi_pixels": 4482,
+        "tvdi_coverage": 0.9820333041191937
+      },
+      "enough_at_50_percent": true
+    },
+    {
+      "code": "27676",
+      "name": "Xã Thạnh An",
+      "filled_pixels": 677,
+      "before": {
+        "ndvi": 0.5997584214094932,
+        "ndvi_pixels": 6228,
+        "ndvi_coverage": 0.8188272416513279,
+        "lst": 32.64490498038692,
+        "lst_pixels": 6228,
+        "lst_coverage": 0.8188272416513279,
+        "tvdi": 0.061495199189071155,
+        "tvdi_pixels": 3302,
+        "tvdi_coverage": 0.43413094925059165
+      },
+      "after": {
+        "ndvi": 0.596084566954461,
+        "ndvi_pixels": 6905,
+        "ndvi_coverage": 0.9078359190113069,
+        "lst": 32.51535704030583,
+        "lst_pixels": 6905,
+        "lst_coverage": 0.9078359190113069,
+        "tvdi": 0.11200668681747494,
+        "tvdi_pixels": 3979,
+        "tvdi_coverage": 0.5231396266105706
+      },
+      "enough_at_50_percent": true
+    }
+  ],
+  "limitations": "Ngày ảnh khác nhau và TVDI tính riêng từng cảnh. Ô ảnh 120 m không được tạo lại."
+}

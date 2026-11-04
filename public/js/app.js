@@ -9,12 +9,13 @@ import {INDEX, INDICES, YEARS, CANONICAL_SOURCE, setPalette} from './core/format
 import {toast} from './ui/toast.js';
 import {perf} from './core/perf.js';
 import {createMap} from './map/engine.js';
-import {createPanel, matching, FILTER_DEFAULTS} from './map/panel.js';
+import {matching, FILTER_DEFAULTS, VIEW_DEFAULT} from './map/panel.js';
 import {renderInfo, renderLegend, createTimeline} from './map/widgets.js';
 import {createSearch} from './map/search.js';
 import {createCompare} from './map/compare.js';
 import {stateFromParams, syncAddress, shareUrl} from './map/share.js';
 import {showTour, tourSeen} from './map/tour.js';
+import {showGlossary} from './ui/glossary.js';
 import {hit, watchErrors} from './core/track.js';
 
 const policy = window.ViewerPolicy;
@@ -22,14 +23,17 @@ const APP = 'Bản đồ Nhiệt - Xanh - Khô TP.HCM';
 const narrow = () => matchMedia('(max-width: 900px)').matches;
 
 export const store = createStore({
-  index: 'lst', year: 2025, range: [2020, 2025], selected: '26743', mode: 'zones', dims: '2d', basemap: 'osm', height: 1,
-  filters: FILTER_DEFAULTS, panel: !narrow(), playing: false, animate: false, pinned: ['26743', '27664', '25747'],
-  palette: 'standard', compare: {on: false, year: 2020},
+  index: 'lst', year: 2025, range: [2020, 2025], selected: null, mode: 'zones', dims: '2d', basemap: 'osm', height: 1,
+  filters: FILTER_DEFAULTS, panel: false, playing: false, animate: false, pinned: ['26743', '27664', '25747'],
+  palette: 'standard', compare: {on: false, year: 2020}, view: VIEW_DEFAULT,
 });
 const savedPalette = () => { try { return localStorage.getItem('mg-palette') === 'cb' ? 'cb' : 'standard'; } catch (_) { return 'standard'; } };
 
 // ---------------------------------------------------------------- pages
 const PAGES = {
+  'xep-hang': {title: 'Xếp hạng', load: () => import('./views/ranking.js')},
+  'them': {title: 'Thêm', load: () => import('./views/more.js')},
+  'du-bao': {title: 'Dự báo theo tháng', load: () => import('./views/forecast.js')},
   'thong-ke': {title: 'Thống kê', load: () => import('./views/stats.js')},
   'bang-so-lieu': {title: 'Bảng số liệu', load: () => import('./views/table.js')},
   'gioi-thieu': {title: 'Giới thiệu', load: () => import('./views/about.js')},
@@ -39,6 +43,7 @@ const PAGES = {
 const ALIAS = {'du-lieu': 'gioi-thieu', 'chuyen-gia': 'thong-ke', 'ban-do': ''};
 const pages = new Map();
 let openPage = null;
+let resolveDeps; const depsReady = new Promise(r => { resolveDeps = r; });
 
 const parseHash = () => {
   const [path, query = ''] = location.hash.replace(/^#\/?/, '').split('?');
@@ -54,7 +59,7 @@ async function showRoute({id, params}) {
   const host = $('#pages');
   if (!id) {
     if (openPage) { openPage.module.hide?.(); openPage = null; }
-    host.hidden = true; document.title = APP;
+    host.hidden = true; document.title = APP; 
     applyMapParams(params);
     return;
   }
@@ -62,7 +67,7 @@ async function showRoute({id, params}) {
   let entry = pages.get(id);
   if (!entry) {
     const section = h('section', {class: 'view', 'aria-label': page.title});
-    entry = {section, ready: page.load().then(module => { entry.module = module; return module.init(section, {store, navigate}); })};
+    entry = {section, ready: page.load().then(module => { entry.module = module; return module.init(section, {store, navigate, deps: depsReady}); })};
     pages.set(id, entry);
   }
   mount(host, h('div', {class: 'page-bar'},
@@ -84,23 +89,41 @@ function applyMapParams(params) {
 function buildIndexSwitch() {
   const host = $('#indexSwitch');
   const render = s => mount(host, ...INDICES.map(k => h('button', {type: 'button', 'aria-pressed': String(k === s.index), title: INDEX[k].help, on: {click: () => store.set({index: k})}},
-    h('i', {style: {background: INDEX[k].colors[k === 'ndvi' ? 5 : 6]}}), INDEX[k].label, h('small', null, INDEX[k].code))));
+    h('i', {style: {background: INDEX[k].colors[k === 'ndvi' ? 5 : 6]}}), h('b', null, INDEX[k].code), h('small', null, INDEX[k].label))));
   let last; store.subscribe(s => { const key = s.index + s.palette; if (key !== last) { last = key; render(s); } }); render(store.get()); last = store.get().index + store.get().palette;
 }
+let forecastOk = false, rebuildMenu = () => {}, rebuildTabs = () => {};
 function buildMenu() {
   const host = $('#menu');
   const render = () => {
     const user = session.user, admin = user?.role === 'admin';
     mount(host,
-      h('button', {class: 'nav', type: 'button', 'aria-pressed': String(store.get().panel), on: {click: () => store.set({panel: !store.get().panel})}}, icon('table', 17), h('span', null, 'Xếp hạng')),
+      h('a', {href: '#/xep-hang'}, icon('table', 17), h('span', null, 'Xếp hạng')),
+      forecastOk && h('a', {href: '#/du-bao'}, icon('trend', 17), h('span', null, 'Dự báo')),
       h('a', {href: '#/thong-ke'}, icon('chart', 17), h('span', null, 'Thống kê')),
       h('a', {href: '#/bang-so-lieu'}, icon('grid', 17), h('span', null, 'Bảng số liệu')),
       h('a', {href: '#/gioi-thieu'}, icon('info', 17), h('span', null, 'Giới thiệu')),
       admin && h('a', {href: url('admin.html')}, icon('lock', 17), h('span', null, 'Quản trị')),
-      env.api && (user ? h('a', {href: '#/tai-khoan', class: 'acct-btn', title: user.email}, h('span', {class: 'acct-av'}, (user.display_name || '?').trim().charAt(0).toUpperCase()), h('span', null, user.display_name))
-        : h('a', {href: '#/tai-khoan'}, icon('user', 17), h('span', null, 'Đăng nhập'))));
+      user ? h('a', {href: '#/tai-khoan', class: 'acct-btn acct-link', title: user.email}, h('span', {class: 'acct-av'}, (user.display_name || '?').trim().charAt(0).toUpperCase()), h('span', null, user.display_name))
+        : h('a', {href: env.api ? '#/tai-khoan' : 'https://mobilegis-93u9.onrender.com/#/tai-khoan', class: 'acct-link guest', 'aria-label': 'Đăng nhập hoặc đăng ký', title: env.api ? '' : 'Mở bản đầy đủ để đăng nhập'}, icon('user', 17), h('span', null, 'Đăng nhập')));
   };
-  onSession(render); store.subscribe((s, p) => { if (s.panel !== p.panel) render(); }); render();
+  onSession(render); store.subscribe((s, p) => { if (s.panel !== p.panel) render(); }); render(); rebuildMenu = render;
+}
+
+// ---------------------------------------------------------------- phone tab bar (thumb-reach navigation)
+function buildTabbar() {
+  const host = $('#tabbar');
+  const tab = (key, label, ic, active, on) => h('button', {type: 'button', class: 'tab', dataset: {tab: key}, 'aria-current': String(!!active), on: {click: on}}, h('span', {class: 'tab-ic'}, icon(ic, 22)), h('span', {class: 'tab-tx'}, label));
+  const render = () => {
+    const id = parseHash().id, s = store.get(), onMap = !id;
+    mount(host,
+      tab('map', 'Bản đồ', 'map', onMap, () => navigate('ban-do')),
+      tab('rank', 'Xếp hạng', 'table', id === 'xep-hang', () => navigate('xep-hang')),
+      forecastOk && tab('forecast', 'Dự báo', 'trend', id === 'du-bao', () => navigate('du-bao')),
+      tab('stats', 'Thống kê', 'chart', id === 'thong-ke', () => navigate('thong-ke')),
+      tab('more', 'Thêm', 'more', ['them', 'bang-so-lieu', 'gioi-thieu', 'tai-khoan', 'thu-nghiem'].includes(id), () => navigate('them')));
+  };
+  window.addEventListener('hashchange', render); store.subscribe((s, p) => { if (s.panel !== p.panel) render(); }); onSession(render); render(); rebuildTabs = render;
 }
 
 // ---------------------------------------------------------------- tools
@@ -114,22 +137,34 @@ function buildTools(engine) {
   const base = group('Bản đồ nền', [['osm', 'Bản đồ'], ['sat', 'Vệ tinh'], ['plain', 'Nhẹ']], 'basemap');
   const height = h('input', {type: 'range', min: 0.3, max: 2.5, step: 0.1, value: store.get().height, 'aria-label': 'Độ cao khối 3D', on: {input: e => store.set({height: +e.target.value})}});
   const heightBox = h('label', {class: 'height-ctl'}, 'Độ cao khối', height);
-  const actions = h('div', {class: 'tool-group'},
-    h('button', {type: 'button', title: 'Xem toàn bộ 167 xã/phường', on: {click: () => engine.fitAll()}}, icon('extent', 16), h('span', null, 'Toàn vùng')),
-    h('button', {type: 'button', dataset: {act: 'compare'}, title: 'So sánh hai năm bằng thanh kéo', on: {click: toggleCompare}}, icon('compare', 16), h('span', null, 'So sánh năm')),
-    h('button', {type: 'button', dataset: {act: 'palette'}, title: 'Bảng màu dễ phân biệt cho người khó nhìn màu (chỉ áp dụng cho tô màu xã/phường)', on: {click: () => { const next = store.get().palette === 'cb' ? 'standard' : 'cb'; setPalette(next); store.set({palette: next}); }}}, icon('eye', 16), h('span', null, 'Màu dễ phân biệt')),
-    h('button', {type: 'button', title: 'Lưu bản đồ thành ảnh PNG có tiêu đề, tọa độ, la bàn, thước tỷ lệ và thang màu', on: {click: saveImage}}, icon('image', 16), h('span', null, 'Lưu ảnh')),
-    h('button', {type: 'button', title: 'Sao chép liên kết đúng khung nhìn đang xem', on: {click: copyLink}}, icon('share', 16), h('span', null, 'Chia sẻ')),
-    h('button', {type: 'button', title: 'Hướng dẫn nhanh', 'aria-label': 'Hướng dẫn nhanh', on: {click: () => { hit('feature', 'huong-dan'); showTour(); }}}, icon('info', 16)));
+  // Dải công cụ gọn: chỉ giữ các nút hay dùng; các nút còn lại vào menu "Thêm công cụ".
+  const compareBtn = h('button', {type: 'button', dataset: {act: 'compare'}, title: 'So sánh hai năm bằng thanh kéo', on: {click: toggleCompare}}, icon('compare', 16), h('span', null, 'So sánh năm'));
+  const paletteBtn = h('button', {type: 'button', dataset: {act: 'palette'}, title: 'Bảng màu dễ phân biệt cho người khó nhìn màu (chỉ áp dụng cho tô màu xã/phường)', on: {click: () => { const next = store.get().palette === 'cb' ? 'standard' : 'cb'; setPalette(next); store.set({palette: next}); closeMenu(); }}}, icon('eye', 16), h('span', null, 'Màu dễ phân biệt'));
+  const menu = h('div', {class: 'tool-menu', role: 'menu', hidden: true},
+    h('div', {class: 'tm-title'}, 'Bản đồ nền'), base,
+    h('div', {class: 'tm-list'},
+      h('button', {type: 'button', on: {click: () => { engine.fitAll(); closeMenu(); }}}, icon('extent', 16), h('span', null, 'Xem toàn vùng')),
+      paletteBtn,
+      h('button', {type: 'button', on: {click: () => { closeMenu(); saveImage(); }}}, icon('image', 16), h('span', null, 'Lưu ảnh bản đồ (PNG)')),
+      h('button', {type: 'button', on: {click: () => { closeMenu(); copyLink(); }}}, icon('share', 16), h('span', null, 'Chia sẻ liên kết'))));
+  const moreBtn = h('button', {type: 'button', class: 'tool-more', 'aria-label': 'Thêm công cụ', 'aria-expanded': 'false', on: {click: e => { e.stopPropagation(); menu.hidden ? openMenu() : closeMenu(); }}}, icon('more', 16), h('span', null, 'Thêm'));
+  function openMenu() {
+    document.body.append(menu); menu.hidden = false; moreBtn.setAttribute('aria-expanded', 'true');
+    const r = moreBtn.getBoundingClientRect(); menu.style.top = Math.round(r.bottom + 6) + 'px'; menu.style.right = Math.max(8, Math.round(innerWidth - r.right)) + 'px';
+    setTimeout(() => addEventListener('pointerdown', away), 0);
+  }
+  function closeMenu() { menu.hidden = true; moreBtn.setAttribute('aria-expanded', 'false'); removeEventListener('pointerdown', away); }
+  function away(e) { if (!menu.contains(e.target) && e.target !== moreBtn) closeMenu(); }
+  const actions = h('div', {class: 'tool-group'}, compareBtn, moreBtn);
   const search = h('div', {class: 'search'});
   createSearch(search, {geo: currentGeo, onPick: code => { hit('feature', 'tim-kiem'); store.set({selected: code}); engine.select(code, true); if (narrow()) store.set({panel: false}); }});
-  mount(host, search, dims, mode, base, heightBox, actions);
+  mount(host, search, dims, mode, heightBox, actions);   // bản đồ nền nằm trong menu Thêm công cụ
   const sync = s => {
     host.querySelectorAll('button[data-key]').forEach(b => b.setAttribute('aria-pressed', String(String(s[b.dataset.key]) === b.dataset.value)));
     host.querySelector('button[data-key=dims][data-value="3d"]').disabled = s.mode === 'pixel';
     heightBox.hidden = s.dims !== '3d';
-    host.querySelector('[data-act=compare]').setAttribute('aria-pressed', String(!!s.compare.on));
-    host.querySelector('[data-act=palette]').setAttribute('aria-pressed', String(s.palette === 'cb'));
+    compareBtn.setAttribute('aria-pressed', String(!!s.compare.on));
+    paletteBtn.setAttribute('aria-pressed', String(s.palette === 'cb'));
   };
   function toggleCompare() {
     const s = store.get();
@@ -214,7 +249,7 @@ async function boot() {
   const setTop = () => document.documentElement.style.setProperty('--topb', Math.round($('#topbar').getBoundingClientRect().bottom) + 'px');
   new ResizeObserver(setTop).observe($('#topbar')); setTop();
   buildIndexSwitch(); buildMenu(); buildTools(engine);
-  createPanel($('#panel'), {geo, rows, ranges, store, onPick: code => { store.set({selected: code}); engine.select(code, true); if (narrow()) store.set({panel: false}); }});
+  resolveDeps({geo, rows, ranges});   // bảng xếp hạng nay là tab riêng (views/ranking.js)
   createTimeline($('#timeline'), store);
   const codes = geo.features.map(f => f.properties.code);
   const compare = createCompare({host: $('#map2'), handleHost: $('#cmp'), geo, rows, products, ranges, padding, main: engine, store, codes});
@@ -243,6 +278,8 @@ async function boot() {
   engine.setHeight(store.get().height);
 
   window.addEventListener('hashchange', () => showRoute(parseHash()));
+  buildTabbar();
+  import('./views/forecast.js').then(m => m.available()).then(ok => { forecastOk = ok; rebuildMenu(); rebuildTabs(); }).catch(() => {});
   await showRoute(parseHash());
   await engine.ready;
   engine.map.once('idle', () => perf.mark('load'));

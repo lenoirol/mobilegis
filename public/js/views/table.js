@@ -59,9 +59,9 @@ function headerRow(columns) {
 function detailTable(rows, onEdit, onDelete) {
   const real = S.mode === 'real', admin = isAdmin();
   const columns = real
-    ? [{label: 'Khu vực', sort: 'name'}, {label: 'Năm', sort: 'year', num: 1}, ...INDICES.map(k => ({label: INDEX[k].label + (INDEX[k].unit ? ' ' + INDEX[k].unit : '') + (INDEX[k].experimental ? ' *' : ''), sort: k, num: 1, hint: INDEX[k].name})),
+    ? [{label: 'Khu vực', sort: 'name'}, {label: 'Năm', sort: 'year', num: 1}, ...INDICES.map(k => ({label: `${INDEX[k].code} · ${INDEX[k].label}` + (INDEX[k].unit ? ' ' + INDEX[k].unit : '') + (INDEX[k].experimental ? ' *' : ''), sort: k, num: 1, hint: `${INDEX[k].full}. ${INDEX[k].what}`})),
        {label: 'Độ phủ mẫu', sort: 'coverage', hint: 'Tỷ lệ ô ảnh hợp lệ của nhiệt độ, độ xanh và độ khô'}, {label: 'Ngày ảnh'}, {label: ''}]
-    : [{label: 'Khu vực', sort: 'name'}, {label: 'Năm', sort: 'year', num: 1}, ...INDICES.map(k => ({label: INDEX[k].label, sort: k, num: 1})), {label: 'Nguồn'}, ...(S.mode === 'demo' && admin ? [{label: 'Thao tác'}] : [])];
+    : [{label: 'Khu vực', sort: 'name'}, {label: 'Năm', sort: 'year', num: 1}, ...INDICES.map(k => ({label: `${INDEX[k].code} · ${INDEX[k].label}`, sort: k, num: 1, hint: INDEX[k].what})), {label: 'Nguồn'}, ...(S.mode === 'demo' && admin ? [{label: 'Thao tác'}] : [])];
   const pages = Math.max(1, Math.ceil(rows.length / PAGE));
   S.page = Math.min(S.page, pages - 1);
   const tbody = h('tbody');
@@ -89,7 +89,7 @@ function detailTable(rows, onEdit, onDelete) {
     h('button', {class: 'btn sm', type: 'button', disabled: S.page === 0, on: {click: () => { S.page--; render(); }}}, '‹ Trước'),
     h('span', {class: 'mono'}, `Trang ${S.page + 1}/${pages} · ${rows.length.toLocaleString('vi-VN')} dòng`),
     h('button', {class: 'btn sm', type: 'button', disabled: S.page >= pages - 1, on: {click: () => { S.page++; render(); }}}, 'Sau ›'));
-  return h('div', null, h('div', {class: 'scroll card flat'}, h('table', {class: 'tbl'}, h('caption', {class: 'sr-only'}, 'Bảng số liệu nhiệt độ, độ xanh và độ khô'), h('thead', null, headerRow(columns)), tbody)), pager);
+  return h('div', null, h('div', {class: 'scroll card flat'}, h('table', {class: 'tbl detail' + (S.mode === 'real' ? ' real' : '')}, h('caption', {class: 'sr-only'}, 'Bảng số liệu nhiệt độ, độ xanh và độ khô'), h('thead', null, headerRow(columns)), tbody)), pager);
 }
 
 // ---- expert summary -----------------------------------------------------------------------------------------------------------------
@@ -120,7 +120,7 @@ function summaryView(rows) {
     const s = summarize(rows, k, year), idx = INDEX[k];
     const ext = r => h('td', null, r ? [h('b', {class: 'mono'}, fmt(r[k], idx.digits)), h('small', null, r.name)] : '');
     const tr = h('tr', {class: n === 0 ? 'group-start' : ''});
-    if (n === 0) tr.append(h('th', {scope: 'rowgroup', rowSpan: years.length, class: 'idx-cell'}, h('b', null, idx.label), h('small', null, idx.name + (idx.unit ? ` (${idx.unit})` : ''))));
+    if (n === 0) tr.append(h('th', {scope: 'rowgroup', rowSpan: years.length, class: 'idx-cell'}, h('b', null, `${idx.code} · ${idx.label}`), h('small', null, idx.full.split(' · ')[1] + (idx.unit ? ` (${idx.unit})` : ''))));
     tr.append(h('td', {class: 'num mono'}, String(year)), h('td', {class: 'num mono'}, `${s.used}/${s.have}`), h('td', {class: 'num mono strong'}, fmt(s.weighted, idx.digits)), h('td', {class: 'num mono'}, fmt(s.mean, idx.digits)), h('td', {class: 'num mono'}, fmt(s.median, idx.digits)), ext(s.min), ext(s.max));
     tbody.append(tr);
   });
