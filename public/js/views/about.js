@@ -33,7 +33,7 @@ async function build() {
     h('thead', null, h('tr', null, h('th', null, 'Năm'), ...INDICES.map(k => h('th', {class: 'num'}, `${INDEX[k].label} (${INDEX[k].code})`)))),
     h('tbody', null, ...YEARS.map(y => h('tr', null, h('th', {scope: 'row'}, String(y)), ...INDICES.map(k => h('td', {class: 'num'}, byYear(y).length ? `${policy.summary(byYear(y), k).adequate} / 167` : '—')))))));
   mount(root,
-    h('header', {class: 'page-head'}, h('h1', null, 'Bản đồ Nhiệt - Xanh - Khô TP.HCM'),
+    h('header', {class: 'page-head'}, h('h1', null, 'Bản đồ đo nhiệt độ, chỉ số thực vật và chỉ số khô hạn TP.HCM'),
       h('p', null, 'Ứng dụng MobileGIS trực quan hóa diễn biến không gian – thời gian của nhiệt độ bề mặt đất (LST), chỉ số thực vật (NDVI) và chỉ số khô hạn nhiệt độ – thực vật (TVDI) cho 167 xã/phường của TP.HCM sau sáp nhập (không gồm đặc khu Côn Đảo), mùa khô 2020–2025, tính từ ảnh Landsat 8/9.')),
     h('div', {class: 'about-grid'}, ...INDICES.map(k => h('article', {class: 'card'},
       h('span', {class: 'eyebrow'}, `${INDEX[k].code}${INDEX[k].unit ? ' · ' + INDEX[k].unit : ''}${INDEX[k].experimental ? ' · thử nghiệm' : ''}`), h('h3', null, INDEX[k].full.split(' · ')[1]), h('small', {class: 'muted'}, INDEX[k].english),

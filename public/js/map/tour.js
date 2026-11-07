@@ -14,7 +14,7 @@ const STEPS = [
 export function showTour() {
   const again = h('input', {type: 'checkbox', checked: true});
   const dialog = h('dialog', {class: 'tour', 'aria-label': 'Hướng dẫn nhanh'},
-    h('h2', null, 'Hướng dẫn nhanh'), h('p', {class: 'muted small', style: {margin: '4px 0 12px'}}, 'Bản đồ Nhiệt - Xanh - Khô TP.HCM · mùa khô 2020–2025'),
+    h('h2', null, 'Hướng dẫn nhanh'), h('p', {class: 'muted small', style: {margin: '4px 0 12px'}}, 'Bản đồ đo nhiệt độ, chỉ số thực vật và chỉ số khô hạn TP.HCM · mùa khô 2020–2025'),
     h('ol', {class: 'tour-steps'}, ...STEPS.map(([ic, t, d]) => h('li', null, h('span', {class: 'tour-ic'}, icon(ic, 18)), h('div', null, h('b', null, t), h('p', null, d))))),
     h('div', {class: 'dlg-actions', style: {justifyContent: 'space-between', alignItems: 'center'}},
       h('label', {class: 'check'}, again, 'Không hiện lại'),

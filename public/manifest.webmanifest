@@ -1,6 +1,6 @@
 {
-  "name": "Bản đồ Nhiệt - Xanh - Khô TP.HCM",
-  "short_name": "Nhiệt-Xanh-Khô",
+  "name": "Bản đồ đo nhiệt độ, chỉ số thực vật và chỉ số khô hạn TP.HCM",
+  "short_name": "Bản đồ TP.HCM",
   "lang": "vi",
   "start_url": "./#/",
   "scope": "./",

@@ -1,4 +1,4 @@
-"""Browser end-to-end test for the v3 interface "Bản đồ Nhiệt - Xanh - Khô TP.HCM" (real Chrome via Playwright).
+"""Browser end-to-end test for the v3 interface "Bản đồ đo nhiệt độ, chỉ số thực vật và chỉ số khô hạn TP.HCM" (real Chrome via Playwright).
 
 Needs a running server and the project virtual environment (it creates and deletes its own throw-away accounts).
     MOBILEGIS_URL=http://127.0.0.1:5379 .venv/bin/python tests/e2e_ui.py [screenshot_dir]
@@ -53,7 +53,7 @@ try:
 
         # ---------------- desktop guest: map-first screen ----------------
         ctx, pg = page(b)
-        ok('title is the new product name', pg.title() == 'Bản đồ Nhiệt - Xanh - Khô TP.HCM', pg.title())
+        ok('title is the new product name', pg.title() == 'Bản đồ đo nhiệt độ, chỉ số thực vật và chỉ số khô hạn TP.HCM', pg.title())
         ok('map fills the window', pg.evaluate("(() => { const r = document.querySelector('#map').getBoundingClientRect(); return r.width === innerWidth && r.height === innerHeight; })()"))
         ok('ranking lists all 167 areas', pg.locator('.rank-item').count() == 167, pg.locator('.rank-item').count())
         ok('LST ranking starts with the hottest ward', 'An Phú' in pg.locator('.rank-item').first.inner_text())

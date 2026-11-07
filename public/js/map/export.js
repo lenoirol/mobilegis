@@ -90,7 +90,7 @@ export async function exportMap(map, s, {title}) {
   // source
   g.fillStyle = INK3; g.font = `11px ${FONT}`; g.textAlign = 'left';
   g.fillText('Nguồn: Landsat 8/9 Collection 2 Level-2 (USGS), xử lý trên Google Earth Engine; ranh giới 167 xã/phường TP.HCM sau sáp nhập (không gồm Côn Đảo).', M.l, M.t + H + M.b - 30);
-  g.fillText(`Nền: ${s.basemap === 'sat' ? 'Esri World Imagery' : s.basemap === 'plain' ? 'Natural Earth' : '© OpenStreetMap'} · Xuất ngày ${new Date().toLocaleDateString('vi-VN')} · Bản đồ Nhiệt - Xanh - Khô TP.HCM`, M.l, M.t + H + M.b - 14);
+  g.fillText(`Nền: ${s.basemap === 'sat' ? 'Esri World Imagery' : s.basemap === 'plain' ? 'Natural Earth' : '© OpenStreetMap'} · Xuất ngày ${new Date().toLocaleDateString('vi-VN')} · Bản đồ đo nhiệt độ, chỉ số thực vật và chỉ số khô hạn TP.HCM`, M.l, M.t + H + M.b - 14);
 
   return new Promise(resolve => out.toBlob(resolve, 'image/png'));
 }

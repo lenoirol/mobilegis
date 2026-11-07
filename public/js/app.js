@@ -1,4 +1,4 @@
-/* Bản đồ Nhiệt - Xanh - Khô TP.HCM · app shell.
+/* Bản đồ đo nhiệt độ, chỉ số thực vật và chỉ số khô hạn TP.HCM · app shell.
    The map is the whole screen. Ranking/threshold panel, tools, selected-area card, legend and timeline float on it.
    Secondary screens (Thống kê, Bảng số liệu, Giới thiệu, Tài khoản, Thử nghiệm) open as full-screen pages over the map. */
 import {$, h, mount, icon} from './core/dom.js';
@@ -19,7 +19,7 @@ import {showGlossary} from './ui/glossary.js';
 import {hit, watchErrors} from './core/track.js';
 
 const policy = window.ViewerPolicy;
-const APP = 'Bản đồ Nhiệt - Xanh - Khô TP.HCM';
+const APP = 'Bản đồ đo nhiệt độ, chỉ số thực vật và chỉ số khô hạn TP.HCM';
 const narrow = () => matchMedia('(max-width: 900px)').matches;
 
 export const store = createStore({

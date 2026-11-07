@@ -1,6 +1,6 @@
 ==============================================================================
  HƯỚNG DẪN SỬ DỤNG WEB TỪ A ĐẾN Z
- BẢN ĐỒ NHIỆT - XANH - KHÔ TP.HCM  (MobileGIS · Nhóm 13 · Đề tài 6)
+ BẢN ĐỒ ĐO NHIỆT ĐỘ, CHỈ SỐ THỰC VẬT VÀ CHỈ SỐ KHÔ HẠN TP.HCM  (MobileGIS · Nhóm 13 · Đề tài 6)
  Phiên bản web v3.1 · cập nhật 02/11/2026
 ==============================================================================
 
@@ -315,7 +315,7 @@ Giới hạn cần biết:
 
 A. Từ giao diện cũ (UI2) lên v3 — theo góp ý của cô (01/11/2026)
 ------------------------------------------------------------------
- 1. Tên mới: "Bản đồ Nhiệt - Xanh - Khô TP.HCM".
+ 1. Tên mới: "Bản đồ đo nhiệt độ, chỉ số thực vật và chỉ số khô hạn TP.HCM".
  2. Bản đồ là màn hình chính, toàn màn hình, không cần cuộn.
  3. Thay Leaflet bằng MapLibre GL JS: có 2D và 3D (khối nổi theo giá trị).
  4. Diễn biến theo thời gian: chọn khoảng năm, bấm phát; chỉ qua năm thật.

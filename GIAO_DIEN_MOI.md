@@ -1,4 +1,4 @@
-# Giao diện v3.1 · Bản đồ Nhiệt - Xanh - Khô TP.HCM
+# Giao diện v3.1 · Bản đồ đo nhiệt độ, chỉ số thực vật và chỉ số khô hạn TP.HCM
 
 Xây lại toàn bộ giao diện web (01/11/2026) theo góp ý của cô: bản đồ là thành phần chính, có 2D/3D, chạy diễn biến theo
 khoảng năm, xếp hạng 167 xã/phường, lọc theo ngưỡng, nền màu nhẹ, người dùng tự xóa được tài khoản.
