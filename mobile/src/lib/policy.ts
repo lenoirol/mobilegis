@@ -1,13 +1,9 @@
-/** Presentation rules only (same as viewer-policy.js): never fill, rewrite or interpolate research observations. */
+/** Quy tắc hiển thị (giống viewer-policy.js của bản web): không lấp, không nội suy số liệu. Khu vực dưới 50% ô ảnh hợp lệ để xám. */
 import {valid, type IndexKey} from './format';
 import type {Row} from './data';
-
 export const THRESHOLD = 0.5;
-export type Quality = 'missing' | 'unknown' | 'limited' | 'adequate';
-export function quality(row: Row | undefined, index: IndexKey): Quality {
-  if (!row || !valid(row[index])) return 'missing';
-  const coverage = row[`${index}_coverage` as const];
-  if (!valid(coverage) || coverage < 0 || coverage > 1) return 'unknown';
-  return coverage < THRESHOLD ? 'limited' : 'adequate';
-}
-export const eligible = (row: Row | undefined, index: IndexKey) => quality(row, index) === 'adequate';
+export const eligible = (row: Row | undefined, k: IndexKey, min = THRESHOLD) => {
+  if (!row || !valid(row[k])) return false;
+  const c = row[`${k}_coverage` as const];
+  return valid(c) && c >= min && c <= 1;
+};

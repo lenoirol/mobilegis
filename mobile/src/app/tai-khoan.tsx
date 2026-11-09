@@ -1,39 +1,41 @@
-import {useState} from 'react';
-import {View} from 'react-native';
-import {useRouter} from 'expo-router';
-import {Button, Card, Dialog, Field, Page, PageHead, PasswordInput, T, Callout, C, Reveal, useToast} from '@/ds';
-import {isAdmin, loadSession, logout, post} from '@/lib/api';
-import {useSession} from '@/lib/session';
+/** Tài khoản: đăng nhập / đăng ký; khi đã đăng nhập: hồ sơ và đăng xuất. Mật khẩu chỉ gửi qua HTTPS tới máy chủ, không lưu trên máy. */
+import {useEffect, useState} from 'react';
+import {Linking, TextInput, View} from 'react-native';
+import {Btn, Callout, Card, PageBar, Screen, Seg, T} from '@/ui/kit';
+import {C, R} from '@/ui/theme';
+import {WEB_APP} from '@/lib/config';
+import {login, logout, onSession, register, session} from '@/lib/api';
 
+const input = {backgroundColor: C.surface, borderWidth: 1, borderColor: C.line2, borderRadius: R, padding: 12, fontSize: 15, color: C.ink} as const;
 export default function Account() {
-  const router = useRouter();
-  const toast = useToast();
-  const session = useSession();
-  const user = session.user;
-  const [dlg, setDlg] = useState(false);
-  const [cur, setCur] = useState('');
-  const [next, setNext] = useState('');
-  const [err, setErr] = useState('');
-  if (!user) return <Page><PageHead eyebrow="Tài khoản" title="Bạn chưa đăng nhập" /><Button tone="primary" label="Đăng nhập" onPress={() => router.replace('/dang-nhap' as any)} /></Page>;
-  const save = async () => {
-    try { await post('/api/auth/change-password', {current_password: cur, new_password: next}); setDlg(false); setCur(''); setNext(''); setErr(''); toast('Đã đổi mật khẩu. Các thiết bị khác phải đăng nhập lại.'); await loadSession(); }
-    catch (e: any) { setErr(e.message); }
+  const [user, setUser] = useState(session.user), [tab, setTab] = useState<'login' | 'register'>('login');
+  const [email, setEmail] = useState(''), [name, setName] = useState(''), [pw, setPw] = useState(''), [err, setErr] = useState(''), [busy, setBusy] = useState(false);
+  useEffect(() => onSession(() => setUser(session.user)), []);
+  const submit = async () => {
+    setErr(''); setBusy(true);
+    try { if (tab === 'login') await login(email.trim(), pw); else await register(email.trim(), name.trim(), pw); setPw(''); }
+    catch (e: any) { setErr(e.message || 'Không thực hiện được.'); }
+    setBusy(false);
   };
   return (
-    <Page back={{label: 'Bản đồ', href: '/'}}>
-      <PageHead eyebrow="Tài khoản" title={user.display_name} intro={`${user.email} · ${isAdmin() ? 'Quản trị viên' : 'Khách hàng'}`} />
-      <View style={{gap: 14}}>
-        {isAdmin() && <Reveal><Card><View style={{gap: 10}}><T w={800} s={20}>Trang quản trị</T><T s={14} lh={1.5} color={C.ink3}>Quản lý tài khoản, kiểm tra dữ liệu, thông báo và ghi chú khu vực.</T><Button tone="primary" icon="lock" label="Mở trang quản trị" onPress={() => router.navigate('/quan-tri' as any)} /></View></Card></Reveal>}
-        <Reveal index={1}><Card><View style={{gap: 10}}><T w={800} s={20}>Mật khẩu</T><Button label="Đổi mật khẩu" onPress={() => setDlg(true)} /></View></Card></Reveal>
-        <Reveal index={2}><Button tone="dark" label="Đăng xuất" onPress={async () => { try { await logout(); } finally { router.replace('/' as any); } }} /></Reveal>
-      </View>
-      <Dialog visible={dlg} onClose={() => setDlg(false)}>
-        <T w={800} s={22}>Đổi mật khẩu</T>
-        <Field label="Mật khẩu hiện tại"><PasswordInput value={cur} onChangeText={setCur} accessibilityLabel="Mật khẩu hiện tại" /></Field>
-        <Field label="Mật khẩu mới · ít nhất 8 ký tự"><PasswordInput value={next} onChangeText={setNext} accessibilityLabel="Mật khẩu mới" /></Field>
-        {err ? <Callout tone="err">{err}</Callout> : null}
-        <View style={{flexDirection: 'row', justifyContent: 'flex-end', gap: 10}}><Button label="Hủy" onPress={() => setDlg(false)} /><Button tone="primary" label="Lưu" onPress={save} /></View>
-      </Dialog>
-    </Page>
+    <View style={{flex: 1, backgroundColor: C.bg}}>
+      <PageBar title="Tài khoản" back />
+      <Screen>
+        <Callout>Ai cũng xem được bản đồ, xếp hạng, dự báo và thống kê mà không cần tài khoản. Tài khoản dùng cho quản trị và góp ý.</Callout>
+        {user ? <Card>
+          <T s={18} w="800">{user.display_name}</T><T s={13.5} color={C.ink3}>{user.email} · {user.role === 'admin' ? 'quản trị viên' : 'người dùng'}</T>
+          <Btn label="Đổi mật khẩu, xóa tài khoản (bản web)" icon="globe" onPress={() => Linking.openURL(WEB_APP + '#/tai-khoan')} />
+          <Btn label="Đăng xuất" tone="primary" onPress={() => logout()} />
+        </Card> : <Card>
+          <Seg options={[{value: 'login', label: 'Đăng nhập'}, {value: 'register', label: 'Đăng ký'}]} value={tab} onChange={v => setTab(v as any)} />
+          <TextInput style={input} value={email} onChangeText={setEmail} placeholder="Email" autoCapitalize="none" keyboardType="email-address" autoComplete="email" placeholderTextColor={C.ink3} />
+          {tab === 'register' && <TextInput style={input} value={name} onChangeText={setName} placeholder="Tên hiển thị" placeholderTextColor={C.ink3} />}
+          <TextInput style={input} value={pw} onChangeText={setPw} placeholder="Mật khẩu" secureTextEntry autoComplete={tab === 'login' ? 'password' : 'new-password'} placeholderTextColor={C.ink3} />
+          {err ? <T s={13} w="700" color={C.err}>{err}</T> : null}
+          <Btn tone="primary" label={busy ? 'Đang gửi…' : tab === 'login' ? 'Đăng nhập' : 'Tạo tài khoản'} disabled={busy || !email || !pw} onPress={submit} />
+          <T s={12} color={C.ink3}>Máy chủ miễn phí có thể mất khoảng 1 phút để khởi động ở lần đầu.</T>
+        </Card>}
+      </Screen>
+    </View>
   );
 }

@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "MobileGIS TP.HCM",
+    "name": "Bản đồ đo nhiệt độ, chỉ số thực vật và chỉ số khô hạn TP.HCM",
     "slug": "mobilegis-hcm",
-    "version": "1.2.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,12 +11,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#f7f3e8",
+        "backgroundColor": "#ffffff",
         "foregroundImage": "./assets/android-icon-foreground.png"
       },
       "predictiveBackGestureEnabled": false,
       "package": "vn.edu.mobilegis.hcm",
-      "versionCode": 3,
+      "versionCode": 4,
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION"
@@ -33,9 +33,25 @@
         {
           "locationWhenInUsePermission": "MobileGIS dùng vị trí của bạn để cho biết bạn đang ở xã/phường nào. Tọa độ không được lưu."
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableMinifyInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true,
+            "enablePngCrunchInReleaseBuilds": true,
+            "useLegacyPackaging": false
+          }
+        }
       ]
     ],
     "scheme": "mobilegis",
-    "experiments": {}
+    "experiments": {},
+    "splash": {
+      "backgroundColor": "#f3f6f8",
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain"
+    }
   }
 }
