@@ -5,6 +5,7 @@
 - Ranh giới 167 xã/phường được làm gọn (mapshaper, giữ hình, ~30% số đỉnh) và chỉ giữ các thuộc tính app cần.
 - Số liệu = observations.json đã công bố + các đợt bổ sung đã kiểm tra (supplements.json), giống bản web.
 - Dự báo tháng = public/data/forecast/forecast.json.
+- Hàm tính lợi ích trồng cây = chép NGUYÊN VĂN public/js/core/treecalc.js sang mobile/src/lib/treecalc.js (một nguồn duy nhất cho web và app).
 App vẫn tải bản mới nhất từ mạng khi có kết nối; tệp đóng gói chỉ là bản dự phòng mở nhanh.
 """
 import json, subprocess, tempfile
@@ -22,7 +23,7 @@ def main():
         geo = json.loads(simple.read_text(encoding='utf8'))
     for f in geo['features']:
         p = f['properties']; f['id'] = p['code']
-        f['properties'] = {k: p[k] for k in ('code', 'name', 'full_name', 'lat', 'lon')}
+        f['properties'] = {k: p[k] for k in ('code', 'name', 'full_name', 'lat', 'lon', 'area_km2_source')}
     (OUT / 'boundaries.json').write_text(json.dumps(geo, ensure_ascii=False, separators=(',', ':')), encoding='utf8')
     rows = json.loads((ROOT / 'public/data/gee_recovery/observations.json').read_text(encoding='utf8'))
     extra = json.loads((ROOT / 'public/data/gee_recovery/supplements.json').read_text(encoding='utf8'))
@@ -35,6 +36,7 @@ def main():
     (OUT / 'rows.json').write_text(json.dumps(compact, ensure_ascii=False, separators=(',', ':')), encoding='utf8')
     fc = ROOT / 'public/data/forecast/forecast.json'
     (OUT / 'forecast.json').write_text(fc.read_text(encoding='utf8'), encoding='utf8')
+    (ROOT / 'mobile/src/lib/treecalc.js').write_text((ROOT / 'public/js/core/treecalc.js').read_text(encoding='utf8'), encoding='utf8')
     for p in sorted(OUT.iterdir()): print(p.name, round(p.stat().st_size / 1024), 'KB')
 
 if __name__ == '__main__':

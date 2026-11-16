@@ -18,6 +18,7 @@ const HOWTO = [
   ['Diễn biến theo thời gian', 'Chọn khoảng năm ở thanh thời gian rồi bấm phát. Bản đồ chạy lần lượt qua các năm thật 2020–2025; không có số liệu cho năm ở giữa.'],
   ['Xếp hạng', 'Tab Xếp hạng liệt kê 167 xã/phường, mặc định LST cao → thấp, NDVI thấp → cao, TVDI cao → thấp; bấm Cao → thấp / Thấp → cao để đổi. Bấm một tên, bản đồ bên cạnh phóng tới khu vực đó, các khu vực khác mờ đi. Nút Tùy chỉnh để lọc ngưỡng (ví dụ LST > 40).'],
   ['Dự báo theo tháng', 'Tab Dự báo cho giá trị trung bình dự kiến của LST và NDVI trong 6 tháng tới, kèm khoảng tin cậy 80%. Đây là ước tính thử nghiệm, không phải cảnh báo.'],
+  ['Tính lợi ích trồng cây', 'Mục Thêm → Tính lợi ích trồng cây xanh (hoặc liên kết trong thẻ khu vực): nhập số cây, số năm, hệ số của cây và đơn giá, kết quả CO₂, O₂, sinh khối, bóng mát, nước mưa và giá trị quy đổi hiện ngay. Có kịch bản không tính trùng, so sánh hai phương án và lưu CSV. Số mặc định là ví dụ của đề bài.'],
   ['Vùng màu xám', 'Khu vực có dưới 50% diện tích ảnh dùng được (do mây) không được tô màu, không xếp hạng và không tính khi lọc.'],
   ['Lưu ảnh bản đồ', 'Trong menu Thêm công cụ của bản đồ, mục Lưu ảnh tạo tệp PNG có tiêu đề, tọa độ, la bàn, thước tỷ lệ và thang màu.'],
   ['Tìm kiếm và chia sẻ', 'Gõ tên xã/phường vào ô Tìm (không cần dấu). Mục Chia sẻ trong menu Thêm công cụ sao chép liên kết đúng chỉ số, năm, khu vực đang xem.'],

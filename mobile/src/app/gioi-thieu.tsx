@@ -9,6 +9,7 @@ const HOWTO = [
   ['Xếp hạng', 'Danh sách 167 xã/phường, mặc định LST cao → thấp, NDVI thấp → cao, TVDI cao → thấp. Bấm một tên, bản đồ bên cạnh phóng tới khu vực đó.'],
   ['Dự báo', 'Giá trị trung bình dự kiến của LST và NDVI 6 tháng tới, kèm khoảng tin cậy 80%. Ước tính thử nghiệm, không phải cảnh báo.'],
   ['Thống kê', 'Số tổng quan, phân bố giá trị, diễn biến 2020–2025 và quan hệ nhiệt độ – độ xanh.'],
+  ['Tính lợi ích trồng cây', 'Thêm → Tính lợi ích trồng cây xanh, hoặc liên kết trong thẻ khu vực trên bản đồ. Nhập số cây, số năm, hệ số và đơn giá; kết quả hiện ngay, có so sánh hai phương án và lưu CSV. Số mặc định là ví dụ của đề bài.'],
   ['Vùng màu xám', 'Khu vực có dưới 50% ô ảnh dùng được (do mây) không tô màu, không xếp hạng.'],
 ];
 export default function About() {

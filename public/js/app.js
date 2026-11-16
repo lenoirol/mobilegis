@@ -34,6 +34,7 @@ const PAGES = {
   'xep-hang': {title: 'Xếp hạng', load: () => import('./views/ranking.js')},
   'them': {title: 'Thêm', load: () => import('./views/more.js')},
   'du-bao': {title: 'Dự báo theo tháng', load: () => import('./views/forecast.js')},
+  'trong-cay': {title: 'Tính lợi ích trồng cây', load: () => import('./views/trees.js')},
   'thong-ke': {title: 'Thống kê', load: () => import('./views/stats.js')},
   'bang-so-lieu': {title: 'Bảng số liệu', load: () => import('./views/table.js')},
   'gioi-thieu': {title: 'Giới thiệu', load: () => import('./views/about.js')},
@@ -121,7 +122,7 @@ function buildTabbar() {
       tab('rank', 'Xếp hạng', 'table', id === 'xep-hang', () => navigate('xep-hang')),
       forecastOk && tab('forecast', 'Dự báo', 'trend', id === 'du-bao', () => navigate('du-bao')),
       tab('stats', 'Thống kê', 'chart', id === 'thong-ke', () => navigate('thong-ke')),
-      tab('more', 'Thêm', 'more', ['them', 'bang-so-lieu', 'gioi-thieu', 'tai-khoan', 'thu-nghiem'].includes(id), () => navigate('them')));
+      tab('more', 'Thêm', 'more', ['them', 'trong-cay', 'bang-so-lieu', 'gioi-thieu', 'tai-khoan', 'thu-nghiem'].includes(id), () => navigate('them')));
   };
   window.addEventListener('hashchange', render); store.subscribe((s, p) => { if (s.panel !== p.panel) render(); }); onSession(render); render(); rebuildTabs = render;
 }

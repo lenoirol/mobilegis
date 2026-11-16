@@ -22,6 +22,7 @@ function render() {
     h('div', {class: 'more-list'},
       account,
       admin && tile('lock', 'Quản trị', 'Nhập số liệu, quản lý người dùng và nhật ký', null, url('admin.html'), 'tone-admin'),
+      tile('leaf', 'Tính lợi ích trồng cây xanh', 'Chọn kịch bản trồng cây, tính ngay CO₂, O₂, bóng mát, nước mưa và giá trị quy đổi', null, '#/trong-cay', 'tone-a'),
       tile('grid', 'Bảng số liệu', 'Tra cứu số liệu từng xã/phường, tải CSV', null, '#/bang-so-lieu', 'tone-a'),
       tile('info', 'LST, NDVI, TVDI nghĩa là gì?', 'Tên đầy đủ, ý nghĩa, cách đọc và giới hạn của ba chỉ số', () => showGlossary('lst'), null, 'tone-b'),
       tile('map', 'Giới thiệu và cách đọc bản đồ', 'Nguồn dữ liệu, giới hạn, cách dùng', null, '#/gioi-thieu', 'tone-c'),

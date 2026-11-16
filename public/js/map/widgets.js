@@ -41,7 +41,8 @@ export function renderInfo(host, {code, geo, rows, store}) {
     h('div', {class: 'vals'}, vals),
     tv != null && tv >= TVDI_ALERT ? h('div', {class: 'info-alert'}, `Độ khô ${fmt(tv, 2)} (${tvdiClass(tv).name.toLowerCase()}) · chỉ số thử nghiệm, không phải cảnh báo hạn chính thức`) : null,
     h('div', {class: 'info-foot'}, h('span', null, `${INDEX[s.index].code} 2020–2025`), spark(series, s.index)),
-    h('a', {class: 'link-btn', href: '#/du-bao'}, icon('trend', 14), 'Xem dự báo tháng của khu vực này'));
+    h('a', {class: 'link-btn', href: '#/du-bao'}, icon('trend', 14), 'Xem dự báo tháng của khu vực này'),
+    h('a', {class: 'link-btn', href: '#/trong-cay?ma=' + code}, icon('leaf', 14), 'Tính lợi ích trồng cây ở khu vực này'));
 }
 
 // ---------- legend ----------

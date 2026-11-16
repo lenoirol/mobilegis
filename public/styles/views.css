@@ -435,3 +435,48 @@ dialog.gloss{max-width:min(600px,94vw);max-height:90vh;overflow:auto}
   .table-page .tbl.detail.real thead th{font-size:10px;white-space:normal}
 }
 @media (max-width:900px){.stats-page .seg button{white-space:normal;line-height:1.15;font-size:12px;padding:6px 4px}}
+
+/* ---- Tính lợi ích trồng cây (giao diện trung tính như Thêm / Giới thiệu, không dùng màu của Thống kê) ---- */
+.tree-page .block{margin-top:34px;display:grid;gap:14px}
+.tree-page .filters{display:flex;flex-wrap:wrap;gap:14px;align-items:end}
+.tree-page .filters .field{min-width:220px;flex:1}
+.tc-plan[hidden]{display:none}
+.tc-layout{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:22px;margin-top:22px;align-items:start}
+.tc-left,.tc-right{display:grid;gap:14px;min-width:0}
+.tc-left h2,.tc-right h2{margin:0}
+.tc-right{position:sticky;top:64px}
+.tc-right h3,.tc-result h3{margin:6px 0 0;font-size:14px;color:var(--ink-2)}
+.tc-inputs{display:grid;gap:12px}
+.tc-group{margin:0;display:grid;gap:12px;padding:14px 16px}
+.tc-group legend{padding:0 6px;font-weight:700;font-size:13px;color:var(--accent-2)}
+.tc-field{gap:4px}
+.tc-sym{display:inline-block;min-width:22px;padding:0 5px;border-radius:5px;background:var(--accent-soft);color:var(--accent-2);font:700 12px var(--f-mono);text-align:center}
+.field>.tc-in{display:flex;align-items:center;gap:8px}
+.tc-in .input{flex:1;min-width:0;font-variant-numeric:tabular-nums}
+.tc-in em{font-style:normal;font-weight:500;font-size:12px;color:var(--ink-3);white-space:nowrap;min-width:70px}
+.tc-result{display:grid;gap:10px}
+.tc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.tc-stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;gap:3px;box-shadow:var(--shadow-sm);height:100%;box-sizing:border-box}
+.tc-stat small{font-size:12px;color:var(--ink-3)}.tc-stat small b{color:var(--accent-2)}
+.tc-stat strong{font-size:20px;line-height:1.2;font-variant-numeric:tabular-nums;color:var(--ink)}
+.tc-formula{font:500 11px var(--f-mono);color:var(--ink-3)}
+.tc-stat.big{background:var(--accent);border-color:var(--accent);color:#fff}
+.tc-stat.big small,.tc-stat.big small b,.tc-stat.big .tc-formula,.tc-stat.big strong{color:#fff}
+.tc-stat.big strong{font-size:30px}
+.tc-hero{display:grid;gap:6px}.tc-hero p{margin:0}
+.tc-off{position:relative}.tc-off .tc-stat{opacity:.55;background:var(--surface-2)}
+.tc-tag{display:block;font-size:11px;color:var(--ink-3);margin-top:4px}
+.tc-chart{min-height:200px}
+.tc-mini{display:none;position:sticky;top:48px;z-index:4;margin:12px 0 0;align-items:center;gap:10px;padding:9px 14px;border-radius:12px;background:var(--accent);color:#fff;box-shadow:var(--shadow);text-decoration:none}
+.tc-mini>*{white-space:nowrap}.tc-mini.away{visibility:hidden}.tc-mini b{font-size:17px;font-variant-numeric:tabular-nums}.tc-mini small{opacity:.9;font-size:12px}.tc-mini span{margin-left:auto;font-size:12px;font-weight:600;text-decoration:underline}
+.tc-diff th,.tc-diff td{background:var(--accent-soft)}
+.tc-method ul{margin:0 0 10px;padding-left:18px;display:grid;gap:6px;font-size:14px;line-height:1.5}
+.tc-method ol{margin:0;padding-left:18px;display:grid;gap:4px}
+@media (max-width:900px){
+  .tc-layout{grid-template-columns:minmax(0,1fr)}
+  .tc-right{position:static}
+  .tc-mini{display:flex}
+  .tree-page .filters .field{min-width:100%}
+  .tc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tc-stat strong{font-size:17px}.tc-stat.big strong{font-size:26px}
+}

@@ -3,7 +3,7 @@ import Svg, {Circle, Path, Rect} from 'react-native-svg';
 import {C} from './theme';
 
 /** Bộ biểu tượng giống bản web (lưới 24 px, nét 2 px). */
-export type IconName = 'map' | 'table' | 'chart' | 'flask' | 'info' | 'play' | 'pause' | 'locate' | 'extent' | 'globe' | 'share' | 'layers' | 'search' | 'download' | 'plus' | 'minus' | 'x' | 'check' | 'chevron' | 'up' | 'lock' | 'user' | 'compare' | 'eye' | 'grid' | 'alert' | 'sliders' | 'trend' | 'more' | 'back';
+export type IconName = 'map' | 'table' | 'chart' | 'flask' | 'info' | 'play' | 'pause' | 'locate' | 'extent' | 'globe' | 'share' | 'layers' | 'search' | 'download' | 'plus' | 'minus' | 'x' | 'check' | 'chevron' | 'up' | 'lock' | 'user' | 'compare' | 'eye' | 'grid' | 'alert' | 'sliders' | 'trend' | 'more' | 'back' | 'leaf';
 
 const SHAPES: Record<IconName, (c: string) => React.ReactNode> = {
   map: () => <><Path d="M9 4 3 6.5v14L9 18l6 2.5 6-2.5v-14L15 6.5 9 4Z" /><Path d="M9 4v14M15 6.5v14" /></>,
@@ -35,6 +35,7 @@ const SHAPES: Record<IconName, (c: string) => React.ReactNode> = {
   trend: () => <Path d="M3 17l6-6 4 4 8-9M15 6h6v6" />,
   more: c => <><Circle cx="5" cy="12" r="1.6" fill={c} /><Circle cx="12" cy="12" r="1.6" fill={c} /><Circle cx="19" cy="12" r="1.6" fill={c} /></>,
   back: () => <Path d="m15 5-7 7 7 7" />,
+  leaf: () => <><Path d="M5 19c0-8 5-14 15-15-1 10-7 15-15 15Z" /><Path d="M5 19 13 11" /></>,
   sliders: () => <><Path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0" /><Circle cx="16" cy="6" r="2" /><Circle cx="10" cy="12" r="2" /><Circle cx="18" cy="18" r="2" /></>,
 };
 

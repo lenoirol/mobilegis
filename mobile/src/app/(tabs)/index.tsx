@@ -87,7 +87,10 @@ export default function MapScreen() {
               </Pressable>); })}
           </View>
           {eligible(row, 'tvdi') && row!.tvdi! >= 0.8 && <T s={12} color={C.warnInk}>Độ khô {fmt(row!.tvdi)} ({tvdiClass(row!.tvdi)!.name.toLowerCase()}) · chỉ số thử nghiệm, không phải cảnh báo hạn</T>}
-          <Pressable onPress={() => router.navigate('/du-bao')}><T s={13} w="700" color={C.accent2}>Xem dự báo tháng của khu vực này ›</T></Pressable>
+          <View style={{flexDirection: 'row', flexWrap: 'wrap', columnGap: 14, rowGap: 4}}>
+            <Pressable onPress={() => router.navigate('/du-bao')}><T s={13} w="700" color={C.accent2}>Xem dự báo tháng ›</T></Pressable>
+            <Pressable onPress={() => router.push({pathname: '/trong-cay', params: {ma: selected!}})}><T s={13} w="700" color={C.accent2}>Tính lợi ích trồng cây ở đây ›</T></Pressable>
+          </View>
         </View>
       )}
 

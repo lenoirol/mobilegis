@@ -33,6 +33,7 @@ export default function More() {
       <Screen>
         <Tile icon="user" title={user ? user.display_name : 'Đăng nhập / Đăng ký'} text={user ? `Đã đăng nhập${user.role === 'admin' ? ' · quản trị viên' : ''} · xem hồ sơ, đăng xuất` : 'Tạo tài khoản hoặc đăng nhập'} onPress={() => router.push('/tai-khoan')} />
         {user?.role === 'admin' && <Tile icon="lock" title="Quản trị" text="Nhập số liệu, người dùng, nhật ký (mở trang quản trị)" onPress={() => Linking.openURL(WEB_APP + 'admin.html')} />}
+        <Tile icon="leaf" title="Tính lợi ích trồng cây xanh" text="Chọn kịch bản trồng cây, tính ngay CO₂, O₂, bóng mát, nước mưa và giá trị quy đổi" onPress={() => router.push('/trong-cay')} />
         <Tile icon="grid" title="Bảng số liệu" text="Tra cứu từng xã/phường, lưu CSV (chọn nơi lưu)" onPress={() => router.push('/bang-so-lieu')} />
         <Tile icon="info" title="LST, NDVI, TVDI nghĩa là gì?" text="Tên đầy đủ, ý nghĩa, cách đọc và giới hạn" onPress={() => setGloss(true)} />
         <Tile icon="map" title="Giới thiệu và cách đọc bản đồ" text="Nguồn dữ liệu, giới hạn, cách dùng" onPress={() => router.push('/gioi-thieu')} />

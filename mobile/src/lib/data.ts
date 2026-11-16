@@ -9,7 +9,7 @@ export interface Row {
   code: string; name: string; year: number; sampled_pixels?: number; dates?: string[]; supplement?: string;
   lst?: number; lst_coverage?: number; ndvi?: number; ndvi_coverage?: number; tvdi?: number; tvdi_coverage?: number;
 }
-export interface Feature {type: 'Feature'; id: string; geometry: {type: 'Polygon' | 'MultiPolygon'; coordinates: any}; properties: {code: string; name: string; full_name: string; lat: number; lon: number}}
+export interface Feature {type: 'Feature'; id: string; geometry: {type: 'Polygon' | 'MultiPolygon'; coordinates: any}; properties: {code: string; name: string; full_name: string; lat: number; lon: number; area_km2_source?: number}}
 export interface Geo {type: 'FeatureCollection'; features: Feature[]}
 export interface Forecast {generated: string; months: string[]; future: string[]; source: string; backtest_months: number; notes: string[];
   indices: Record<string, {model: string; mae_model: number; mae_baseline: number | null; beats_baseline: boolean}>;
