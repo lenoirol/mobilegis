@@ -271,7 +271,7 @@ async function boot() {
     if (s.selected !== p.selected && s.selected && p.selected !== undefined) hit('area', s.selected);
     if (s.dims === '3d' && p.dims !== '3d') hit('feature', '3d', true);
     if (s.playing && !p.playing) hit('feature', 'phat', true);
-    if (['index', 'year', 'selected', 'mode', 'dims', 'basemap', 'palette', 'range', 'compare'].some(k => s[k] !== p[k]) && $('#pages').hidden) { clearTimeout(addrTimer); addrTimer = setTimeout(() => syncAddress(store.get()), 300); }
+    if (['index', 'year', 'selected', 'mode', 'dims', 'basemap', 'palette', 'range', 'compare'].some(k => s[k] !== p[k]) && $('#pages').hidden) { clearTimeout(addrTimer); addrTimer = setTimeout(() => { if (!parseHash().id && $('#pages').hidden) syncAddress(store.get()); }, 300); }   // chỉ ghi địa chỉ khi đang ở bản đồ: không đè liên kết trang con (#/trong-cay, #/du-bao…) lúc mới mở
     if (s.animate) queueMicrotask(() => store.set({animate: false}));
   };
   store.subscribe(draw);
