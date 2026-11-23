@@ -18,7 +18,7 @@ import rasterio
 from rasterio.warp import transform as warp
 
 STATION = {'name': 'Tân Sơn Nhất', 'wmo': '48900', 'lat': 10.8188, 'lon': 106.6520}   # tọa độ sân bay (VVTS)
-RASTERS = {2020: 'data/gee_recovery/fill_2020_20261104/indices_2020_fill_120m.tif', 2021: 'data/gee/rasters/indices_2021_120m.tif',
+RASTERS = {2020: 'data/gee_recovery/fill_2020_hocmon_20261123/indices_2020_fill_120m.tif', 2021: 'data/gee/rasters/indices_2021_120m.tif',
            2022: 'data/gee_recovery/fill_2022_20261104/indices_2022_fill_120m.tif', 2023: 'data/gee_recovery/fill_2023_20261104/indices_2023_fill_120m.tif',
            2024: 'data/gee/rasters/indices_2024_120m.tif', 2025: 'data/gee_recovery/batch3_20261102_review/indices_2025_recovery_batch3_120m.tif'}
 NODATA = -9999

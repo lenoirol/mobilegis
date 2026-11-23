@@ -31,14 +31,15 @@ def grey_codes(year):
     return sorted(c for c, r in published(year).items() if any(not (r.get(k) is not None and (r.get(k + '_coverage') or 0) >= .5) for k in KEYS))
 
 
-def review(year, folder, output):
+def review(year, folder, output, prefix=None, baseline=None, targets=None, exclude=()):
     if output.exists():
         raise ValueError('Thư mục kết quả đã có. Dùng thư mục mới, không ghi đè một lần kiểm tra.')
-    prefix = f'MobileGIS_fill_{year}'
+    prefix = prefix or f'MobileGIS_fill_{year}'
     tif, scenes_csv = folder / f'{prefix}_120m.tif', folder / f'{prefix}_scenes.csv'
     if not (tif.is_file() and scenes_csv.is_file()):
         raise ValueError(f'Cần {tif.name} và {scenes_csv.name}')
     base_ids = {r['LANDSAT_PRODUCT_ID'] for r in read_csv(ROOT / f'data/gee/originals/MobileGIS_scenes_{year}.csv')}
+    for extra in exclude: base_ids |= {r['LANDSAT_PRODUCT_ID'] for r in read_csv(Path(extra))}
     scenes = {}
     for row in read_csv(scenes_csv):
         date = dt.date.fromisoformat(row['acquisition_date'])
@@ -49,8 +50,8 @@ def review(year, folder, output):
         if int(float(row['year'])) != year or int(float(row['resolution_m'])) != 120:
             raise ValueError('Sai năm hoặc độ phân giải')
         scenes[int(float(row['scene_index']))] = row
-    targets = set(grey_codes(year))
-    baseline_path = ROOT / f'data/gee/rasters/indices_{year}_120m.tif'
+    targets = set(targets or grey_codes(year))
+    baseline_path = Path(baseline) if baseline else ROOT / f'data/gee/rasters/indices_{year}_120m.tif'
     with rasterio.open(baseline_path) as base, rasterio.open(tif) as cand:
         if cand.descriptions != DESCRIPTIONS or cand.crs != base.crs or cand.transform != base.transform or cand.shape != base.shape:
             raise ValueError('Ứng viên phải cùng lưới, cùng hệ tọa độ và đúng tên 5 bảng với ảnh gốc')
@@ -105,7 +106,11 @@ if __name__ == '__main__':
     ap.add_argument('--year', type=int, required=True)
     ap.add_argument('--input', type=Path, required=True)
     ap.add_argument('--output', type=Path, required=True)
+    ap.add_argument('--prefix', help='tên tệp xuất, mặc định MobileGIS_fill_<năm>')
+    ap.add_argument('--baseline', help='ảnh nền (mặc định ảnh gốc của năm); dùng ảnh đã lấp đợt trước để giữ phần đã lấp')
+    ap.add_argument('--targets', nargs='*', help='mã xã/phường mục tiêu (mặc định: các khu vực còn xám)')
+    ap.add_argument('--exclude', nargs='*', default=[], help='tệp scenes.csv của các đợt trước: cảnh trong đó không được dùng lại')
     a = ap.parse_args()
-    report, rows = review(a.year, a.input, a.output)
+    report, rows = review(a.year, a.input, a.output, a.prefix, a.baseline, a.targets, a.exclude)
     print(json.dumps({'year': a.year, 'filled_pixels': report['filled_pixels'], 'rows': len(rows),
                       'wards': [{k: w[k] for k in ('code', 'name', 'filled_pixels', 'enough_at_50_percent')} for w in report['wards']]}, ensure_ascii=False, indent=1))

@@ -1,18 +1,18 @@
 {
   "2020": {
-    "raster": "data/gee_recovery/fill_2020_20261104/indices_2020_fill_120m.tif",
-    "sha256": "bd2d9a2492a145abd53615f7784f68d903eb663ba99852daee976837cd7387f5",
+    "raster": "data/gee_recovery/fill_2020_hocmon_20261123/indices_2020_fill_120m.tif",
+    "sha256": "6f3161238bbad2079fcbdb5fbfb6e03b3152e42dbbaefcecdb2e32e82b5baae4",
     "ndvi": {
       "pixels_before": 449497,
-      "pixels_after": 450314
+      "pixels_after": 450907
     },
     "lst": {
       "pixels_before": 449497,
-      "pixels_after": 450314
+      "pixels_after": 450907
     },
     "tvdi": {
       "pixels_before": 383753,
-      "pixels_after": 384570
+      "pixels_after": 385163
     }
   },
   "2022": {

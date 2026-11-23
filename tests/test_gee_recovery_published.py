@@ -63,7 +63,7 @@ class PublishedRecovery(unittest.TestCase):
                 self.assertTrue(np.array_equal(d[valid],b[i,valid]-a[i,valid]))
                 self.assertTrue(np.all(d[~valid]==NODATA))
         # Lớp thay đổi đang công bố được tính lại từ ảnh 2020 và 2025 đã lấp ô thiếu (scripts/publish_fill_tiles.py)
-        with rasterio.open(ROOT/'data/gee_recovery/fill_2020_20261104/indices_2020_fill_120m.tif') as first,rasterio.open(ROOT/'data/gee_recovery/batch3_20261102_review/indices_2025_recovery_batch3_120m.tif') as last:
+        with rasterio.open(ROOT/'data/gee_recovery/fill_2020_hocmon_20261123/indices_2020_fill_120m.tif') as first,rasterio.open(ROOT/'data/gee_recovery/batch3_20261102_review/indices_2025_recovery_batch3_120m.tif') as last:
             a=first.read();b=last.read()
             for i,k in enumerate(('ndvi','lst','tvdi')):
                 valid=(a[i]!=NODATA)&(b[i]!=NODATA)

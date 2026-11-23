@@ -652,7 +652,7 @@
       "to": 2025,
       "min": -0.3,
       "max": 0.3,
-      "valid_pairs": 433244,
+      "valid_pairs": 433483,
       "note": "GEE 2020 và 2025 sau khi lấp ô thiếu; ngày ảnh khác nhau, không phải quan hệ nhân quả."
     },
     "lst": {
@@ -674,7 +674,7 @@
       "to": 2025,
       "min": -10,
       "max": 10,
-      "valid_pairs": 433244,
+      "valid_pairs": 433483,
       "note": "GEE 2020 và 2025 sau khi lấp ô thiếu; ngày ảnh khác nhau, không phải quan hệ nhân quả."
     },
     "tvdi": {
@@ -696,7 +696,7 @@
       "to": 2025,
       "min": -0.4,
       "max": 0.4,
-      "valid_pairs": 354524,
+      "valid_pairs": 354763,
       "note": "GEE 2020 và 2025 sau khi lấp ô thiếu; ngày ảnh khác nhau, không phải quan hệ nhân quả."
     }
   },
@@ -1916,19 +1916,19 @@
     "note": "Ô 120 m của 2020, 2022, 2023, 2025 được tạo lại từ ảnh đã lấp ô thiếu; giá trị của ảnh gốc giữ nguyên.",
     "years": {
       "2020": {
-        "raster": "data/gee_recovery/fill_2020_20261104/indices_2020_fill_120m.tif",
-        "sha256": "bd2d9a2492a145abd53615f7784f68d903eb663ba99852daee976837cd7387f5",
+        "raster": "data/gee_recovery/fill_2020_hocmon_20261123/indices_2020_fill_120m.tif",
+        "sha256": "6f3161238bbad2079fcbdb5fbfb6e03b3152e42dbbaefcecdb2e32e82b5baae4",
         "ndvi": {
           "pixels_before": 449497,
-          "pixels_after": 450314
+          "pixels_after": 450907
         },
         "lst": {
           "pixels_before": 449497,
-          "pixels_after": 450314
+          "pixels_after": 450907
         },
         "tvdi": {
           "pixels_before": 383753,
-          "pixels_after": 384570
+          "pixels_after": 385163
         }
       },
       "2022": {

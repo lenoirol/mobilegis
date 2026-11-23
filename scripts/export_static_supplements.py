@@ -15,6 +15,7 @@ BATCHES = [   # (nhãn, tệp CSV) theo thứ tự áp dụng; dòng sau ghi đ�
     ('Bổ sung GEE 2025 · đợt 2', 'data/gee_recovery/batch2_20261101_review/nhap_so_lieu_dot2.csv'),
     ('Bổ sung GEE 2025 · đợt 3', 'data/gee_recovery/batch3_20261102_review/nhap_so_lieu_dot3.csv'),
     ('Bổ sung GEE 2020', 'data/gee_recovery/fill_2020_20261104/nhap_so_lieu_2020.csv'),
+    ('Bổ sung GEE 2020 · Xã Hóc Môn', 'data/gee_recovery/fill_2020_hocmon_20261123/nhap_so_lieu_2020.csv'),
     ('Bổ sung GEE 2022', 'data/gee_recovery/fill_2022_20261104/nhap_so_lieu_2022.csv'),
     ('Bổ sung GEE 2023', 'data/gee_recovery/fill_2023_20261104/nhap_so_lieu_2023.csv'),
 ]

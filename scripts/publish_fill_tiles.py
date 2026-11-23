@@ -3,7 +3,8 @@
     .venv/bin/python scripts/publish_fill_tiles.py
 
 - 2025: ảnh sau đợt 3 (data/gee_recovery/batch3_20261102_review), đã gồm đợt 1 và 2.
-- 2020, 2022, 2023: ảnh đã lấp (data/gee_recovery/fill_<năm>_20261104).
+- 2020: ảnh sau đợt lấp riêng Xã Hóc Môn (fill_2020_hocmon_20261123), đã gồm đợt lấp 2020 trước.
+- 2022, 2023: ảnh đã lấp (data/gee_recovery/fill_<năm>_20261104).
 Không sửa ảnh gốc và không xóa ô ảnh cũ: ô mới ghi vào thư mục tên mới (gee_fill_<chỉ số>_<năm>), products.json trỏ sang đó.
 Trước khi dùng, kiểm tra mọi giá trị hữu hạn của ảnh gốc năm đó được giữ nguyên (chỉ ô trống mới được lấp).
 """
@@ -20,7 +21,7 @@ from build_landsat import PALETTES
 
 FILLED = {
     2025: ROOT / 'data/gee_recovery/batch3_20261102_review/indices_2025_recovery_batch3_120m.tif',
-    2020: ROOT / 'data/gee_recovery/fill_2020_20261104/indices_2020_fill_120m.tif',
+    2020: ROOT / 'data/gee_recovery/fill_2020_hocmon_20261123/indices_2020_fill_120m.tif',
     2022: ROOT / 'data/gee_recovery/fill_2022_20261104/indices_2022_fill_120m.tif',
     2023: ROOT / 'data/gee_recovery/fill_2023_20261104/indices_2023_fill_120m.tif',
 }
