@@ -62,6 +62,19 @@ class PublishedRecovery(unittest.TestCase):
                 with rasterio.open(ROOT/f'data/gee_recovery/batch1_20261004/change_{k}_2020_2025_120m.tif') as ds:d=ds.read(1)
                 self.assertTrue(np.array_equal(d[valid],b[i,valid]-a[i,valid]))
                 self.assertTrue(np.all(d[~valid]==NODATA))
+        # Lớp thay đổi đang công bố được tính lại từ ảnh 2020 và 2025 đã lấp ô thiếu (scripts/publish_fill_tiles.py)
+        with rasterio.open(ROOT/'data/gee_recovery/fill_2020_20261104/indices_2020_fill_120m.tif') as first,rasterio.open(ROOT/'data/gee_recovery/batch3_20261102_review/indices_2025_recovery_batch3_120m.tif') as last:
+            a=first.read();b=last.read()
+            for i,k in enumerate(('ndvi','lst','tvdi')):
+                valid=(a[i]!=NODATA)&(b[i]!=NODATA)
                 self.assertEqual(product['change'][k]['valid_pairs'],int(valid.sum()))
+
+    def test_filled_tiles_keep_original_values(self):
+        product=read('public/data/gee_recovery/products.json')
+        for year,info in product['tiles_filled']['years'].items():
+            for k in ('ndvi','lst','tvdi'):
+                self.assertGreaterEqual(info[k]['pixels_after'],info[k]['pixels_before'])
+                self.assertTrue(product['absolute'][year][k]['url'].startswith(f'/data/tiles/gee_fill_{k}_{year}/'))
+                self.assertTrue((ROOT/'public'/product['absolute'][year][k]['url'].lstrip('/').split('{z}')[0]/'metadata.json').exists())
 
 if __name__=='__main__':unittest.main()

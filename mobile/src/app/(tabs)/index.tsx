@@ -1,6 +1,6 @@
 /** Bản đồ: màn hình chính. Chỉ gồm những thứ hay dùng; thẻ khu vực chỉ hiện khi chạm vào một xã/phường. */
 import {useCallback, useEffect, useRef, useState} from 'react';
-import {Modal, Pressable, ScrollView, Share, View} from 'react-native';
+import {ActivityIndicator, Alert, Modal, Pressable, ScrollView, Share, View} from 'react-native';
 import {useRouter} from 'expo-router';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import * as Sharing from 'expo-sharing';
@@ -16,6 +16,7 @@ import {eligible} from '@/lib/policy';
 import {getRows, names, tileMeta, useDataVersion} from '@/lib/data';
 import {getState, setState, useStore} from '@/lib/store';
 import {session, onSession} from '@/lib/api';
+import {locate, type Fix} from '@/lib/locate';
 
 function useUser() { const [u, setU] = useState(session.user); useEffect(() => onSession(() => setU(session.user)), []); return u; }
 
@@ -24,7 +25,19 @@ export default function MapScreen() {
   const index = useStore(s => s.index), year = useStore(s => s.year), selected = useStore(s => s.selected), lite = useStore(s => s.lite);
   const dims = useStore(s => s.dims), basemap = useStore(s => s.basemap), pixel = useStore(s => s.pixel);
   const [tools, setTools] = useState(false), [gloss, setGloss] = useState(false), [playing, setPlaying] = useState(false), [tiles, setTiles] = useState<string | null>(null);
+  const [me, setMe] = useState<Fix | null>(null), [meCode, setMeCode] = useState<string | null>(null), [finding, setFinding] = useState(false);
   const user = useUser(); useDataVersion();
+  /** Nút định vị: chấm xanh tại vị trí hiện tại, tự chọn và phóng tới xã/phường đang đứng. */
+  const findMe = useCallback(async () => {
+    if (finding) return;
+    setFinding(true);
+    const r = await locate();
+    setFinding(false);
+    if (!r.ok) { Alert.alert('Chưa định vị được', r.message); return; }
+    setMe(r.fix); setMeCode(r.code);
+    if (r.code) { setState({selected: r.code}); map.current?.focus(r.code); }
+    else { map.current?.flyTo(r.fix.lon, r.fix.lat, 11); Alert.alert('Ngoài khu vực nghiên cứu', 'Vị trí của bạn nằm ngoài 167 xã/phường TP.HCM của bản đồ (không gồm Côn Đảo), nên không có số liệu LST, NDVI, TVDI tại đây.'); }
+  }, [finding]);
   const onPick = useCallback((code: string | null) => setState({selected: code}), []);
   useEffect(() => {   // ô ảnh 120 m: lấy địa chỉ lớp ảnh của năm/chỉ số đang chọn
     if (!pixel) { setTiles(null); return; }
@@ -45,7 +58,7 @@ export default function MapScreen() {
   };
   return (
     <View style={{flex: 1, backgroundColor: C.bg}}>
-      <ZonesMap ref={map} index={index} year={year} selected={selected} dims={dims} basemap={basemap} pixelTiles={tiles} lite={lite} onPick={onPick}
+      <ZonesMap ref={map} index={index} year={year} selected={selected} me={me} dims={dims} basemap={basemap} pixelTiles={tiles} lite={lite} onPick={onPick}
         padding={{top: insets.top + 150, right: 24, bottom: 170, left: 24}} />
 
       {/* thanh trên: tên + tài khoản + chọn chỉ số */}
@@ -75,6 +88,7 @@ export default function MapScreen() {
         <View style={[st.float, {position: 'absolute', left: 10, right: 10, bottom: 92, padding: 12, gap: 8}]}>
           <View style={{flexDirection: 'row', alignItems: 'flex-start', gap: 8}}>
             <View style={{flex: 1}}><T s={16} w="800" lines={1}>{names.get(selected)}</T>
+              {selected === meCode && me ? <T s={12} w="800" color="#2a78d6">● Bạn đang ở khu vực này</T> : null}
               <T s={12} color={C.ink3}>Mùa khô {year}{row?.dates?.length ? ' · ảnh ' + dmy(row.dates[0]).slice(0, 5) + (row.dates.length > 1 ? '–' + dmy(row.dates[row.dates.length - 1]) : '') : ''}</T></View>
             <Pressable hitSlop={12} onPress={() => setState({selected: null})} accessibilityLabel="Đóng"><Icon name="x" size={20} color={C.ink3} /></Pressable>
           </View>
@@ -110,6 +124,10 @@ export default function MapScreen() {
         <Btn small icon="plus" onPress={() => map.current?.zoomBy(1)} />
         <Btn small icon="minus" onPress={() => map.current?.zoomBy(-1)} />
         <Btn small icon="extent" onPress={() => map.current?.fitAll()} />
+        <Pressable onPress={findMe} accessibilityRole="button" accessibilityLabel="Vị trí của tôi" android_ripple={{color: '#0000001a'}}
+          style={[st.btn, st.btnSm, {backgroundColor: me ? '#2a78d6' : C.surface, borderColor: me ? '#2a78d6' : C.line2}]}>
+          {finding ? <ActivityIndicator size="small" color={me ? '#fff' : '#2a78d6'} /> : <Icon name="locate" size={16} color={me ? '#fff' : '#2a78d6'} />}
+        </Pressable>
       </View>
 
       <Modal visible={tools} transparent animationType="fade" onRequestClose={() => setTools(false)}>

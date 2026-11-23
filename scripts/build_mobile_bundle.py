@@ -36,6 +36,7 @@ def main():
     (OUT / 'rows.json').write_text(json.dumps(compact, ensure_ascii=False, separators=(',', ':')), encoding='utf8')
     fc = ROOT / 'public/data/forecast/forecast.json'
     (OUT / 'forecast.json').write_text(fc.read_text(encoding='utf8'), encoding='utf8')
+    (OUT / 'station_compare.json').write_text((ROOT / 'public/data/station_compare.json').read_text(encoding='utf8'), encoding='utf8')
     (ROOT / 'mobile/src/lib/treecalc.js').write_text((ROOT / 'public/js/core/treecalc.js').read_text(encoding='utf8'), encoding='utf8')
     for p in sorted(OUT.iterdir()): print(p.name, round(p.stat().st_size / 1024), 'KB')
 

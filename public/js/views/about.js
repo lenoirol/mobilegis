@@ -1,7 +1,7 @@
 /* Giới thiệu: what the three indices mean, how to read the map, how far to trust the numbers, where the data comes from. */
 import {h, mount, icon} from '../core/dom.js';
 import {data} from '../core/data.js';
-import {INDEX, INDICES, YEARS, rampCss, TVDI_CLASSES, CANONICAL_SOURCE} from '../core/format.js';
+import {INDEX, INDICES, YEARS, rampCss, TVDI_CLASSES, CANONICAL_SOURCE, fmt, dmy} from '../core/format.js';
 import {url} from '../core/api.js';
 
 const policy = window.ViewerPolicy;
@@ -29,6 +29,7 @@ const HOWTO = [
 async function build() {
   built = true;
   const rows = await data.rows(CANONICAL_SOURCE).catch(() => []);
+  const station = await fetch(url('data/station_compare.json')).then(r => r.ok ? r.json() : null).catch(() => null);
   const byYear = y => rows.filter(r => r.year === y);
   const coverage = h('div', {class: 'scroll card flat', style: {padding: 0}}, h('table', {class: 'tbl'},
     h('thead', null, h('tr', null, h('th', null, 'Năm'), ...INDICES.map(k => h('th', {class: 'num'}, `${INDEX[k].label} (${INDEX[k].code})`)))),
@@ -44,6 +45,12 @@ async function build() {
       h('div', {class: 'scroll card flat', style: {padding: 0}}, h('table', {class: 'tbl'}, h('thead', null, h('tr', null, h('th', null, 'Khoảng giá trị'), h('th', null, 'Mức'))),
         h('tbody', null, ...TVDI_CLASSES.map((c, i) => h('tr', null, h('td', {class: 'num', style: {textAlign: 'left'}}, `${i ? String(TVDI_CLASSES[i - 1].max).replace('.', ',') : '0'} – ${String(Math.min(c.max, 1)).replace('.', ',')}`), h('td', null, c.name))))))),
     h('section', {class: 'about-sec'}, h('h2', null, 'Mỗi năm có bao nhiêu khu vực đủ dữ liệu?'), h('p', {class: 'muted small'}, 'Số xã/phường có từ 50% diện tích ảnh dùng được. Mỗi năm là một lần chụp trong mùa khô (các cảnh có thể khác ngày), nên chênh lệch giữa các năm không phải xu thế khí hậu.'), coverage),
+    station && h('section', {class: 'about-sec'}, h('h2', null, 'LST khác nhiệt độ không khí bao nhiêu?'),
+      h('p', {class: 'muted small'}, `Đối chiếu LST tại sân bay Tân Sơn Nhất (trung bình 3 × 3 ô 120 m quanh trạm) với nhiệt độ không khí đo tại trạm khí tượng Tân Sơn Nhất lúc khoảng 10 giờ sáng, đúng các ngày vệ tinh chụp. Trung bình LST cao hơn ${String(station.mean_diff).replace('.', ',')} °C (từ ${String(station.min_diff).replace('.', ',')} đến ${String(station.max_diff).replace('.', ',')} °C). Đây là đối chiếu để hiểu số liệu, không phải hiệu chỉnh LST.`),
+      h('div', {class: 'scroll card flat', style: {padding: 0}}, h('table', {class: 'tbl'},
+        h('thead', null, h('tr', null, h('th', null, 'Năm'), h('th', {class: 'num'}, 'LST tại sân bay (°C)'), h('th', {class: 'num'}, 'Không khí lúc 10 giờ (°C)'), h('th', {class: 'num'}, 'Chênh lệch'), h('th', null, 'Ngày ảnh'))),
+        h('tbody', null, ...station.years.map(y => h('tr', null, h('th', {scope: 'row'}, String(y.year)), h('td', {class: 'num'}, fmt(y.lst_station_3x3, 1)), h('td', {class: 'num'}, fmt(y.air_temp_10h, 1)), h('td', {class: 'num'}, '+' + fmt(y.diff_lst_minus_air, 1)), h('td', null, y.dates.map(dmy).join(', '))))))),
+      h('p', {class: 'small muted'}, 'Nguồn nhiệt độ không khí: ', h('a', {href: station.station.url, target: '_blank', rel: 'noopener'}, 'Meteostat, trạm 48900 Tân Sơn Nhất'), '. Một năm có vài ngày ảnh nên nhiệt độ trạm là trung bình các ngày đó.')),
     h('section', {class: 'about-sec'}, h('h2', null, 'Vì sao TVDI chỉ để tham khảo'),
       h('div', {class: 'card'}, h('p', {class: 'small', style: {margin: 0}}, 'TVDI được ước lượng riêng cho từng cảnh ảnh, chưa kiểm định bằng số đo độ ẩm đất. Trong dữ liệu này, quan hệ giữa TVDI và NDVI của các xã/phường đổi dấu theo năm (khoảng từ −0,33 đến +0,50), trong khi TVDI luôn đi cùng chiều với LST (khoảng 0,28–0,75). Điều đó cho thấy TVDI phụ thuộc nhiều vào cảnh ảnh được chọn, vì vậy nó chỉ dùng để mô tả mức khô tương đối, không dùng để kết luận hạn hán.'))),
     h('section', {class: 'about-sec'}, h('h2', null, 'Dữ liệu và giới hạn'),

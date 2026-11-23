@@ -8,9 +8,9 @@ import {INDEX, NODATA, colorOf, type IndexKey} from '@/lib/format';
 import {eligible} from '@/lib/policy';
 import {CODES, WORLD_BOX, bbox, getGeo, getRows, useDataVersion} from '@/lib/data';
 
-export interface ZonesHandle {fitAll: () => void; focus: (code: string, wide?: boolean) => void; zoomBy: (d: number) => void; snapshot: () => Promise<string | null>}
+export interface ZonesHandle {fitAll: () => void; flyTo: (lon: number, lat: number, zoom?: number) => void; focus: (code: string, wide?: boolean) => void; zoomBy: (d: number) => void; snapshot: () => Promise<string | null>}
 interface Props {index: IndexKey; year: number; selected: string | null; dims?: '2d' | '3d'; basemap?: 'osm' | 'sat' | 'plain'; pixelTiles?: string | null;
-  dimOthers?: boolean; lite?: boolean; onPick: (code: string | null) => void; padding?: {top: number; right: number; bottom: number; left: number}}
+  dimOthers?: boolean; lite?: boolean; me?: {lon: number; lat: number} | null; onPick: (code: string | null) => void; padding?: {top: number; right: number; bottom: number; left: number}}
 
 const STYLE = {version: 8 as const, sources: {}, layers: [{id: 'bg', type: 'background' as const, paint: {'background-color': '#e3eaf0'}}]};
 const vis = (on: boolean) => ({visibility: on ? 'visible' : 'none'} as const);
@@ -27,7 +27,7 @@ function heightExpr(k: IndexKey, year: number) {
   e.push(0); return e;
 }
 
-export const ZonesMap = memo(forwardRef<ZonesHandle, Props>(function ZonesMap({index, year, selected, dims = '2d', basemap = 'osm', pixelTiles, dimOthers, lite, onPick, padding}, ref) {
+export const ZonesMap = memo(forwardRef<ZonesHandle, Props>(function ZonesMap({index, year, selected, dims = '2d', basemap = 'osm', pixelTiles, dimOthers, lite, me, onPick, padding}, ref) {
   const camera = useRef<CameraRef>(null), map = useRef<MapRef>(null);
   const version = useDataVersion();
   const pad = padding ?? {top: 40, right: 20, bottom: 40, left: 20};
@@ -42,6 +42,7 @@ export const ZonesMap = memo(forwardRef<ZonesHandle, Props>(function ZonesMap({i
       const dx = (b[2] - b[0]) * (wide ? 2.5 : 0.6), dy = (b[3] - b[1]) * (wide ? 2.5 : 0.6);
       camera.current?.fitBounds([b[0] - dx, b[1] - dy, b[2] + dx, b[3] + dy], {padding: pad, duration: anim});
     },
+    flyTo: (lon, lat, zoom = 14) => camera.current?.flyTo({center: [lon, lat], zoom, duration: lite ? 0 : 900} as any),
     zoomBy: async d => { const z = await map.current?.getZoom(); if (z != null) camera.current?.zoomTo(z + d, {duration: lite ? 0 : 200}); },
     snapshot: async () => { try { return await (map.current as any)?.createStaticMapImage({output: 'file'}) ?? null; } catch { return null; } },
   }), [pad, anim, dims, lite]);
@@ -64,6 +65,10 @@ export const ZonesMap = memo(forwardRef<ZonesHandle, Props>(function ZonesMap({i
         <Layer id="z-line" type="line" paint={{'line-color': '#ffffff', 'line-width': 0.6, 'line-opacity': dimOthers && sel ? 0.4 : 0.9}} />
         <Layer id="z-sel" type="line" filter={['==', ['get', 'code'], sel] as any} paint={{'line-color': '#1d2733', 'line-width': 3}} />
       </GeoJSONSource>
+      {me ? <GeoJSONSource id="me" data={{type: 'Feature', geometry: {type: 'Point', coordinates: [me.lon, me.lat]}, properties: {}} as any}>
+        <Layer id="me-halo" type="circle" paint={{'circle-radius': 16, 'circle-color': '#2a78d6', 'circle-opacity': 0.18}} />
+        <Layer id="me-dot" type="circle" paint={{'circle-radius': 7, 'circle-color': '#2a78d6', 'circle-stroke-color': '#ffffff', 'circle-stroke-width': 2.5}} />
+      </GeoJSONSource> : null}
     </Map>
   );
 }));

@@ -1,0 +1,66 @@
+{
+  "2020": {
+    "raster": "data/gee_recovery/fill_2020_20261104/indices_2020_fill_120m.tif",
+    "sha256": "bd2d9a2492a145abd53615f7784f68d903eb663ba99852daee976837cd7387f5",
+    "ndvi": {
+      "pixels_before": 449497,
+      "pixels_after": 450314
+    },
+    "lst": {
+      "pixels_before": 449497,
+      "pixels_after": 450314
+    },
+    "tvdi": {
+      "pixels_before": 383753,
+      "pixels_after": 384570
+    }
+  },
+  "2022": {
+    "raster": "data/gee_recovery/fill_2022_20261104/indices_2022_fill_120m.tif",
+    "sha256": "357f50a7cbb2fe3424d6c48f7ef3328d7d9e6f1773cb66c97f8a25df98d92c36",
+    "ndvi": {
+      "pixels_before": 408334,
+      "pixels_after": 432880
+    },
+    "lst": {
+      "pixels_before": 408334,
+      "pixels_after": 432880
+    },
+    "tvdi": {
+      "pixels_before": 369273,
+      "pixels_after": 393819
+    }
+  },
+  "2023": {
+    "raster": "data/gee_recovery/fill_2023_20261104/indices_2023_fill_120m.tif",
+    "sha256": "a4b04c49149708f09b82729750e8773551105336bb1a4f3c6373523c8bbb622c",
+    "ndvi": {
+      "pixels_before": 437193,
+      "pixels_after": 442290
+    },
+    "lst": {
+      "pixels_before": 437193,
+      "pixels_after": 442290
+    },
+    "tvdi": {
+      "pixels_before": 407079,
+      "pixels_after": 412176
+    }
+  },
+  "2025": {
+    "raster": "data/gee_recovery/batch3_20261102_review/indices_2025_recovery_batch3_120m.tif",
+    "sha256": "4980fc0feb294909a8f69c003fa07361799c99c43d672e5ad7b562a7e80221b2",
+    "ndvi": {
+      "pixels_before": 423253,
+      "pixels_after": 443689
+    },
+    "lst": {
+      "pixels_before": 423253,
+      "pixels_after": 443689
+    },
+    "tvdi": {
+      "pixels_before": 383997,
+      "pixels_after": 404433
+    }
+  }
+}

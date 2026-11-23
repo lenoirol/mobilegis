@@ -16,7 +16,7 @@ export const PARAMS = [
   {key: 'N', sym: 'N', label: 'Số cây trồng', unit: 'cây', def: 1000, min: 1, max: 10000000, step: 1, group: 'plan'},
   {key: 'T', sym: 'T', label: 'Số năm tính', unit: 'năm', def: 10, min: 1, max: 100, step: 1, group: 'plan'},
   {key: 'C', sym: 'C', label: 'CO₂ hấp thụ mỗi cây', unit: 'kg CO₂/cây/năm', def: 20, min: 0, max: 1000, step: 0.1, group: 'tree',
-    hint: 'Tham khảo: khoảng 16 kg (cây nhỏ, đường kính thân 8–15 cm) đến 340 kg (cây rất lớn, trên 76 cm) mỗi năm — McPherson (1998), cây đô thị Chicago.', src: 'mcpherson'},
+    hint: 'Tham khảo: khoảng 16 kg (cây nhỏ, đường kính thân 8–15 cm) đến 340 kg (cây rất lớn, trên 76 cm) mỗi năm — McPherson (1998), cây đô thị Chicago. Ở TP.HCM chưa có số đo theo từng cây; nghiên cứu i-Tree ở công viên Tao Đàn và 23/9 chỉ cho số tổng theo diện tích. Cây đường phố phổ biến ở TP Thủ Đức: dầu rái, sao đen, lim xẹt, bằng lăng.', src: 'mcpherson'},
   {key: 'B', sym: 'B', label: 'Sinh khối tăng thêm mỗi cây', unit: 'kg/cây/năm', def: 12, min: 0, max: 1000, step: 0.1, group: 'tree',
     hint: 'Phụ thuộc loài và tuổi cây; nên lấy theo số liệu lâm học của loài trồng.'},
   {key: 'S', sym: 'S', label: 'Diện tích tán mỗi cây', unit: 'm²/cây', def: 15, min: 0, max: 2000, step: 0.1, group: 'tree',
@@ -45,6 +45,8 @@ export const GROUPS = [
 export const SOURCES = {
   mcpherson: {text: 'McPherson, E. G. (1998), USDA Forest Service – Pacific Southwest Research Station: lượng CO₂ cây đô thị Chicago hấp thụ theo cỡ đường kính thân.', url: 'https://www.fs.usda.gov/psw/publications/mcpherson/psw_1998_mcpherson003.pdf'},
   rain: {text: 'Chesapeake Bay Program, tổng hợp tài liệu về tán cây đô thị (mô hình Cincinnati của Berland và Hopton, 2014) và bài trình bày của Selbig tại hội thảo nước mưa quận Waukesha 2021 (hệ số 59 gallon/cây/năm).', url: 'https://www.chesapeakebay.net/files/documents/utc_literature_synthesis_update_aug31_draft_attachment_b.pdf'},
+  hcmPark: {text: 'Nghiên cứu sơ bộ lợi ích của công viên đô thị TP.HCM (Tao Đàn, 23/9) bằng công cụ i-Tree (ResearchGate, 2025).', url: 'https://www.researchgate.net/publication/390363386_A_preliminary_study_on_the_benefits_of_urban_parks_in_Ho_Chi_Minh_City_using_i-Tree_tools'},
+  thuDuc: {text: 'Kiểm kê cây đường phố TP Thủ Đức: 31.023 cây, 65 loài (Tạp chí Nông nghiệp và Phát triển, ĐH Nông Lâm TP.HCM).', url: 'https://jad.hcmuaf.edu.vn/index.php/jad/article/view/1016'},
   water: {text: 'Báo Sài Gòn Giải Phóng: đơn giá nước sinh hoạt hộ gia đình TP.HCM tính theo định mức.', url: 'https://www.sggp.org.vn/don-gia-nuoc-sinh-hoat-ho-gia-dinh-tinh-theo-dinh-muc-post787873.html'},
 };
 /** Giá trị nào được cộng vào tổng. Mặc định theo đúng công thức đề bài (cả ba). */
